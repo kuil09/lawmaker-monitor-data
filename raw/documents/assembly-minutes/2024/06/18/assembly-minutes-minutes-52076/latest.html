@@ -1,0 +1,1283 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52076" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제415회 (임시회) 제3차 과학기술정보방송통신위원회</strong><span class="date">(2024.06.18.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">o 의사일정 변경동의의 건(김현 위원 서면동의)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">18. 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의 증인 출석 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">19. 현안질의 서류제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">2. 방송법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200060)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">3. 방송법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200098)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">4. 방송법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200225)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">5. 방송법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200257)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">6. 방송법 일부개정법률안(한준호 의원 발의)(의안번호 2200460)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">7. 방송문화진흥회법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200057)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">8. 방송문화진흥회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200103)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">9. 방송문화진흥회법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200227)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">10. 방송문화진흥회법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200261)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">11. 방송문화진흥회법 일부개정법률안(한준호 의원 발의)(의안번호 2200465)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">12. 한국교육방송공사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200066)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">13. 한국교육방송공사법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200102)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">14. 한국교육방송공사법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200228)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">15. 한국교육방송공사법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200265)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">16. 한국교육방송공사법 일부개정법률안(한준호 의원 발의)(의안번호 2200464)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">17. 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(한준호 의원 발의)(의안번호 2200461)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최민희 위원장 (경기 남양주시갑)"> 
+							최민희 위원장 (경기 남양주시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이훈기 위원 (인천 남동구을)"> 
+							이훈기 위원 (인천 남동구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이정헌 위원 (서울 광진구갑)"> 
+							이정헌 위원 (서울 광진구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박민규 위원 (서울 관악구갑)"> 
+							박민규 위원 (서울 관악구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="황정아 위원 (대전 유성구을)"> 
+							황정아 위원 (대전 유성구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이해민 위원 (비례대표)"> 
+							이해민 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이준석 위원 (경기 화성시을)"> 
+							이준석 위원 (경기 화성시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조인철 위원 (광주 서구갑)"> 
+							조인철 위원 (광주 서구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="노종면 위원 (인천 부평구갑)"> 
+							노종면 위원 (인천 부평구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="한민수 위원 (서울 강북구을)"> 
+							한민수 위원 (서울 강북구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김우영 위원 (서울 은평구을)"> 
+							김우영 위원 (서울 은평구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김현 위원 (경기 안산시을)"> 
+							김현 위원 (경기 안산시을)
+						</option>
+					
+					
+						<option value="김건오 수석전문위원">김건오 수석전문위원</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(12명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6738" data-name="최민희" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">최민희</span>
+												<span class="position">위원장</span>
+												<span class="area">(경기 남양주시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6799" data-name="이훈기" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">이훈기</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 남동구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6774" data-name="이정헌" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">이정헌</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 광진구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6804" data-name="박민규" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">박민규</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 관악구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6821" data-name="황정아" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">황정아</span>
+												<span class="position">위원</span>
+												<span class="area">(대전 유성구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6755" data-name="이해민" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">이해민</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6785" data-name="이준석" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">이준석</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 화성시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6829" data-name="조인철" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">조인철</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 서구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6844" data-name="노종면" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">노종면</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 부평구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6768" data-name="한민수" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">한민수</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강북구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem10" data-mem_id="6787" data-name="김우영" data-pos="위원"> 
+											<label for="spk_mem10">												
+												<span class="name">김우영</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 은평구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem11" data-mem_id="6737" data-name="김현" data-pos="위원"> 
+											<label for="spk_mem11">												
+												<span class="name">김현</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 안산시을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="김건오" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">김건오</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52076&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제415회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>과학기술정보방송통신위원회회의록</h1></div></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 6월 18일(화)</p></li><li><div class="sbj lts2">장소</div><p class="con">과학기술정보방송통신위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의</li><li><span class="num">2.</span> 방송법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200060)</li><li><span class="num">3.</span> 방송법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200098)</li><li><span class="num">4.</span> 방송법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200225)</li><li><span class="num">5.</span> 방송법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200257)</li><li><span class="num">6.</span> 방송법 일부개정법률안(한준호 의원 발의)(의안번호 2200460)</li><li><span class="num">7.</span> 방송문화진흥회법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200057)</li><li><span class="num">8.</span> 방송문화진흥회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200103)</li><li><span class="num">9.</span> 방송문화진흥회법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200227)</li><li><span class="num">10.</span> 방송문화진흥회법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200261)</li><li><span class="num">11.</span> 방송문화진흥회법 일부개정법률안(한준호 의원 발의)(의안번호 2200465)</li><li><span class="num">12.</span> 한국교육방송공사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200066)</li><li><span class="num">13.</span> 한국교육방송공사법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200102)</li><li><span class="num">14.</span> 한국교육방송공사법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200228)</li><li><span class="num">15.</span> 한국교육방송공사법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200265)</li><li><span class="num">16.</span> 한국교육방송공사법 일부개정법률안(한준호 의원 발의)(의안번호 2200464)</li><li><span class="num">17.</span> 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(한준호 의원 발의)(의안번호 2200461)</li><li><span class="num">18.</span> 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의 증인 출석 요구의 건(추가)</li><li><span class="num">19.</span> 현안질의 서류제출 요구의 건(추가)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2">o 의사일정 변경동의의 건(김현 위원 서면동의)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">18.</span> 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의 증인 출석 요구의 건</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">19.</span> 현안질의 서류제출 요구의 건</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">2.</span> 방송법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200060)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">3.</span> 방송법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200098)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">4.</span> 방송법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200225)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">5.</span> 방송법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200257)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">6.</span> 방송법 일부개정법률안(한준호 의원 발의)(의안번호 2200460)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">7.</span> 방송문화진흥회법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200057)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">8.</span> 방송문화진흥회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200103)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">9.</span> 방송문화진흥회법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200227)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">10.</span> 방송문화진흥회법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200261)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">11.</span> 방송문화진흥회법 일부개정법률안(한준호 의원 발의)(의안번호 2200465)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">12.</span> 한국교육방송공사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200066)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">13.</span> 한국교육방송공사법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200102)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">14.</span> 한국교육방송공사법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200228)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">15.</span> 한국교육방송공사법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200265)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">16.</span> 한국교육방송공사법 일부개정법률안(한준호 의원 발의)(의안번호 2200464)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">17.</span> 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(한준호 의원 발의)(의안번호 2200461)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시01분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈하여 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제415회 국회(임시회) 제3차 과학기술정보방송통신위원회를 개의하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;회의 진행에 앞서 저번 회의에도 말씀드렸지만 과방위가 국민의힘과 함께 진행되지 못함에 대해서 매우 유감으로 생각합니다. 다행히 의장님께서 국회를 정상적으로 여야가 함께 진행하는 것에 대한 강력한 의지가 있으시고, 제가 어제 기사를 본 바에 따르면 여야가 물밑 협상을 하고 있다고 합니다. 그 결과가 매우 좋아서 저희가 다음 회의부터는 여야가 함께 회의를 하기를 기대합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시02분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의를 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;오늘 과학기술정보통신부, 방송통신위원회, 원자력안전위원회, 방송통신심의위원회를 대상으로 현안질의를 실시할 예정이었으나 이 네 기관의 기관장들께서 출석하지 않으셨습니다. 국무위원 및 정부위원들은 국회 회의에 출석할 의무가 있음에도 불참한 관계로 회의가 정상적으로 진행되기 어렵게 되었습니다. </span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;국회법 제121조에 따르면 위원회는 의결로 국무위원과 정부위원의 출석을 요구할 수 있고 출석 요구를 받은 자는 출석해서 답변해야 할 의무가 있습니다. 그럼에도 우리 위원회의 긴급한 현안에 대해 논의하고 정부 부처의 책임감 있는 답변을 듣는 중요한 자리에 출석 요구를 받은 국무위원 및 정부위원이 불참한 것에 대해서 유감의 뜻을 표명합니다. 또한 방송통신위원회에도 회의가 있음을 통지하였음에도 방심위 위원장이 불참한 것에 대해서도 유감의 뜻을 표합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">o 의사일정 변경동의의 건(김현 위원 서면동의)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시03분)</p><br/><div id="spk_6" class="item2 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;현안질의의 정상적인 진행을 위하여 김현 간사 위원님께서 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의 관련 증인 출석 요구의 건, 현안질의 관련 서류제출 요구의 건을 각각 전체회의 의사일정으로 추가 상정하자는 서면동의서를 제출하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;국회법 71조에 따르면 위원회에서는 동의자 외 1명 이상의 찬성으로 의제가 될 수 있습니다. </span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;의사일정 변경동의에 찬성하는 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;찬성하는 위원님이 계시므로 국회법 제71조에 따라 동의가 의제로 성립되었습니다. </span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;국회법 제77조에 의하면 의사일정의 순서를 변경하거나 안건을 추가하는 동의의 경우에 대해서는 토론을 하지 않고 표결하도록 규정하고 있습니다. </span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;그러면 방금 의제로 성립된 의사일정 변경동의의 건을 각각 오늘 전체회의 의사일정으로 추가하고자 하는데 이의 없습니까?</span><br/><span class="spk_sub" id="spk_sub6-8">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-9">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">18. 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의 증인 출석 요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" class="tit">19. 현안질의 서류제출 요구의 건</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시05분)</p><br/><div id="spk_8" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;다음으로 의사일정 제18항 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의 관련 증인 출석 요구의 건과 의사일정 제19항 현안질의 관련 서류제출 요구의 건을 각각 상정합니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;의사일정 제18항 및 제19항을 먼저 심사하도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;의사일정 제18항은 국회법 제129조 및 국회에서의 증언·감정 등에 관한 법률 제2조 및 제5조에 따라 2024년 6월 25일 오후 2시―다시 한번 반복합니다―2024년 6월 25일 오후 2시 과학기술정보통신부, 방송통신위원회 등에 대한 현안질의에 필요한 증인의 출석을 요구하기 위한 것입니다. </span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;여러 위원님들께서 신청해 주신 증인 및 참고인에 대하여 간사 위원님과 협의한 결과 증인 12명, 참고인 5명을 채택하기로 하였습니다. </span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;구체적인 명단과 출석 일시 등은 배부해 드린 자료를 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;배부해 드린 바와 같이 증인에 대하여 출석을 요구하는 것에 대해 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-9"><div class="taR">(증인 및 참고인 명단은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub8-10">&nbsp;출석 요구의 철회 및 일시 변경 등에 관한 경미한 사항은 위원장과 간사에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-11">&nbsp;의사일정 제19항 현안질의 관련 서류제출 요구의 건입니다. </span><br/><span class="spk_sub" id="spk_sub8-12">&nbsp;국회법 제128조 및 국회에서의 증언·감정 등에 관한 법률 제2조 및 제5조에 따라 정부 부처와 행정기관 등에게 배부한 자료에 따라 총 21건의 서류를 제출할 것을 요구하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-13">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-14">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-15">&nbsp;자료제출과 관련해서도 우리 위원회는 증감법에 따라 의결했으므로 마찬가지로 각 기관에는 제출의 의무가 부여됩니다. 만약 정당한 이유 없이 제출을 거부한다면 징역 3년 이하 또는 1000만 원 이상 3000만 원 이하의 벌금에 처하도록 하고 있습니다. 자료제출을 거부할 경우 역시 과방위원장인 저의 명의로 고발할 것임을 밝혀 둡니다.</span><br/><span class="spk_sub" id="spk_sub8-16">&nbsp;혹시 위원님들 중에 의사진행발언하실 분 계십니까?</span><br/><span class="spk_sub" id="spk_sub8-17">&nbsp;이훈기 위원님 등에게 기회를 드리겠습니다. </span><br/><span class="spk_sub" id="spk_sub8-18">&nbsp;발언 시간은 5분으로 제한하고자 합니다.</span><br/></div></div></div><div id="spk_9" class="item4 speaker spk_mem" data-mem_id="6799" data-name="이훈기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">이훈기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece0e563880b4537a847dd2a22a9a478.jpg" alt="이훈기"></span><span class="txt"><strong class="name">이훈기</strong><span class="position">위원</span><span class="area">(인천 남동구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;더불어민주당 인천 남동을의 이훈기 위원입니다. </span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;제가 지난주에 과방위에서 방송 3법을 비롯한 언론 정상화를 넘어서 국가 미래를 대비하는 과학기술과 인공지능 시대를 선도하고, 생산적이고 효율적인 상임위가 되었으면 좋겠다고 말씀을 드렸습니다. 그렇기 때문에 22대 국회 개원 초에 부처별 업무보고 및 현안질의가 필요하다고 말씀을 드렸고 지금 윤석열 정부의 공영방송 독립성 및 자율성 침해 문제, 방심위의 편파방송 심의 문제, 경영주권마저 약탈하려는 일본의 네이버 라인 문제, 이제 막 개청한 우주청의 방향성 이런 과방위의 관련 현안이 산적해 있습니다. </span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;그런데 대통령실이 중심이 돼서 부처의 국회 업무보고를 저지하고 국민을 무시하는 처사가 버젓이 이어지고 있습니다. 무엇이 두려워서 업무보고와 현안질의를 회피하는지 모르겠습니다. 국민들이 어떻게 생각을 하겠습니까? 국회 과방위의 미래지향적이고 효율적인 상임위 운영을 방해하는 행위입니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;증인 의결을 통해서 정부위원이 현안질의에 참석할 수 있도록 위원장님과 위원님들께서 꼭 힘써 주시기 바라고요.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;먼저 위원장님께 김홍일 방송통신위원장과 이상인 부위원장을 증인으로 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;이 두 사람은 2인 체제의 파행적인 방통위 운영을 하면서 주요 의결사항을 결정해 왔습니다. 지난 5월에 서울고법은 YTN 최대주주 변경 집행정지 관련 판결에서 방통위 2인 의결로 행해진 처분의 절차적 위법성이 문제될 여지가 있다고 판시했습니다. 김 위원장과 이 부위원장은 이러한 절차적 위법성이 있음에도 무리하게 주요 의결사항을 둘이서만 결정해 오고 있습니다. 이것은 언론을 장악하고 방송 현업인들을 압박하는 형식으로 진행되고 있습니다. </span><br/><span class="spk_sub" id="spk_sub9-7">&nbsp;게다가 MBC, KBS, EBS 등 공영방송 3사의 이사진 임기 만료를 앞두고 지금 2인 체제의 문제점에 대한 현안질의가 하루빨리 이루어져야 된다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub9-8">&nbsp;아울러 류희림 방송통신심의위원장을 증인으로 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub9-9">&nbsp;류 위원장은 가족과 지인을 동원해서 상상할 수 없는 방심위 민원 사주를 한 장본인입니다. 그리고 편파적 선거방송심의위원회 구성으로 윤석열 정부의 언론장악에 앞장서고 있습니다.</span><br/><span class="spk_sub" id="spk_sub9-10">&nbsp;특히 방통위 설치법 현행법은 방심위가 방송 내용의 공공성과 공정성 보장을 위해 독립적 사무를 수행하도록 하고 있습니다. 하지만 류 위원장의 방심위는 그 어느 때보다 정권에 편향적인 사무 수행에 열을 올리고 있습니다.</span><br/><span class="spk_sub" id="spk_sub9-11">&nbsp;증인으로 신청한 김홍일 위원장, 이상인 부위원장, 류희림 위원장은 모두 윤석열 정권의 언론장악의 도구로 방통위와 방심위를 이용하고 있습니다. 따라서 반드시 국회 과방위 현안질의에 증인으로 나올 수 있도록 위원장님께 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub9-12">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_10" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;지금 이훈기 위원님께서 말씀하신 분들은 저희가 방금 전에 의결한 증인 및 참고인 목록에 들어 있기 때문에 만약에 이분들 중에 참고인을 제외한 증인들이 출석하지 않는다면 저희가 국회에서 의결했기 때문에 국회법 절차에 따라서 사후조치를 취하기로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;다음은 이정헌 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="6774" data-name="이정헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">이정헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7c68150569c741f79fd55986f59991b1.png" alt="이정헌"></span><span class="txt"><strong class="name">이정헌</strong><span class="position">위원</span><span class="area">(서울 광진구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;서울 광진갑의 국회의원 이정헌입니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;먼저 기관 불출석에 대해서 저도 한 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;국회법에 따른 출석요구에도 불구하고 기관장들이 이번 전체회의에도 불참하는 것에 대해 깊은 유감을 표합니다. 이것은 매우 심각한 사안입니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;헌법 62조 2항에 이렇게 되어 있습니다. ‘국회나 그 위원회의 요구가 있을 때에는 국무총리·국무위원 또는 정부위원은 출석·답변하여야 한다’입니다. ‘출석해서 답변할 수 있다’거나 ‘사정에 따라 불출석할 수 있다’가 아니라 ‘답변하여야 한다’입니다. 때문에 기관 불출석은 명백하게 헌법을 위반한 것입니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;마찬가지로 국회법 121조 3항은 ‘출석 요구를 받은 국무총리, 국무위원 또는 정부위원은 출석하여 답변을 하여야 한다’ 이렇게 명확하게 규정하고 있습니다. 의무입니다. 다른 해석의 여지가 없습니다. 이처럼 기관 출석요구와 질의는 삼권분립 국가에서 입법부가 행정부를 견제하는 가장 중요한 제도입니다. 이런 규정을 통해서 행정부의 폭주를 견제할 수 있기 때문입니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;따라서 심각한 사안을 경고로 넘어갈 것이 아니라 법에 따라서 반드시 강력한 조치가 필요하다고 생각합니다. 우리 위원회에서 보다 충분히 검토돼야 한다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;윤석열 정부의 오만한 권력에 대해 강력히 경고합니다.</span><br/><span class="spk_sub" id="spk_sub11-8">&nbsp;‘나는 신문 없는 정부보다 차라리 정부 없는 신문을 택하겠다’, 미국 대통령 토머스 제퍼슨이 했던 유명한 말입니다. 민주주의의 성공을 위해서 언론자유가 얼마나 중요한지 230여 년 전 미국 건국의 아버지는 알고 있었습니다.</span><br/><span class="spk_sub" id="spk_sub11-9">&nbsp;언론은 국가권력의 오작동을 견제할 수 있는 최후의 보루입니다. 그러나 현재 대한민국에는 정부도 언론자유도 없습니다. 우리는 법치를 외치던 대통령에 의해 권력분립이라는 헌법 가치가 무너지는 비극을 보고 있습니다. 민주주의 국가에서는 언론을 행정부, 사법부, 입법부에 이어 제4부로 부릅니다. 그런데 지금 대한민국 민주주의를 지탱하는 모든 기둥이 위태롭습니다. 윤석열 정부는 언론을 장악하고 통제하고 있습니다. 그리고 그 책임을 묻겠다는 국회를 무시하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-10">&nbsp;국민 여러분 그리고 언론인 여러분!</span><br/><span class="spk_sub" id="spk_sub11-11">&nbsp;오늘 텅 비어 있는 저 자리들을 기억하고 기록해 두시기 바랍니다. 우리는 이 현장을 대한민국 민주주의가 뒷걸음치고 있다는 또 하나의 증거로 남겨야만 합니다.</span><br/><span class="spk_sub" id="spk_sub11-12">&nbsp;윤석열 정부의 언론장악 국정조사를 추진하겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-13">&nbsp;퇴보하는 민주주의를 방관하면 그 청구서는 반드시 국민에게 돌아갑니다. 이것만큼은 기필코 막아야 합니다. 언론장악 국정조사 실시로 윤석열 정부의 언론장악의 위법성과 무도함을 바로잡아 나갈 것입니다. 7월 임시국회에서 반드시 추진하겠습니다. </span><br/><span class="spk_sub" id="spk_sub11-14">&nbsp;권력은 영원하지 않습니다. 국민 위에 군림하려는 권력, 국민을 우습게 아는 권력은 절대 성공할 수 없습니다. 한상혁 방통위원장 해임을 시작으로 류희림 방심위의 비상식적인 심의 남발까지 이 정부는 집권 25개월 동안 일사천리로 언론장악 프로젝트를 가동하고 있습니다. 국정조사로 낱낱이 밝혀야 합니다.</span><br/><span class="spk_sub" id="spk_sub11-15">&nbsp;마지막으로 오늘도 상임위 회의에 참석하지 않고 민의를 대변하는 국회를 존중하지 않는 여당 위원들에 대해 강한 유감을 표합니다.</span><br/><span class="spk_sub" id="spk_sub11-16">&nbsp;방송 4법 관련한 입법청문회가 예정되어 있습니다. 자유롭고 책임 있는 언론 개혁으로 나아갈 첫걸음입니다. 방송 4법은 정권에 따라 흔들리는 언론자유를 지키는 법입니다. 보수가 집권하든 진보가 집권하든 권력자가 아니라 국민의 편에 서는 언론환경을 만들자는 법입니다. KBS와 MBC·EBS를 국민의 방송으로 돌려 드리자는 법입니다. 여당 위원님들께서 반드시 참석하셔서 국민께서 우리 위원회에 부여하신 시대적 소명을 조속히 완수할 수 있기를 소망합니다.</span><br/><span class="spk_sub" id="spk_sub11-17">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;다음으로 의사진행발언하실 위원 계십니까?</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;박민규 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_13" class="item4 speaker spk_mem" data-mem_id="6804" data-name="박민규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">박민규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c226f9600c64c52b8bfeee6b8f2eedd.png" alt="박민규"></span><span class="txt"><strong class="name">박민규</strong><span class="position">위원</span><span class="area">(서울 관악구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;안녕하십니까?</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;서울 관악갑 국회의원 박민규입니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;존경하는 이정헌 위원님의 말씀을 들으며 깊은 공감과 존중의 말씀을 올립니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;윤석열 정부는 출범 이후에 검찰을 통해 뉴스타파와 JTBC를 무작정 압수 수색하고 방통위와 방심위는 MBC와 KBS 등에 대한 심의를 강화하는 등 언론장악을 위한 시도를 지속적으로 해 왔습니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;TBS 또한 정부의 언론탄압의 피해자입니다. 방송통신위원회와 서울시의회, 오세훈 서울시장이 단합하여 TBS에 대한 예산 지원 조례의 폐지를 이루어 내며 TBS를 고사 직전까지 몰아 가고 있습니다. 최근 TBS에 대한 지원을 3개월 연장하는 조례안을 추진했었지만 서울시의회의 상임위에도 상정되지 못한 채 조례의 상정이 무산되었습니다. </span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;현재 TBS는 구조적으로 재정 자립이 불가능한 상태에서 강제적으로 출연기관 지정 해제를 당하게 되었습니다. 재정 지원을 제대로 받지 못하는 TBS에 대한 자구책이 조속히 마련되지 않는다면 정치적 탄압으로 방송사가 문을 닫는 비극으로 연결될 수 있습니다. 이는 군부독재 시대였던 5공화국 전두환 언론 통폐합 이후 처음 있는 일입니다. 불완전한 2인 체제의 방송통신위원회가 TBS 사태에 대한 아무런 역할도 하지 않는 것은 정부의 언론장악에 대한 공범의 형태로 영원하게 기억될 것입니다.</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;앞으로도 과방위에서 TBS 문제에 대해서 상세히 살펴보고 방송의 공정성 확립을 위한 방송 3법 통과와 방송통신위원회에 대한 국정조사 추진에 저도 힘을 보태겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_14" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;황정아 위원님.</span><br/></div></div></div><div id="spk_15" class="item4 speaker spk_mem" data-mem_id="6821" data-name="황정아" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">황정아 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HWANGJUNGA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fb9d9e029ee438c9ad6c9050c36feee.jpg" alt="황정아"></span><span class="txt"><strong class="name">황정아</strong><span class="position">위원</span><span class="area">(대전 유성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;안녕하십니까?</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;대전 유성구을 국회의원 황정아입니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;집권 여당인 국민의힘이 일하는 국회를 만들라는 국민의 명령을 보이콧하니 정부마저 국회의 적법한 출석요구를 거부하고 있습니다. 국회의 국무위원·정부위원에 대한 출석요구권은 헌법에 명시된 헌법상의 권한이자 행정부를 견제하기 위한 삼권분립의 요체 중의 하나입니다. </span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;하지만 윤석열 대통령이 야당을 무시하고 정적 죽이기에만 앞장서자 정부 여당은 대통령의 호위무사처럼 국회를 대통령 부부 비위, 대통령의 실정을 방탄하는 공간으로 만들려고 하고 있습니다. 국민을 섬겨야 하는 일개 공직자들마저 국민 위에 군림해 헌법을 무시하려 하고 있는 것이 아닌지 우려됩니다. 국무위원·정부위원들이 무슨 자신감으로 국회의 적법한 출석요구를 거부했는지 낱낱이 밝혀내야 합니다. 이미 국민의힘이 국회에 출석하지 말라는 가이드라인을 줬다는 것이 밝혀지고 있지 않습니까? 부처들이 더 높은 권력에 의해 입틀막을 당한 것인지 아니면 헌법 위에 군림하려는 것인지 명명백백히 밝혀야 합니다.</span><br/><span class="spk_sub" id="spk_sub15-5">&nbsp;R&amp;D 예산 삭감, 일본에 눈 뜨고 코 베인 라인 사태 그리고 방통위의 노골적인 언론장악 의도까지 윤석열 정부가 국민 앞에 답해야 할 현안들이 차고 넘치다 못해서 폭포수처럼 쏟아지고 있습니다.</span><br/><span class="spk_sub" id="spk_sub15-6">&nbsp;최민희 위원장님 그리고 김현 간사님께 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub15-7">&nbsp;오늘 기관장들에 대한 증인 채택에도 불구하고 또다시 불법적인 불출석이 반복될 경우 동행명령과 고발 등 국민이 국회에 맡겨 주신 모든 권한을 활용해 국민 위에 군림하려는 공직자들에게 응당한 책임을 물어야 합니다. 또한 만약 기관장들이 불출석할 경우 부처의 실국장들에 대한 증인 채택이라도 추진해 윤석열 정부의 오만과 독선을 저지하고 무너져 내린 대한민국을 다시 세우기 위한 방안을 마련해야 할 것입니다.</span><br/><span class="spk_sub" id="spk_sub15-8">&nbsp;국회 상임위가 발의된 법안을 심사하고 의결하는 것은 당연한 책무입니다. 하지만 국민의힘은 당연히 해야 할 일마저 거부하고 있는 것입니다. 국민의힘이 언론 정상화를 위한 4법의 심사마저 거부하는 이유는 단 한 가지로 귀결될 수밖에 없습니다. 언론장악을 위한 윤석열 대통령과 방통위의 위법적, 불법적 행태를 방탄하겠다는 것입니다. 언론탄압을 방지할 최소한의 제도적 장치마저 무너뜨려 언론을 두 손 위에 두고 자기들 멋대로 주무르겠다는 뜻입니다. 언론 정상화 4법을 거부하는 자가 범인입니다. 이 법을 거부하는 자는 자기 멋대로 언론을 탄압하고 본인들 유리하게 언론을 장악하겠다고 자기 고백을 하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub15-9">&nbsp;지난 카이스트 졸업식에서 대통령을 향해 R&amp;D 예산 삭감을 지적한 졸업생이 입틀막 당하고 사지가 들려 내쫓겼던 사건을 기억하실 것입니다. 그런데 윤석열 정권은 국민 한 명의 목소리뿐만 아니라 권력을 감시하고 견제하는 언론과 방송에 대해서도 갖가지 탄압을 통해 장악을 시도해 왔습니다. 방송의 공정성과 독립성을 요구하는 기구나 기관의 경우에는 이전 정부에서 임명된 인사들을 임기가 끝나기도 전에 쫓아내고 정권의 나팔수들을 그 자리에 배치하여 충성 경쟁을 시켰습니다. 특히 압도적으로 많은 수의 여당 추천 인사들이 장악한 KBS는 정권의 눈치나 보는 권력의 하수인으로 전락하였습니다. 이뿐만 아니라 방송통신심의위원회의 심의 기능을 동원하여 노골적인 편파 심의를 통해 역대 최대의 법정 제재를 기록하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-10">&nbsp;언론의 말할 기회와 자유의 제한은 국제사회에서의 부정적인 평가로 돌아왔고 국경없는기자회의 발표에 따르면 2024년 세계언론자유지수에서 한국이 세계 62위로 추락하였습니다. ‘바이든’을 ‘날리면’ 하니 언론자유가 날아가고 있습니다. </span><br/><span class="spk_sub" id="spk_sub15-11">&nbsp;윤석열 대통령과 정부 여당이 언론자유를 황폐화시키는 이러한 상황을 더 이상 용납할 수 없습니다. 윤석열 정부의 언론장악 야욕을 하루라도 빨리 막기 위해서는 언론정상화 4법이 반드시 필요하고, 오늘 과방위 의결 절차를 종결하고 본회의까지 신속하게 이루어져야 언론장악을 막기 위한 방파제를 세울 수 있습니다. 언론정상화 4법은 우리 상임위원회가 많은 언론인과 국민의 염원을 담아 추진한 법안입니다. 이미 21대 국회에서도 많은 논의가 이루어졌던 내용들입니다.</span><br/><span class="spk_sub" id="spk_sub15-12">&nbsp;이러한 점을 고려할 때 언론정상화 4법을 신속하게 처리하는 것이 국회의 의무라고 생각합니다. 좌고우면하지 말고 지체 없이 의결시켜야 합니다.</span><br/><span class="spk_sub" id="spk_sub15-13">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_16" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;다음은 조국혁신당 이해민 위원님 발언해 주십시오.</span><br/></div></div></div><div id="spk_17" class="item4 speaker spk_mem" data-mem_id="6755" data-name="이해민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">이해민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEHAIMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/79bdbaaefa354f8ea270cacb973fc566.jpg" alt="이해민"></span><span class="txt"><strong class="name">이해민</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;조국혁신당 이해민입니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;우리는 지금 정권이 과하게 무지하면 나라가 얼마나 망가질 수 있는지를 보고 있습니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;저는 어제 카이스트 입틀막 사건의 피해자 학생, 재학생, 졸업생과 함께 기자회견을 했습니다. 특히 4학년 재학생의 절절한 외침은 우리가 지금 정쟁을 논하며 과학기술 예산을 이야기해야 하나 부끄러웠습니다.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;이와 관련해서, 자료 요구 관련돼서 지금 최민희 위원장님과 김현 간사님께 부탁을 드리고자 합니다.</span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;R&amp;D 예산 관련돼서는 여러 가지 이야기가 나오고 있지만 갑자기 튀어나온 예타 폐지 문제가 함께 있습니다. 과학기술정보통신부와 기획재정부는 지난달에 국가재정전략회의에서 발표된 R&amp;D 예타 폐지에 대한 세부 추진방안으로서 대형 국가연구개발사업 투자·관리 시스템 혁신방안을 제8회 국가과학기술자문회의 심의회의에서 최종 의결했습니다.</span><br/><span class="spk_sub" id="spk_sub17-6">&nbsp;예타 폐지와 관련해서는 부실·중복 연구개발사업에 대한 거름장치가 없어지고 대형 연구개발사업에 소요되는 예산을 충분히 검증 없이 기재부가 쥐락펴락할 우려가 제기되어 왔습니다. 상피제 폐지, 악용 방지 등 보완책 마련과 민간 전문가 중심 사전 전문검토 제도 또한 신중하게 추진해야 한다는 우려가 있습니다. 아직 국가재정법 개정 단계가 남아 있지만 이러한 우려들에 대한 문제 제기가 있었는지, 충분히 고려되고 논의되었는지 회의 속기록을 통해 확인을 하고자 합니다. 해서 R&amp;D 예타 폐지 관련 국가과학기술자문회의 제8회 심의회의 속기록을 요구합니다.</span><br/><span class="spk_sub" id="spk_sub17-7">&nbsp;라인 관련해서도 잠시 말씀을 드리고자 합니다.</span><br/><span class="spk_sub" id="spk_sub17-8">&nbsp;7월 1일, 얼마 남지 않았습니다. 어떤 날짜냐 하면 일본 총무성이 행정지도로 라인야후에 구체적인 대응책을 내놓아라 하고 요구한 날짜입니다. 네이버가 제출할 보고서에는 지분 매각에 대한 내용은 포함하지 않기로 했지만 7월 1일 이후에도 매각의 가능성은 여전히 열려 있으며 노동자들의 고용불안 상황도 지속될 우려가 있습니다.</span><br/><span class="spk_sub" id="spk_sub17-9">&nbsp;과기정통부 강도현 제2차관은 5월 10일 라인야후 사태와 관련해 최초로 정부의 공식 입장을 발표하면서 ‘행정지도에 지분 매각하라는 표현이 없었다고 확인했다’라고 하며 향후 국제투자분쟁 소송 시 일본 정부에 유리하게 작용할 수도 있는 부적절한 발언을 했습니다. 누구의 지시로 일본 정부를 두둔하는 브리핑을 한 것인지 진상 규명을 위한 국정조사도 반드시 이루어져야 합니다.</span><br/><span class="spk_sub" id="spk_sub17-10">&nbsp;라인야후 사태는 시기를 놓치면 되돌릴 수 없는 국가적 손실을 불러일으킬 수 있는 시급한 사안인 만큼 국정조사 이전에 빠르게 과방위에서 먼저 현안질의를 통해 정부의 잘못된 대처에 대해 책임을 추궁해야 합니다.</span><br/><span class="spk_sub" id="spk_sub17-11">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_18" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;다음으로는 개혁신당 이준석 위원님 발언해 주십시오.</span><br/></div></div></div><div id="spk_19" class="item4 speaker spk_mem" data-mem_id="6785" data-name="이준석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">이준석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEJUNSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f150e375dc4a4a05b0c99ae1a313b432.jpg" alt="이준석"></span><span class="txt"><strong class="name">이준석</strong><span class="position">위원</span><span class="area">(경기 화성시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;개혁신당 경기 화성을 이준석입니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;사실 오늘 국회 자리에, 상임위에 앉아서도 참 안타까운 느낌이 다시 한번 듭니다. 앞서서 많은 동료 위원님들께서 지적해 주셨던 것처럼 정부 측 관계자의 불출석 같은 경우에는 명백하게 국회법을 무시한 그런 상황이다 이렇게 판단하고, 무엇보다도 동료 위원들이 되어야 할 여당 위원들의 불참 또한 지금 시급한 현안을 다루는 데 있어 가지고 상당한 장애 요소로 동작하고 있다는 것을 인지합니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;그럼에도 불구하고 지금 저희 앞에 놓여진, 특히 방송 관계 현안들 같은 경우에는 언론의 자유를 위해서 매우 중요한 현안이기 때문에 이것이 실질적으로 언론의 자유를 지킬 수 있는 방향으로 저희가 위원회를 운영해야 된다는 생각도 보태고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;지금 예고된 것을 보면 저희가 신속하게 본회의까지 이 법안들을 올려 보내서 처리한다 하더라도 대통령은 거부권을 쓸 것이 자명해 보입니다. 그렇다고 했을 때 이 법안들은 현재 논의되고 있는 특검법이나 이런 것과 달리 과거가 아니라 미래를 재단하는 법이고 그리고 무엇보다도 이 사안에 대해 가지고는 거부권을 행사하는 것에 대해 가지고 국민의힘 위원들이 반발할 가능성이 조금 더 낮다고 저는 판단합니다. 그렇기 때문에 실질적으로 8월부터 진행될 공영방송의 이사진과 그리고 사장 선임 등의 절차에 있어 가지고 효과를 나타내기 위해서는 이 법안의 거부권, 재의요구권 행사 가능성을 최대한 낮은 형태로 저희가 협상해야 되는 것이 아닌가 그런 생각을 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;그래서 다시 한번 국민의힘 위원들이 이런 저희 상임위의 절차에 협조할 것을 촉구하는 한편 위원장께서도 이 법안이 빠르게 올라가는 것보다 어떻게 하면 재의요구권의 영향을 적게 받을 수 있는지 염두에 두고 앞으로의 의사일정을 진행해 주셨으면 하는 바람이 있습니다. 그리고 그것이 참 어려운 일임을 알기 때문에 제가 위원장님께 이런 부탁을 드리면서도 죄송하다는 말씀이지만 어쨌든 거부권이 행사되지 않도록 해서 저희가 실질적으로 공영방송의 공정성과 그리고 독립성을 확보할 수 있는 방향으로 위원회를 운영하자고 동료 위원들께도 제안드리고 싶습니다.</span><br/></div></div></div><div id="spk_20" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;조인철 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_21" class="item4 speaker spk_mem" data-mem_id="6829" data-name="조인철" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">조인철 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOINCHEUL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/264a103fd8ca4218be7239d650d86011.png" alt="조인철"></span><span class="txt"><strong class="name">조인철</strong><span class="position">위원</span><span class="area">(광주 서구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;존경하는 최민희 위원장님, 선배·동료 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;더불어민주당 광주 서구갑 조인철입니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;오늘은 제22대 국회 과방위 첫 현안질의가 예정되어 있었습니다. 하지만 정부와 여당의 불참으로 이렇게 파행된 것을 유감으로 생각합니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;이 자리는 과학과 방송 그리고 원자력안전 등 대한민국의 미래와 국민안전을 논의하는 자리였습니다. 특히 과학기술 분야의 R&amp;D 예산 삭감, 네이버 라인 사태, 방송 정상화 4법 그리고 최근 부안 지진에 따른 원전안전 문제 등 시급한 현안에 대해 정부 입장과 해결책을 논의하는 자리가 되었어야만 합니다. </span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;위원장님, 다시는 이런 일이 일어나지 않도록 보다 강력한 조치를 해 줄 것을 건의드립니다.</span><br/><span class="spk_sub" id="spk_sub21-6">&nbsp;또한 이 자리에 불참한 정부와 여당 위원들께 고합니다. 대통령 일가 지키기가 국민의 삶과 국정보다 우선시될 수는 없습니다. 적어도 제22대 국회 과방위에서는 오늘과 같은 사태가 반복되어서는 안 될 것입니다. 국민의 삶과 국정에 대해 정부와 여당의 책임 있는 자세를 촉구합니다.</span><br/><span class="spk_sub" id="spk_sub21-7">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_22" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;노종면 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_23" class="item4 speaker spk_mem" data-mem_id="6844" data-name="노종면" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">노종면 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NOHJONGMYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4abfcdd3a1e84d28901c894e8c1189fe.jpg" alt="노종면"></span><span class="txt"><strong class="name">노종면</strong><span class="position">위원</span><span class="area">(인천 부평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;존경하는 최민희 위원장님, 발언 기회 주셔서 감사합니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;부평갑 국회의원 노종면입니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;한국지질자원연구원에 대해서 말씀을 잠깐 드리겠습니다. 당연히 저희 상임위 소관기관이고요 과기정통부 산하기관입니다. 지금 정부 부처 그리고 부처의 장들이 국회를 무시하는 행태, 이것이 관련 부처의 소관기관으로까지 일사불란하게 확대돼 있는 것이 아닌가 하는 그런 판단을 하지 않을 수가 없습니다.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;한국지질자원연구원은 최근 논란이 되고 있는 동해 석유 탐사 프로젝트에 국내 전문가기구로 참여했던 연구원입니다. ‘대왕고래 탐사시추 관련 해저지형조사 기술자문 용역’ 이게 한국지질자원연구원이 실시한 기술자문 용역의 명칭입니다. 저희 의원실에서 지난 6월 7일부터 이 용역의 결과보고서 제출을 요구했습니다만 이상한 답변을 받았습니다. ‘석유공사에서 의뢰한 자료라서 줄 수가 없다’, 이것은 도대체 누구를 설득할 수 있는 답변인지 모르겠고요. 그러면 열람이 가능하냐 그랬더니 열람도 불가능하다고 합니다. 도대체 뭘 숨기려고 하는 것인지, 공기관 스스로가 의혹을 키우는 형국이 아닌가 이렇게 우려하고 있습니다. 은폐행위에 만약 가담하고 있다면 이런 공직자들, 해당 기관들은 마땅한 책임을 질 수밖에 없다는 점을 다시 한번 강조합니다.</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;지질자원연구원뿐만이 아니지요. 방통위, KBS 등 우리 상임위 소관기관들도 자료 미제출이 일상화돼 있습니다. 아마 여기 계신 동료 위원님들 비슷한 경험을 하고 계시리라 알고 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-6">&nbsp;오늘 위원회 의결로 자료제출을 요구하게 된 점, 최민희 위원장님께 감사를 드리면서도 만약 제출되지 않는다면 법령에 따라서 강력한 조치를 취해 주시기 바란다는 말씀을 덧붙입니다. 끝내 한국지질자원연구원이 자료제출을 거부한다면 결국은 이평구 원장에 대한 증인 출석을 요구할 방침이라는 점도 밝혀 둡니다.</span><br/><span class="spk_sub" id="spk_sub23-7">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_24" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;또 의사진행발언하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;한민수 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_25" class="item4 speaker spk_mem" data-mem_id="6768" data-name="한민수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">한민수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANMINSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/005a3d5dd9ea4299a1d3e4c457395e9a.png" alt="한민수"></span><span class="txt"><strong class="name">한민수</strong><span class="position">위원</span><span class="area">(서울 강북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;존경하는 최민희 위원장님!</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;서울 강북구을 국회의원 한민수입니다.</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;많은 위원들께서 이미 지적을 하셨습니다마는 오늘 집권 여당인 국민의힘 위원들의 과방위 보이콧에 대해서는 재차 깊은 유감의 뜻을 표합니다.</span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;22대 국회 열차는 이미 정시에 출발을 했는데 이렇게 입법부의 무력화를 시도하고 있습니다, 집권 여당이. 제가 기자 생활을 오래하면서 야당의 발목을 잡는 여당은 처음 본 것 같습니다. 있을 수 없는 일들이 계속 이루어지고 있습니다. 언론정상화법을 비롯해 가지고 시급한 과방위의 현안 문제가 있는데도 여전히 집권당 위원들은 용산의 눈치만 보고 있는 것 아닌가 싶습니다.</span><br/><span class="spk_sub" id="spk_sub25-5">&nbsp;국민의힘 위원들이 더 이상 우리 과방위를 보이콧하지 말고, 민생특위라는 이름으로 짝퉁 상임위 만들지 말고 정상적인 우리 과방위에 와서 입법과 정책을 같이 논의하기를 재차 촉구드립니다.</span><br/><span class="spk_sub" id="spk_sub25-6">&nbsp;기록으로 남긴다는 의미에서도 제가 몇몇 분들의 이름을 불러야 되겠습니다. 이종호 과기부장관, 김홍일 방통위원장, 이창윤 과기부제1차관, 강도현 2차관, 류광준 과학기술혁신본부장, 유국희 원안위원장, 류희림 방심위원장 전부 전원 불출석한 것은 현안질의 자체를 봉쇄한 것입니다.</span><br/><span class="spk_sub" id="spk_sub25-7">&nbsp;다시 말씀드리지만 이것은 삼권분립이 우리 헌법에 보장돼 있는데 행안부가 우리 입법부의 업무를 마비시킨 폭거에 해당됩니다. 우리는 국회법에 따라서 소집된 상임위에서 정부 측 국무위원, 정부위원 등이 불출석하는 것은 명백한 직무유기이자 삼권분립의 취지를 정면으로 위배하는 것임을 다시 한번 저는 강조하겠습니다.</span><br/><span class="spk_sub" id="spk_sub25-8">&nbsp;앞서서 이정헌 위원도 말씀하신 것처럼 헌법 제62조제2항, 국회법 제121조를 위반한 것입니다. 우리 과방위가 엄연히 위원회 차원에서 의결을 통해 출석을 요구했습니다만 이렇게 정면으로 보이콧을 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-9">&nbsp;특히 이종호 과기부장관 얘기를 좀 하겠습니다. 윤석열 정부 들어서 첫 번째 상임위 불출석 국무위원입니다. 이분이 2022년 8월 18일 이때도 회의를 불출석해 왔습니다. 아울러 지난해에는 R&amp;D 예산 주무 부처 장관이 헌정사상 역대급인 R&amp;D 예산 삭감을 논의하는 예결위 회의에도 해외 출장을 핑계로 불출석을 했습니다. 이 정도면 정부 부처의 장관이 아니고 국민의힘 소속의 장관이 아닌가 이런 지적을 받아도 타당하다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub25-10">&nbsp;최민희 위원장께서는 좀 전에 저희가 증인과 서류 관련해서도 채택을 했습니다마는 다음 전체회의에서는 정부 측이 오늘과 같은 입법부를 무력화하는 시도 일어나지 않도록 강력하게 대처해 주시기를 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_26" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;의사진행발언, 김우영 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_27" class="item4 speaker spk_mem" data-mem_id="6787" data-name="김우영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">김우영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMWOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/40b8f61bbb444b429d9fc87fe4dff506.jpg" alt="김우영"></span><span class="txt"><strong class="name">김우영</strong><span class="position">위원</span><span class="area">(서울 은평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;저는 은평을 김우영입니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;일하지 않는 것이 일하는 것이다, 현재 정부 여당분들의 자세가 그게 아닌가, 일을 하려는 사람에게 그 일의 추진력이나 속도에 발목을 잡고 또 국민에 대해서 마땅히 해야 할 공적 업무를 해태하는 것이 이 정부의 국정목표인가 심각하게 고민하지 않을 수 없고요.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;현장에, 마땅히 국회에 나와서 답변해야 할 책무가 있는 산하기관의 장들이 나오지 않는다면 저는 우리 상임위 차원에서 현장 방문을 통한 질의를 적극 추진할 것을 제안드립니다. 안 오면 우리가 찾아가면 되지 않을까 싶습니다. 현장에 가서 도대체 그 자리에 앉아서 뭘 하고 있는지, 국민의 세금으로 녹을 먹고 일하지 않는다는 그 자세를 우리가 직접 국민을 대신해서 규탄하고 꾸짖어야 되지 않겠는가 그런 제안을 일단 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;그리고 방송통신 분야, 대한민국의 선진화를 이끌었던 분야였고요. 특히 방송은 K-문화, K-드라마 해서 우리 한국인들의 창의성이나 문화적 우수성이 반영되는 아주 중요한 콘텐츠를 다루는 분야이지 않습니까? 그런데 그 방송통신 정책을 이끌어 가는 주무기관의 장이나 이런 분들은 기본적으로 언론이나 방송의 독립성 또 그 지난한 역사 또 국민에 대한 충실성, 그 어떤 것도 갖추지 못하고 오직 무능한 자의 지배에 놀아나는 그러한 사람들이기 때문에 최근에 논란이 되고 있는 소위 애완견, 그 애완견이 다름 아니라 그들이 아닌가 그런 생각을 갖고 있습니다.</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;대한민국은 선진국가가 되고 있고 발전과 성장을 거듭해 왔고 문화나 IT, 통신, 모든 영역에서 국민의 우수한 창의성을 바탕으로 또 공직자들도 열성을 보이고 방송·언론인들도 현장에서 정말 무한하게 열심히 자긍심을 가지고 일을 해 왔기 때문에 이렇게 발전해 왔는데 2년 동안에, 잘못된 대통령을 선택함으로써 거의 모든 분야에서의 후퇴와 붕괴와 파괴를 경험하고 있습니다. 현대판 분서갱유나 마찬가지다, 그런 참 속상한 감정을 갖고 있는데 저는 이 자리를 빌려서 방송·언론인들, 방송사 현장에서 안타까운 이런 대한민국의 후진적 문화를 직접 몸으로 목도하고 있는 여러분들께서 방송인으로서의 자긍심, 언론인으로서의 독립적인 마인드를 가지고 이 현실을 직시하고 규탄하고 바로잡기 위해서 함께 싸워야 한다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub27-6">&nbsp;우리 국회의원들도 열심히 해야 되겠습니다마는 현장에서 직접 노동하고 일하고 있는 여러분들이야말로 이 국정의 난맥과 잘못된 방송통신·과학기술 정책을 바로잡는 주역이다 그렇게 생각을 하고 함께했으면 하는 그런 소망입니다.</span><br/></div></div></div><div id="spk_28" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;김현 간사 위원님 발언해 주십시오.</span><br/></div></div></div><div id="spk_29" class="item4 speaker spk_mem" data-mem_id="6737" data-name="김현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">김현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1f184c9b9ef14a2b999ccf0c4fdd7870.jpg" alt="김현"></span><span class="txt"><strong class="name">김현</strong><span class="position">위원</span><span class="area">(경기 안산시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;더불어민주당 안산시을 국회의원 김현입니다.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;위원장님 이하 여러 위원님들의 말씀을 잘 경청했습니다.</span><br/><span class="spk_sub" id="spk_sub29-3">&nbsp;대한민국헌법 제7조 ‘공무원은 국민 전체에 대한 봉사자이며, 국민에 대한 책임을 진다’, 2항 ‘공무원의 신분과 정치적 중립성은 법률이 정하는 바에 의하여 보장된다’라고 돼 있습니다. 제21조 ‘모든 국민은 언론·출판의 자유와 집회·결사의 자유를 가진다’라고 되어 있습니다. 즉 헌법에 근거해서 국가공무원은 본인의 의무를 다해야 된다고 생각합니다. 오늘 출석하지 않은 공직자들은 대한민국 국민을 위한 공직자가 아니라 용산을 위한 공직자임을 국민들에게 스스로 천명했다, 스스로 보여 줬다 이렇게 단정해도 과언이 아니다 싶습니다.</span><br/><span class="spk_sub" id="spk_sub29-4">&nbsp;두 번째는 제가 간사를 맡아서 오늘 방송통신위원장이 출석하느냐 여부를 둘러싸고 언론인으로부터 전화를 많이 받았습니다. 그래서 이 부분에 대해서도 향후에―물론 정치권에 있는 국회의원들한테 질문할 내용이기는 하지만―방송통신위원장에게 질문을 좀 해 주시고, 왜 출석하지 않는지를 지면을 통해 또는 방송을 통해 보고 싶다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub29-5">&nbsp;그리고 지금 의사진행발언을 하게 된 배경 중의 하나는 저희가 증인 출석요구권을 오늘 의결했습니다. 앞서 여러 동료 위원님들께서 말씀하셨지만 과학기술정보통신부장관은 네이버 라인 사태 이후에 벌어지는 정부의 대응과 관련해서 많은 국민들이 궁금해하고 이것이 몇 개월 동안 제대로 다뤄지지 못하고 있다, 더디되고 있다라는 점을 다시 한번 지적합니다.</span><br/><span class="spk_sub" id="spk_sub29-6">&nbsp;R&amp;D 예산 삭감의 문제점과 앞서 예비타당성조사 폐지 후의 후속조치 방안을 점검하는 과정에서 법을 위반하고 있지는 않은가라는 점을 확인해야 됩니다. 이 부분에 대해서 확인하기 위해서 장관, 1차관, 2차관, 과학기술혁신본부장을 증인으로 요청하고 있는 겁니다.</span><br/><span class="spk_sub" id="spk_sub29-7">&nbsp;두 번째로는 김홍일 방송통신위원장입니다. 2인 체제에 들어서서 주요 의결을 해서 문제가 있다라는 법원의 판결이 있습니다. 그럼에도 불구하고 오늘 이 자리에 나오지 않았다는 것은 대단히 비겁하고 무책임한 행위다라고 생각을 갖고 있고요. 특히 김홍일 방송통신위원장은 자신의 의사에 반하지 않는 한 임기가 보장되어 있습니다. 다만 국회로부터 탄핵의 대상이 될 수 있음을 명심하기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub29-8">&nbsp;지금까지 벌어진 각종 불법·탈법, 직권남용, 직무유기에 대해서 반드시 국회에서 국회의원들이 묻는 것에 대한 답변을 해야 될 것이고 이에 대한 책임 있는 행동을 해야 됨에도 불구하고 불출석이라는 비겁한 행동으로 지금 김홍일 위원장의 행태에 대해서 규탄하지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub29-9">&nbsp;이상인 방송통신위 부위원장도 마찬가지입니다. 2인 체제에서 방통위의 주요 의결을 결정하고 있습니다. 그리고 방문진 이사 선임 및 방심위의 징계 남발에 대해서도 예산을 낭비하면서 무책임한 행위를 계속하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub29-10">&nbsp;조성은 사무처장도 이를 뒷받침하는 실무 책임자로서 그 책임을 면키 어렵기 때문에 국가공무원법을 위반하고 있다는 점을 지적하지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub29-11">&nbsp;이헌 방송정책국장도 마찬가지, 방송통신위원회의 설치 및 운영에 관한 법률 개정에 대한 정부 측 의견을 실무적으로 뒷받침하는 자리, 중요한 자리를 함께하고 있는 국가공무원입니다. 이에 대한 무책임한 행위에 대해서 규탄하지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub29-12">&nbsp;아울러 방송통신심의위원회의 류희림 위원장에 대해서는 그동안 민원 사주, 편파 선방위원 구성, 방심위의 징계 남발 문제 그다음에 방통위의 소송 예산 낭비 등 점검하고 질의해서 확인해야 될 내용이 많이 있는데 출석하지 않은 점에 대해서 다시 한번 지적합니다.</span><br/><span class="spk_sub" id="spk_sub29-13">&nbsp;이상과 같이 주요한 일에 대해서 방기하고 책임을 지지 않은 공무원들은 국가공무원법 위반의 소지가 다분히 있다라는 점을 다시 한번 말씀을 드리고 오늘 채택된 증인 출석 요구의 건에 대해서 다음 25일 날 반드시 출석해서 국민들이 궁금해하고 국민들이 책임을 묻는 내용에 대해서 적어도 국가공무원으로서 소임을 다해 줄 것을 다시 한번 강조드립니다.</span><br/><span class="spk_sub" id="spk_sub29-14">&nbsp;이상 마치겠습니다.</span><br/></div></div></div><div id="spk_30" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;다들 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;여러 위원님들께서 위원장에게 주신 근본적인 문제 제기, 증인이 출석하지 않거나 자료제출을 하지 않았을 때 강력한 대책을 강구하라는 말씀은 소중히 받고 실천하겠습니다. 행동으로 보여 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;그리고 우리 과방위 행정실 실무자가 너무 걱정을 하는데 저희가 각 기관별 서류제출 요구에 대해서 의결했습니다. 그래서 총 21건 의결했으니 너무 걱정하지 마시고요. 그리고 그중에 특히, 위원장도 다 마찬가지입니다만 특별히 한국지질자원연구원의 자료제출 요구 거부와 해태에 대해서는 저도 면밀히 주시하겠습니다. 이런 일 없었으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-4">&nbsp;그리고 위원님들께서 주신 구체적인 제안 두 가지가 있었습니다. 하나는 정치적인 이유로 국무위원급이 출석하지 않는다면 각 단위의 실무자급을 불러서라도 현안질의를 하자는 제안 그리고 현장을 방문하자는 구체적인 제안이 있었는데요. 이 부분은 간사 위원님과 협의해서 저희가 이후 결정하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-5">&nbsp;위원장도 3분 정도의 발언 시간을 얻도록 하려고 하는데 허용해 주실 거지요?</span><br/><span class="spk_sub" id="spk_sub30-6">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub30-7">&nbsp;동영상 틀어 주십시오.</span><br/></div></div></div><p class="tit_sm taR">(10시47분 영상자료 상영개시)</p><br/><p class="tit_sm taR">(10시50분 영상자료 상영종료)</p><br/><div id="spk_30" class="item4 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-8">&nbsp;잠시 양해 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-9">&nbsp;앞서 의결한 의사일정 제18항 출석 요구의 건에는 배부해 드린 유인물과 같이 참고인 5명도 포함되어 있음을 확인 차원에서 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub30-10">&nbsp;굉장히 꼼꼼한 과방위 행정실 직원이 있습니다. 앞으로도 계속 그렇게 해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub30-11">&nbsp;법안을 상정하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-12">&nbsp;법안의 계속심사를 위해 상정합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Y4G0U5I3R1I1W7K4M5T0T1S8Z1B3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 방송법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200060)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2N4F0T6X0R3T1M9F0E2L0Z9M6Z0I3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 방송법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200098)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2G4C0N6F0I7X1H8U2S1C3F2P2I6L6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 방송법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200225)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J4Q0R6P0Q6O1P7N5V9V5U5V5T4T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 방송법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200257)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2E4Q0B6G1W3C1O6C2Y3I4I7Z8D9F2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 방송법 일부개정법률안(한준호 의원 발의)(의안번호 2200460)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2N4R0F5Y3H1E1H7C4J0Q4U2K8Q1C8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 방송문화진흥회법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200057)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Q4O0R6F0Z3R2Y0R2Z2P3H8E8O0J2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 방송문화진흥회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200103)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2D4U0E6Q0T7L1P8I3R4E5D9S8P4W5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 방송문화진흥회법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200227)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2X4Y0W6U0V6D1E8C0C2B5Z4A8V7W8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 방송문화진흥회법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200261)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2J4B0Y6L1I3N1U6L3C8V4I8O5J9S3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 방송문화진흥회법 일부개정법률안(한준호 의원 발의)(의안번호 2200465)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2E4T0G5U3U1H1G8T0R6O0C7N7I9V0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 한국교육방송공사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2200066)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2V4Y0T6I0V3V1F9W5H0O3G6C7N7G0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 한국교육방송공사법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2200102)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2G4B0H6F0N7G1O8J3K6S5U9D7Q8L3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 한국교육방송공사법 일부개정법률안(고민정 의원 대표발의)(의안번호 2200228)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2G4H0F6F0E6C1D8K0L3K4K6I3H4I5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 한국교육방송공사법 일부개정법률안(최민희 의원 대표발의)(의안번호 2200265)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2J4F0Z6G1W3R1L6C3B6T4F5I6U1J6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 한국교육방송공사법 일부개정법률안(한준호 의원 발의)(의안번호 2200464)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2T4Y0W6A1H3Y1W6O2T4E3D0L1I1M5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(한준호 의원 발의)(의안번호 2200461)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시51분)</p><br/><div id="spk_32" class="item20 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;의사일정 제2항 방송법 일부개정법률안부터 의사일정 제17항 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안까지 이상 16건의 법률안을 일괄 상정합니다.</span><br/><span class="spk_sub" id="spk_sub32-2">&nbsp;제가 영상을 보고 약간 목이 메는 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub32-3">&nbsp;다음은 전체회의에 계류된 법률안에 대하여 심사할 순서입니다.</span><br/><span class="spk_sub" id="spk_sub32-4">&nbsp;먼저 법안 심사에 당연히 참석하여야 할 방통위원장 등 관계자가 불참한 것에 대해 다시 한번 유감을 표합니다.</span><br/><span class="spk_sub" id="spk_sub32-5">&nbsp;법안 심사는 배부된 자료를 중심으로 먼저 수석전문위원으로부터 보고를 들은 후 위원님들의 찬반 토론 과정에서 의견이나 질문을 통해 법안 내용이 정리되면 의결하는 방식으로 진행하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub32-6">&nbsp;그러면 수석전문위원께서는 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_33" class="item20 speaker spk_mem" data-mem_id="0" data-name="김건오" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">수석전문위원 김건오 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김건오"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">김건오</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;먼저 방송법안 심사자료 11쪽을 보아 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;의사일정 제2항부터 제6항까지 방송법 일부개정법률안에 대하여는 대안의 내용이 될 수정의견을 제21대 국회 이송본과의 차이점을 중심으로 간략히 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;수정의견은 대체로 한준호 의원안과 동일하며 한준호 의원안은 21대 이송본과 비교 시 사장의 임기 보장 관련 규정을 신설하고 부칙에 시행일을 공포 후 6개월 경과에서 공포한 날부터 시행하는 것으로 이사 및 사장의 임기에 관한 경과조치를 삭제한 것을 제외하면 동일합니다.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;조문별로 설명드리면, 안 제4조 방송편성규약 준수 의무 규정 등의 내용은 현행 유지 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;다음, 14쪽을 보시면 안 제46조는 KBS 이사 수를 21명으로 증원하고 이사 추천 주체를 방송 및 미디어 관련 학회, 시청자위원회 등으로 확대하는 내용으로 한준호 의원안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;다음, 20쪽을 보시면 안 제46조, 제49조, 제50조의2는 사장후보국민추천위원회의 설치 및 특별다수제·결선투표 도입 등을 내용으로 하며 한준호 의원안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-7">&nbsp;다음, 27쪽을 보시면 안 제50조제7항은 KBS 사장의 임기 보장 규정으로 각호의 어느 하나에 해당하는 경우를 제외하고는 임기 중 그 의사에 반하여 해임되지 아니하도록 하는 내용이며 한준호 의원안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-8">&nbsp;다음, 29쪽을 보시면 부칙은 한준호 의원안과 같이 제1조(시행일)은 공포한 날부터 시행하고 제2조는 다른 법률에 개정 규정을 두는 의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub33-9">&nbsp;다음 법안들을 일괄해서 설명드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-10">&nbsp;다음, 의사일정 제7항부터 제11항까지 방송문화진흥회법 일부개정법률안에 대해 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-11">&nbsp;방문진법안 심사자료 10쪽을 보아 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub33-12">&nbsp;앞의 방송법안과 내용이 유사하며 안 제1조 목적 변경 내용은 현행 유지 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-13">&nbsp;다음, 11쪽을 보시면 안 제6조는 방문진 이사 수 증원 및 이사 추천 주체 확대 내용으로 한준호 의원안과 같으나, 다만 14쪽을 보시면 방송 법안 및 EBS 법안과 체계를 맞추어 ‘진흥회가 최다출자자인 방송사업자의 정관으로 정하는 시청자위원회가 추천하는 사람’으로 수정하는 의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub33-14">&nbsp;다음, 18쪽을 보시면 안 제9조, 제10조, 제10조의3은 사추위 설치 및 특별다수제·결선투표 도입 등을 내용으로 하며 한준호 의원안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-15">&nbsp;다음, 26쪽을 보시면 안 제10조의4는 MBC 사장의 임기보장 규정으로 한준호 의원안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-16">&nbsp;다음, 28쪽을 보시면 부칙은 한준호 의원안과 같은 의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub33-17">&nbsp;다음, 의사일정 제12항부터 제16항까지 한국교육방송공사법 일부개정법률안에 대해 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-18">&nbsp;EBS 법안 심사자료 10쪽을 보아 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub33-19">&nbsp;안 제1조(목적) 변경 내용은 현행 유지 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-20">&nbsp;다음, 11쪽 이하를 보시면 안 제9조는 사장을 이사회의 제청으로 대통령이 임명하고, 제13조는 EBS 이사 수 증원 및 이사 추천 주체를 확대하는 내용으로 한준호 의원안과 같습니다.</span><br/><span class="spk_sub" id="spk_sub33-21">&nbsp;다음, 18쪽을 보시면 제9조, 제14조, 제14조의2는 사추위 설치 및 특별다수제·결선투표 도입 등을 내용으로 하며 한준호 의원안과 같습니다.</span><br/><span class="spk_sub" id="spk_sub33-22">&nbsp;다음, 25쪽을 보시면 안 제10조는 EBS 사장의 임기보장 규정으로 한준호 의원안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-23">&nbsp;다음, 27쪽을 보시면 부칙은 한준호 의원안과 같은 의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub33-24">&nbsp;다음, 의사일정 제17항 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안에 대해 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-25">&nbsp;방통위 법안 심사자료 6쪽을 보아 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub33-26">&nbsp;개정안은 방통위의 회의를 4인 이상의 위원의 출석으로 개의하도록 의사정족수 4인 규정을 신설하고 의결정족수를 현행 재적위원 과반수에서 출석위원 과반수로 변경하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub33-27">&nbsp;개정안의 취지에 공감하며 개정안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-28">&nbsp;다음, 8쪽을 보시면 부칙으로 공포한 날부터 시행하는 개정안과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub33-29">&nbsp;이상으로 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_34" class="item20 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;수석전문위원님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub34-2">&nbsp;관련 보고 내용과 법안과 관련하여 의견 있으신 위원님은 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub34-3">&nbsp;이훈기 위원님.</span><br/></div></div></div><div id="spk_35" class="item20 speaker spk_mem" data-mem_id="6799" data-name="이훈기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">이훈기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece0e563880b4537a847dd2a22a9a478.jpg" alt="이훈기"></span><span class="txt"><strong class="name">이훈기</strong><span class="position">위원</span><span class="area">(인천 남동구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;법안 설명 잘 들었고요. 그리고 아까 이준석 위원님께서 말씀하신 이 법안을 신속하게 처리하고 서로 동의할 수 있는 부분을 최소화해서 통과시켜야 된다는 데 대해서 전적으로 동의합니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;그럼에도 불구하고 제가 한 두 가지 정도 말씀을 드리려고 하는데 일단 제가 발의한 내용 중에 편성규약 관련 내용입니다. 일단 제가 편성규약을 강제해서 방송 3법에 넣은 이유는 지금 KBS만 당장 상황을 보더라도……</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;(자료를 들어 보이며)</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;여기 KBS나 방송 탄압 사례는 밤새서 얘기해도 힘들 정도로 여러 사례가 있는데 최근에도 ‘역사저널 그날’ MC를 배우 한가인 씨에서 조수빈 전 아나운서로 일방적으로 교체해서 프로그램이 지금 방송도 못 되고 있습니다.</span><br/><span class="spk_sub" id="spk_sub35-5">&nbsp;그리고 얼마 전에 KBS 메인 뉴스가 스포츠 뉴스하고 날씨 빼면 한 40분 정도 될 것 같은데 영일만 석유 보도를 무려 24분간 검증 없이 보도를 했는데, 이런 사안뿐이 아니고 지금 KBS는 무단협 상태입니다, 6월 3일부터. 제가 지난주에 KBS를 방문했는데 기자, PD, 엔지니어, 아나운서, 모든 종사자들이 너무나 공포에 싸여서 언론인으로서 역할도 못 하고……</span><br/><span class="spk_sub" id="spk_sub35-6">&nbsp;물론 그렇게 얘기할 수 있습니다. ‘왜 언론인이 그 정도밖에 저항을 못 하고 역할을 못 하냐’ 그럴 수 있지만 지금 우리 언론 환경이나 정권의 어떤 강압적인 행태를 보면 현업인들이 과거처럼 그렇게 저항하기는 쉽지 않은 상황입니다. 그렇기 때문에 저는 이런 편성규약 같은 걸 법으로 강제해서 언론인들이 제대로 역할을 할 수 있게 해야 된다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub35-7">&nbsp;그리고 과거에 MBC가 파업을 했을 때 공정방송과 관련된 내용은 중요한 근로조건이라고 대법에서까지 판결을 했습니다. 그래서 언론에 대해서는 기업이나 아니면 다른 형태의, 어떤 일터하고 다른 적용을 해야 된다고 생각을 합니다. 그래서 저희가 이런 입법 과정에서 언론의 독립성을 지키기 위해서는 좀 더 전향적이고 다른 사고를 가져야 된다고 생각을 해서 저는 편성규약이 강제성을 갖고 들어가야 된다고 생각을 하고.</span><br/><span class="spk_sub" id="spk_sub35-8">&nbsp;과잉 입법이라는 지적도 있지만 노동조합법에도 여러 가지 세부적으로 규정을 해서 형사처벌을 하고 있습니다. 그런 측면에서 고민을 하고 이번에 입법이 안 되더라도 편성규약 문제는 과방위에서 관심을 가져 주셨으면 하고요.</span><br/><span class="spk_sub" id="spk_sub35-9">&nbsp;또 한 가지는 경과조치 관련해서 부칙에 이 법 시행과 동시에 사장과 이사진의 임기가 종료된다고 제가 발의한 내용에는 있는데, 한준호 의원안은 여기서 이 부분을 삭제하고 가는 걸로 돼 있고 저도 시급성 때문에 이걸 갖고 논란을 벌이면 안 된다고는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub35-10">&nbsp;그런데 지금 MBC, KBS가 이사진의 임기가 다르기 때문에, 지금 이사진이 MBC는 9명이고 KBS는 11명인데 KBS 같은 경우에 임기가 아직 남았기 때문에 이 법이 통과될 경우 나머지 이사들을 누가, 어떻게 임명할지에 대해서 상당한 혼란이 예상되거든요, 법이 구체적으로 돼 있지 않기 때문에. 그래서 이런 측면에서 이런 부분은 좀 더 고민을 하고 추후에라도 정리가 필요하다는 말씀을 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub35-11">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_36" class="item20 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;또 의견 있으신 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub36-3">&nbsp;노종면 위원님.</span><br/></div></div></div><div id="spk_37" class="item20 speaker spk_mem" data-mem_id="6844" data-name="노종면" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">노종면 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NOHJONGMYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4abfcdd3a1e84d28901c894e8c1189fe.jpg" alt="노종면"></span><span class="txt"><strong class="name">노종면</strong><span class="position">위원</span><span class="area">(인천 부평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;지금 필요한 법이 이미 21대 국회에서 통과가 됐고 안타깝게도 대통령 거부권 행사 때문에 좌초된 채 지금에 이르러 있기 때문에 시급성이 있는 거지요. 거기에 십분 동의하고 서둘러 중요한 시스템 정비가 이 법을 통해서 이루어지기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;그럼에도 불구하고 마지막 순간까지 저희가 짚어 내야 되는 점은 이것이 실행됐을 때 정말 실효성을 가질 수 있는가, 저희가 바꾸는 전반적인 취지에 공감하면서도 좀 미시적인 부분에서 이게 작아 보이지만 나중에 큰 결과로 이어질 수 있겠다라는 그런 부분이 바로 방송통신위원회가 선정한 방송 및 미디어 관련 학회의 추천 권한입니다.</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;지금 방송통신위원회에 대한 신뢰가 바닥에 떨어져 있고 위법 소지가 있다는 법원 결정에도 불구하고 5인 정원 방통위가 2인 체제로 운영된 지 지금 반년이 넘었습니다. 그런데 그 조직에 추천권을 이렇게 인정해도 되는가.</span><br/><span class="spk_sub" id="spk_sub37-4">&nbsp;그래서 최민희 위원장님 발의 법안에 보면 방송통신위원회가 추천을 하되 다만 그 추천 기준을, 합리적인 기준을 지금 적시하고 있습니다, 활동 기간, 활동 내용, 회원 수를 기준으로 선정한 학회가 추천을 하도록.</span><br/><span class="spk_sub" id="spk_sub37-5">&nbsp;이게 합리적인데 왜 빼야 하는지, 그만큼 시간이 없는 것인지, 합리적인 방안임을 동의하실 수 있으면 넣으면 되는 건 아닌지 동료 위원님들께 다시 한번 의견을 구합니다.</span><br/></div></div></div><div id="spk_38" class="item20 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;또 의견 있으신 분 계십니까?</span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;간사 위원님.</span><br/></div></div></div><div id="spk_39" class="item20 speaker spk_mem" data-mem_id="6737" data-name="김현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">김현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1f184c9b9ef14a2b999ccf0c4fdd7870.jpg" alt="김현"></span><span class="txt"><strong class="name">김현</strong><span class="position">위원</span><span class="area">(경기 안산시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;지금 말씀하신 위원님들의 얘기를, 의견을 반대하거나 이견이 있는 것은 아닙니다. 그러나 21대 국회에서 충분히 논의가 됐는데 부득이하게 통과가 되지 않아서 저희가 22대 국회에서는 방송 정상화 4법을 신속성을 요하는 안건으로 의결을 했고 그 논의 과정이 여러 차례 있었던 것으로 알고 있습니다.</span><br/><span class="spk_sub" id="spk_sub39-2">&nbsp;그래서 저는 한준호 의원님 의견과 그다음에 방송문화진흥회법에 따라서 자구 수정, 최민희 의원님 안을 담아서 수석전문위원님이 얘기했던 안대로 통과를 했으면 하는 의견입니다.</span><br/></div></div></div><div id="spk_40" class="item20 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;김현 간사 위원님 의견에 동의하십니까?</span><br/><span class="spk_sub" id="spk_sub40-2">&nbsp;(「동의합니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-3">&nbsp;대다수가 동의했기 때문에 이상으로 토론을 종결하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub40-4">&nbsp;과방위 행정실에서는 지금 의견을 수렴한 대안을 위원님들께 전달해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub40-5">&nbsp;특별히 이준석 위원님이 주신 말씀은 우리가 추구해야 될 굉장히 중요한 가치입니다. 그리고 국회가 협치로 운영해야 한다는 것 또한 중요한 가치이고 법안을 심사하는 과정에서 저희가 좀 더 신중하게 해야 한다는 점도 충분히 일리 있는 말씀입니다.</span><br/><span class="spk_sub" id="spk_sub40-6">&nbsp;그러나 이 법안이 우리 사회에서 논의되기 시작한 지가 굉장히 오래되었습니다. 그리고 지난 21대 국회에서도 이미 국회 본회의를 통과한 법률에 크게 가감한 것이 없어서 이상으로 토론을 마치고 의결하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub40-7">&nbsp;그리고 조금 속도 조절을 하자는 이준석 위원님의 말씀을 제가 수용하지 못하는 점에 대해서는 죄송하게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub40-8">&nbsp;이제 의결에 들어가겠습니다.</span><br/><span class="spk_sub" id="spk_sub40-9">&nbsp;먼저 축조심사 및 비용추계서 제출 생략 의결을 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub40-10">&nbsp;오늘 의결하는 일부개정법률안들은 국회법 제58조제5항에 따라 축조심의를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-11">&nbsp;(「이의 없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-12">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-13">&nbsp;다음으로 오늘 의결하는 법률안 중 예산 또는 기금상의 조치를 수반하는 대안에 대하여 국회법 제66조제3항 단서 등에 따라 비용추계서 첨부를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-14">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-15">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-16">&nbsp;의사일정 제2항부터 제6항까지 5건의 법률안은 본회의에 부의하지 아니하고 지금까지 논의 과정에서 합의된 사항을 통합 조정한 방송법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-17">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-18">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-19">&nbsp;의사일정 제7항부터 제11항까지 5건의 법률안은 본회의에 부의하지 아니하고 지금까지 논의 과정에서 합의된 사항을 통합 조정한 방송문화진흥회법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-20">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-21">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-22">&nbsp;의사일정 제12항부터 제16항까지 5건의 법률안은 본회의에 부의하지 아니하고 지금까지 논의 과정에서 합의된 사항을 통합 조정한 한국교육방송공사법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-23">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-24">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-25">&nbsp;의사일정 제17항 방송통신위원회의 설치 및 운영에 관한 법률 일부개정법률안은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-26">&nbsp;(「이의 없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-27">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-28">&nbsp;오늘 의결한 법안의 체계와 자구 정리에 대해서는 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub40-29">&nbsp;오늘 준비한 안건을 모두 마무리하였습니다.</span><br/><span class="spk_sub" id="spk_sub40-30">&nbsp;위원 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub40-31">&nbsp;이것으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub40-32">&nbsp;다음 회의는 6월 21일 오후 2시에 방송통신위원회 법률과 관련된 입법청문회가 있을 예정입니다.</span><br/><span class="spk_sub" id="spk_sub40-33">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(11시09분 산회)</p><br/><div class="line_dot">&nbsp;</div><br/></div><div class="minutes_footer"><p class="tit"><strong>증인 및 참고인 명단</strong></p>증인(12인)<div class="table_wrap2"><table class="normal"><caption>증인 및 참고인 명단</caption><colgroup><col width="8.34047476219042%"><col width="31.51726797497643%"><col width="16.828777101722512%"><col width="43.31348016111063%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">소속 및 직위</th><th scope="col">출석요구일</th><th scope="col">출석 요지 및 신청이유</th></tr></thead><tr><td>이종호<br/></td><td>과학기술정보통신부장관<br/></td><td rowspan=12>2024. 6. 25.(화)<br/>14:00<br/></td><td>네이버 라인야후 사태 정부 대응 등<br/></td></tr><tr><td>이창윤<br/></td><td>과학기술정보통신부제1차관<br/></td><td>이공계 활성화를 위한 태스크포스 관련 우수과학기술 인재 확보 및 육성방안 점검 등<br/></td></tr><tr><td>강도현<br/></td><td>과학기술정보통신부제2차관<br/></td><td>제4이동통신 준비법인 스타이지엑스 후보 자격 취소 사유 파악 등<br/></td></tr><tr><td>류광준<br/></td><td>과학기술정보통신부 과학기술혁신본부장<br/></td><td>예비타당성조사 폐지 후 후속조치 방안 점검 관련<br/></td></tr><tr><td>김홍일<br/></td><td>방송통신위원장<br/></td><td>2인 체제 방통위 주요 의결의 당위성 문제 (YTN 최대주주 변경 승인 의결) 등<br/></td></tr><tr><td>이상인<br/></td><td>방송통신위원회 부위원장<br/></td><td>2인 체제 방통위 주요 의결의 당위성 문제 (YTN 최대주주 변경 승인 의결) 등<br/></td></tr><tr><td>조성은<br/></td><td>방송통신위원회 사무처장<br/></td><td>방송통신위원회의 설치 및 운영에 관한 일부개정법률안에 관한 정부 측 의견청취<br/></td></tr><tr><td>이헌<br/></td><td>방송통신위원회 방송정책국장<br/></td><td>방송통신위원회의 설치 및 운영에 관한 일부개정법률안에 관한 정부 측 의견청취<br/></td></tr><tr><td>이우일<br/></td><td>국가과학기술자문회의 부의장<br/></td><td>R&amp;D 예산 삭감 관련<br/></td></tr><tr><td>류희림<br/></td><td>방송통신심의위원장<br/></td><td>방심위 민원사주, 편파 선방위원 구성 문제 등<br/></td></tr><tr><td>박민<br/></td><td>한국방송공사 사장<br/></td><td>방송법 개정, 수신료 분리징수 관련<br/></td></tr><tr><td>김유열<br/></td><td>한국교육방송공사 사장<br/></td><td>방송법 개정 관련<br/></td></tr></table></div><br/><div class="table_wrap2"><table class="normal"><caption>증인 및 참고인 명단</caption><colgroup><col width="8.252135468086019%"><col width="31.398892561273982%"><col width="17.362750568742758%"><col width="42.98622140189724%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업</th><th scope="col">출석요구일</th><th scope="col">출석 요지 및 신청이유</th></tr></thead><tr><td>권태선<br/></td><td>방송문화진흥회 이사장<br/></td><td rowspan=5>2024. 6. 25.(화)<br/>14:00<br/></td><td>MBC 장악을 위한 방통위의 불법적 공영방송 이사 해임 및 선임 등<br/></td></tr><tr><td>김유진<br/></td><td>방송통신심의위원회 위원<br/></td><td>방심위의 보복 표적 심의와 류희림 위원장의 일방적 회의운영 및 민원사주 의혹 등<br/></td></tr><tr><td>최수연<br/></td><td>네이버 대표이사 사장<br/></td><td>라인야후 사태 관련<br/></td></tr><tr><td>서상원<br/></td><td>스테이지파이브 대표이사<br/></td><td>4이통 후보자격 취소 관련<br/></td></tr><tr><td>최선영<br/></td><td>연세대학교 커뮤니케이션<br/>대학원 객원교수<br/></td><td>방송통신심의위원회 장악을 위한 불법적 심의위원 미위촉 등 관련<br/></td></tr></table></div><br/><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(12인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWOOYOUNG" target="_blank"><span class="name lts3 ">김우영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank"><span class="name lts2 ">김현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NOHJONGMYUN" target="_blank"><span class="name lts3 ">노종면</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank"><span class="name lts3 ">박민규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank"><span class="name lts3 ">이정헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNSEOK" target="_blank"><span class="name lts3 ">이준석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAIMIN" target="_blank"><span class="name lts3 ">이해민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank"><span class="name lts3 ">이훈기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOINCHEUL" target="_blank"><span class="name lts3 ">조인철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank"><span class="name lts3 ">최민희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANMINSOO" target="_blank"><span class="name lts3 ">한민수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGJUNGA" target="_blank"><span class="name lts3 ">황정아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGDONGYOUNG" target="_blank"><span class="name lts3 ">정동영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 김건오</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 임명현</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 서덕교</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52076;
+			const class_id = 2;
+			const confer_num = "053865";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1784993390100" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1784993390100"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1784993390100"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1784993390100"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
