@@ -1,0 +1,757 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56910" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제436회 (임시회) 제4차 국무총리(한성숙)임명동의에관한인사청문특별위원회</strong><span class="date">(2026.06.29.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 국무총리(한성숙) 임명동의안(의안번호 2219175) 심사경과보고서 채택의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="백혜련 위원장 (경기 수원시을)"> 
+							백혜련 위원장 (경기 수원시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김한규 위원 (제주 제주시을)"> 
+							김한규 위원 (제주 제주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최혁진 위원 (비례대표)"> 
+							최혁진 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박선원 위원 (인천 부평구을)"> 
+							박선원 위원 (인천 부평구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김동아 위원 (서울 서대문구갑)"> 
+							김동아 위원 (서울 서대문구갑)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(5명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6706" data-name="백혜련" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">백혜련</span>
+												<span class="position">위원장</span>
+												<span class="area">(경기 수원시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6659" data-name="김한규" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">김한규</span>
+												<span class="position">위원</span>
+												<span class="area">(제주 제주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6875" data-name="최혁진" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">최혁진</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6815" data-name="박선원" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">박선원</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 부평구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6748" data-name="김동아" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">김동아</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 서대문구갑)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56910&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제436회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>국무총리(한성숙)임명동의에관한인사청문특별위원회회의록</h1></div></div><p class="num">제4호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 6월 29일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">제3회의장(245호)</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 국무총리(한성숙) 임명동의안(의안번호 2219175) 심사경과보고서 채택의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 국무총리(한성숙) 임명동의안(의안번호 2219175) 심사경과보고서 채택의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(16시06분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6706" data-name="백혜련" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 백혜련 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/968e99ee8f8b4b6e9d4ce7eb16a92864.jpg" alt="백혜련"></span><span class="txt"><span class="position">위원장</span><strong class="name">백혜련</strong><span class="area">(경기 수원시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제436회 국회(임시회) 국무총리(한성숙) 임명동의에 관한 인사청문특별위원회 제4차 회의를 개회하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 국무총리(한성숙) 임명동의안(의안번호 2219175) 심사경과보고서 채택의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6706" data-name="백혜련" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 백혜련 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/968e99ee8f8b4b6e9d4ce7eb16a92864.jpg" alt="백혜련"></span><span class="txt"><span class="position">위원장</span><strong class="name">백혜련</strong><span class="area">(경기 수원시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;그러면 의사일정 제1항 국무총리(한성숙) 임명동의안 심사경과보고서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;지금 야당 국민의힘 위원님들이 한 분도 안 들어오셔서요 일단은 조금 기다리면서 의사진행발언하실 분들이 있으면 의사진행발언을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;3분 주세요.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;김한규 간사님.</span><br/></div></div></div><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6659" data-name="김한규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">김한규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5607570161f4879b98311c104e21485.jpg" alt="김한규"></span><span class="txt"><strong class="name">김한규</strong><span class="position">위원</span><span class="area">(제주 제주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;인사청문회법에 따르면 오늘까지 한성숙 후보자에 대한 심사경과보고서를 채택을 해야 됩니다. 국회에 동의안이 온 지 20일째 되는 날이기도 하고 지난주 금요일 청문회가 끝난 후 3일의 보고서 채택 시한이 되기도 하는 날입니다. 어느 규정에 따르더라도 오늘까지 한성숙 총리후보자에 대해서 저희가 심사보고서를 채택해야 되는데…… 그동안 국민의힘 간사와 청문회 채택 일정에 대해서 협의를 했습니다. 협의를 했음에도 불구하고 국민의힘에서는 원구성 협상이 진행되는 과정이라 동의하기 어렵다라는 입장을 내놨습니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;오늘 국민의힘 의원총회 이후에 원내수석대변인이 한성숙 후보자에 대해서 부적격하다라는 국민의힘 소속 인사청문 위원들의 의견이 있었다라고 밝혔습니다. 그렇다고 하면 이 자리에 와서 부적격하다라는 의견을 밝히고 그 내용을 심사보고서에 기재를 하면 됩니다. 저희 더불어민주당 소속 위원들은 한성숙 후보자가 총리후보자로 적격하다고 생각합니다. 이렇게 생각이 다르다고 하면 양 의견을 보고서에 다 기재하고 채택하면 됩니다. 그리고 총리후보자는 본회의에서 국회의 동의가 필요한 사안이기 때문에 존경하는 동료 의원들이 본회의에서 적격과 부적격 의견이 병기된 보고서를 보고 스스로 판단할 수 있는 기회를 드리면 되는 겁니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;저희 인사청문위원회 마지막 책임은 지난 이틀간 진행된 인사청문회 내용을 보고서에 기재하고 각 위원들의 의견을 기재하면 되는 건데 이틀 동안 열심히 질의를 하고 후보자의 답변을 들었는데 마무리를 하지 못하게 되면 국민에 대한 의무를 다하지 못하는 것이고 인사청문회법을 위반하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;그래서 저는 신속하게 국민의힘 소속 위원들이 지금 회의장에 참석해 주시기를 요청드리는 바이고 만약에 참석하지 않는다면 오늘 보고서 채택을 해야 된다라는 의견을 드립니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6706" data-name="백혜련" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 백혜련 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/968e99ee8f8b4b6e9d4ce7eb16a92864.jpg" alt="백혜련"></span><span class="txt"><span class="position">위원장</span><strong class="name">백혜련</strong><span class="area">(경기 수원시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;추가로 또 의사진행발언하실 위원님들.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;최혁진 위원님.</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6875" data-name="최혁진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">최혁진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1d9a03dadae24c80b84c737608798be6.jpg" alt="최혁진"></span><span class="txt"><strong class="name">최혁진</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;존경하는 위원장님, 간단하게만 의견을 좀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;저는 비교섭단체 의원의 한 사람으로서 존경하는 위원장님과 이 자리에 계신 더불어민주당의 위원님 여러분께…… 잠시 기다릴 수는 있으나 오늘 20일 기한 안에 반드시 임명동의안 채택을 해 주십사 요청을 드립니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;일단 정당한 사유가 없이 시간 끌기를 하는 것에 대해서 분명하게 경고와 철퇴를 내려야 된다라고 생각을 하고 있습니다. 지난 이틀 동안의 인사청문회 과정을 지켜보신 많은 국민들과 이 자리에 계신 선배·동료 위원님들께서 다 확인하셨듯이 특별한 결격 사유가 발견된 게 없고 또 민간 부문에서도 탁월한 역량으로…… 그리고 굳이 꼬투리 잡는 내용으로 민간기업의 경영에서 일상적으로 발생하는 업무를 문제 삼아서 공직사회의 흠결처럼 이야기하는 태도들, 심지어 본인이 재산상의 손실을 감수하면서까지, 그것도 법적 기준도 아닌 공직사회 고위공직자에 대한 윤리적 기준으로 해서 집이라든가 이런 부분들도 다 청산하고 많은 것들을 감수하고 국민 앞에 모든 것이 벗겨진 상태로 섰는데 지금 임명동의안 채택을 다시 원내 구성 문제와 연동해서 가져간다라고 하는 것은 저는 개인적으로는 굉장히 비열한 행태다라고 생각을 합니다. </span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;원내 구성은 원내 구성대로 협상을 할 일이지 지금 대한민국을 대표해서 총리후보자로 나선 분을 총리 인사청문회와 전혀 무관한 걸 가지고 연동을 시켜서 결정하겠다라고 하는 그런 뉘앙스를 풍기는 것 자체가 도무지 납득할 수가 없고 이것을 용납하고 간다라는 것 자체를 국민들께서도 용납하지 않으실 것이다. 그래서 저는 어쨌든지 간에 존경하는 위원장님 그리고 더불어민주당 선배·동료 위원님들께서 관용도 어느 정도가 있는 거지 선을 넘는다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;그리고 대통령께서 말씀하셨듯이 우리 국회의 하루는 5000만 국민의 하루입니다. 5000만 일이 되는 거지요, 그렇게 따지면. 사실은 이런 것들을 시간을 넘기면서까지 또 더 기다리면서까지 굳이 배려를 해야 될 아무런 이유가 없다. 제가 비교섭단체 의원으로서 객관적으로 볼 때 이 정도의 흠결이 없는 분까지도 우리가 결정장애에 빠진다라고 하면 국민들이 국회를 오히려 심판하실 거다라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;그래서 위원장님께서는 아무래도 중립적인 자세로 국민의힘 위원들에게도 충분히 기회를 주려고 하시는 부분에 대해서 저도 깊이 공감하지만 이미 충분한 시간을 배려하셨다라고 보여지고요. 오늘 오전부터 이 회의를 하려고 하다가 미뤄지고 미뤄지고 미뤄지고 해서 여기까지 온 것이기 때문에 저는 의결을 해 주십사 요청을 드립니다.</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6706" data-name="백혜련" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 백혜련 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/968e99ee8f8b4b6e9d4ce7eb16a92864.jpg" alt="백혜련"></span><span class="txt"><span class="position">위원장</span><strong class="name">백혜련</strong><span class="area">(경기 수원시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;추가로 발언하실 위원님들 계신가요?</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;박선원 위원님.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;국민의힘 인사청문회 위원들께서 이 자리에 계시지 않은 것에 대해 매우 유감스럽게 생각합니다. 이미 당 지도부에 입장을 보고했고 그 결과 일부 부적격하다 이런 의견이 있으신 것 같은데요. 그러면 지금 이 심사경과보고서에 그 한 줄 넣으면 됩니다. 이미 저희 더불어민주당 청문위원들도 자질부터 시작을 해서 도덕성, 재산 문제, 여러 가지를 다 검토해서 지금 사실상 종합보고로서 이미 준비가 되어 있고 이것은 그동안 나온 모든 이야기, 모든 검증 내용까지 다 포함된 결과보고서입니다. 그렇기 때문에 이 결과보고서에 매우 부분적으로 자신들의 의견을 반영해서 추가하고 정리하면 지금이라도 바로 채택할 수 있는 것입니다. 그럼에도 불구하고 원내 구성, 원구성을 놓고 들어오지 않는다……</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;아니, 총리 인사청문회하고 원구성하고 무슨 상관이 있습니까? 원구성하고 별도로 지금 총리 인사청문회 날짜가 잡혀 있고 그에 따라서 원구성과 아무 상관없이 인사청문회를 실제로 지난주 목요일·금요일 이틀 동안 진행했습니다. 국민의힘 위원들도 똑같은 이야기 반복적으로 여러 번 부동산 문제를 지적했으나 실제로 중대한 하자라든지 흠결이 없다는 것이 확인되지 않았습니까? 그래서 이미 다 끝난 것입니다. 자질은 충분히 확인됐습니다. 대한민국 정부 내각을 총괄하는, 통할하는 국무총리로서 대통령을 보좌하여 이 대한민국의 국정을 제대로 운영할 수 있다는 자질과 역량이 분명히 확인되어 있었습니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;청년 문제부터 IT 문제, 산업의 문제, 심지어 부동산과 문화 문제, 집값 문제까지 다 이야기가 돼서 이분의 자질에 대해서는 문제가 없다, 충분하다라고 확인되었기 때문에 더 이상 위원장님께서 시간을 지체할 필요가 없지 않느냐, 법대로 해야 된다. </span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;사회과학에서 사과는 사과하고 비교하고 레몬은 레몬끼리 비교해야 된다 그런 정치·사회과학의 기본 룰이 있습니다. 왜 축구장에 와서 야구 이야기합니까? 야구장에 가서는 야구 이야기를, 축구장에서는 축구 이야기를 해야 되는데 축구장에서 골 못 넣었으니까 야구장에 선수 출정하지 마라 이거하고 똑같지 않습니까? 그런 일이 더 이상 반복되게 우리가 용납해서는 안 된다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;그래서 위원장님께서 국민의힘 쪽에 다시 한번 이 자리에 와서 회의를 진행해 줄 것을 정중히 요청해 주시고 그게 되지 않는다면 법대로 처리해 주시는 것이 마땅하다 이런 의견입니다.</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6748" data-name="김동아" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">김동아 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2aa44f38f64049829c3acf45b19aba20.png" alt="김동아"></span><span class="txt"><strong class="name">김동아</strong><span class="position">위원</span><span class="area">(서울 서대문구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;저도……</span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6706" data-name="백혜련" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 백혜련 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/968e99ee8f8b4b6e9d4ce7eb16a92864.jpg" alt="백혜련"></span><span class="txt"><span class="position">위원장</span><strong class="name">백혜련</strong><span class="area">(경기 수원시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;그러면 김동아 위원님.</span><br/></div></div></div><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6748" data-name="김동아" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">김동아 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2aa44f38f64049829c3acf45b19aba20.png" alt="김동아"></span><span class="txt"><strong class="name">김동아</strong><span class="position">위원</span><span class="area">(서울 서대문구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;저희가 이틀간 정말 성실히 국무총리 인사청문회를 진행했습니다. 성실하게 충실하게 후보자께서 소명할 것은 다 소명이 되었고 이미 국민의힘 위원들이 제기한 내용 역시 지난 중소기업부장관 임명 인사청문회 때 다 나온 내용입니다. 그런데 중기부장관 인청은 저희가, 국힘과 민주당이 합의 처리했습니다. 그때는 맞고 지금은 틀리다라고 할 수 있습니까?</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;이미 1년간 중기부장관을 역임하면서 오히려 성과를 보여 줬고 그 이전에 제기된 문제에 대해서는 주택을 매각함으로 인해서, 1주택자가 됨으로 인해서 이미 다 해소가 됐고, 오히려 자격은 더 개선됐고 본인의 능력과 성과는 보여 준 이 마당에 또다시 중기부장관 인사청문회 때 나온 그 내용을 가지고서 부적격하다라고 말을 하는 것은 자신들의 얼굴에 스스로 침 뱉는 꼴이라고 저는 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;이미 그때 합의 처리했고 다 정상적으로 장관 업무를 수행했는데 이제 와서 똑같은 사유를 들어서 국무총리에 부적격하다라고 주장하는 것은 말이 안 된다고 생각되고요. 궁색한 변명이라고 생각합니다. 원내 상임위 배분 문제와 관련해서 정략적으로 활용하기 위해서 대한민국의 중차대한 국무총리라는 이 직을 걸고 지금 투쟁하고 있는 게 아닌가 그렇게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;오늘 이재명 대통령께서 3대 메가프로젝트를 발표한 날입니다. 대한민국에 새로운 투자가 일어나고 새로운 기회를 펼칠 수 있는 이 중차대한 시점에 국무총리 임명을 지금 거부하고 있는 것은 국정의 발목 잡기이자 우리 대한민국의 미래, 대한민국의 새로운 투자에 대한 발목 잡기라고 생각됩니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;가급적 빨리 국민의힘 위원들이 이 자리에 와서 함께 투표에 참여해 주시기를 간곡하게 요청드리고 만약에 국민의힘이 불참한다면 저희들만이라도 빨리 의결을 통해서 이 보고서를 채택했으면 하는 의견입니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_12" class="item1 speaker spk_mem" data-mem_id="6706" data-name="백혜련" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 백혜련 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/968e99ee8f8b4b6e9d4ce7eb16a92864.jpg" alt="백혜련"></span><span class="txt"><span class="position">위원장</span><strong class="name">백혜련</strong><span class="area">(경기 수원시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;또 추가로 발언하실 위원님들 계신가요?</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;없으신 것 같은데요.</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;그러면 제가 위원장으로서 한말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;먼저 지난 목요일과 금요일 이틀 동안 정말 여야 위원님들께서 성실하게 인사청문회에 임해 주셨습니다. 지금 이 자리에 안 계시지만 국민의힘 위원님들께서도 자리를 뜨지 않으시고 정말 성실히 인사청문회에 임해 주셨다고 생각합니다. 그런 시간들을 통해서 후보자의 신상 의혹부터 정책 역량까지 철저한 검증이 이루어졌습니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;개인 의혹도 충분히 해소되었다고 보입니다. 무엇보다 후보자가 AI 대전환 시대를 이끌고 그 성과가 중소기업과 소상공인, 골목상권과 노동자들에게까지 고루 연결될 수 있도록 헌신할 적임자라는 점에 대해서 공감대가 형성되었다고 판단합니다.</span><br/><span class="spk_sub" id="spk_sub12-7">&nbsp;후보자에 대해 다소 부족하다고 판단하는 부분이 있다면 제가 지난번 회의에서도 말씀드렸다시피 적격과 부적격을 보고서에 병기해서 청문경과보고서를 채택하면 된다고 봅니다. 그래서 제가 그때 당시도 부적격 의견을 보고서에 병기하더라도 여야가 함께 채택해 주시기를 간곡히 당부드렸습니다. 그런데 오늘 국민의힘 위원님들께서 이 자리에 끝까지 함께하지 않으신 것에 대해서 유감을 표명하지 않을 수가 없습니다.</span><br/><span class="spk_sub" id="spk_sub12-8">&nbsp;지금 대내외 상황이 진짜 급변하고 세계가 반도체 중심, AI 중심으로 패권 경쟁을 치열하게 벌이고 있습니다. 그 어느 때보다 엄중한 시기이고 국무총리의 역할이 중요한 시기라고 봅니다. 지금은 여야가 당리당략을 내려놓고 초당적으로 국민만 바라보고 대한민국이라는 이름으로 협력해야 할 때라고 생각합니다. 빨리 국민의힘 위원님들께서 이 점을 주지하시고 이 자리에 함께하셔서 심사보고서를 채택할 수 있도록 해 주셨으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-9">&nbsp;여러 위원님들께서 오늘 중으로 지금이라도 바로 경과보고서를 채택하자는 많은 의견을 주셨는데요. 위원장으로서는 좀 더 기다리겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-10">&nbsp;오늘 아직 24시간이 되기까지는 많은 시간이 남았기 때문에 김한규 간사님께서 국민의힘 간사님과 합의해 주시기를 더 노력을 부탁드리고요. 합의가 될 때까지 이 회의는 정회하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-11">&nbsp;오늘 중으로, 다시 한번 국민의힘 위원님들께 간곡하게 부탁드립니다. 경과보고서 채택을 할 수 있도록 이 자리에 함께해 주시기를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub12-12">&nbsp;그러면 이 회의는 일단 산회하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-13">&nbsp;저도 긴장했나 봅니다.</span><br/><span class="spk_sub" id="spk_sub12-14">&nbsp;정회하겠습니다.</span><br/></div></div></div><p class="tit_sm taR">(16시21분 회의중지)</p><br/><p class="tit_sm taR">(계속개의되지 않았음)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(7인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank"><span class="name lts3 ">박균택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAKSEUNGA" target="_blank"><span class="name lts3 ">백승아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank"><span class="name lts3 ">최혁진</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 정명호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 김정연</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 이선주</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56910;
+			const class_id = 3;
+			const confer_num = "N054288";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785179670398" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785179670398"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785179670398"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785179670398"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
