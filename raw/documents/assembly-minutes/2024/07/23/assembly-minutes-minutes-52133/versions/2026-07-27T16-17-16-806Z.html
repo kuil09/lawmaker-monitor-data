@@ -1,0 +1,562 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52133" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제416회 (임시회) 제4차 행정안전위원회</strong><span class="date">(2024.07.23.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 경찰청장후보자(조지호) 인사청문요청안</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 경찰청장후보자(조지호) 인사청문회 실시계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 경찰청장후보자(조지호) 인사청문회 자료제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 경찰청장후보자(조지호) 인사청문회 증인·참고인 출석요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="신정훈 위원장 (전남 나주시화순군)"> 
+							신정훈 위원장 (전남 나주시화순군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이광희 위원 (충북 청주시서원구)"> 
+							이광희 위원 (충북 청주시서원구)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(2명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6713" data-name="신정훈" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">신정훈</span>
+												<span class="position">위원장</span>
+												<span class="area">(전남 나주시화순군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6570" data-name="이광희" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">이광희</span>
+												<span class="position">위원</span>
+												<span class="area">(충북 청주시서원구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52133&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제416회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>행정안전위원회회의록</h1></div></div><p class="num">제4호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 7월 23일(화)</p></li><li><div class="sbj lts2">장소</div><p class="con">행정안전위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 경찰청장후보자(조지호) 인사청문요청안</li><li><span class="num">2.</span> 경찰청장후보자(조지호) 인사청문회 실시계획서 채택의 건</li><li><span class="num">3.</span> 경찰청장후보자(조지호) 인사청문회 자료제출 요구의 건</li><li><span class="num">4.</span> 경찰청장후보자(조지호) 인사청문회 증인·참고인 출석요구의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 경찰청장후보자(조지호) 인사청문요청안</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 경찰청장후보자(조지호) 인사청문회 실시계획서 채택의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 경찰청장후보자(조지호) 인사청문회 자료제출 요구의 건</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 경찰청장후보자(조지호) 인사청문회 증인·참고인 출석요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시30분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제416회 국회(임시회) 제4차 행정안전위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;바쁘신 일정 중에도 회의에 참석해 주신 위원님 여러분께 감사의 말씀 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;오늘 회의는 조지호 경찰청장후보자에 대한 인사청문회 실시계획서를 채택하고 자료제출 요구와 증인·참고인 채택 등 인사청문회와 관련된 안건을 의결하기 위해서 열렸습니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;매우 촉박한 일정이었음에도 양 간사님들께서 서로 양보하시면서 이렇게 의사일정에 합의해 주셔서 오늘 회의를 원활하게 진행할 수 있게 되었습니다. 위원장으로서 두 간사님께 진심으로 감사의 말씀 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;본격적인 의사일정에 들어가기 전에 이번에 우리 위원회에 새롭게 배치된 전문위원을 소개해 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;조문상 전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;서기영 전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub2-9">&nbsp;(인사)</span><br/><span class="spk_sub" id="spk_sub2-10">&nbsp;우리 위원회에 오신 걸 축하드리고 위원회가 원활하게 운영될 수 있도록 위원님들의 의정활동을 충실하게 지원해 주시기를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub2-11">&nbsp;그러면 안건을 상정하겠습니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6570" data-name="이광희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">이광희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/15418961bc6146379f22d5d43443a1a3.jpg" alt="이광희"></span><span class="txt"><strong class="name">이광희</strong><span class="position">위원</span><span class="area">(충북 청주시서원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;위원장님, 안건 상정하기 전에 의사진행발언 있습니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;예. </span><br/></div></div></div><div id="spk_5" class="item0 speaker spk_mem" data-mem_id="6570" data-name="이광희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">이광희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/15418961bc6146379f22d5d43443a1a3.jpg" alt="이광희"></span><span class="txt"><strong class="name">이광희</strong><span class="position">위원</span><span class="area">(충북 청주시서원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;충북 청주 서원구의 이광희 위원입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;지금 이상기후로 연일 기록적인 집중 폭우가 내리고 있습니다. 정부는 지난 15일 충북 영동군, 충남 논산시·서천군 등 충청권 3곳을 포함해서 전국 5개 지자체를 특별재난구역으로 선포했습니다. 특별재난지역으로 선포된 지역은 기본 지원 이외에도 응급 대책 및 재난구호와 복구에 필요한 행정·재정·금융·의료상의 특별 지원으로 피해 복구와 피해주민의 생계 안정을 위한 지원이 가능합니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;수해 피해는 속도전입니다. 얼마나 빨리 재난 극복을 위한 지원이 필요한가를 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;지금 연일 충북의 피해 지역을 돌아보고 있는데요 특별재난구역에서 아직은 빠져 있는 충북 옥천군의 경우는 지난 7일 내린 폭우로 평균 440㎜ 이상의 집중호우가 내렸고 아주 큰 피해를 봤습니다. 집계된 피해 건만 1800여 건, 피해액은 120여억 원이 넘습니다. 이곳도 특별히 특별재난구역으로 선포해 주실 것을 부탁드리고요.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;그리고 폭우로 인한 피해가 전국에서 발생하고 있는데요 지금 이 피해가 어디까지 갈지, 확산될지 우려가 큰 편입니다. 정부가 지금 적극적으로 대응에 나서야 될 때라고 생각하는데요 지금이라도 재난관리 주무부처인 행안부가 피해 복구, 피해주민 생계 안정 대책 마련을 위해서 특별재난지역 확대에 적극적으로 나서 주시길 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;그리고 오송참사 발생한 지 1년이 넘었지만 아직도 책임소재를 밝히지 못하고 있는데요. 전국에 995곳의 지하차도가 있습니다. 이 중 행안부가 지정한 진입차단시설 의무화 대상 402곳 중 164곳만 진입차단시설이 구축되었습니다. 약 40% 정도입니다. 아직 238곳의 제2의 오송지하차도가 물폭탄과 싸우고 있는 지경입니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;지난 21일 평택시에서 600㎜ 폭우로 인근 도일천 지류가 범람하고 세교 지하차도가 침수되는 사건이 발생했습니다. 청주에 있는 사람들은 오송의 재현처럼 느껴져서 섬뜩한 지경이었습니다. 다행스럽게도 세교 지하차도는 모니터링과 차량 통제가 제때 이루어져 오송 같은 사고는 면할 수 있었습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;안전과 생명보다 앞서는 것은 없습니다. 정부의 역할은 국민의 안전을 도모하고 생명을 보호하는 것입니다. 그 제일 책무를 잊지 말아 주시기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item0 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;그러면 안건을 상정하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2I4A0I7U1X9O1V7O1M3U0Z5J7Y9P9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 경찰청장후보자(조지호) 인사청문요청안</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 경찰청장후보자(조지호) 인사청문회 실시계획서 채택의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시34분)</p><br/><div id="spk_8" class="item2 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;의사일정 제1항 경찰청장후보자(조지호) 인사청문요청안과 의사일정 제2항 경찰청장후보자(조지호) 인사청문회 실시계획서 채택의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;지난 7월 19일 금요일 대통령으로부터 경찰청장후보자에 대한 인사청문요청안이 국회에 제출되었습니다. 인사청문요청안은 어제인 7월 22일에 행정안전위원회로 회부되었고 상임위원회는 인사청문회법에 따라 15일 이내에 인사청문을 완료해야 합니다. 이에 우리 행정안전위원회에서는 배부해 드린 실시계획서와 같이 인사청문회를 실시하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;인사청문회는 7월 29일 월요일 오전 10시에 개회하여 후보자의 모두발언을 들은 후에 일문일답 형식으로 질의응답을 실시하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;질의 시간, 증인 신문 등 운영 관련 사항은 위원장이 간사님들과 협의해서 정하고 인사청문경과보고서는 위원장과 간사 간 협의를 거쳐서 위원회에서 의결하는 것으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;보다 자세한 사항에 대해서는 배부해 드린 유인물을 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;그러면 조지호 경찰청장후보자에 대한 인사청문회를 계획서와 같이 실시하고자 하는데 위원님 여러분 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">3. 경찰청장후보자(조지호) 인사청문회 자료제출 요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시36분)</p><br/><div id="spk_10" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;다음으로 의사일정 제3항 경찰청장후보자(조지호) 인사청문회 자료제출 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;7월 23일 현재까지 75개 기관에 대해서 총 1705건의 자료제출 요구가 접수되었습니다. 오늘까지 접수된 자료제출 요구는 의결되는 즉시 각 기관에 송부하여 7월 26일 오전 10시까지 자료제출을 받도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;오늘 의결하는 자료 외에 위원님들께서 추가로 자료를 요구하실 경우 인사청문회법 제12조에 따라 재적의원 3분의 1 이상이 연서한 요구서를 행정실로 제출해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;자료제출 의결에 앞서 한 말씀만 더 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-5">&nbsp;최근 상임위를 진행하면서 위원님들의 정당한 자료제출 요구에 대해 각 부처에서 자료제출을 거부하거나 불성실한 답변을 하는 사례가 빈번하게 발생하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-6">&nbsp;국회법 128조, 국회에서의 증언·감정 등에 관한 법률 2조 등에 따르면 개인정보 보호법, 공공기관의 정보공개에 관한 법률 등 다른 법률에도 불구하고 자료제출을 요구받은 사람은 반드시 해당 자료를 제출해야 된다고 규정하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-7">&nbsp;오늘 위원회의 의결로 자료제출 요구를 받은 정부와 행정기관은 이 점을 명심해서 성실하게 준비하고 제출해 주시기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub10-8">&nbsp;그러면 이상 설명해 드린 내용과 같이 자료제출 요구를 하고자 하는데 위원님 여러분 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub10-9">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub10-10">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub10-11">&nbsp;아울러 서면질의와 구두질의에 대해서 안내말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-12">&nbsp;인사청문회법은 서면질의는 청문회 5일 전까지 후보자에게 송부해서 청문회 48시간 전까지 답변서를 받도록 하고 있습니다. 이에 따라서 서면질의를 하고자 하시는 위원님들께서는 내일 오후 1시까지 서면질의서를 제출해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub10-13">&nbsp;구두질의의 경우 질의서 요지를 청문회 24시간 전까지 위원장에게 제출하도록 하고 있습니다. 구두질의를 하고자 하시는 위원님들께서는 7월 28일 오전 10시까지 질의요지서를 제출해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub10-14">&nbsp;촉박한 일정이지만 인사청문회법 등 관련 법령을 준수할 수 있도록 준비에 만전을 기해 주실 것을 위원님 여러분께 당부드립니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" class="tit">4. 경찰청장후보자(조지호) 인사청문회 증인·참고인 출석요구의 건</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시38분)</p><br/><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;다음, 의사일정 제4항 경찰청장후보자(조지호) 인사청문회 증인·참고인 출석요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;여야 간사님들 간 협의를 거쳐서 배부해 드린 유인물과 같이 증인과 참고인의 출석요구서 명단을 정리하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;우리 위원회가 인사청문회에 출석요구 하기로 한 증인은 노규호 경기북부청 수사부장, 조병노 수원남부경찰서장, 백해룡 강서경찰서 화곡지구대장, 이종호 블랙펄인베스트먼트 전 대표, 이원모 대통령실 전 인사비서관, 이상 5명이고, 참고인은 임상규 경북경찰청 수사심의위원장, 김승호 전 인사혁신처장, 이상 2명입니다.</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;위원님 여러분께서는 유인물을 확인해 주시기 바라며 배부된 유인물과 같이 증인과 참고인에 대해 출석요구를 하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub12-7"><div class="taR">(증인 및 참고인 명단은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub12-8">&nbsp;회의에 참석해 주신 위원님 여러분께 다시 한번 감사의 말씀 드립니다.</span><br/><span class="spk_sub" id="spk_sub12-9">&nbsp;다음 전체회의는 앞서 의결한 대로 7월 29일 월요일 오전 10시에 열어서 경찰청장후보자에 대한 인사청문회를 실시하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-10">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-11">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시40분 산회)</p><br/><div class="line_dot">&nbsp;</div><br/></div><div class="minutes_footer"><p class="tit"><strong>증인 및 참고인 명단</strong></p>증인(5인)<div class="table_wrap2"><table class="normal"><caption>증인 및 참고인 명단</caption><colgroup><col width="9.168704156479219%"><col width="40.561060352592975%"><col width="33.028782224509925%"><col width="17.241453266417878%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직위</th><th scope="col">신문 요지</th><th scope="col">출석요구 일시</th></tr></thead><tr><td>노규호<br/></td><td>전 경상북도경찰청 수사부장<br/>현 경기도북부경찰청 수사부장<br/></td><td>채 해병 사건 기록 회수 관련 경북경찰청 소속 최초 통화자로 회수 과정 및 당시 경북경찰청장에게 보고 과정 확인<br/></td><td rowspan=5>2024. 7. 29(월) 10:00<br/></td></tr><tr><td>조병노<br/></td><td>전 서울특별시경찰청 생활안전부장<br/>현 수원남부경찰서 서장<br/></td><td>전 서울청 생활안전부장 재직 시 세관직원 마약사건 연루 수사 관련 수사외압 관련. 조지호 후보자의 서울경찰청장 재직 당시 과정 확인<br/></td></tr><tr><td>백해룡<br/></td><td>전 서울영등포경찰서 형사과장<br/>현 서울강서경찰서 화곡지구대장<br/></td><td>전 서울청 생활안전부장 재직 시 세관직원 마약사건 연루 수사 관련 수사외압 관련. 조지호 후보자의 서울경찰청장 재직 당시 과정 확인<br/></td></tr><tr><td>이종호<br/></td><td>전 블랙펄인베스트먼트 대표<br/></td><td>영등포경찰서 수사외압 여부 및 징계 무마 관련<br/></td></tr><tr><td>이원모<br/></td><td>전 대통령비서실 인사비서관<br/></td><td>인사검증 면접 여부 질의<br/></td></tr></table></div><br/>참고인(2인)<div class="table_wrap2"><table class="normal"><caption>증인 및 참고인 명단</caption><colgroup><col width="9.168704156479219%"><col width="40.561060352592975%"><col width="33.028782224509925%"><col width="17.241453266417878%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직위</th><th scope="col">신청 사유</th><th scope="col">출석요구 일시</th></tr></thead><tr><td>임상규<br/></td><td>경상북도경찰청 수사심의위원장<br/></td><td>채 해병 수사외압 의혹, 임성근 전 해병대 사단장 불송치, 수사 과정 및 공정성 관련 질의<br/></td><td rowspan=2>2024. 7. 29(월) 10:00<br/></td></tr><tr><td>김승호<br/></td><td>전 인사혁신처장<br/></td><td>영등포경찰서 수사외압 여부 및 징계 무마 관련<br/></td></tr></table></div><br/><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(21인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGWOOK" target="_blank"><span class="name lts3 ">김상욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJONGYANG" target="_blank"><span class="name lts3 ">김종양</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOGYEONGJONG" target="_blank"><span class="name lts3 ">모경종</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEONGHYEON" target="_blank"><span class="name lts3 ">박정현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank"><span class="name lts3 ">배준영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank"><span class="name lts3 ">신정훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YANGBUNAM" target="_blank"><span class="name lts3 ">양부남</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGHYEIN" target="_blank"><span class="name lts3 ">용혜인</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank"><span class="name lts3 ">위성곤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank"><span class="name lts3 ">윤건영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank"><span class="name lts3 ">이광희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEDALHEE" target="_blank"><span class="name lts3 ">이달희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGSIK" target="_blank"><span class="name lts3 ">이상식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAESIK" target="_blank"><span class="name lts3 ">이해식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGDONGMAN" target="_blank"><span class="name lts3 ">정동만</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank"><span class="name lts3 ">정춘생</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank"><span class="name lts3 ">조승환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank"><span class="name lts3 ">조은희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAIHYUNIL" target="_blank"><span class="name lts3 ">채현일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 유상조</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 조문상</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 서기영</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52133;
+			const class_id = 2;
+			const confer_num = "053929";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785169936191" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785169936191"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785169936191"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785169936191"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

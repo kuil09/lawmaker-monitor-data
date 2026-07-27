@@ -1,0 +1,650 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52150" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제416회 (임시회) 제1차 환경노동위원회(환경법안심사소위원회)</strong><span class="date">(2024.07.11.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 폐기물관리법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2200485)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김형동 소위원장 (경북 안동시예천군)"> 
+							김형동 소위원장 (경북 안동시예천군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김주영 위원 (경기 김포시갑)"> 
+							김주영 위원 (경기 김포시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박정 위원 (경기 파주시을)"> 
+							박정 위원 (경기 파주시을)
+						</option>
+					
+					
+						<option value="오창석 수석전문위원">오창석 수석전문위원</option>
+					
+						<option value="이병화 환경부차관">이병화 환경부차관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(3명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6661" data-name="김형동" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">김형동</span>
+												<span class="position">소위원장</span>
+												<span class="area">(경북 안동시예천군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6609" data-name="김주영" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">김주영</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 김포시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6688" data-name="박정" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">박정</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 파주시을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="오창석" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">오창석</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="이병화" data-pos="환경부차관"> 
+											<label for="spk_attend1">
+												<span class="name">이병화</span>
+												<span class="position">환경부차관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52150&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제416회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>환경노동위원회회의록</h1><p class="tit_sm">(환경법안심사소위원회)</p></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 7월 11일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">환경노동위원회소회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 폐기물관리법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2200485)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 폐기물관리법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2200485)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시01분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6661" data-name="김형동" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 김형동 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8666f5ad131416fb853f840dc4d66e6.jpg" alt="김형동"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김형동</strong><span class="area">(경북 안동시예천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제416회 국회(임시회) 환경노동위원회 제1차 환경법안심사소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;바쁘신 가운데에서도 참석하여 주신 여러 위원님들께 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;오늘 회의는 안건을 상정 및 심사하고 심의를 마친 안건에 대하여는 의결하는 순서로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;정부 측 관계자들께서는 발언 시 위원장의 허가를 얻어 발언하여 주시고 기록을 위하여 직위와 성명을 말씀하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;원활한 회의 진행을 위하여 언론 공개는 여기까지 하도록 하겠습니다. 언론인 여러분께서는 협조하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;감사합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2E4F0D6D1C3A1B0W3X6W3W4U0V0T5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 폐기물관리법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2200485)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시03분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6661" data-name="김형동" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 김형동 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8666f5ad131416fb853f840dc4d66e6.jpg" alt="김형동"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김형동</strong><span class="area">(경북 안동시예천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;그러면 의사일정 제1항 폐기물관리법 일부개정법률안을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;수석전문위원께서는 소위 자료를 중심으로 설명하여 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="0" data-name="오창석" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">수석전문위원 오창석 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="오창석"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">오창석</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;배부해 드린 소위 자료를 중심으로 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;폐기물관리법 일부개정법률안입니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;소위 자료 1쪽입니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;시멘트 제조에 사용된 폐기물 정보공개입니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;개정안은 시멘트 제조사에 대하여 사용된 폐기물의 종류, 원산지 및 구성성분을 포함한 정보공개를 의무화하고, 정보를 공개하지 아니하거나 거짓으로 공개한 자에 대한 제재규정을 마련하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;하단의 개정 배경을 보시면, 최근 폐플라스틱 발생량이 증가하고 있고 재활용 시장 침체, 불법 폐기물 신속 처리 필요성 등으로 시멘트 소성로의 폐기물 사용량이 증가하고 있습니다. 2014년에 643만t에서 2023년 841만t으로 증가하였습니다. 또한 시멘트 생산량 대비 폐기물 사용량 비중이 2014년 13.7%에서 2023년 16.5%로 증가하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;개정안은 시멘트 제조 시 폐기물 사용량 증가 등에 따라 이에 대한 국민들의 알권리를 보장하고 정보공개 의무 및 제재규정을 법률에서 명시적으로 마련하려는 내용으로 타당한 것으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;우측 관련 조문을 보시면, 폐기물관리법 시행규칙 별표8에서는 재활용하는 폐기물의 종류, 사용량, 중금속 분석 결과를 시멘트 제조사 홈페이지에 공개토록 의무화하고 있으나 법률에서 명확한 위임근거가 없어 제재규정의 적용 여부가 불명확한 실정입니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;개정안에 대한 환경부 의견은 찬성입니다.</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;산업통상자원부 의견은 신중 검토입니다. 내용을 보시면, 법률에서 시멘트 업종에 한하여 정보공개 의무 및 벌칙규정을 두는 것은 타 업종과의 형평성 문제가 발생할 소지가 있어 신중한 검토가 필요하다는 의견입니다.</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;수정의견을 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;시멘트 제조에 사용된 폐기물의 종류, 원산지 및 구성성분 등에 대한 구체적인 내용과 공개 방법, 절차 등에 대해서는 하위법령을 통해 규율할 수 있도록 위임근거를 신설하자는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;제2항 신설입니다. 폐기물 사용 시멘트 정보의 항목, 공개기간, 공개방법, 그 밖에 필요한 사항은 환경부령으로 정한다는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;소위 자료 9쪽을 보시면, 개정안 대비 수정의견을 이렇게 정리를 했습니다.</span><br/><span class="spk_sub" id="spk_sub5-15">&nbsp;이어서 3쪽 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-16">&nbsp;지난 6월 27일 공청회를 실시한 바가 있습니다.</span><br/><span class="spk_sub" id="spk_sub5-17">&nbsp;위원님들께서 말씀하신 사항을 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-18">&nbsp;국민의 알권리 차원에서 정보공개가 필요하다. 다음으로 시멘트 중금속 함량 등을 안전하게 관리할 필요가 있고 궁극적으로는 시멘트 등급제 도입이 필요하다는 의견이 있었습니다. 또한 시멘트 업계, 지역 주민 및 시멘트 공장 주변 지역 의원님들의 의견을 수렴할 필요. 또한 시멘트를 주거용과 비주거용으로 구분하되 주거용의 경우 더 강한 규제가 이루어질 필요가 있다는 의견이 있었습니다. 또한 시멘트 중금속 함량 정보에 대한 대국민 접근성이 제고될 필요가 있고, 시멘트 유해성에 대한 연구용역 결과에 따라 유해성이 인정되는 경우 정보공개 및 제재규정 마련 등이 필요하다는 의견이 있었습니다.</span><br/><span class="spk_sub" id="spk_sub5-19">&nbsp;이상으로 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6661" data-name="김형동" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">소위원장 김형동 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8666f5ad131416fb853f840dc4d66e6.jpg" alt="김형동"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김형동</strong><span class="area">(경북 안동시예천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;다음은 정부 측 의견을 말씀하여 주시기 바랍니다.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="0" data-name="이병화" data-pos="환경부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">환경부차관 이병화 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이병화"></span><span class="txt"><span class="position">환경부차관</span><strong class="name">이병화</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;폐기물 사용 시멘트에 대한 국민의 알권리를 보장하기 위한 정보공개 의무를 법령에 명시한 안에 대해서 정부는 수용을 합니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;그리고 구체적인 방법을 하위법령에 규정할 필요가 있다는 수정의견도 수용을 합니다.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6661" data-name="김형동" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">소위원장 김형동 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8666f5ad131416fb853f840dc4d66e6.jpg" alt="김형동"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김형동</strong><span class="area">(경북 안동시예천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;위원님들 의견 있으시면 말씀하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;김주영 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6609" data-name="김주영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">김주영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a3a36296e15c4c2990676f4047e80a4b.jpg" alt="김주영"></span><span class="txt"><strong class="name">김주영</strong><span class="position">위원</span><span class="area">(경기 김포시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;이 법안은 이미 21대 환노위에서 여야가 합의로 법사위로 보냈던 법안입니다. 그렇기 때문에 특별한 의견들이 없으시면 이대로 채택해 주시면 좋을 것 같습니다.</span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6661" data-name="김형동" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">소위원장 김형동 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8666f5ad131416fb853f840dc4d66e6.jpg" alt="김형동"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김형동</strong><span class="area">(경북 안동시예천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;더 이상 의견이 없으시지요?</span><br/></div></div></div><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">박정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><strong class="name">박정</strong><span class="position">위원</span><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;이 법에 대한 거랑은 좀 상관은 없지만 결국은 지난번 공청회 때 보니까 6가크롬이 가장 유해성이 높은 물질인데 국제기준에 비해서 우리가 너무 허용 범위가 높다, 그것에 대한 대책도 나중에 소위 차원에서 또는 상임위 차원에서 논의할 필요가 있을 것 같습니다.</span><br/></div></div></div><div id="spk_12" class="item1 speaker spk_mem" data-mem_id="6661" data-name="김형동" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">소위원장 김형동 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8666f5ad131416fb853f840dc4d66e6.jpg" alt="김형동"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김형동</strong><span class="area">(경북 안동시예천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;좋은 말씀 감사합니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;더 이상 의견이 없으시지요?</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;더 이상 의견이 없으시니까요. 이대로 정리하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;지금까지 합의된 법률안에 대해서 의결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;의사일정 제1항 폐기물관리법 일부개정법률안은 수정한 부분은 수정한 대로, 기타 부분은 원안대로 의결하고자 하는데 위원님 여러분 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub12-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub12-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub12-9">&nbsp;오늘 의결된 법률안의 체계 및 자구 정리는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub12-10">&nbsp;이상으로 제1차 환경법안심사소위원회를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-11">&nbsp;위원님 여러분 안건 심사에 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-12">&nbsp;정부 관계자, 위원회 직원 및 보좌진 여러분도 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-13">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시09분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(7인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGDEUKGU" target="_blank"><span class="name lts3 ">강득구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSOHEE" target="_blank"><span class="name lts3 ">김소희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUYOUNG" target="_blank"><span class="name lts3 ">김주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank"><span class="name lts3 ">김형동</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank"><span class="name lts2 ">박정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHAECHEOL" target="_blank"><span class="name lts3 ">박해철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJIYEON" target="_blank"><span class="name lts3 ">조지연</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 오창석</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>환경부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 이병화</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">자원순환국장</span></span><span class="name lts3"> 유승광</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 김효정</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52150;
+			const class_id = 2;
+			const confer_num = "053899";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785169824244" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785169824244"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785169824244"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785169824245"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
