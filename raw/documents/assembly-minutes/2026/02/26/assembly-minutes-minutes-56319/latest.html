@@ -1,0 +1,619 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56297" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제432회 (임시회) 제3차 과학기술정보방송통신위원회</strong><span class="date">(2026.02.25.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 청원 심사기간 연장요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">98. 과학기술기본법 일부개정법률안(조인철 의원 대표발의)(의안번호 2209297)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">99. 여성과학기술인 육성 및 지원에 관한 법률 일부개정법률안(박충권 의원 대표발의)(의안번호 2208967)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">100. 방송법 일부개정법률안(김현 의원 대표발의)(의안번호 2207480)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">101. 방송법 일부개정법률안(이정문 의원 대표발의)(의안번호 2207899)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">102. 방송법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">103. 별정우체국법 일부개정법률안(장종태 의원 대표발의)(의안번호 2210268)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">104. 별정우체국법 일부개정법률안(주호영 의원 대표발의)(의안번호 2211713)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">105. 별정우체국법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">106. 전기통신사업법 일부개정법률안(박정훈 의원 대표발의)(의안번호 2207260)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">107. 전기통신사업법 일부개정법률안(조은희 의원 대표발의)(의안번호 2212097)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">108. 전기통신사업법 일부개정법률안(한정애 의원 대표발의)(의안번호 2214369)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">109. 전기통신사업법 일부개정법률안(조인철 의원 대표발의)(의안번호 2214390)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">110. 전기통신사업법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2208301)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">111. 전기통신사업법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">112. 전파법 일부개정법률안(임종득 의원 대표발의)(의안번호 2203413)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">113. 전파법 일부개정법률안(최형두 의원 대표발의)(의안번호 2205494)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">114. 전파법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">115. 정보통신 진흥 및 융합 활성화 등에 관한 특별법 일부개정법률안(최수진 의원 대표발의)(의안번호 2208212)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">116. 정보통신공사업법 일부개정법률안(최형두 의원 대표발의)(의안번호 2207299)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">117. 정보통신공사업법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215164)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">118. 정보통신공사업법 일부개정법률안(최형두 의원 대표발의)(의안번호 2207277)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">119. 정보통신공사업법 일부개정법률안(이해민 의원 대표발의)(의안번호 2207594)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">120. 정보통신공사업법 일부개정법률안(박정훈 의원 대표발의)(의안번호 2212478)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">121. 정보통신공사업법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">122. 인터넷 멀티미디어 방송사업법 일부개정법률안(위원회안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">2. 과학기술 국제협력 촉진에 관한 법률안(이정헌 의원 대표발의)(의안번호 2213873)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">3. 과학기술기본법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2213639)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">4. 과학기술기본법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2216248)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">5. 과학기술분야 정부출연연구기관 등의 설립·운영 및 육성에 관한 법률 일부개정법률안(최수진 의원 대표발의)(의안번호 2214219)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">6. 과학기술분야 정부출연연구기관 등의 설립·운영 및 육성에 관한 법률 일부개정법률안(조인철 의원 대표발의)(의안번호 2214229)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">7. 과학기술분야 정부출연연구기관 등의 설립·운영 및 육성에 관한 법률 일부개정법률안(권향엽 의원 대표발의)(의안번호 2216249)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">8. 국가과학기술 경쟁력 강화를 위한 이공계지원 특별법 일부개정법률안(최민희 의원·이상휘 의원 대표발의)(의안번호 2215430)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">9. 국가과학기술 경쟁력 강화를 위한 이공계지원 특별법 일부개정법률안(황정아 의원 대표발의)(의안번호 2216168)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">10. 기후변화대응 기술개발 촉진법 일부개정법률안(김선교 의원 대표발의)(의안번호 2215601)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">11. 바이오데이터 활용 및 인공지능바이오 연구개발 촉진에 관한 법률안(조인철 의원·최형두 의원 대표발의)(의안번호 2215618)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">12. 소형모듈원자로 및 초소형모듈원자로의 기술개발 촉진 및 지원에 관한 특별법안(김장겸 의원 대표발의)(의안번호 2215664)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">13. 양자과학기술 및 양자산업 육성에 관한 법률 일부개정법률안(최민희 의원 대표발의)(의안번호 2216371)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">14. 연구개발특구의 육성에 관한 특별법 일부개정법률안(장철민 의원 대표발의)(의안번호 2215630)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">15. 우주개발 진흥법 일부개정법률안(한민수 의원 대표발의)(의안번호 2215208)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">16. 우주개발 진흥법 일부개정법률안(서천호 의원 대표발의)(의안번호 2215563)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">17. 우주개발 진흥법 일부개정법률안(김위상 의원 대표발의)(의안번호 2215626)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">18. 원자력 진흥법 일부개정법률안(구자근 의원 대표발의)(의안번호 2215194)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">19. 원자력 진흥법 일부개정법률안(정부 제출)(의안번호 2216237)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">20. 원자력안전법 일부개정법률안(황정아 의원 대표발의)(의안번호 2213996)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">21. 원자력안전법 일부개정법률안(이해민 의원 대표발의)(의안번호 2214370)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">22. 원자력안전법 일부개정법률안(최수진 의원 대표발의)(의안번호 2215463)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">23. 원자력안전위원회의 설치 및 운영에 관한 법률 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214013)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">24. 한국연구재단법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214377)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">25. 항공우주산업개발 촉진법 일부개정법률안(정부 제출)(의안번호 2216236)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">26. 디지털포용법 일부개정법률안(최보윤 의원 대표발의)(의안번호 2214800)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">27. 방송광고판매대행 등에 관한 법률 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214365)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">28. 방송미디어통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2214361)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">29. 방송미디어통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(조인철 의원 대표발의)(의안번호 2216185)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">30. 방송미디어통신위원회의 설치 및 운영에 관한 법률 일부개정법률안(김상훈 의원 대표발의)(의안번호 2216242)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">31. 방송법 일부개정법률안(김우영 의원 대표발의)(의안번호 2214311)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">32. 방송법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214792)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">33. 방송법 일부개정법률안(이해민 의원 대표발의)(의안번호 2215238)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">34. 방송법 일부개정법률안(노종면 의원 대표발의)(의안번호 2215293)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">35. 방송법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215615)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">36. 방송통신발전 기본법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2213646)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">37. 방송통신발전 기본법 일부개정법률안(황정아 의원 대표발의)(의안번호 2215840)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">38. 방송통신발전 기본법 일부개정법률안(임호선 의원 대표발의)(의안번호 2216195)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">39. 별정우체국법 일부개정법률안(윤종군 의원 대표발의)(의안번호 2214761)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item65">40. 사이버재해보험법안(박정훈 의원 대표발의)(의안번호 2215050)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item66">41. 소프트웨어 진흥법 일부개정법률안(이해민 의원 대표발의)(의안번호 2214631)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item67">42. 우정사업 운영에 관한 특례법 일부개정법률안(이정헌 의원 대표발의)(의안번호 2213870)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item68">43. 우체국보험특별회계법 일부개정법률안(이정헌 의원 대표발의)(의안번호 2213872)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item69">44. 인공지능 발전과 신뢰 기반 조성 등에 관한 기본법 일부개정법률안(최민희 의원 대표발의)(의안번호 2215298)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item70">45. 인공지능 발전과 신뢰 기반 조성 등에 관한 기본법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2215322)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item71">46. 인공지능 발전과 신뢰 기반 조성 등에 관한 기본법 일부개정법률안(김우영 의원 대표발의)(의안번호 2215967)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item72">47. 인공지능 발전과 신뢰 기반 조성 등에 관한 기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2216221)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item73">48. 인터넷 멀티미디어 방송사업법 일부개정법률안(김우영 의원 대표발의)(의안번호 2214309)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item74">49. 전기통신사업법 일부개정법률안(김기웅 의원 대표발의)(의안번호 2214206)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item75">50. 전기통신사업법 일부개정법률안(한민수 의원 대표발의)(의안번호 2214388)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item76">51. 전기통신사업법 일부개정법률안(조인철 의원 대표발의)(의안번호 2214741)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item77">52. 전기통신사업법 일부개정법률안(조인철 의원 대표발의)(의안번호 2215169)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item78">53. 전기통신사업법 일부개정법률안(조인철 의원 대표발의)(의안번호 2215242)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item79">54. 전기통신사업법 일부개정법률안(임호선 의원 대표발의)(의안번호 2215470)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item80">55. 전기통신사업법 일부개정법률안(김민전 의원 대표발의)(의안번호 2215594)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item81">56. 전기통신사업법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215625)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item82">57. 전기통신사업법 일부개정법률안(김장겸 의원 대표발의)(의안번호 2215628)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item83">58. 전기통신사업법 일부개정법률안(김장겸 의원 대표발의)(의안번호 2215658)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item84">59. 전기통신사업법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215666)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item85">60. 전기통신사업법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215858)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item86">61. 전기통신사업법 일부개정법률안(김정호 의원 대표발의)(의안번호 2215922)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item87">62. 전파법 일부개정법률안(성일종 의원 대표발의)(의안번호 2213995)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item88">63. 전파법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214360)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item89">64. 전파법 일부개정법률안(박충권 의원 대표발의)(의안번호 2215001)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item90">65. 전파법 일부개정법률안(안철수 의원 대표발의)(의안번호 2215958)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item91">66. 정보보호 교육 진흥 및 전문인력 육성에 관한 법률안(김도읍 의원 대표발의)(의안번호 2214289)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item92">67. 정보보호산업의 진흥에 관한 법률 일부개정법률안(한민수 의원 대표발의)(의안번호 2215797)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item93">68. 정보보호산업의 진흥에 관한 법률 일부개정법률안(김태호 의원 대표발의)(의안번호 2215944)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item94">69. 정보통신공사업법 일부개정법률안(김주영 의원 대표발의)(의안번호 2214722)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item95">70. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(조인철 의원 대표발의)(의안번호 2213857)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item96">71. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(황정아 의원 대표발의)(의안번호 2213944)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item97">72. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(황정아 의원 대표발의)(의안번호 2213992)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item98">73. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(김소희 의원 대표발의)(의안번호 2214126)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item99">74. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214378)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item100">75. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(한민수 의원 대표발의)(의안번호 2215209)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item101">76. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(최민희 의원 대표발의)(의안번호 2215299)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item102">77. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(이해민 의원 대표발의)(의안번호 2215361)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item103">78. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(조인철 의원 대표발의)(의안번호 2215559)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item104">79. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(최민희 의원 대표발의)(의안번호 2215604)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item105">80. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(최민희 의원 대표발의)(의안번호 2215639)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item106">81. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(박충권 의원 대표발의)(의안번호 2215722)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item107">82. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(한정애 의원 대표발의)(의안번호 2215833)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item108">83. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(이주희 의원 대표발의)(의안번호 2215933)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item109">84. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(김미애 의원 대표발의)(의안번호 2215986)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item110">85. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(이재강 의원 대표발의)(의안번호 2216028)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item111">86. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(배현진 의원 대표발의)(의안번호 2216041)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item112">87. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(최형두 의원 대표발의)(의안번호 2216078)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item113">88. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(김장겸 의원 대표발의)(의안번호 2216079)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item114">89. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(조인철 의원 대표발의)(의안번호 2216202)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item115">90. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2216217)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item116">91. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(최형두 의원 대표발의)(의안번호 2216230)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item117">92. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(이해민 의원 대표발의)(의안번호 2216243)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item118">93. 정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안(최형두 의원 대표발의)(의안번호 2216276)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item119">94. 지능정보화 기본법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214379)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item120">95. 클라우드컴퓨팅 발전 및 이용자 보호에 관한 법률 일부개정법률안(최형두 의원 대표발의)(의안번호 2216227)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item121">96. 한국교육방송공사법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2214793)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item122">97. 핸드폰개통 시 안면인식 의무화 정책 반대에 관한 청원(강다연 외 50,179인 국민동의로 제출)(청원번호 2200263)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박주민 위원 (서울 은평구갑)"> 
+							박주민 위원 (서울 은평구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="남인순 위원 (서울 송파구병)"> 
+							남인순 위원 (서울 송파구병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="이주영 위원 (비례대표)"> 
+							이주영 위원 (비례대표)
+						</option>
+					

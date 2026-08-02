@@ -1,0 +1,881 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56310" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제432회 (임시회) 제4차 행정안전위원회</strong><span class="date">(2026.02.23.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 청원 심사기간 연장 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2025년도 국정감사 결과보고서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">o 의사일정 변경동의의 건(윤건영 위원 외 1인 서면동의)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">o 의사일정 상정의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">3. 국민투표법 전부개정법률안(김영배 의원 대표발의)(의안번호 2200415)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">4. 국민투표법 전부개정법률안(권칠승 의원 대표발의)(의안번호 2213273)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">5. 국민투표법 일부개정법률안(윤후덕 의원 대표발의)(의안번호 2203589)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">6. 국민투표법 일부개정법률안(김용민 의원 대표발의)(의안번호 2205394)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">7. 국민투표법 일부개정법률안(박정훈 의원 대표발의)(의안번호 2209719)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">8. 국민투표법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2210099)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">9. 국민투표법 일부개정법률안(박충권 의원 대표발의)(의안번호 2211274)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">10. 국민투표법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216568)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">11. 국민투표법 일부개정법률안(이용우 의원 대표발의)(의안번호 2216856)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">12. 국민투표법 전부개정법률안(대안)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="신정훈 위원장 (전남 나주시화순군)"> 
+							신정훈 위원장 (전남 나주시화순군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박홍배 위원 (비례대표)"> 
+							박홍배 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서범수 위원 (울산 울주군)"> 
+							서범수 위원 (울산 울주군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤건영 위원 (서울 구로구을)"> 
+							윤건영 위원 (서울 구로구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="용혜인 위원 (비례대표)"> 
+							용혜인 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="위성곤 위원 (제주 서귀포시)"> 
+							위성곤 위원 (제주 서귀포시)
+						</option>
+					
+					
+						<option value="허철훈 중앙선거관리위원회사무총장">허철훈 중앙선거관리위원회사무총장</option>
+					
+						<option value="조문상 전문위원">조문상 전문위원</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(6명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6713" data-name="신정훈" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">신정훈</span>
+												<span class="position">위원장</span>
+												<span class="area">(전남 나주시화순군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6791" data-name="박홍배" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">박홍배</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6708" data-name="서범수" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">서범수</span>
+												<span class="position">위원</span>
+												<span class="area">(울산 울주군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6687" data-name="윤건영" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">윤건영</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 구로구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6697" data-name="용혜인" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">용혜인</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6694" data-name="위성곤" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">위성곤</span>
+												<span class="position">위원</span>
+												<span class="area">(제주 서귀포시)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"> 
+											<label for="spk_attend0">
+												<span class="name">허철훈</span>
+												<span class="position">중앙선거관리위원회사무총장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="조문상" data-pos="전문위원"> 
+											<label for="spk_attend1">
+												<span class="name">조문상</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56310&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제432회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>행정안전위원회회의록</h1></div></div><p class="num">제4호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 2월 23일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">행정안전위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 청원 심사기간 연장 요구의 건</li><li><span class="num">2.</span> 2025년도 국정감사 결과보고서 채택의 건</li><li><span class="num">3.</span> 국민투표법 전부개정법률안(김영배 의원 대표발의)(의안번호 2200415)(추가)</li><li><span class="num">4.</span> 국민투표법 전부개정법률안(권칠승 의원 대표발의)(의안번호 2213273)(추가)</li><li><span class="num">5.</span> 국민투표법 일부개정법률안(윤후덕 의원 대표발의)(의안번호 2203589)(추가)</li><li><span class="num">6.</span> 국민투표법 일부개정법률안(김용민 의원 대표발의)(의안번호 2205394)(추가)</li><li><span class="num">7.</span> 국민투표법 일부개정법률안(박정훈 의원 대표발의)(의안번호 2209719)(추가)</li><li><span class="num">8.</span> 국민투표법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2210099)(추가)</li><li><span class="num">9.</span> 국민투표법 일부개정법률안(박충권 의원 대표발의)(의안번호 2211274)(추가)</li><li><span class="num">10.</span> 국민투표법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216568)(추가)</li><li><span class="num">11.</span> 국민투표법 일부개정법률안(이용우 의원 대표발의)(의안번호 2216856)(추가)</li><li><span class="num">12.</span> 국민투표법 전부개정법률안(대안)(추가)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 청원 심사기간 연장 요구의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2025년도 국정감사 결과보고서 채택의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3">o 의사일정 변경동의의 건(윤건영 위원 외 1인 서면동의)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4">o 의사일정 상정의 건</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">3.</span> 국민투표법 전부개정법률안(김영배 의원 대표발의)(의안번호 2200415)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">4.</span> 국민투표법 전부개정법률안(권칠승 의원 대표발의)(의안번호 2213273)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">5.</span> 국민투표법 일부개정법률안(윤후덕 의원 대표발의)(의안번호 2203589)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">6.</span> 국민투표법 일부개정법률안(김용민 의원 대표발의)(의안번호 2205394)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">7.</span> 국민투표법 일부개정법률안(박정훈 의원 대표발의)(의안번호 2209719)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">8.</span> 국민투표법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2210099)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">9.</span> 국민투표법 일부개정법률안(박충권 의원 대표발의)(의안번호 2211274)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">10.</span> 국민투표법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216568)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">11.</span> 국민투표법 일부개정법률안(이용우 의원 대표발의)(의안번호 2216856)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">12.</span> 국민투표법 전부개정법률안(대안)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시15분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제432회 국회(임시회) 제4차 행정안전위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;안건을 상정하기 전에 위원님 여러분께 사보임을 안내해 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;이재관 위원님께서 오늘 자로 사임되셨고 박홍배 위원님께서 새로 보임하셨습니다. 새로 보임되신 박홍배 위원님, 간단한 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6791" data-name="박홍배" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">박홍배 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cdaf530a93c04f1cb5cb4795fa2cdc5e.jpg" alt="박홍배"></span><span class="txt"><strong class="name">박홍배</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;기후에너지환경노동위원회에서 행정안전위원회로 오늘 자로 사보임 한 박홍배 위원입니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;열심히 하겠습니다. 잘 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;참고로 오늘 회의는 국회방송으로 생중계되고 있음을 알려 드립니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 청원 심사기간 연장 요구의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시16분)</p><br/><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;의사일정 제1항 청원 심사기간 연장 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;배부해 드린 유인물과 같이 2건의 청원이 심사기간을 경과하였거나 경과될 예정이며 이러한 경우 국회법 125조 6항에 따라 의결로써 심사기간을 연장하여 국회의장에게 요구할 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;이에 2건의 심사기간을 2026년 12월 31일까지 연장할 것을 요구코자 하는데 위원님 여러분 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 2025년도 국정감사 결과보고서 채택의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시17분)</p><br/><div id="spk_8" class="item2 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;의사일정 제2항 2025년도 국정감사 결과보고서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;배부해 드린 결과보고서(안)은 지난해 국정감사에서 위원님들께서 지적해 주신 사항을 바탕으로 전문위원실에서 내용을 정리하고 개별 의원실 회람을 거친 후 작성된 것입니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;국정감사 결과보고서(안)에 대해 의견 있으신 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;의견이 없으시면 의결토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;배부해 드린 유인물과 같이 우리 행정안전위원회의 2025년도 국정감사 결과보고서를 채택코자 하는데 위원님 여러분 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;중앙선관위 관계자 외 정부 관계자 여러분께서는 이석해도 좋습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">o 의사일정 변경동의의 건(윤건영 위원 외 1인 서면동의)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시18분)</p><br/><div id="spk_10" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;의사일정과 관련해서 잠시 안내말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;윤건영 간사님께서 법안심사제2소위원회에 계류 중인 법안 가운데 국민투표법 전부개정법률안 2건과 국민투표법 일부개정법률안 7건을, 그리고 이상의 국민투표법 전부 또는 일부개정법률안을 통합 조정한 대안 등 총 10건의 법률안을 오늘 의사일정에 추가해서 심사해 줄 것을 요청하는 동의서를 서면으로 제출하셨습니다. 안건 목록은 지금 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;국회법 제71조에 따르면 동의가 의제로 성립하기 위해서는 동의자 외 1인의 찬성이 필요합니다. 서면동의서에 동의자 외 찬성자가 있으므로 의제가 성립되었음을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;그러면 먼저 현재 법안심사제2소위원회에 계류 중인 국민투표법 전부개정법률안 2건과 국민투표법 일부개정법률안 7건을 행정안전위원회 전체회의에 회부코자 합니다. 이의 없으십니까?</span><br/></div></div></div><div id="spk_11" class="item3 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;이의 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;의사진행발언 좀 하겠습니다.</span><br/></div></div></div><div id="spk_12" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;서범수 위원님 의사진행발언해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item3 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;이게 참 해도 해도 너무하다는 말씀을 먼저 드립니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;오늘 우리 국민의힘 위원님들께서 안 나오신 이유는 오늘 이 행안위 전체회의가 여야 간에 합의된 내용이 일절 아니다, 일방적인 통보에 의해서 지금 이 행안위 전체회의가 열리고 있다는 점을 먼저 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;그리고 제가 매번 행안위를 하면서 의사진행발언을 하고 불평불만을 지금 늘어놓습니다. 이거는 사실은 역으로 보면 우리 행안위가 정상적으로 운영되지 않는다는 것을 반증하는 게 아니냐 하는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;지난 금요일 오후에 윤건영 간사께 전화가 왔었습니다, ‘월요일 날 10시에 행안위 전체회의를 할 수밖에 없습니다’. 그래서 그때마다…… 사실은 윤건영 간사님하고 저하고의 이야기는 ‘아니, 이 국민투표법을 지금 이렇게 시급히 개정을 해야 될 이유가 뭐가 있느냐?’.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;물론 헌법불합치의 문제가 있습니다. 있습니다만 그럼에도 불구하고 이 국민투표법 개정안을 심의하는 순간 전체적으로 개헌의 블랙홀에 빠질 수 있다. 그러면 심각한 혼란을 초래할 수 있는데 굳이 이걸 지금 현재 할 게 뭐가 있느냐.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;개헌에 대한 여야 합의가 어느 정도 되면 국민투표법 이거야 하루이틀 정도면 충분히 통과시킬 수 있는 거 아니냐, 여야 간의 합의하에. 그런데도 왜 이렇게 지금 시급하게, 그리고 일방적으로 국민투표법을 개정해야 되느냐라는 이야기를 줄곧 해 왔고 그날도 이야기를 했습니다. 그럼에도 불구하고 오늘 이 전체회의에서 국민투표법을 올려서 다시 의결을 하려고 합니다.</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;절차적으로도 여러 가지 문제가 있습니다. 먼저 오늘은 합의된 의사일정이 아님을 내가 분명히 말씀을 드리고.</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;두 번째, 이 국민투표법, 법안소위 거치지도 않았습니다.</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;세 번째, 조금 전에 말씀드렸다시피 여기에 전부개정안 2건이 있습니다, 2개가. 그러면 공청회 거쳐야지요, 공청회. 공청회도 안 거치고 지금 전체회의에 올려서 심의를 하겠다고 합니다.</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;내용적으로 보면, 사실 어제까지 행정실에다가 ‘그러면 오늘 도대체 국민투표법 개정안에 대해서 무엇을 논의할 거냐’라고 물어보니 아직 정리가 안 됐대요.</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;여러분, 우리 솔직히 말합시다. 민주당 위원 여러분, 오늘 국민투표법에 어떠한 내용들이 들어가 있고 어떤 문제를 논의할 건가 다 알고 오신 분 계십니까? 회의 열어 놓고 지금 이 내용을 처음 보는 것 아닙니까? 그런데도 불구하고 이걸 지금 바로 올려서 의결을 한단 말입니까?</span><br/><span class="spk_sub" id="spk_sub13-12">&nbsp;제가 보기에는 이게 다른 무슨 의도가 있는 것 아니냐, 다른 무슨. 민주당이 원하는 그런 법을 본회의에 상정하기 위해서 누군가와 서로 거래를 하는 악마의 거래가 있는 거 아니냐라는 이야기를 지금 할 수밖에 없습니다. 이 저의가 불순하다는 거지요, 저의가.</span><br/><span class="spk_sub" id="spk_sub13-13">&nbsp;우리 정상적으로 국민투표법 하나하나 챙겨 봐야지요. 챙겨 봐야지요. 그런데 왜 이렇게 급하게 아무런 논의도 하지 않고 이걸 무장정 전체회의에 올려서 내용도 제대로 검토도 안 하고 이걸 지금 해야 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub13-14">&nbsp;그래서 국민투표법은, 아까도 제가 말했는데 국민투표법, 우리 여섯 차례 국민투표를 했습니다. 이거는 다 중요 정책이라기보다는 개헌을 위한 어떤 국민투표를 진행했습니다.</span><br/><span class="spk_sub" id="spk_sub13-15">&nbsp;그래서 이게 지금 만약에 시작을 하면 개헌 그리고 또 개헌의 다른 어떤 저의를 가지고 국민투표법을 개정할 것이 아니냐라는 많은 의심의 눈초리를 국민들이 지금 가지지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub13-16">&nbsp;다시 한번 제가 말씀을 드립니다.</span><br/></div></div></div><div id="spk_14" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;정리해 주시지요.</span><br/></div></div></div><div id="spk_15" class="item3 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;위원장님, 이 부분에 대해서 다시 소위로 넘기든지 지금 현재 행안위 전체회의에 올리는 부분에 대해서는 철회를 하시고 다시 한번 냉정하게 우리가 한번 국민투표법에 대해서 제대로 된 국민투표법 개정을 위한 어떤 그런 절차를 좀 밟아야 되는 것 아니냐 위원장님께 간곡하게 부탁을 드립니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;다시 한번 말씀을 드립니다. 우리가 국민투표법 개정하지 말자는 게 아니잖아요. 좀 제대로 된 국민투표법 개정을 하고 그다음에 국민투표법 개정을 하는 순간 개헌의 블랙홀로 빠질 수밖에 없다. 그러면 우리가 제대로 된 개헌도 안 되는 거고 여러 가지 혼란이 있을 수밖에 없다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;그래서 여야가 어느 정도 개헌에 대한 합의가 되는 상황에서 국민투표법 개정안을 우리가 심의하고 의결하는 게 제대로 된 순번이 아니냐라는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;다시 한번 우리 위원장님께서 용단을 내리셔 가지고 오늘 이 전체회의에서 국민투표법 개정안을 올리는 부분에 대해서는 철회를 해 주십사 부탁을 드립니다.</span><br/></div></div></div><div id="spk_16" class="item3 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;위원장님.</span><br/></div></div></div><div id="spk_17" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;다음은 윤건영 위원님 발언해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_18" class="item3 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;구로을의 윤건영입니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;2014년 7월 24일 날 헌법재판소는 국민투표법 관련해서 헌법불합치 결정을 내렸습니다. 12년 걸렸습니다. 12년 동안 국회는 일을 안 했던 겁니다. 국민투표법에 대해서 헌재가 헌법불합치 결정을 내린 지 12년이 지났음에도 그동안 일을 안 하고 있다가 이제 제대로 일을 하려고 하는 겁니다. 생각해 보십시오. 어느 나라가 헌법불합치된 상황을 12년 동안 두 눈 부릅뜨고 그냥 가만히 지켜보고 있습니까? 그런 국회가 일하는 국회 맞습니까? 국회가 국회답게 일을 하려면 신속하게 처리할 건 처리해야 된다라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;다음으로 존경하는 서범수 간사님께서 말씀하셨는데요. 여야 협의의 부족함에 대해서 이야기하셨습니다. 오늘 저는 국민의힘 위원님들이 참석하지 않은 것에 대해서 대단히 유감을 표명합니다. 간사 협의 과정에서 22대에 들어와서요 국민투표법을 네 차례나 법안소위 안건으로 상정하자고 의논했습니다. 그중에 딱 한 번만 상정하는 걸로 의논이 되었습니다. 그리고 이번 2월 임시국회에서도 줄기차게 법안을 상정해서 처리하자라고 이야기했지만 국민의힘 당 차원에서인지는 모르겠으나 논의 자체가 이루어지지 않았습니다.</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;시기를 좀 되돌려 보겠습니다. 윤석열 정부 당시에는 집권여당인 윤석열 정부가 나서서 국민투표법을 개정하자고 했습니다. 지금 원내대표이신 송언석 당시 국민의힘 원내수석부대표가 뭐라고 하셨냐면요, ‘이 비정상을 정상화시키기 위해서라도 즉시 국민투표법 자체를 개정하는 게 타당하다’라고 공식적으로 말씀하셨습니다. 또 당시 당선인 비서실장 또한 나서서 ‘국회 입법 미비 상황을 개선해야 된다’라고 이야기하셨습니다. 집권여당일 때는 즉각 개정해야 된다고 하시더니 정권이 바뀌자마자 180도로 돌변하는 상황을 저는 이해할 수가 없습니다.</span><br/><span class="spk_sub" id="spk_sub18-5">&nbsp;앞서 말씀드린 것처럼 12년 동안 헌법불합치한 상황이 계속되었습니다. 국민투표법은요 개헌과 꼭 연관돼 있는 게 아닙니다. 국가의 중요한 사항을 국민투표로 결정할 수 있는 겁니다. 그런 국민의 참정권을 제한받는 것들을 해소하자는 게 오늘 국민투표법 개정안입니다. 따라서 이건 더 이상 늦출 일이 아니고 지금도 늦었다. 12년 동안 국회가 일 안 했으면 이제라도 일 제대로 해 보자라는 차원에서 위원장께서는 안건을 상정해서 처리하셔야 된다라고 저는 강하게 말씀드리는 거고요.</span><br/><span class="spk_sub" id="spk_sub18-6">&nbsp;현행법상 국민투표 자체가 불가능합니다. 국민투표가 안 되는 나라가 대한민국이에요. 이런 대한민국을 그대로 두고 본다는 게 국회의원으로서 말이 됩니까? 안 되잖아요. 국민투표 안 되는 나라가 어디 있습니까, 선진국 중에서? 이런 걸 해소하자는 게 오늘 이 회의입니다. 따라서 위원장께서는 신속하게 법안을 처리해 주셨으면 합니다.</span><br/><span class="spk_sub" id="spk_sub18-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_19" class="item3 speaker spk_mem" data-mem_id="6697" data-name="용혜인" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">용혜인 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YONGHYEIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b71fbe23a11d45a9935a24fcfac4447b.png" alt="용혜인"></span><span class="txt"><strong class="name">용혜인</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;위원장님, 저도 간단히……</span><br/></div></div></div><div id="spk_20" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;용혜인 위원님 발언해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item3 speaker spk_mem" data-mem_id="6697" data-name="용혜인" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">용혜인 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YONGHYEIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b71fbe23a11d45a9935a24fcfac4447b.png" alt="용혜인"></span><span class="txt"><strong class="name">용혜인</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;서범수 간사님께서 누군가와 뭔가 검은 거래가 있는 건 아닌가라는 말씀을 하셨는데 좀 속시원히 말을 못 하신 것 같아서 어떤 말씀을 하고 싶으신 건지 좀 궁금하기는 합니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;그런데 사실 법안을 가지고 거래를 한다고 하면 상대 교섭단체라고 할 수 있는 국민의힘 지도부밖에 없을 텐데 국민의힘 지도부와 이 법안을 두고 거래한다는 것을 걱정하신다는 건지 좀 납득하기가 어렵습니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;12년 동안 위헌 상태였기 때문에 각 정당들이 이 국민투표법 개정에 대해 정리된 당 차원의 입장들은 다 있을 거라고 생각합니다. 그렇기 때문에 오늘 법안심사를 하지 못하는 것도 좀 납득하기가 어렵고요.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;‘개헌 논의가 시작되면 개헌의 블랙홀에 빠진다’라고 하셨는데 개헌이라고 하는 건 대한민국의 기본적인 원칙을 다시 세우는 문제이기 때문에 블랙홀에 빠져야 개헌도 할 수 있는 것입니다. 그래서 더 이상 이것을 미루지 말아야 된다라는 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;제가 오늘 강조하고 싶은 건 이 민주공화국이라고 하는 대한민국의 일원이라면 이 국민투표법 개정에 반대할 명분이 없다라는 것입니다. 지난 12월 3일 내란이 87년 헌법이 민주주의를 수호하는 데 한계가 있다라는 것을 보여 줬습니다. 이 국가 폭력에 맞서서 민주주의를 지키기 위해서 싸웠던 5·18 정신을 헌법에 명문하는 등의 개헌이 이루어져야 다시는 지난 비상계엄, 내란 사태를 반복하지 않을 수 있다는 점을 많은 국민들께서 얘기하고 계십니다. 이런 국민투표법 개정을 반대하는 것은 이 내란을 정당화하는 극우 세력과 절연하지 않겠다라는 선언과 다름이 없다라는 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub21-6">&nbsp;아니면 오늘 안 오신 국민의힘 위원님들께서는 사전투표용지 위조나 아니면 QR코드 조작, 전산 해킹 같은 부정선거 음모론 때문에 법 개정에 동의하지 못하시는 것인지 저는 묻고 싶습니다. 여기에 대해서 명확히 입장을 밝혀 주셔야 합니다.</span><br/><span class="spk_sub" id="spk_sub21-7">&nbsp;일부 언론보도를 보니까 ‘국민투표법 개정안이 사전투표를 허용하고 있어서 강성 지지층을 고려해서 찬성하기가 어렵다’라는 이야기들이 들립니다. 사실이라면 정말 기가 차는 이야기인데요.</span><br/><span class="spk_sub" id="spk_sub21-8">&nbsp;5년 동안 있었던 부정선거 소송 150건 중에 150건 다 중선관위가 승소했습니다. 그리고 12·3 비상계엄과 관련된 모든 재판에서 ‘계엄은 내란이다’라고 규정하고 있습니다. 그럼에도 사전투표는 곧 부정선거이고 내란수괴 윤석열의 계엄 선포는 부정선거로부터 대한민국을 구하는 구국의 결단이라고 믿는 위원님들이 계시지 않을 거라고 저는 믿고 싶습니다. 이런 상황 인식을 같이하는 정당이 아니라면 국민투표법 개정을 반대할 이유도 또 명분도 없다라고 생각하고요.</span><br/><span class="spk_sub" id="spk_sub21-9">&nbsp;그리고 공청회 얘기하셨는데 법안2소위에서 공청회를 진행을 해야 합니다. 그런데 그 법안2소위 위원장님이 바로 국민의힘 간사님이신 서범수 위원장이십니다. 절차적 문제를 자처하셨는데 저는 그 핑계로 법 개정을 미루는 건 좀 납득하기가 어렵다라는 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub21-10">&nbsp;개헌 내용부터 합의가 되어야 한다라고 하시는데……</span><br/><span class="spk_sub" id="spk_sub21-11">&nbsp;(발언시간 초과로 마이크 중단)</span><br/><div class="line_dot">&nbsp;</div><span class="spk_sub" id="spk_sub21-12">&nbsp;(마이크 중단 이후 계속 발언한 부분)</span><br/><span class="spk_sub" id="spk_sub21-13">우원식 의장은 ‘합의 가능한 것부터 첫발을 떼겠다’라고 하셨습니다. 이미 한병도 원내대표도 ‘5·18 원포인트 개헌하자’라고 구체적으로 제안을 하셨고 그것은 국민의힘의 지지난 대선의 공약이기도 했습니다. 저는 합의된 내용들이 충분히 있는데 합의를 핑계로 개헌을 하지 못할 이유가 전혀 없다라고 생각하고요.</span><br/><span class="spk_sub" id="spk_sub21-14">&nbsp;오늘 직권상정한 국민투표법을 예정대로 빠르게 처리해 주시기를 위원장님께 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub21-15">&nbsp;이상입니다.</span><br/><div class="line_dot">&nbsp;</div></div></div></div><div id="spk_22" class="item3 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;의사진행발언입니다. 오해의 소지가 있어서……</span><br/></div></div></div><div id="spk_23" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;그러면 조금만 쓰십시오.</span><br/></div></div></div><div id="spk_24" class="item3 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;용혜인 위원께서 몇 가지를 말씀을 하시면서 오해의 소지가 있는 말씀을 하신 것 같아서 제가 명확하게 밝힙니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;거래 관계에 있어서 우리 국민의힘 지도부와 민주당 간의 거래를 이야기할 것 같았으면 제가 이 자리에서 이야기를 하지도 않습니다. 지금 민주당의 다수, 거대 여당인 민주당이 우리 국민의힘과 여태까지 거래하지도 않았고 지금 정치적인 파트너로서 야당을, 우리 국민의힘을 과연 그렇게 간주했느냐? 모두 다 일방적으로 처리한 거 아닙니까? 제가 이야기하는 거래는 민주당과 또 다른 사람 간의 거래 관계를 분명히 제가 말씀을 드립니다. 그런 우려 때문에 제가 말씀을 드리는 거고요.</span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;두 번째, 부정선거요. 우리 행안위 위원들 중에, 저를 비롯해서 우리 행안위에 있는 국민의힘 위원들 중에 부정선거와 관련해서 부정선거가 있다고 생각하는 사람은 한 사람도 없다는 걸 분명히 밝힙니다. 그걸 동료 위원을 그런 식으로 음해를 하지 마십시오. 그렇다면 동료로서의 인정을 안 한다는 이야기밖에 더 되겠습니까? 그런 부분이 전혀 아니라는 걸 말씀을 드리고.</span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;다시 한번 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub24-5">&nbsp;이 국민투표법 개정과 관련해서 제가 말씀드린 거는 개헌이라는 부분에 대해서 여야가 어느 정도 합의가 되는 상황 같으면 국민투표법 하루이틀이면 됩니다. 그런데 지금 당장에 국민투표를 붙여야 될 사안이 없지 않습니까? 그럼에도 불구하고 아까 우리 윤건영 위원님께서 좋은 말씀 하셨는데 12년 동안, 15년 동안 못 한 걸 왜 갑자기 지금 와서 빨리하자는 겁니까? 하자고요. 헌법불합치에 대한 부분을 하자고요. 그런데 그거는 하나씩 하나씩 챙겨 가면서 제대로 된 검토를 하고 제대로 된 법 개정을 해야 되는 거 아닙니까?</span><br/><span class="spk_sub" id="spk_sub24-6">&nbsp;그런데 갑자기 나타나서 법안소위도 안 거치고 법안소위를 스킵해 버리고…… 전체적으로 지금 와서, 쟁점사항이나 논의사항도 정리가 안 된 이 상태에서 과연 우리가 제대로 된 국민투표법 개정안 심의가 되겠느냐는 거지요. 저는 그런 차원에서 말씀드렸다는 걸 말씀드립니다.</span><br/></div></div></div><div id="spk_25" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;이제 조금 마무리하시지요.</span><br/></div></div></div><div id="spk_26" class="item3 speaker spk_mem" data-mem_id="6694" data-name="위성곤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위성곤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/26841957c287473db75fad6182189804.jpg" alt="위성곤"></span><span class="txt"><strong class="name">위성곤</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;아니, 한 가지만 말씀드려야 될 것 같아서……</span><br/></div></div></div><div id="spk_27" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;그러겠습니까?</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;예.</span><br/></div></div></div><div id="spk_28" class="item3 speaker spk_mem" data-mem_id="6694" data-name="위성곤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">위성곤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/26841957c287473db75fad6182189804.jpg" alt="위성곤"></span><span class="txt"><strong class="name">위성곤</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;우선 국민투표법 개정이 반드시 오늘 이루어져야 되고요.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;국민투표법과 관련해서 국민투표 운동들이 국민들이 참여해서 운동을 하게 되어질 텐데 그때 걱정스러운 게 이제 현수막이 우후죽순처럼 걸릴 가능성이 매우 높아서 이 부분에 대한 보완적 조처가 좀 필요하겠다라고 생각을 합니다. 그래서 시행령이라든가 이런 것들을 통해서 현수막은 모든 국민들이 게시할 수 있게끔 하되 그것들을 거리에 거는 것이 아니라 자기의 집이나 아니면 자기가 위치한 사무실의 건물이나 이런 데 이렇게 거치하게 함으로써 운동은 활성화시키되 실질적으로 미관은 해치지 않는 그런 방식으로 좀 할 수 있게끔 보완 조처를 좀 요구드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_29" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;제가 선관위 사무총장 나오셨으니까 한번 좀 여쭤보겠습니다.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;2014년도 헌재의 위헌 판결 이후에 이 문제에 대한 선관위의 입장은 어떤 겁니까?</span><br/></div></div></div><div id="spk_30" class="item3 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;저희 위원회에서는 국민투표법 14조 투표인명부 작성 규정이 이제 헌법불합치 결정이 됐기 때문에 이것을 개정해야만 국민투표를 실시할 수 있다, 그렇게 판단을 해서 중앙위원회에 보고를 하고 그래서 개정 의견을 작성해서 2017년 10월 달에 국회에 제출을 했습니다.</span><br/></div></div></div><div id="spk_31" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;지금 상황은 지극히 비정상적인 상황 아니겠습니까?</span><br/></div></div></div><div id="spk_32" class="item3 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;그래서 저희 위원회 입장은 장기간 지속되어 온 위헌 상태를 해소해야 하고 또 향후 국민투표 실시에 대비해서 국민투표법 개정은 필요하다고 생각합니다.</span><br/></div></div></div><div id="spk_33" class="item3 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;여러 위원님들이 지적하셨듯이 지금 이 상황은 정상적인 상황이 아닙니다. 이걸 해소하는 것은 우리 국회의 당연한 의무고요. 저도 위원장으로서 이렇게 여야 합의 없는 법안을 처리하는 것에 대해서 굉장히 주의하고 절제해야 된다고 생각합니다. 그러나 이 법만큼은 조금 더 내용과 과정이 다르다는 것을 분명히 국민 여러분들께서도 알아 주셔야 한다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;그러니까 12년 동안 이런 헌법불합치 그리고 위헌 상황이 계속되고 있고 그로 말미암아서 개헌이라고 하는 정당한 국회의 권능, 국민들의 요구 이런 것들이 작동하지 않는 이런 상황이 계속되고 있습니다. 뿐만 아니라 이 국민투표법에 대한 여야 간의 의사진행 과정을 보면 막무가내로 그냥 미뤄 두기, 그냥 덮어 두기를 계속하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;그래서 지난번에 우원식 국회의장께서는 여야 간사들과 또 이렇게 위원장을 불러서 이 안에 대한 조속한 처리에 대한 중재 입장을 가지고 중재를 했습니다. 그때마다 국민의힘에서는 회의 자체를 거부했습니다. 논의 자체를 거부했어요. 그러고도 이 문제를 마치 여당이 밀어붙이는 것처럼 무슨 음모론을 이야기하는 것은 전혀 가당치 않은 이야기다 저는 이렇게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;마찬가지로 ‘개헌의 블랙홀’ 이것 역시 과도한 억지 주장이다 저는 이렇게 생각합니다. 아까 용혜인 위원님께서 말씀하셨지만 이런 상황, 윤석열의 내란 행위조차에 대해서도 사실 묵묵부답으로 지금 일관하고 있는 정당에서 또다시 이 정당한 국회의 의무 또 당연한 직무 처리에 대해서 소위 말해서 ‘개헌 블랙홀이다’ 이런 식으로 국민들을 왜곡하는 것은 정당한 논리가 아니다 생각합니다. 그래서 저는 국회의 직무를, 당연히 이번 국민투표법 처리를 통해서 국회에게 맡겨진 정당한 직무를 수행해야 된다 이런 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;여전히 국민의힘께서 이렇게 여야 간의 협의를 통해 가지고 또 다른 의사일정을 잡겠다 이런 입장도 아니지 않습니까? 개헌이 합의되면 그때까지 미루자 이런 이야기를 계속하고 있지 않습니까? 개헌이 먼저입니까? 이런 헌법불합치를 해결하는 게 먼저입니까? 국민 여러분들께서는 충분히…… 우리 행정안전위원회가 처리하고자 하는 국민투표법 헌법불합치 상황을 해결하는 것이 국민들의 정당한 요구이고 우리 국회에 맡겨져 있는 직무다 이렇게 생각합니다. 그래서 오늘 불가피하게 야당이 불참한 가운데서라도 이런 헌법불합치 상황을 해소하는 것이 필요하겠다 이런 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;그래서 현재 법안심사제2소위에 계류 중인 국민투표법 전부개정법률안 2건과 국민투표법 일부개정법률안 7건을 행정안전위원회 전체회의로 회부코자 합니다.</span><br/><span class="spk_sub" id="spk_sub33-7">&nbsp;이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub33-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub33-9">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" class="tit">o 의사일정 상정의 건</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시40분)</p><br/><div id="spk_35" class="item4 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;다음으로 국회법 제71조 및 제77조에 따라서 윤건영 위원의 동의대로 국민투표법 전부개정법률안과 일부개정법률안을 오늘 의사일정 제3항부터 제11항까지로, 국민투표법 전부개정법률안(대안)을 의사일정 제12항으로 추가코자 합니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;국회법 제77조에 따르면 의사일정 안건 추가 동의의 경우 그 동의에 대해서는 토론을 하지 아니하고 표결토록 규정하고 있습니다. 그러면 이상과 같은 의사일정 변경동의에 대해서 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G4G0F6G0E5E1M4L4L0J3K9I4J1R6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 국민투표법 전부개정법률안(김영배 의원 대표발의)(의안번호 2200415)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T5T0S9Z1Y2U1S6R0Q2R1Z3X1W6U2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 국민투표법 전부개정법률안(권칠승 의원 대표발의)(의안번호 2213273)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I4I0E8E2D7E1C5A2B2J0J1I9G9H8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 국민투표법 일부개정법률안(윤후덕 의원 대표발의)(의안번호 2203589)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2W4W1V1V0T7S1T3A4B9Z2A9Y2Z7X4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 국민투표법 일부개정법률안(김용민 의원 대표발의)(의안번호 2205394)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2X5X0F4E1E0D0D9B2C4K0L6J6J6I5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 국민투표법 일부개정법률안(박정훈 의원 대표발의)(의안번호 2209719)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2R5P0Q4O1P6X1V8W0U0U3T2U8P7Q4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 국민투표법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2210099)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2C5C0B6B1J2K1I0G5H0F2G5O0O3N6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 국민투표법 일부개정법률안(박충권 의원 대표발의)(의안번호 2211274)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2H6H0G2G0F3D1D4L2M0K5L0J2K0I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 국민투표법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216568)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I6G0G2F0G5N0O9M5L0L2J8K1S3T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 국민투표법 일부개정법률안(이용우 의원 대표발의)(의안번호 2216856)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" class="tit">12. 국민투표법 전부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시41분)</p><br/><div id="spk_37" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;그러면 방금 의사일정으로 추가된 제3항부터 제12항까지를 일괄 상정합니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;방금 상정된 법률안에 대해 찬반토론을 할 순서이나 토론에 앞서 위원님들의 이해를 돕기 위해서 의사일정 제12항 국민투표법 전부개정법률안(대안)에 대해서는 전문위원으로부터 그 내용에 대해서 간략한 보고를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;전문위원 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_38" class="item14 speaker spk_mem" data-mem_id="0" data-name="조문상" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">전문위원 조문상 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="조문상"></span><span class="txt"><span class="position">전문위원</span><strong class="name">조문상</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;배부해 드린 검토의견 자료를 보고 설명을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-3">&nbsp;작년 11월 26일 날 2법안소위에서 국민투표법 전부개정법률안을 포함한 안건들이 상정이 됐고 그때 당시의 소위 자료에서 권칠승 의원안을 중심으로 일부 수정의견을 제시한 수정안을 제시한 바 있습니다. 오늘 제시된 대안의 경우 그 소위 자료에 있었던 수정안과 상호 유사하게 규정되어 있다는 말씀을 먼저 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-4">&nbsp;자료 1쪽을 보시면 총 9건입니다.</span><br/><span class="spk_sub" id="spk_sub38-5">&nbsp;2건의 전부개정법률안과 7건의 일부개정법률안인데요. 일부개정법률안의 내용은 투표권자의 연령을 공직선거법상 선거권자와 일치시키고 또 재외국민투표제도를 도입하는 등의 내용이고, 전부개정안 2건은 이 일부개정안의 내용을 모두 포괄하고 아울러 최신화·현행화시키는 내용으로 되어 있다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-6">&nbsp;하단 부분의 개정안별 구성 체계를 보시면 현행은 총 14개 장에 125개 조문인데 전부개정안에 따른 김영배 의원안은 총 15개 장에 걸쳐 108개 조문, 권칠승 의원안은 총 15개 장에 걸쳐 118개 조문으로 구성되어 있다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-7">&nbsp;2페이지를 보시면 총괄 의견입니다.</span><br/><span class="spk_sub" id="spk_sub38-8">&nbsp;주요 내용 부분은 앞에서 설명을 드렸기 때문에 생략하고요.</span><br/><span class="spk_sub" id="spk_sub38-9">&nbsp;중간 부분으로 가시면 권칠승 의원안과 김영배 의원안은 7개 일부개정안 내용을 포괄하여 공직선거법의 관련 규정을 국민투표법에 준용하는 전부개정안입니다. 김영배 의원안에 비해서 권칠승 의원안이 최근 공직선거법 개정사항까지 모두 반영하고 있어 국민투표법을 현행화하는 데 가장 적합한 안으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub38-10">&nbsp;동 개정안은 헌법불합치 결정을 반영한 재외국민투표제도의 도입, 투표권자 연령 하한, 사전·거소·선상투표제도의 도입, 딥페이크를 이용한 투표운동의 금지 등 그간 공직선거법 개정사항을 폭넓게 반영한 것으로 지난 89년 3월 25일 동법 전부개정 이후에 실질적인 내용 및 법문 표현 개정이 이루어지지 않았던 사항들을 종합적으로 정비하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub38-11">&nbsp;동 개정법률안이 공직선거법의 체계에 맞추고 있다는 점에서 바람직한 입법 조치로 보이고 권칠승 의원안을 중심으로 각 개정안 및 수정의견을 통합 조정한 대안이 마련되어 있음을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub38-12">&nbsp;이 대안에 반영되어 있는 권칠승 의원안에 대한 수정의견을 말씀을 드리면 먼저 권칠승 의원안에서는 제5조를 삭제하고 있습니다. 인구의 기준이라고 되어 있는데요. 그러나 공선법은 사무관리의 기준이 되는 인구수를 정하는 방법을 규정하고 있기 때문에 동법도 인구수에 대한 명확화, 관련 예산 확보 등을 위해 필요하다는 선관위 의견이 있었음을 감안해서 인구의 기준에 관한 규정을 유지하되 폐지된 재외국민 국내거소신고제도 표현은 삭제하는 것으로 수정의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub38-13">&nbsp;안 8조의 투표권을 보시면 일단은 모든 안들이 공직선거법에 따라 선거권을 가지고 있는 사람 또는 국민으로 이렇게 개정을 하고 있는데 권칠승 의원안은 그게 사람으로 되어 있습니다. 그런데 이 동법이 국민투표법임을 감안해서 그걸 국민으로 수정하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-14">&nbsp;3쪽을 보시면 투표운동을 할 수 없는 사람에 교육의원이 빠져 있는데 지금 제주도의 경우에는 교육의원이 올 6월 30일까지 재직하고 있기 때문에 관련 교육의원을 투표운동을 할 수 없는 사람의 범위에 추가하되 부칙으로 6월 30일까지만 적용된다는 것을 명확히 하였습니다.</span><br/><span class="spk_sub" id="spk_sub38-15">&nbsp;그다음에 안 제40조 투표참관인의 선정과 관련해서 공직선거는 사전투표참관인 관련 사무를 구·시·군 선관위에서 처리하지만 권칠승 의원안은 읍·면·동 선관위에서 처리하도록 하여 동시실시의 경우 혼란이 예상되기 때문에 공직선거와 통일할 필요가 있어서 수정하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-16">&nbsp;아울러 동시실시의 정의와 관련해서 교육감 선거가 누락되어 있어 이를 추가 반영하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-17">&nbsp;4쪽을 보시면 그 외 투표참관인·준용규정 등을 공직선거법과 동일하게 하도록 하였고요.</span><br/><span class="spk_sub" id="spk_sub38-18">&nbsp;마지막 5쪽의 재정신청 등과 관련해서도 역시 마찬가지로 공직선거법과 유사하게 맞췄다는 말씀을 드리고 기타 용어의 정비가 있었다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-19">&nbsp;다시 2쪽으로 가시면 대안에 대해서 간략히 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-20">&nbsp;대안은 총 15개 장 119개 조문으로 구성되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub38-21">&nbsp;각 장별로 주요사항을 말씀드리면 1장 총칙과 관련해서는 먼저 정의에서 재외국민투표제도가 도입됨에 따라 투표인의 정의에 ‘재외투표인명부에 올라 있는 사람’을 추가하였다는 말씀을 드립니다. 그 밖의 사항들은 공선법 규정을 반영한 사항들입니다.</span><br/><span class="spk_sub" id="spk_sub38-22">&nbsp;2장 투표권과 관련해서는 아까 말씀드린 대로 투표권자의 연령을 18세 이상 국민으로 함으로써 공직선거법에 맞췄다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-23">&nbsp;3장 국민투표 구역 및 투표일과 관련해서는 투표구의 기준시점 및 행정구역의 구역 변경 미반영 시점을 최신화를 위해서 국민투표일 공고일을 투표인명부작성기준일로 변경하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-24">&nbsp;제4장 투표인명부와 관련해서는 현행법은 국민투표일 전 18일까지 투표일과 투표안을 공고하도록 되어 있으나 이 대안에서는 중요정책 국민투표는 투표일 전 60일까지, 헌법개정 국민투표는 헌법개정안이 국회에서 의결된 날의 다음 날부터 공고하도록 하고 있고요.</span><br/><span class="spk_sub" id="spk_sub38-25">&nbsp;투표인명부 작성을 현행법은 국민투표일 공고일로부터 5일 이내에 작성하도록 규정하고 있으나 대안은 투표인명부의 최신화를 위해서 국민투표일 전 22일부터 5일 이내에 작성하도록 변경하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-26">&nbsp;그 외에 공선법상 폐지된 부재자투표제도를 폐지하고 거소·선상투표 관련 신고조항을 반영하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-27">&nbsp;다음, 명부사본의 교부와 관련해서는 교부 대상을 현행은 ‘교섭단체 구성 정당’으로 하고 있으나 ‘보조금 배분대상 정당’으로 변경하여 정당의 투표운동을 폭넓게 보장하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub38-28">&nbsp;제5장 국민투표 정보 제공과 관련해서는 현행 국민투표법의 관련 규정을 참고해서 현재 국민투표안 게시제도를 폐지하고 방송, 신문, 인터넷 등을 활용한 정보 제공 명시를 의무화하였습니다.</span><br/><span class="spk_sub" id="spk_sub38-29">&nbsp;그다음에 제6장 국민투표 운동과 관련해서는 국민투표 운동의 정의를 기존에 찬성 또는 반대하게 하는 행위 외에 ‘여러 가지 사항 중 하나를 지지하게 하는 행위’를 추가하였습니다.</span><br/><span class="spk_sub" id="spk_sub38-30">&nbsp;그다음에 제7장 투표와 관련해서는 투표시간을 공선법 규정을 반영했고요. 투표용지도 역시 마찬가지로 투표용지란도 찬성·반대 외에 ‘여러 가지 사항 중 하나’를 추가하였습니다.</span><br/><span class="spk_sub" id="spk_sub38-31">&nbsp;8장 개표와 관련해서는 공선법 규정을 그대로 준용하는 절차를 마련했고요.</span><br/><span class="spk_sub" id="spk_sub38-32">&nbsp;9장 확정과 관련해서는 헌법개정안이 투표권자 과반수의 투표와 투표권자 과반수의―4쪽입니다―찬성을 얻은 때에 확정된다는 내용을 명문화한 것인데요. 이때 투표권자의 개념을 ‘투표인명부와 재외투표인명부에 올라와 있는 사람’으로 명확히 하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-33">&nbsp;제10장 재외국민투표 특례와 관련해서는 헌법불합치 결정을 받은 사안인데요. 전반적으로 공직선거법상 재외선거와 유사한 절차로 규정되어 있음을 말씀드립니다. 이 부분은 참고로 넘어가겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-34">&nbsp;제11장 동시실시의 특례 장입니다. 공직선거와 국민투표가 동일한 날에 실시되는 경우를 대비하여 양 절차의 병행 실시가 가능하도록 명시적인 법적 근거를 마련하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-35">&nbsp;12장 소송 부분은 공선법과 일치시켰습니다.</span><br/><span class="spk_sub" id="spk_sub38-36">&nbsp;13장의 재투표, 투표연기와 관련해서 전부무효에 따른 재외국민투표를 위해서 재투표 실시 시기를 현행보다 늦추고 공고일은 현행보다 앞당겼다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-37">&nbsp;제14장 보칙과 15장 벌칙 조항은 공선법과 유사하게 규정되어 있음을 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub38-38">&nbsp;6쪽을 마지막으로 보시면 투표운동의 원칙 및 한계와 관련해서 일단 대안은 권칠승 의원안을 반영하고 있습니다. 전부개정에서 김영배 의원안과 권칠승 의원안에 약간 차이가 있는데 김영배 의원안은 공직선거와 유사하게 투표일 14일 전부터 투표일 전일까지 운동기간을 설정한 반면에 권칠승 의원안을 반영한 대안은 투표일을 제외한 상시운동을 할 수 있도록 하였습니다. 각각의 장단점에 대해서는 이 박스를 참고해 주시고 이 두 부분에 대해서 일단 어느 것이 더 적정한지 선택할 필요가 있다고 보입니다.</span><br/><span class="spk_sub" id="spk_sub38-39">&nbsp;마지막 국민투표방해죄와 관련해서는 작년 부정선거와 관련해서 선거관리위원회에 대해서 신뢰를 훼손할 목적으로 여러 가지 많은 허위사실이 유포된 바가 있는데 그 부분을 처벌하기 위해서 개정안과 같이 이런 국민투표방해죄가 신설되었다는 말씀을 드리는데 이게 공직선거법에서는 현재 반영되어 있지 않습니다. 다만 이와 관련해서 개정안만이 지금 발의되어 있을 뿐입니다. 그래서 이 투표운동의 원칙과 한계 및 국민투표방해죄와 관련해서는 어느 것이 적절한지 논의가 필요하다고 보입니다.</span><br/><span class="spk_sub" id="spk_sub38-40">&nbsp;이상 모든 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_39" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;그러면 상정된 법률안에 대해서 토론하실 위원님 계십니까?</span><br/></div></div></div><div id="spk_40" class="item14 speaker spk_mem" data-mem_id="6694" data-name="위성곤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">위성곤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/26841957c287473db75fad6182189804.jpg" alt="위성곤"></span><span class="txt"><strong class="name">위성곤</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;위성곤 위원입니다.</span><br/></div></div></div><div id="spk_41" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;위성곤 위원님.</span><br/></div></div></div><div id="spk_42" class="item14 speaker spk_mem" data-mem_id="6694" data-name="위성곤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">위성곤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/26841957c287473db75fad6182189804.jpg" alt="위성곤"></span><span class="txt"><strong class="name">위성곤</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;투표시간이 지금 일반 공직선거인 경우는 오후 8시까지 하고 있는데 투표법안이 오전 6시부터 오후 6시까지로만 되어 있어서 투표시간을 한 2시간 정도 오후를 확대하는 것이 바람직하다고 저는 생각이 됩니다.</span><br/><span class="spk_sub" id="spk_sub42-2">&nbsp;왜냐하면 투표시간을 늘려 주는 것이 우리 참정권을 확대하는 방안이라고 생각하기 때문에 그렇습니다.</span><br/></div></div></div><div id="spk_43" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;또 다른 토론하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub43-2">&nbsp;더 이상 토론하실 위원님 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub43-3">&nbsp;방금 위성곤 위원님 그 의견에 대해서 선관위 입장은 어떻습니까?</span><br/></div></div></div><div id="spk_44" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;위성곤 위원님이 말씀하신 부분은 아마 재보궐선거 등을 실시하는 경우에 선거법의 155조 투표시간이 오전 6시부터 오후 8시까지 임기만료 선거보다 2시간이 더 연장되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub44-2">&nbsp;여기서는 국민투표하고 재보궐선거를 동시에 실시할 때 재보궐선거 선거구역은 일부에서 시행되는 부분이고 국민투표는 전국을 단위로 실시되기 때문에 아마 이 대안에서는 전국을 실시하는 국민투표 투표시간을 적용하도록 이렇게 규정한 걸로 알고 있습니다.</span><br/></div></div></div><div id="spk_45" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;간사님이 정리 좀 해 주시겠습니까?</span><br/></div></div></div><div id="spk_46" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;위원장님, 저 한말씀만 더 드려도 되겠습니까?</span><br/></div></div></div><div id="spk_47" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;예.</span><br/></div></div></div><div id="spk_48" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;지금 대안 50조에 국민투표결과의 확정 부분이 있는데요. 헌법 130조 2항에 ‘헌법개정안은 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다’고 규정이 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub48-2">&nbsp;그런데 국회의원선거권자는 국내선거권자하고 재외선거권자를 합친 개념이고요. 그리고 재외선거권자는 주민등록이 되어 있는 재외선거권자와 주민등록이 없는 재외선거권자로 구성이 됩니다. 그래서 국회의원선거권자는 국내선거권자 플러스 주민등록 재외선거권자 플러스 미등록 재외선거권자 이렇게 되어 있는데 미등록 재외선거권자 수를 알 수가 없어서 국회의원선거권자 수의 정확한 산정이 불가합니다. 그래서 이것을 입법적으로 해결할 수밖에 없고 해서 대안 2조 정의 규정하고 50조 1항의 투표권자는 투표인명부와 재외투표인명부에 올라와 있는 사람으로 이렇게 규정을 했습니다. 그래서 그렇게 정의를 하면 헌법개정안 가결·부결 논란을 해소할 수는 있습니다.</span><br/><span class="spk_sub" id="spk_sub48-3">&nbsp;다만 재외선거인명부에 올라와 있지 않은 사람이 제외됨으로써 헌법개정 확정과 관련된 최저투표율 충족 여부를 판단하는 데 있어서 논란이 있을 수 있습니다. 그래서 위원님들께서 이 부분에 대해서도 한번 생각을 해 주시면 고맙겠습니다.</span><br/></div></div></div><div id="spk_49" class="item14 speaker spk_mem" data-mem_id="6694" data-name="위성곤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">위성곤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/26841957c287473db75fad6182189804.jpg" alt="위성곤"></span><span class="txt"><strong class="name">위성곤</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;구체적으로 어떤 대안……</span><br/></div></div></div><div id="spk_50" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;잠깐만요.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;윤건영 위원님, 정리를 좀 해 주시지요.</span><br/></div></div></div><div id="spk_51" class="item14 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub51-2">&nbsp;총장님 말씀 충분히 잘 알겠는데요. 저희 고민도 마찬가지로 맞닿아 있는 거지 않습니까, 총장님?</span><br/></div></div></div><div id="spk_52" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;예.</span><br/></div></div></div><div id="spk_53" class="item14 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;그러면 구체적인 대안을 검토하신 게 있을까요?</span><br/></div></div></div><div id="spk_54" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;대안을 검토해 봤습니다만 지금 현실적으로는……</span><br/></div></div></div><div id="spk_55" class="item14 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;해외에 계신 분들은 현실적인 답이 없는 것 아닌가요?</span><br/></div></div></div><div id="spk_56" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;예, 그렇습니다.</span><br/><span class="spk_sub" id="spk_sub56-2">&nbsp;그래서 저희가 여권을 가진 사람으로 직권 작성하는 부분도 고려를 해 봤습니다만 외국에 있는 18세 이상 재외국민 중에서 여권이 없는 사람도 많이 있고요. 또 여권에는 성명 그다음에 생년월일, 주민번호는 없고 여권번호만 있기 때문에 여권 정보를 가지고 명부를 작성하는 게 어렵다 그렇게 판단이 들어서요.</span><br/><span class="spk_sub" id="spk_sub56-3">&nbsp;그래서 저희가 헌법학자 세 사람한테 자문을 얻었습니다. 그래서 두 분은 지금 국회의원선거권자의 정확한 숫자 산정이 불가한 상황에서 입법적으로 해결할 수밖에 없다는 의견이었고요. 한 분은 조금 논란이 될 수 있다는 그런 의견이 있었습니다. 그래서 입법적으로 해결할 수밖에 없다고 저도 생각하고 있습니다.</span><br/></div></div></div><div id="spk_57" class="item14 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;아니, 그러니까요. 입법적으로 해결하려고 해도 현재는 현존하는 방법이 없는 게 사실인 거잖아요.</span><br/></div></div></div><div id="spk_58" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;예.</span><br/></div></div></div><div id="spk_59" class="item14 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;그래서 저희도 대안에 그렇게 담은 걸로 알고 있고.</span><br/><span class="spk_sub" id="spk_sub59-2">&nbsp;그래서 위원장님, 이 부분은 본 위원 생각은 그렇습니다. 방금 사무총장이 밝힌 내용과 저희의 고민이 다르지 않습니다. 다만 현실적인 대안을 못 찾는 상황이기 때문에 현행법을, 대안을 처리하시고 부족한 부분에 대해서는 선관위에서도 추후 검토를 해 주셔서 만약에 그 부분을 해소할 수 있는 대안이 나온다면 국회 행안위에 보고해 주시고 그걸 저희는 즉각적으로 받아들여서 법 개정 작업에 나아갈 수 있도록 하는 게 가장 현실적인 안이 아닌가 싶습니다.</span><br/><span class="spk_sub" id="spk_sub59-3">&nbsp;총장님, 어떻습니까?</span><br/></div></div></div><div id="spk_60" class="item14 speaker spk_mem" data-mem_id="0" data-name="허철훈" data-pos="중앙선거관리위원회사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">중앙선거관리위원회사무총장 허철훈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="허철훈"></span><span class="txt"><span class="position">중앙선거관리위원회사무총장</span><strong class="name">허철훈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;위원님 말씀에 공감합니다.</span><br/></div></div></div><div id="spk_61" class="item14 speaker spk_mem" data-mem_id="6694" data-name="위성곤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">위성곤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/26841957c287473db75fad6182189804.jpg" alt="위성곤"></span><span class="txt"><strong class="name">위성곤</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;동의합니다.</span><br/></div></div></div><div id="spk_62" class="item14 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">윤건영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><strong class="name">윤건영</strong><span class="position">위원</span><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_63" class="item14 speaker spk_mem" data-mem_id="6713" data-name="신정훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">위원장 신정훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5cd673d75bd44bc9a7ab580f39eb663.jpg" alt="신정훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">신정훈</strong><span class="area">(전남 나주시화순군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;위성곤 위원님이 제기해 주셨던 투표시간대나 또 방금 사무총장이 말씀하셨던 의결정족수 이 문제에 대해서는 현행 대안으로 강구할 수밖에 없다 하는 현실적인 어려움이 있는 것 같습니다. 그래서 그 대안을 중심으로, 원안으로 해서 여러분들의 의견을 모으도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-2">&nbsp;그러면 더 이상 의견 없으십니까?</span><br/><span class="spk_sub" id="spk_sub63-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-4">&nbsp;더 이상 의견이 없으시므로 토론을 종결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-5">&nbsp;그러면 법률안을 의결하기 전에 비용추계서 첨부 및 공청회 관련 사항을 먼저 의결토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-6">&nbsp;우선 방금 상정된 안건 중 비용추계서가 필요한 법안에 대해서는 국회법 제79조의2제3항에 따라 비용추계서 첨부를 생략코자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub63-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub63-9">&nbsp;다음으로 안건 중 의사일정 제3항, 제4항 및 제12항은 각각 전부개정법률안으로서 공청회를 개최하는 것이 원칙입니다.</span><br/><span class="spk_sub" id="spk_sub63-10">&nbsp;다만 이번 안건은 2014년도 헌법불합치 결정 이후에 제19대 국회에서부터 계속 논의해 왔고 제21대 국회에서도 입법공청회를 개최한 바가 있다는 점을 고려해서 국회법 제58조 6항에 따라 공청회를 생략코자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub63-11">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-12">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub63-13">&nbsp;의사일정 제12항 국민투표법 전부개정법률안(대안)은 전부개정법률안이므로 축조심사를 거치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-14">&nbsp;그러면 제명 및 제1조부터 제40조까지의 조문에 대해서 의견 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub63-15">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-16">&nbsp;다음, 제41조부터 제80조까지의 조문에 대해서 의견 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub63-17">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-18">&nbsp;끝으로 제81조부터 마지막 조문까지 조문 및 부칙에 대해서 의견 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub63-19">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-20">&nbsp;의견이 없으시므로 이상으로 축조심사를 마치고 의결토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-21">&nbsp;그러면 의결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-22">&nbsp;의사일정 제3항부터 제11항까지의 법률안은 각각 본회의에 부의하지 않고 그 내용을 통합 조정한 의사일정 제12항 국민투표법 전부개정법률안(대안)을 우리 위원회 대안으로 제안코자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub63-23">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub63-24">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub63-25">&nbsp;오늘 의결한 법률안에 대한 심사보고서 작성과 체계·자구 정리는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub63-26">&nbsp;위원님 여러분 오늘 하루 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub63-27">&nbsp;오늘 회의는 이것으로 모두 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-28">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(11시00분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(15인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONCHILSEUNG" target="_blank"><span class="name lts3 ">권칠승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOGYEONGJONG" target="_blank"><span class="name lts3 ">모경종</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEONGHYEON" target="_blank"><span class="name lts3 ">박정현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank"><span class="name lts3 ">박홍배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank"><span class="name lts3 ">서범수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank"><span class="name lts3 ">신정훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YANGBUNAM" target="_blank"><span class="name lts3 ">양부남</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGHYEIN" target="_blank"><span class="name lts3 ">용혜인</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank"><span class="name lts3 ">위성곤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank"><span class="name lts3 ">윤건영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGSIK" target="_blank"><span class="name lts3 ">이상식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAESIK" target="_blank"><span class="name lts3 ">이해식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank"><span class="name lts3 ">정춘생</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAIHYUNIL" target="_blank"><span class="name lts3 ">채현일</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank"><span class="name lts3 ">이광희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOOHOYOUNG" target="_blank"><span class="name lts3 ">주호영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 정순임</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 조문상</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 나아정</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>행정안전부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 김민재</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">기획조정실장직무대리</span></span><span class="name lts3"> 이지성</span></a></li><p>인사혁신처</p><li><a class="in_nm"><span class="pos"><span class="lts2">처장</span></span><span class="name lts3"> 최동석</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 유승주</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">윤리복무국장</span></span><span class="name lts3"> 천지윤</span></a></li><p>경찰청</p><li><a class="in_nm"><span class="pos"><span class="lts7">경무인사기획관</span></span><span class="name lts3"> 김병찬</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">혁신기획조정담당관</span></span><span class="name lts3"> 최인규</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">규제개혁법무담당관</span></span><span class="name lts3"> 이순명</span></a></li><p>소방청</p><li><a class="in_nm"><span class="pos"><span class="lts6">청장직무대행</span></span><span class="name lts3"> 김승룡</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 이진호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">화재예방국장직무대리</span></span><span class="name lts3"> 송호영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">장비기술국장직무대리</span></span><span class="name lts2"> 한선</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">기획재정담당관</span></span><span class="name lts3"> 구동욱</span></a></li><p>10·29이태원참사진상규명과재발방지를위한특별조사위원회</p><li><a class="in_nm"><span class="pos"><span class="lts3">위원장</span></span><span class="name lts3"> 송기춘</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯중앙선거관리위원회측 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>중앙선거관리위원회</p><li><a class="in_nm"><span class="pos"><span class="lts4">사무총장</span></span><span class="name lts3"> 허철훈</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 옥미선</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">선거정책실장</span></span><span class="name lts3"> 윤재수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">법제국장</span></span><span class="name lts3"> 박세진</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">정보관리국장</span></span><span class="name lts3"> 유훈옥</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56310;
+			const class_id = 2;
+			const confer_num = "N053986";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640723346" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640723346"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640723346"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640723346"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

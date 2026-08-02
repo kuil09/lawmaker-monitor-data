@@ -1,0 +1,871 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52285" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제418회 (정기회) 제2차 법제사법위원회(안건조정위원회)</strong><span class="date">(2024.11.08.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 조정위원장 선출의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">o 조정위원장(박지원) 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">2. 윤석열 대통령 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안(김용민 의원 발의)(의안번호 2204739)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박지원 조정위원장 (전남 해남군완도군진도군)"> 
+							박지원 조정위원장 (전남 해남군완도군진도군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김승원 위원 (경기 수원시갑)"> 
+							김승원 위원 (경기 수원시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박은정 위원 (비례대표)"> 
+							박은정 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="이건태 위원 (경기 부천시병)"> 
+							이건태 위원 (경기 부천시병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="조배숙 위원 (비례대표)"> 
+							조배숙 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="곽규택 위원 (부산 서구동구)"> 
+							곽규택 위원 (부산 서구동구)
+						</option>
+					
+					
+						<option value="김성완 전문위원">김성완 전문위원</option>
+					
+						<option value="박성재 법무부장관">박성재 법무부장관</option>
+					
+						<option value="천대엽 법원행정처장">천대엽 법원행정처장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(6명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">박지원</span>
+												<span class="position">조정위원장</span>
+												<span class="area">(전남 해남군완도군진도군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6598" data-name="김승원" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">김승원</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 수원시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6779" data-name="박은정" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">박은정</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6814" data-name="이건태" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">이건태</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6731" data-name="조배숙" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">조배숙</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6836" data-name="곽규택" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">곽규택</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 서구동구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="김성완" data-pos="전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">김성완</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="박성재" data-pos="법무부장관"> 
+											<label for="spk_attend1">
+												<span class="name">박성재</span>
+												<span class="position">법무부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="천대엽" data-pos="법원행정처장"> 
+											<label for="spk_attend2">
+												<span class="name">천대엽</span>
+												<span class="position">법원행정처장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52285&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제418회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>법제사법위원회회의록</h1><p class="tit_sm">(안건조정위원회)</p></div></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 11월 8일(금)</p></li><li><div class="sbj lts2">장소</div><p class="con">법제사법위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 조정위원장 선출의 건</li><li><span class="num">2.</span> 윤석열 대통령 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안(김용민 의원 발의)(의안번호 2204739)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 조정위원장 선출의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2">o 조정위원장(박지원) 인사</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">2.</span> 윤석열 대통령 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안(김용민 의원 발의)(의안번호 2204739)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시03분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">조정위원장직무대행 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장직무대행</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정리하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제418회 국회(정기회) 법제사법위원회 제2차 안건조정위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;우리 조정위원회 위원 중 연장자인 제가 국회법 제47조 및 제57조의2의 규정에 따라서 조정위원장으로 선출됩니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;그래서 회의를 진행하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 조정위원장 선출의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">조정위원장직무대행 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장직무대행</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;그러면 의사일정 제1항 안건조정위원회 위원장 선출의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;국회법 제57조의2제5항에 따르면 안건조정위원회 위원장은 제1교섭단체 소속 위원 중에서 선출하도록 규정하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;그러면 제1교섭단체인 더불어민주당 소속 위원님 세 분 중에서 위원장후보를 추천해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;김승원 위원님.</span><br/></div></div></div><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6598" data-name="김승원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">김승원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSEUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/06249610045b4c5487f9586046460423.jpg" alt="김승원"></span><span class="txt"><strong class="name">김승원</strong><span class="position">위원</span><span class="area">(경기 수원시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;김승원입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;저희 위원 중에 가장 경륜도 풍부하시고 또 타의 모범이 되는 의정활동을 하고 계신 박지원 현 위원장님을 저희 안건조정위 위원장님으로 추천합니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">조정위원장직무대행 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장직무대행</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;다른 분들 없습니까?</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;동의합니다.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6814" data-name="이건태" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">이건태 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEGEONTAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7355806cdad64eed8888ef6a17886585.jpg" alt="이건태"></span><span class="txt"><strong class="name">이건태</strong><span class="position">위원</span><span class="area">(경기 부천시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;찬성합니다.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">조정위원장직무대행 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장직무대행</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;후보로 추천된 저를 안건조정위원회의 위원장으로 선출을 하고자 하는데 이의 없습니까?</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;(「이의 없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;(박지원 조정위원장직무대행, 조정위원장으로서 사회 계속)</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">o 조정위원장(박지원) 인사</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시05분)</p><br/><div id="spk_10" class="item2 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;방금 안건조정위원회의 위원장으로 선출된 박지원입니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;위원장으로 선출해 주신 위원 여러분에게 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;원활한 회의 진행을 위해서 언론 공개는 상례적으로 여기까지만 하겠습니다. 비공개로 진행할 테니까 언론인 여러분들의 협조를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;그러면 안건 심사에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">2. 윤석열 대통령 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안(김용민 의원 발의)(의안번호 2204739)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시07분)</p><br/><div id="spk_12" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;의사일정 제2항 윤석열 대통령 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;먼저 전문위원으로부터 심사 경과를 보고받고 기관장님들로부터 의견을 들은 다음에 위원님들께서 논의하시는 순서로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;김성완 전문위원께서는 그동안의 심사 경과를 간략히 보고해 주기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item3 speaker spk_mem" data-mem_id="0" data-name="김성완" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">전문위원 김성완 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김성완"></span><span class="txt"><span class="position">전문위원</span><strong class="name">김성완</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;의사일정 제2항 김용민 의원이 대표발의한 동 법률안에 대한 심사 경과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;우리 위원회 법안심사소위원회에서는 2024년 11월 5일 해당 안건을 심사하여 특별검사의 수사 대상 명확화 등 일부 내용을 수정한 법률안을 의결하였고, 11월 8일 전체회의 대체토론을 거친 후 안건조정위원회에 회부되었습니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;이상 보고를 마치겠습니다. </span><br/></div></div></div><div id="spk_14" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;수고하셨습니다. </span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;기관 측의 의견을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;박성재 장관님의 의견을 말씀해 주시기 바랍니다. </span><br/></div></div></div><div id="spk_15" class="item3 speaker spk_mem" data-mem_id="0" data-name="박성재" data-pos="법무부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">법무부장관 박성재 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박성재"></span><span class="txt"><span class="position">법무부장관</span><strong class="name">박성재</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;조금 길게 해도 괜찮습니까? </span><br/></div></div></div><div id="spk_16" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;가급적 짧게 해 주십시오.</span><br/></div></div></div><div id="spk_17" class="item3 speaker spk_mem" data-mem_id="0" data-name="박성재" data-pos="법무부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">법무부장관 박성재 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박성재"></span><span class="txt"><span class="position">법무부장관</span><strong class="name">박성재</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;윤석열 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안에 대해서 법무부장관의 의견을 말씀드리겠습니다. </span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;정부는 이 법률안과 유사한 법률안에 대해 21대 국회에서 여러 위헌성을 이유로 2024년 1월 재의를 요구하여 2024년 2월 재의결을 거쳐 해당 법률안이 부결된 바 있습니다. 그리고 22대 국회에서도 위헌성이 오히려 더 가중된 채로 의결됐다는 이유로 2024년 10월 재의를 요구하였고 그 결과 2024년 10월 다시 한번 재의결을 거쳐 해당 법률안이 부결된 바 있습니다. 그럼에도 이 법률안은 이전에 부결된 법률안의 위헌성이 해소되지 않았고 오히려 위헌적 요소가 다분한 수사 대상들을 대거 더 추가하여 또다시 발의되었습니다.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;이런 법률안은 특별검사제도의 보충성·예외성 원칙에 위반되고 권력분립 원칙을 위반한 특검 임명 절차가 마련되어 있어서 그 정치적 중립성과 공정성에 의심을 받을 요소가 있고 이 부분이 위헌적인 요소가 있다고 생각합니다. </span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;그리고 사건관계인의 명예훼손, 사생활 침해 우려 그다음에 과도한 수사 기간·인력으로 인한 인권침해 우려도 있다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub17-6">&nbsp;그리고 특검 실시에 소중한 혈세가 많이 투입될 것으로 예상되고 직무수행 회피 규정에 문제점도 있다고 생각합니다. </span><br/><span class="spk_sub" id="spk_sub17-7">&nbsp;결국 이런 점들을 살펴보면 특별검사 법률안에 위헌적 요소가 다분하다고 생각되므로 특별검사 도입 문제를 신중하게 검토하여 주시면 감사하겠습니다. </span><br/></div></div></div><div id="spk_18" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;감사합니다. </span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;법무부장관의 의견을 청취했습니다. </span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;그러면 다음은 천대엽 법원행정처장님의 의견을 청취하겠습니다. </span><br/></div></div></div><div id="spk_19" class="item3 speaker spk_mem" data-mem_id="0" data-name="천대엽" data-pos="법원행정처장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">법원행정처장 천대엽 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="천대엽"></span><span class="txt"><span class="position">법원행정처장</span><strong class="name">천대엽</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;법원행정처 의견을 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;기본적으로 지난번 소위에서 행정처 차장이 밝힌 것과 같은 의견입니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;기존 법 6조 3항에서 자료제출 대상인 관계기관 범위에 법원이 포함되는 것은 조금 부적절하다라는 의견을 개진했는데 이번에 그 부분이 반영되었고, 나머지 부분에 대해서는 기본적으로 특검에 대한 국회의 폭넓은 재량을 인정하는 취지에 비추어서 입법정책적 결정사항이라는 것이 행정처의 입장입니다.</span><br/></div></div></div><div id="spk_20" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;지난번에 법원 측에서 요구한 내용은 이번 법안에 반영됐다 이런 말씀이시지요?</span><br/></div></div></div><div id="spk_21" class="item3 speaker spk_mem" data-mem_id="0" data-name="천대엽" data-pos="법원행정처장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">법원행정처장 천대엽 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="천대엽"></span><span class="txt"><span class="position">법원행정처장</span><strong class="name">천대엽</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;예, 그렇습니다. </span><br/></div></div></div><div id="spk_22" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;감사합니다. </span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;그러면 위원님들께서는 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;먼저 조배숙 위원님. </span><br/><span class="spk_sub" id="spk_sub22-4">&nbsp;시간은 5분으로 하겠습니다. </span><br/></div></div></div><div id="spk_23" class="item3 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;5분 내에 하겠습니다. </span><br/></div></div></div><div id="spk_24" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;소위는 시간이 없대요. 미안합니다. 가급적 5분으로 제한하겠습니다. </span><br/></div></div></div><div id="spk_25" class="item3 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;예, 정리해서 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;지금 비슷한 사안으로 안건조정위원회가 두 번째인 것 같습니다. 이번 특검법 발의안은 계속되고 있어요. 그리고 또 저희들이 대체토론이나 이런 데서도 누차 얘기를 했지만 우선 특검 검사 임명권의 문제입니다. 임명권을 더불어민주당과 야당에 추천권을 주고 있습니다. 저는 그것은 심각한 문제라고 생각합니다. </span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;왜냐하면 지금 더불어민주당에서 이렇게 의혹을 제기하고 의혹을 믿는데 그런데 그것을 수사하는 특검 검사도 야당에서 추천한 검사만이 조사를 할 수 있다고 하면 과연 이 수사의 중립성과 독립성이 지켜질지 의문입니다. 첫째, 그 부분 하나. </span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;그리고 또 여러 가지 많습니다만 여기 법안 12조에 보면 대국민보고를 하는 사항이 있습니다. 그래서 ‘사건의 대국민보고’ 해서 ‘국민의 알권리 보장을 위해서 피의사실 외의 수사과정에 대한 언론 브리핑을 실시할 수 있다’ 했는데 저는 이것도 이외라고 하지만 이 구분이 그렇게 쉬운 것이 아니고 그래서 피의사실공표죄가 될 우려가 크다.</span><br/><span class="spk_sub" id="spk_sub25-5">&nbsp;이렇게 위헌적인 요소가 그때도 지적이 되었는데 아까 법무부장관님 말씀하신 것처럼 그런 것에 대한 시정이 없이 계속 또 똑같은, 그런 중요한 부분은 전혀 변함이 없이 이렇게 특검법안을 제출한다는 것이 이게 결론이 통과되지 않을 것이 자명하고 계속 도돌이표인데 과연 이런 국정의 낭비를 하는 게 필요한가 하는 그런 생각이 듭니다. </span><br/><span class="spk_sub" id="spk_sub25-6">&nbsp;저는 이러한 위헌성이 전혀 시정되지도 않고 이것을 계속해서 반복하는 것은 정쟁이라고 생각하고, 저는 이 법안에 대해서 명백하게 문제점이 있으니 반대하고 우리 안건조정위원회에서 이 부분을 이렇게 반대하는 것으로 결론을 내려 주셨으면 좋겠습니다. </span><br/><span class="spk_sub" id="spk_sub25-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_26" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;수고하셨습니다. </span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;김승원 위원님.</span><br/></div></div></div><div id="spk_27" class="item3 speaker spk_mem" data-mem_id="6598" data-name="김승원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">김승원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSEUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/06249610045b4c5487f9586046460423.jpg" alt="김승원"></span><span class="txt"><strong class="name">김승원</strong><span class="position">위원</span><span class="area">(경기 수원시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;벌써 세 번째 특검법입니다. 그동안 수사 대상은 확대되고 수사 기간은 더 늘어났으며 수사 규모 역시 증원되어 왔습니다. 윤석열 대통령 본인의 이해관계에 대한 거부권 행사로 인한 대통령의 지지율은 17%, 아무튼 10%대로 계속 추락하고 있습니다. 참으로 안타깝고 또 유감스럽습니다. </span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;윤석열 대통령께서는 이 특검법이 삼권분립 위배다 혹은 위헌이라고 주장하시지만 윤석열 대통령 본인이 최순실 특검에서 수사검사로서 맹활약을 하셨고 그 수사 후 발간한 백서에 ‘수사 대상이 대통령인 경우 대통령, 법무부장관 그리고 여권 내 영향력을 받지 않는 곳에서 특검을 추천해야 된다’라고 분명히 그렇게 기록을 하셨습니다. 헌법재판소에서도 특검의 대상으로부터 독립된 야권이라든가 그런 곳에서 추천한다는 것이 이미 합헌이라는 결정도 내렸습니다. </span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;국민께서는 분명히 의혹에 대한 진실을 원하십니다. 도이치모터스 주가조작 사건 또 명품 가방에 대한 무혐의 사건에 대한 진실, 양평고속도로가 왜 휘어졌는지, 대통령실이 청와대에 있다가 왜 용산으로 이전되었는지, 그러면서 무허가 업체가 와서 그 중요시설을 공사했는지 또 대통령 되기 위한 경선 과정에서 어떤 불법 여론조사가 있었고 그것에 대한 대가로 정말 국회의원 공천권을 주었는지 등등 국민이 가지는 많은 의혹에 대해서 정말 특검만이 진실을 밝힐 수 있는 유일한 수단이다 이렇게 생각이 됩니다. </span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;근거가 없다고 말씀하시는데 지금 윤석열 정권하에서 뉴스타파, 경향신문 등이 언론 보도로 인한 압수수색을 당한 것을 여러 언론기관이 목도하고 있음에도 불구하고 여러 언론기관이 이 의혹에 대한 보도를 지금 하고 있습니다. 그만큼 근거가 있고 또 중요하다는 것을 반증하는 것 아니겠습니까? </span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;국회는 국민의 이런 의혹에 대한 진실규명에 반드시 답을 해야 됩니다. 그래서 우리 안건조정위원회가 서로 정당 간에 어떤 유불리라든가 이해관계는 있어도 국민의 명령에 대해서는 그 명령을 따를 국회의원, 헌법기관으로서의 의무가 있기 때문에 반드시 이 특검법안은 통과되어야 된다 이렇게 말씀을 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub27-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_28" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;수고하셨습니다. </span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;박은정 위원. </span><br/></div></div></div><div id="spk_29" class="item3 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;법안소위에서 충분히 논의됐던 내용이고 똑같은 논의가 반복적으로 진행이 되고 있습니다. 지금 안건조정위에서도 같은 내용으로 말씀을 나누고 계시는데요, 저는 이 토론을 종결하고 빨리 법사위 전체회의에서 논의를 해서 통과해야 된다고 생각합니다. </span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;토론 종결을 제안합니다. </span><br/></div></div></div><div id="spk_30" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;소위에서는 토론 종결 규정이 없다고 하니까 발언으로 간주하겠습니다. </span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;그다음 곽규택 위원.</span><br/></div></div></div><div id="spk_31" class="item3 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;역시 위원장님이 위원장석에 앉아 있으니까 아주 회의 분위기가 안정적이고 토론에 집중할 수 있는 것 같아서 너무 좋습니다. </span><br/></div></div></div><div id="spk_32" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;감사합니다. </span><br/></div></div></div><div id="spk_33" class="item3 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;오늘 오전에 법사위에서 이 안건에 대해서 법무부장관께서 하신 말 중에 특검을 우리보다 먼저 앞서 시행했던 미국에서 특별검사제도를 어떻게 보는지에 대한 정확한 메시지가 담겨 있다고 생각합니다. 아무것도 아닌 사안을 정치적으로 키워서 정치적인 수사를 하게 하는 그런 특검의 폐해가 벌써 우리보다 앞서 특별검사제도를 경험한 미국의 결론이었던 것입니다. </span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;특히 이번 22대 국회 들어서 김건희 여사에 대한 특검 또 채 상병 특검, 이런 특검들을 계속해서 반복적으로 제기를 하고 또 대통령이 재의 요구했음에도 불구하고 계속 부결되는 절차를 반복하고 있습니다. </span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;11월 예산 국회가 열리고 있음에도 11월 14일 국회본회의에 이 특검법안을 올리기 위해서 지금 이런 무리한 법안을 법사위에서 통과시키려고 하고 있고요.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;또 14일 날 통과된 다음에 대통령이 재의 요구를 하면 28일 본회의에서 또 표결을 하겠다 하는 일정까지 세워 놓고 있습니다. 아주 공교롭게도 14일 본회의 다음 날이 이재명 피고인에 대한 1심 선고, 공직선거법 위반 사건의 1심 선고가 있는 날입니다. 그리고 25일은 위증교사 사건의 1심 선고가 있지요. 그리고 28일 날 본회의에서 재의 요구돼서 돌아온 이 특검법을 다시 표결하겠다는 겁니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;이런 계획하에서 오로지 이재명 피고인에 대한 재판 결과를 김건희 특검으로 몰고 가려는 그런 정치적인 수사, 정치적인 특별검사의 폐해가 그대로 보이는 법안입니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;여기 보면 이것저것 다 합쳐 가지고 11개의 사건을 만들고 그다음에 그와 관계된 사건 이렇게 해 가지고 붙여 놓았습니다. 이재명 피고인이 4개의 재판, 7개의 죄명, 11개의 사건, 그 11개의 사건에 다 맞춰 보려고 어떻게든 11개를 만든 그런 느낌이 들어요. 이미 수사를 거쳐 가지고 혐의를 인정하기 어렵다, 기소할 수 없는 사건이라는 것, 확인된 것들 그리고 언론에서 기사 몇 번 난 사건들 그런 사건들을 정치적인 사건으로 만들어서 정치적인 수사를 하려고 하는, 미국의 특별검사제도의 폐해가 그대로 고스란히 드러나는 그런 사안이 아닌가 싶습니다.</span><br/><span class="spk_sub" id="spk_sub33-7">&nbsp;이 법률안 수사 대상 중에서 제일 끝에 11항 한번 보시면 ‘윤석열 대통령 배우자 김건희와 그의 측근, 대통령실이 국가기밀에 해당하는 정보를 유출하고 법적 근거 없이 민간인에게 국가 업무를 수행토록 하는 등 국정 농단했다는 의혹 사건’. 도대체 무슨 국가기밀을 누구에게 유출한 것이며 어떤 민간인에게 어떤 국가 업무를 수행토록 했다는 것인지 전혀 특정도 안 돼 있는데 11개 맞추려고 하다 보니까 이런 추상적인 사건까지도 등장을 하는 겁니다.</span><br/><span class="spk_sub" id="spk_sub33-8">&nbsp;지금 사건들이 잘 아시겠지만 이미 민주당과 야당에서 고발을 해 가지고 공수처에서 다 수사 중인 사건들입니다. 과거에 우리가 특검을 하면서 국회에서 계속 정쟁이 되고 쟁점화가 되고 해결이 안 되니까 아예 상설특검을 만들고 그리고 공수처를 만들자, 정말 민주당 쪽의 숙원사업이었던 것 아닙니까? 그 공수처법 통과시키려고 패스트트랙 관련해서 엄청난 분란이 있었고요. 그러면서 통과시켜 놓고, 그 공수처에다가 고발을 했습니다. 그런데 공수처에서 수사를 하고 있는 것도 못 믿겠다, 필요 없다 해 가지고 다시 또 특검을 하겠다는 것 아닙니까? 이런 반복적이고 권한 남용적인 수사를 계속해서 하겠다 하는 이것은 법사위에서 통과시켜서는 안 될 정치적인 특별검사에 관한 내용이라고 보여집니다.</span><br/><span class="spk_sub" id="spk_sub33-9">&nbsp;그래서 하나하나를 따지기보다는 이 특검법 자체가 정말 정쟁을 위한 그리고 특정 야당의 당대표 사건을 눈가림하기 위한 그런 법이기 때문에 이 사안은 결코 법사위에서 통과되어서는 안 된다 하는 이런 의견을 드립니다.</span><br/><span class="spk_sub" id="spk_sub33-10">&nbsp;이상입니다. </span><br/></div></div></div><div id="spk_34" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;곽규택 위원 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub34-2">&nbsp;특검이 왜 안 되는가 반대 이유를 논리 정연하게 설명하셨습니다.</span><br/><span class="spk_sub" id="spk_sub34-3">&nbsp;발언하시겠어요?</span><br/></div></div></div><div id="spk_35" class="item3 speaker spk_mem" data-mem_id="6814" data-name="이건태" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">이건태 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEGEONTAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7355806cdad64eed8888ef6a17886585.jpg" alt="이건태"></span><span class="txt"><strong class="name">이건태</strong><span class="position">위원</span><span class="area">(경기 부천시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;지금 윤석열 대통령의 지지율이 17%까지 떨어졌습니다. 탄핵 직전의 지지율을 보이고 있습니다. 그 이유는 이 특검법에 들어 있는 11개의 국민적 의혹에 대해서 검찰이 수사를 하지 않거나 봐주기 수사를 하기 때문에 이렇게 여론이 악화된 겁니다. 검찰은 지금 김건희 여사에 대해서 수사할 의지가 전혀 없습니다. 김건희 여사는 우리나라 특검의 성역이 됐습니다. 헌법은 법 앞에 평등을 규정했는데 김건희 여사는 법 위에 군림하고 있습니다. 그것은 우리 모두가 다 인지하고 있는 사실입니다.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;장관님께서 미국의 특검제도가 사라진 게 특검이 정치에 악용되었기 때문이라는 것을 미국 여야가 모두 인정했기 때문이라고 말씀하셨는데 지금 우리나라의 상황은 그것과 완전 180도 다릅니다. 지금 검찰의 수사가 정치에 악용되고 있습니다. 그렇기 때문에 특검을 통해서라도 법 앞의 평등을 실현하기 위해서 국민들이 특검을 요구하고 있는 것입니다. 검찰의 수사권이 정치에 악용되고 있는 이 안타까운 현실을 해결하기 위해서 특검이 필요합니다. 반드시 김건희 특검법을 통과시켜야 될 의무가 우리 법사위에 있습니다.</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_36" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">조정위원장 박지원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">박지원</strong><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;마찬가지로 특검법이 필요하다는 이유를 논리 정연하게 잘 설명해 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;이렇게 여섯 위원 중 위원장을 제외한 다섯 위원들이 의견을 개진했습니다. 위원장으로서 조정안의 내용과 처리 방안에 대해서 제안하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub36-3">&nbsp;기존 소위에서 심사한 내용을 존중하여 의사일정 제2항은 소위원회에서 의결한 바와 같이 수정한 부분은 수정한 대로, 그 외 부분은 원안대로 하여 조정안을 채택하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub36-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-5">&nbsp;(「있습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-6">&nbsp;이의가 있고, 진행을 더 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-7">&nbsp;그러면 조정안을 채택하기에 앞서 축조심사를 실시하겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-8">&nbsp;법안의 제명과 제1조부터 제5조까지 의견 있으신 위원님은 계십니까?</span><br/><span class="spk_sub" id="spk_sub36-9">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-10">&nbsp;다음으로 제6조부터 제10조까지 의견 있으십니까?</span><br/><span class="spk_sub" id="spk_sub36-11">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-12">&nbsp;다음으로 제11조부터 15조까지 의견 있으십니까?</span><br/><span class="spk_sub" id="spk_sub36-13">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-14">&nbsp;다음으로 제16조부터 20조까지 의견 있으십니까?</span><br/><span class="spk_sub" id="spk_sub36-15">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-16">&nbsp;다음으로 21조부터 제22조까지, 부칙에 대해 의견 있으십니까?</span><br/><span class="spk_sub" id="spk_sub36-17">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-18">&nbsp;이상으로 축조심의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-19">&nbsp;그러면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-20">&nbsp;의사일정 제2항 윤석열 대통령 배우자 김건희의 주가조작 사건 등의 진상규명을 위한 특별검사 임명 등에 관한 법률안은 소위원회에서 심사한 바와 같이 수정한 부분은 수정한 대로, 그 외 부분은 원안대로 의결코자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub36-21">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-22">&nbsp;(「이의 있습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub36-23">&nbsp;이의 있으세요?</span><br/><span class="spk_sub" id="spk_sub36-24">&nbsp;그러면 이의가 있기 때문에 국회법에 따라서 거수 표결로 결정하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-25">&nbsp;표결에 앞서 안건조정위원회의 조정안 채택은 국회법에 따라 재적위원 3분의 2 이상의 찬성으로 이루어진다는 점을 알려 드립니다.</span><br/><span class="spk_sub" id="spk_sub36-26">&nbsp;찬성하는 위원님들은 손을 들어 주십시오.</span><br/><span class="spk_sub" id="spk_sub36-27">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub36-28">&nbsp;내리십시오.</span><br/><span class="spk_sub" id="spk_sub36-29">&nbsp;반대하는 위원들은 손을 들어 주십시오.</span><br/><span class="spk_sub" id="spk_sub36-30">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub36-31">&nbsp;내리십시오.</span><br/><span class="spk_sub" id="spk_sub36-32">&nbsp;표결 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-33">&nbsp;재석위원 총 6인 중 찬성 4인, 반대 2인으로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub36-34">&nbsp;이상으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-35">&nbsp;오늘 의결한 법률안에 대해서 자구 정리 등에 관한 사항은 조정위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub36-36">&nbsp;수고하신 법무부장관과 법원행정처장께 감사말씀을 드리면서 다섯 분의 위원님들이 충분하게 의견 조정을 했지만 가결되었기 때문에 서로 존중해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub36-37">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(14시29분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(6인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank"><span class="name lts3 ">곽규택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSEUNGWON" target="_blank"><span class="name lts3 ">김승원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank"><span class="name lts3 ">박은정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank"><span class="name lts3 ">박지원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGEONTAE" target="_blank"><span class="name lts3 ">이건태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank"><span class="name lts3 ">조배숙</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 김성완</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>법무부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 박성재</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯법원측 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>법원행정처</p><li><a class="in_nm"><span class="pos"><span class="lts2">처장</span></span><span class="name lts3"> 천대엽</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52285;
+			const class_id = 2;
+			const confer_num = "054296";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641330454" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641330454"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641330454"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641330454"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

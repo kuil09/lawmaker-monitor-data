@@ -1,0 +1,979 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52544" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제418회 (정기회) 제1차 정보위원회</strong><span class="date">(2024.09.26.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 소위원회 위원 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2024년도 국정감사계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 2024년도 국정감사 보고 및 서류제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 2024년도 국정감사 증인 출석 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 국가정보원 현안질의(비공개)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="신성범 위원장 (경남 산청군함양군거창군합천군)"> 
+							신성범 위원장 (경남 산청군함양군거창군합천군)
+						</option>
+					
+						
+						
+							
+								
+							
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="柳榮夏(유영하) 위원 (대구 달서구갑)"> 
+							柳榮夏(유영하) 위원 (대구 달서구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이기헌 위원 (경기 고양시병)"> 
+							이기헌 위원 (경기 고양시병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박선원 위원 (인천 부평구을)"> 
+							박선원 위원 (인천 부평구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김병기 위원 (서울 동작구갑)"> 
+							김병기 위원 (서울 동작구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이성권 위원 (부산 사하구갑)"> 
+							이성권 위원 (부산 사하구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="권영세 위원 (서울 용산구)"> 
+							권영세 위원 (서울 용산구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박지원 위원 (전남 해남군완도군진도군)"> 
+							박지원 위원 (전남 해남군완도군진도군)
+						</option>
+					
+					
+						<option value="송환엽 행정실장">송환엽 행정실장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(8명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6741" data-name="신성범" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">신성범</span>
+												<span class="position">위원장</span>
+												<span class="area">(경남 산청군함양군거창군합천군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+											
+										
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6795" data-name="柳榮夏(유영하)" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">柳榮夏(유영하)</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 달서구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6564" data-name="이기헌" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">이기헌</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 고양시병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6815" data-name="박선원" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">박선원</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 부평구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6591" data-name="김병기" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">김병기</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 동작구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6727" data-name="이성권" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">이성권</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 사하구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6584" data-name="권영세" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">권영세</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 용산구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6735" data-name="박지원" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">박지원</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 해남군완도군진도군)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="송환엽" data-pos="행정실장"> 
+											<label for="spk_attend0">
+												<span class="name">송환엽</span>
+												<span class="position">행정실장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52544&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제418회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>정보위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 9월 26일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">정보위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 소위원회 위원 선임의 건</li><li><span class="num">2.</span> 2024년도 국정감사계획서 채택의 건</li><li><span class="num">3.</span> 2024년도 국정감사 보고 및 서류제출 요구의 건</li><li><span class="num">4.</span> 2024년도 국정감사 증인 출석 요구의 건</li><li><span class="num">5.</span> 국가정보원 현안질의</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 소위원회 위원 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2024년도 국정감사계획서 채택의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 2024년도 국정감사 보고 및 서류제출 요구의 건</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 2024년도 국정감사 증인 출석 요구의 건</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 국가정보원 현안질의(비공개)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시02분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제418회 국회(정기회) 제1차 정보위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;의사일정에 들어가기 전에 우리 위원회에 새로 보임되어 오신 유영하 위원님의 인사말씀을 듣겠습니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6795" data-name="柳榮夏" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">柳榮夏 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/32a8a3160f2e48dea973ec7f54668fa7.jpg" alt="柳榮夏"></span><span class="txt"><strong class="name">柳榮夏</strong><span class="position">위원</span><span class="area">(대구 달서구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;안녕하십니까?</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;저는 대구 달서갑의 유영하입니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;여러 가지로 많이 부족할 것입니다. 그렇지만 제가 생각했던 공화정의 요체는 서로 다름을 인정하고 관용과 절제가 바탕이 되어야 된다고 믿고 있습니다. 하여튼 그런 토대에서 여러분들 의견을 잘 듣고 보탬이 될 수 있는 의정활동을 하겠습니다. 열심히 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;유영하 위원님을 환영합니다. 축하드립니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 소위원회 위원 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시03분)</p><br/><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;의사일정 제1항 소위원회 위원 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;이 안건은 지난 9월 12일 사보임으로 인해 공석이 된 예산결산심사소위원회에 유영하 위원을 선임하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;이와 같이 소위원회 위원을 선임하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;소위원회 위원 선임의 건은 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub6-6"><div class="taR">(소위원회 구성 명단은 끝에 실음)</div></span></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 2024년도 국정감사계획서 채택의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_7" class="item2 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;의사일정 제2항 2024년도 국정감사계획서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;이 안건은 우리 정보위원회가 2024년도 국정감사를 실시하기 위하여 국정감사 일정 및 대상기관 등을 정한 국정감사계획서를 채택하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;국정감사계획서의 주요 내용을 말씀드리면 감사반은 위원 전원으로 구성하고, 국가정보원 등 5개 기관에 대하여 10월 29일부터 10월 31일까지 3일간 비공개로 감사를 실시하되 마지막 날인 10월 31일 오후에는 777사령부를 현장 시찰하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;그 밖의 자세한 내용은 배부해 드린 2024년도 국정감사계획서(안)을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;그리고 오늘 계획서 의결 이후 불가피한 사유로 국정감사 계획을 일부 변경할 필요가 있을 때는 위원회의 의결에 갈음하여 위원장이 양 간사와 협의하여 정하도록 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;그러면 2024년도 국정감사계획서를 배부해 드린 유인물과 같이 채택하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;2024년도 국정감사계획서 채택의 건은 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">3. 2024년도 국정감사 보고 및 서류제출 요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시05분)</p><br/><div id="spk_9" class="item3 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;의사일정 제3항 2024년도 국정감사 보고 및 서류제출 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;이 안건은 5개 감사 대상 기관에 대하여 감사일에 소관 업무에 대하여 보고할 것과 우리 위원회의 서류제출 요구서에 따른 서류제출을 요구하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;보고 및 서류제출 요구 현황은 배부해 드린 유인물을 참고해 주시기 바랍니다. 서류제출 요구는 위원님들의 요구 자료와 위원회 공통 요구 자료를 같이 해당 기관에 요구하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;아울러 오늘 의결 이후에 추가로 위원님들의 서류제출 요구가 있는 경우 위원회의 의결에 갈음하여 위원장이 해당 기관에 서류제출을 요구할 수 있도록 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;그러면 이상과 같이 감사 대상 기관에 대하여 보고 및 서류제출을 요구하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub9-7">&nbsp;2024년도 국정감사 보고 및 서류제출 요구의 건은 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" class="tit">4. 2024년도 국정감사 증인 출석 요구의 건</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시07분)</p><br/><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;의사일정 제4항 2024년도 국정감사 증인 출석 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;이 안건은 국가정보원장 등 18명을 국정감사 기관증인으로 선정하여 해당 기관의 국정감사일에 출석하도록 요구하기 위한 것입니다. 증인 명단은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;그러면 기관증인 18명에 대하여 국정감사 증인출석을 요구하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;(「이의 있습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;이의가 들어왔습니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;이기헌 위원님 먼저 말씀하시지요.</span><br/></div></div></div><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6564" data-name="이기헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">이기헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d73911ce9f2247269b2f64c0c74c08d3.jpg" alt="이기헌"></span><span class="txt"><strong class="name">이기헌</strong><span class="position">위원</span><span class="area">(경기 고양시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;제가 매번 말씀드립니다만, 정보위원회 처음 해서 제가 잘 몰라서 그럴 수도 있습니다만 상례적으로, 상식적으로 봤을 때…… 지금 차관급 이상 국가정보원 5인의 정무직 직원들만 증인 채택이 되어 있는데요. 저는 실질적으로 이렇게 해서는 실효적인 국정감사가 진행되기 어렵다라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;국정원에 1급 부서장들이 많습니다만 지방 근무해서 올라오기 어려운 부서장은 모르겠지만 적어도 본부의 부서장들은 국정감사의 증인으로 채택하는 것이 타당하다 이렇게 생각하고 말씀드립니다.</span><br/></div></div></div><div id="spk_13" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;박선원 위원님.</span><br/></div></div></div><div id="spk_14" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;존경하는 위원장님, 가급적 현재대로 하면 좋겠지만 과거 사례를 보니까 증인선서를 하지 않았다는 이유 때문인지는 모르겠으나 부서장이 배석을 해서 답변을 하는 경우에 드러내 놓고 거짓말하는 경우가 여러 차례 있습니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;그렇기 때문에 공직자로서의 기본 도덕과 양심은 존중하지만 굳이 증인으로 채택해서 선서하지 않을 이유가 없다, 어차피 그 자리에 부서장은 나오시지 않습니까? 그래서 증인으로 채택해 주셨으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;특히 22대 첫 국정감사인 마당에 1급 부서장들, 본청에 근무하는 1급 부서장들은 반드시 증인으로 채택돼야 된다는 의견입니다.</span><br/></div></div></div><div id="spk_15" class="item4 speaker spk_mem" data-mem_id="6591" data-name="김병기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">김병기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d7c2ddfa44bd49e384f91f4ea0f080e9.png" alt="김병기"></span><span class="txt"><strong class="name">김병기</strong><span class="position">위원</span><span class="area">(서울 동작구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;몇 가지 확인 좀 할게요, 증인 관련해 가지고.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;원래 배석을 하지 않나요? 몇 년 동안 당연히 다 배석을 하지 않았나요? 형식적인 문제인 것 같아요. 배석하는 부서장들을 전부 증인으로 일괄적으로 하느냐, 다른 위원회의 부처를 보면 참석하는 국장님까지는…… 국정원을 예를 들면 원장이나 차장들, 정무직들께서 답변 못 하는 걸 부서장들이 대신하는 경우가 있지 않습니까? 그건 당연한 것일 것 같아요. 그러면 그 부서장들까지는 보통 다른 부처들도 증인선서를 받거든요.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;그런데 만약에 증인선서가 여러 가지 이유로 합의가 안 된다 한다면 그날 당일에 정무직을 대신해 가지고 답변을 해야 되는 부서장들 있지 않습니까? 예를 들면 북한정보국장이 답변을 해야 된다 그러면 북한정보국장을 추가로 증인선서를 받고 하는 것은 형식상으로 안 되나요, 전부 다 시킬 필요 없이?</span><br/></div></div></div><div id="spk_16" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;이성권 위원님.</span><br/></div></div></div><div id="spk_17" class="item4 speaker spk_mem" data-mem_id="6727" data-name="이성권" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">이성권 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/5b2cfeea639e41b0a8007c602631c659.png" alt="이성권"></span><span class="txt"><strong class="name">이성권</strong><span class="position">위원</span><span class="area">(부산 사하구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;저도 정보위원회 간사 또 정보위원회 활동을 처음 해 보기 때문에 과거의 사례나 선례들은 정확하게 잘 모르겠습니다만 일단 통계적으로 보면 지금까지는 주로 국정원장을 포함해서 정무직으로 임명된 분들을 대상으로 해서 증인 채택을 했던 걸로 저는 알고 있습니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;아까 박선원 간사님이 얘기하는 방식, 그러니까 그 발언에 있어서 허위 발언이 있었을 때 책임을 묻기 위해서 증인선서를 받는다는 관점에서 본다면 답변대에 서는 모든 사람들이 증인선서를 해야 됩니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;그런데 사실 정무직 5명을 증인으로 채택하는 이유는 이 기관을 대표하는 정무적 책임자기 때문에 책임을 지게 만드는 것이고 부서의 장들의 답변에 대한 최종적인 책임은 국정원장을 비롯한 5명이 지는 거라고 보거든요. 그래서 굳이 부서장들을 증인으로 채택할 필요는 없다고 저는 생각을 하고 어제까지 박선원 간사님하고 이 증인 채택 문제를 가지고 거의 한 일주일 간 서로 협의를 해 왔고 최종적으로는 5명이 하기로 결정을 본 상태고 그래서 오늘 자료도 5명으로 정해서 올라왔는데 지금 갑작스럽게 채택을 앞두고 변화된 말씀을 하시니까 약간 당혹스럽기도 합니다.</span><br/></div></div></div><div id="spk_18" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;그것에 대해서 설명드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;제가 위원님들께 보고를 드렸습니다. ‘이렇게 하자는 의견이 있습니다’ 해서 제가 구두로 합의해 준 건 맞습니다.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;그런데 지난 국정감사 때 일부 위원님들의 질문에 대해서 특정 부서를 이야기하기는 그렇지만 과학정보국 같은 경우에 원장님이 다 대답하기 어려운 부분이 있습니다. 그 부분에 대해서 대놓고 허위 보고 내지는 진술을 하는 경우가 있어요. 그리고 그걸로 끝납니다. 우리는 진실을 대답한다라고 전제를 하고 있지 않습니까? 그러니까 그 자리에 있는데 증인을 채택해서 선서 못 할 것이 없지 않습니까?</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;존경하는 이성권 간사님께서 굳이 불러야 되느냐 하지만 굳이 안 부를 이유가 없고 현장에 있기 때문에 반드시 채택하자 하는 게 저희 입장입니다.</span><br/></div></div></div><div id="spk_19" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;이 위원님.</span><br/></div></div></div><div id="spk_20" class="item4 speaker spk_mem" data-mem_id="6564" data-name="이기헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">이기헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d73911ce9f2247269b2f64c0c74c08d3.jpg" alt="이기헌"></span><span class="txt"><strong class="name">이기헌</strong><span class="position">위원</span><span class="area">(경기 고양시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;다시 부연해서 말씀드리면 국민들이 상식적으로 국회를 바라볼 때 행정부에 대한 감사를 할 수 있는 국정감사의 권한을 가지고 있는 곳입니다. 그래서 국정감사가 정기국회 내에 이루어지고 있고 가장 중요하게 국민들이 행정부처의 잘못된 일을 국회가 어떻게 견제해 내는지, 감사해 내는지를 보고 판단하는 중요한 시간입니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;이 시간에 국가정보원이 아무리 정보를 다루는 기관이라고 하지만 국가예산의 대단히 많은 예산을 쓰고 있고 또 그러한 중요한 일을 하기 때문에 1급 이상의 상위 직위자들이 굉장히 많은 포션을 차지하고 있습니다. 국정감사를 받으면서 1급 이상의 공직자를 기관증인으로 채택하지 않는 예를 저는 본 적이 없는 것 같아요.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;그래서 국정원에서도 당연히 그 회의 전체가 공개되는 것이 아니기 때문에 기관증인들이 책임감 있게 발언하고 법률적으로 본인들이 위증을 해서는 안 되기 때문에 저는 반드시 1급 이상의 부서장들은 증인 채택이 되어야 된다 이렇게 생각을 하고 있습니다.</span><br/></div></div></div><div id="spk_21" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;권영세 위원님.</span><br/></div></div></div><div id="spk_22" class="item4 speaker spk_mem" data-mem_id="6584" data-name="권영세" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">권영세 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f58fcbb4b2f64d05a335da7099f679e7.jpg" alt="권영세"></span><span class="txt"><strong class="name">권영세</strong><span class="position">위원</span><span class="area">(서울 용산구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;권영세 위원입니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;제가 알기에는 박선원 위원님이 차장으로 계실 때도 국장들은 아마 증인선서를 안 했을 거라……</span><br/></div></div></div><div id="spk_23" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;반반입니다. 한 적이 있고 안 한 적이 있습니다.</span><br/></div></div></div><div id="spk_24" class="item4 speaker spk_mem" data-mem_id="6584" data-name="권영세" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">권영세 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f58fcbb4b2f64d05a335da7099f679e7.jpg" alt="권영세"></span><span class="txt"><strong class="name">권영세</strong><span class="position">위원</span><span class="area">(서울 용산구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;안 했을 거라 생각이 되고……</span><br/></div></div></div><div id="spk_25" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;한 적이 있습니다.</span><br/></div></div></div><div id="spk_26" class="item4 speaker spk_mem" data-mem_id="6584" data-name="권영세" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">권영세 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f58fcbb4b2f64d05a335da7099f679e7.jpg" alt="권영세"></span><span class="txt"><strong class="name">권영세</strong><span class="position">위원</span><span class="area">(서울 용산구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;예, 반은 했다 하더라도 전체적으로 보면, 김병기 위원님도 이미 알고 물어보셨겠지만 대부분 안 했습니다. 그래서 그것은 정보위가 다른 상임위하고 다르다는 데서 기인하는 것이기 때문에 그 부분에 대해서는 굳이 지금 외에 특별히 추가로 국장들까지 다 이름 드러나게 하면서 증인 채택하는 게 과연 옳은가 싶고 저도 국정감사의 대상기관장을 해 봤지만 원칙적으로 사실은 국장이 아니라 장과 최소한 차장 정도가 다 대답을 해야 됩니다.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;아주 예외적으로 국장들에게 실무적인 부분에 대해서 물어보기 때문에 김병기 위원님이 예외적인 부분에 대해서 절충안 비슷하게 내셨는데 일단은 증인 결정 부분에 있어서는 기존의 차장급대로 유지하는 게 맞지 않겠나 이렇게 생각을 합니다.</span><br/></div></div></div><div id="spk_27" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;박지원 위원님.</span><br/></div></div></div><div id="spk_28" class="item4 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">박지원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><strong class="name">박지원</strong><span class="position">위원</span><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;지금 위원님들이 지적을 하시는데요. 이게 국정원입니다. 다른 부서 같으면 해당이 안 돼요. 그렇기 때문에 박선원 간사가 얘기하는 것처럼 좀 더 정확한 국정감사를 하기 위해서는 담당자들을 증인 채택하는 것이 옳다 저는 그렇게 봅니다.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_29" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;유영하 위원님.</span><br/></div></div></div><div id="spk_30" class="item4 speaker spk_mem" data-mem_id="6795" data-name="柳榮夏" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">柳榮夏 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/32a8a3160f2e48dea973ec7f54668fa7.jpg" alt="柳榮夏"></span><span class="txt"><strong class="name">柳榮夏</strong><span class="position">위원</span><span class="area">(대구 달서구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;오늘 처음 와서 이런 말씀을 드리는 게 적절한지는 모르겠습니다마는 여기 앞에 계신 존경하는 박지원 위원님하고 박선원 위원님께서는 아마 국정원의 원장과 차장으로 재직하신 걸로 제가 알고 있습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;언론에 공개되는 범위가 국정원은 정무직 다섯 분에 대해서는 얼굴도 공개되고 실명이 공개됩니다. 그런데 만약에 증인 채택을 해서 증인선서를 하게 되면 그분들의 실명이 아마 속기록에도 남게 될 것입니다.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;그리고 국정원이라는 게 정보를 다루는 부서 아니겠습니까? 아까 권영세 위원님께서 말씀하셨듯이 모든 책임은 원장 이하 정무직들이 지시는 거고 그 답변에서 부가설명을 담당 실국장이 하실 때 저희가 거기에 대해서 미흡된 게 있으면 나중에 따로 서면보고로 받는 방법도 있을 수 있다고 봅니다.</span><br/><span class="spk_sub" id="spk_sub30-4">&nbsp;굳이 증인선서를 해서 진실성이 담보되냐? 저는 꼭 그렇지는 않다고 봅니다. 위원님께서 말씀하신 것은 증인선서를 함으로 해서 증인의 신빙성을 담보하는 데 주안점이 있다고 보면 그럼으로 해서 잃어 버리는 실익은 뭐냐 하면 공개되지 않은 에이전트의 실명이 공개되는 그런 불이익도 저희가 감수할 수밖에 없지 않습니까? 그래서 그런 경우에는 차라리 필요한 자료를 비공개로 서면답변을 받아 보시고 그다음에 그게 미흡했을 때 거기에 따른 정무직을 상대로 다시 추궁하는 게 어떤가 싶어서 말씀을 드렸습니다.</span><br/></div></div></div><div id="spk_31" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;존경하는 위원님 말씀이 계셨기 때문에 간략하게 설명 겸 보고 올리겠습니다.</span><br/><span class="spk_sub" id="spk_sub31-2">&nbsp;아마 예행연습을 아직 안 하고 계실 텐데요. 왜냐하면 우리가 한 달 정도 남았기 때문에 국정원 내부에서 아직 예행연습을 안 할 겁니다.</span><br/><span class="spk_sub" id="spk_sub31-3">&nbsp;우리가 어떻게 하느냐 하면 정무직만 노출됩니다. 기자들이 사진 찍을 때 정무직만 노출되고 그다음에 1급 부서장들이 배석을 하고 그 상태에서 선서를 할 경우에 이름을 쓰지 않습니다. 부서 이름만 씁니다. 그렇기 때문에 보안에서 전혀 노출되지도 않고 처음에 카메라 들어왔을 때 그때는 정무직만 계시는 겁니다. 그래서 유영하 위원님께서 말씀하신 부분은 염려 안 하셔도 된다고 말씀드리겠습니다.</span><br/></div></div></div><div id="spk_32" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;그러면 지금까지 적어도 정보위원회가 출범한 이후에 국가정보원의 1급 부서장들이 증인으로 채택된 사례가, 국정감사를 몇 번이나 했고 그게 혹시 수석전문위원이나 행정실에 정리된 게 있어요?</span><br/></div></div></div><div id="spk_33" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;우리 정부 때도 반반 했어요. 조태용 원장님 잘 아십니다.</span><br/></div></div></div><div id="spk_34" class="item4 speaker spk_mem" data-mem_id="6584" data-name="권영세" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">권영세 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f58fcbb4b2f64d05a335da7099f679e7.jpg" alt="권영세"></span><span class="txt"><strong class="name">권영세</strong><span class="position">위원</span><span class="area">(서울 용산구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;94년도부터 이게 시작이 되어서 채택이 된 게 아마 두 번 정도밖에 없을 겁니다.</span><br/></div></div></div><div id="spk_35" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;제가 왜 여쭈냐 하면 2021년도와 2020년도에 했던……</span><br/></div></div></div><div id="spk_36" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;예, 문재인 정부 때 했습니다. 왜 안 하시려고 그래요? 22대인데, 국감인데?</span><br/></div></div></div><div id="spk_37" class="item4 speaker spk_mem" data-mem_id="6584" data-name="권영세" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">권영세 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f58fcbb4b2f64d05a335da7099f679e7.jpg" alt="권영세"></span><span class="txt"><strong class="name">권영세</strong><span class="position">위원</span><span class="area">(서울 용산구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;그때만 하고 그 전에는 안 했습니다.</span><br/></div></div></div><div id="spk_38" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;잠깐만요. 아마 안 했던 이유가, 연유가 있을 겁니다. 제 입장에서는 정보위원장이 22대 국회 초기에 하면서, 정보위원회의 전통과 관행이라는 부분도 있을 터이고 앞에 선배들도 다들 고민해서 이렇게 해 놓은 걸로 사료됩니다. </span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;그래서 이 문제를 가지고 여기서 표결할 것도 아니고 저는 간사님들 간에 협의가 잘된 걸로 보여지는데 아마 야당 위원들께서는 결국 선서 안 하고 거짓말하면 어떻게 할 거냐 이런 불신이 있는 것 같아요.</span><br/><span class="spk_sub" id="spk_sub38-3">&nbsp;그래서 제 생각에는 일단 기관증인 18명 정하고 현장 분위기에 따라서 정 마음에 안 드시면 과학이나 기술적인 분야에 대해서는 나오라고 해서 이렇게 하는 게 맞다고 생각하는데 이 문제를 가지고 우리가 계속 여기서…… 표결로 갈 수도 없는 것 아니겠어요?</span><br/></div></div></div><div id="spk_39" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;그동안 몇 번 이야기를 했었는데 법에 감찰실장을 둘 수 있다 그다음에 감찰 결과를 대통령과 국회 정보위원회에 보고하여야 한다로 되어 있다고 제가 몇 번 말씀드렸고, 그런데 단 한 번도 지키지 않고 있습니다.</span><br/><span class="spk_sub" id="spk_sub39-2">&nbsp;지금 22대 들어와서 감찰이 몇 번 있었는지 제가 대략 압니다. 작년에 대략 몇 번 있었는지 압니다. 안 해요. 법에 있는 것도 안 합니다, 위원장님. 그리고 법에 있는 것 하자고 그러면 위원장님이 혼자 보고받으라고 그러시잖아요. 그것 말이 안 되는 겁니다. 법에 전체회의에서 하라고 했는데 그것도 안 하면서 22대 첫 번째 국감하는데 위원장님 그러시면 안 되지요. 22대 첫 번째 국감에서 한 번 합시다. 그리고 그다음부터 하지 말지요, 그러면.</span><br/></div></div></div><div id="spk_40" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;그런데 증인 문제에서 왜 감찰까지 나왔는지……</span><br/></div></div></div><div id="spk_41" class="item4 speaker spk_mem" data-mem_id="6815" data-name="박선원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">박선원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/107f88df05484eaeaf4fdcbb158b1221.png" alt="박선원"></span><span class="txt"><strong class="name">박선원</strong><span class="position">위원</span><span class="area">(인천 부평구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;아니, 왜냐하면 처음에 내가 이성권 간사한테 감찰실장 넣으라 했는데 그것도 안 한다고 그러잖아요.</span><br/></div></div></div><div id="spk_42" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;잠깐만, 기자들 있습니까?</span><br/></div></div></div><div id="spk_43" class="item4 speaker spk_mem" data-mem_id="0" data-name="송환엽" data-pos="행정실장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">행정실장 송환엽 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송환엽"></span><span class="txt"><span class="position">행정실장</span><strong class="name">송환엽</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;예, 아직은 공개 상황이니까 예민한 건 비공개에서……</span><br/></div></div></div><div id="spk_44" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;잠시만, 이게 약간 우리의 원래 시나리오하고 달라졌는데……</span><br/></div></div></div><div id="spk_45" class="item4 speaker spk_mem" data-mem_id="6727" data-name="이성권" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">이성권 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/5b2cfeea639e41b0a8007c602631c659.png" alt="이성권"></span><span class="txt"><strong class="name">이성권</strong><span class="position">위원</span><span class="area">(부산 사하구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;제가 한마디만……</span><br/></div></div></div><div id="spk_46" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;한 말씀 하시고 비공개로 넘어가야지 이것 안 되겠다.</span><br/></div></div></div><div id="spk_47" class="item4 speaker spk_mem" data-mem_id="6727" data-name="이성권" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">이성권 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/5b2cfeea639e41b0a8007c602631c659.png" alt="이성권"></span><span class="txt"><strong class="name">이성권</strong><span class="position">위원</span><span class="area">(부산 사하구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;박선원 위원님이 지속적으로……</span><br/></div></div></div><div id="spk_48" class="item4 speaker spk_mem" data-mem_id="6591" data-name="김병기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">김병기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d7c2ddfa44bd49e384f91f4ea0f080e9.png" alt="김병기"></span><span class="txt"><strong class="name">김병기</strong><span class="position">위원</span><span class="area">(서울 동작구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;기사화하지 마시지요. 이게 비공개로 논의되는 거예요. 사실 다 비공개였어야 되는데 이게 사고가 난 것 같은데.</span><br/></div></div></div><div id="spk_49" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;잠깐만, 잠깐만. 위원장으로서 부담스러운데……</span><br/><span class="spk_sub" id="spk_sub49-2">&nbsp;이후 진행되는 회의는 국가의 안전보장을 위하여 국회법 제75조제1항 단서의 규정에 따라 비공개로 하고자 하는데 이의 없으시지요?</span><br/><span class="spk_sub" id="spk_sub49-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub49-4">&nbsp;회의 비공개의 건이 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub49-5">&nbsp;그러면 지금부터 회의를 비공개로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-6">&nbsp;회의 관계자 외에는 모두 퇴장해 주시기 바랍니다.</span><br/></div></div></div><p class="tit_sm taR">(10시22분 비공개회의개시)</p><br/><p class="tit_sm taR">(12시14분 비공개회의종료)</p><br/><div id="spk_50" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;이제부터는 회의를 공개로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-3">&nbsp;오늘 회의에 참석해 주신 위원님들과 수석전문위원을 비롯한 위원회 직원 및 속기사 여러분 그리고 국가정보원장님과 관계 직원 여러분 모두 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub50-4">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(12시15분 산회)</p><br/><div class="line_dot">&nbsp;</div><br/></div><div class="minutes_footer"><p class="tit"><strong>소위원회 구성 명단</strong></p><div class="table_wrap2"><table class="normal"><caption>소위원회 구성 명단</caption><colgroup><col width="43.217942675977895%"><col width="28.81838824386273%"><col width="27.963669080159377%"></colgroup><thead><tr><th scope="col">소위원회</th><th scope="col">위원명</th><th scope="col">교섭단체</th></tr></thead><tr><td rowspan=2>법안심사(5인)<br/></td><td>박선원<br/>위성락<br/>이기헌<br/></td><td>더불어민주당(3)<br/></td></tr><tr><td>권영세<br/>◎이성권<br/></td><td>국민의힘(2)<br/></td></tr><tr><td rowspan=2>예산결산심사(5인)<br/></td><td>김병기<br/>◎박선원<br/>이인영<br/></td><td>더불어민주당(3)<br/></td></tr><tr><td>유영하<br/>이성권<br/></td><td>국민의힘(2)<br/></td></tr><tr><td rowspan=2>청원심사(5인)<br/></td><td>박지원<br/>박찬대<br/>위성락<br/></td><td>더불어민주당(3)<br/></td></tr><tr><td>◎권영세<br/>추경호<br/></td><td>국민의힘(2)<br/></td></tr></table></div><br/>◎표시는 소위원장임<div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(12인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank"><span class="name lts3 ">권영세</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank"><span class="name lts3 ">김병기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank"><span class="name lts3 ">박지원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKCHANDAE" target="_blank"><span class="name lts3 ">박찬대</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank"><span class="name lts3 ">신성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WISUNGLAC" target="_blank"><span class="name lts3 ">위성락</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank"><span class="name lts3 ">유영하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank"><span class="name lts3 ">이기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINYOUNG" target="_blank"><span class="name lts3 ">이인영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOOKYUNGHO" target="_blank"><span class="name lts3 ">추경호</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이복우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 유재근</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>국가정보원</p><li><a class="in_nm"><span class="pos"><span class="lts2">원장</span></span><span class="name lts3"> 조태용</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제2차장</span></span><span class="name lts3"> 황원진</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제3차장</span></span><span class="name lts3"> 윤오준</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="21.213289634342267%"><col width="20.607073238652184%"><col width="34.55005033952403%"><col width="23.629586787481525%"></colgroup><thead><tr><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>김건<br/></td><td>유영하<br/></td><td>국민의힘<br/></td><td>2024. 9. 12.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국민보호와 공공안전을 위한 테러방지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 30. 임종득 의원 대표발의)(의안번호 2203424)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>2025년도 예산안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 정부 제출)(의안번호 2203519)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국민보호와 공공안전을 위한 테러방지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 이달희 의원 대표발의)(의안번호 2203927)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 12일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="13.547806331311484%"><col width="47.91135306599224%"><col width="24.39933986325739%"><col width="14.141500739438884%"></colgroup><thead><tr><th scope="col">소관부처</th><th scope="col">제명</th><th scope="col">구분</th><th scope="col">제출일</th></tr></thead><tr><td>국가정보원<br/></td><td>국가정보원직원법 시행령 일부개정령<br/></td><td>대통령령<br/></td><td>24. 9. 13.<br/></td></tr></table></div><br/></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52544;
+			const class_id = 2;
+			const confer_num = "054149";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641366879" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641366879"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641366879"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641366879"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

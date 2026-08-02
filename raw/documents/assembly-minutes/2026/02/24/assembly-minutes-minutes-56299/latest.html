@@ -1,0 +1,992 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56295" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제432회 (임시회) 제1차 국회운영위원회</strong><span class="date">(2026.02.23.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 제432회국회(임시회) 회기 전체 의사일정 협의의 건(의장 제의)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="한병도 의원 (전북 익산시을 )"> 
+							한병도 의원 (전북 익산시을 )
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="박민규 의원 (서울 관악구갑)"> 
+							박민규 의원 (서울 관악구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="유상범 의원 (강원 홍천군횡성군영월군평창군)"> 
+							유상범 의원 (강원 홍천군횡성군영월군평창군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="천준호 의원 (서울 강북구갑)"> 
+							천준호 의원 (서울 강북구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="강선영 의원 (비례대표)"> 
+							강선영 의원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="서미화 의원 (비례대표)"> 
+							서미화 의원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="최수진 의원 (비례대표)"> 
+							최수진 의원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="전용기 의원 (경기 화성시정)"> 
+							전용기 의원 (경기 화성시정)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="박수민 의원 (서울 강남구을)"> 
+							박수민 의원 (서울 강남구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="김남근 의원 (서울 성북구을)"> 
+							김남근 의원 (서울 성북구을)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(10명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6617" data-name="한병도" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">한병도</span>
+												<span class="position">의원</span>
+												<span class="area">(전북 익산시을 )</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6804" data-name="박민규" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">박민규</span>
+												<span class="position">의원</span>
+												<span class="area">(서울 관악구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6690" data-name="유상범" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">유상범</span>
+												<span class="position">의원</span>
+												<span class="area">(강원 홍천군횡성군영월군평창군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6622" data-name="천준호" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">천준호</span>
+												<span class="position">의원</span>
+												<span class="area">(서울 강북구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6846" data-name="강선영" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">강선영</span>
+												<span class="position">의원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6772" data-name="서미화" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">서미화</span>
+												<span class="position">의원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6780" data-name="최수진" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">최수진</span>
+												<span class="position">의원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6640" data-name="전용기" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">전용기</span>
+												<span class="position">의원</span>
+												<span class="area">(경기 화성시정)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6790" data-name="박수민" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">박수민</span>
+												<span class="position">의원</span>
+												<span class="area">(서울 강남구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6757" data-name="김남근" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">김남근</span>
+												<span class="position">의원</span>
+												<span class="area">(서울 성북구을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56295&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제432회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>국회운영위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 2월 23일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">국회운영위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 제432회국회(임시회) 회기 전체 의사일정 협의의 건(의장 제의)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 제432회국회(임시회) 회기 전체 의사일정 협의의 건(의장 제의)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(15시06분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제432회 국회(임시회) 제1차 국회운영위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 유인물로 대체하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘은 제432회국회(임시회) 회기 전체 의사일정 협의의 건을 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;의사일정에 들어가기에 앞서서 지난 1월 19일 자로 우리 위원회에 보임하신 박민규 위원님의 인사말씀을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;박민규 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6804" data-name="박민규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">박민규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c226f9600c64c52b8bfeee6b8f2eedd.png" alt="박민규"></span><span class="txt"><strong class="name">박민규</strong><span class="position">위원</span><span class="area">(서울 관악구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;서울 관악갑 박민규입니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;열심히 하겠습니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;다음으로 국회사무처 인사에 따라 우리 위원회에 새로 보임된 직원을 소개하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;이준화 총괄 입법조사관입니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;(인사)</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;위원회가 효율적이고 원만하게 운영될 수 있도록 잘 보좌해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 제432회국회(임시회) 회기 전체 의사일정 협의의 건(의장 제의)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시07분)</p><br/><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;의사일정 제1항 제432회국회(임시회) 회기 전체 의사일정 협의의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;이 안건은 국회의장께서 국회법 제76조에 따라 제432회국회(임시회) 회기 전체 의사일정을 우리 위원회에 협의 요청한 것으로 2월 26일에 안건 심의를 위한 본회의를 개의하는 일정입니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;보다 자세한 내용은 배부해 드린 자료를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;이 안건에 대해서 천준호 위원 등으로부터 수정안이 제출되었습니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;수정안의 주요 내용은 당초 의장으로부터 협의 요청된 2월 26일 본회의 일정을 2월 24일로 변경하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;그러면 이 안건에 대하여 토론하실 위원님 계십니까?</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;위원장님.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;유상범 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;제가 길지 않은 국회의원 생활을 합니다만 지금까지 국회의장과 원내대표단이 합의한 일정안을 가지고 그 일정안을 다시 운영위에서 수정하기 위해서 이렇게 전체회의를 여는 경우를 처음 경험합니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;국회의장이 의사일정을 할 때 원칙적으로 여야 원내대표단 간의 협의를 거쳐서 일정을 합의합니다. 또 그 일정이 합의가 안 될 때는 국회의장께서 본인의 판단에 따라서 본회의 일정을 정하십니다. 그리고 그 일정이 여기에 통보돼 오면 운영위에서 국회의장이 요구한 일정에 대해서, 제가 기억하기로는 지금까지 단 한 번도 일정에 대해서 추가 협의를 위해서 운영위원회를 연다는 전례는 사실상 없었던 것으로 압니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;국회는 먼저 협의를 거친 합의가 모든 의사일정에서 가장 우선합니다. 국회의장이 26일로 본회의 개의 일정을 통보했다는 것은 여기에 계신 한병도 위원장님, 천준호 수석께서 저희와 함께 2월 달 의사일정을 하면서 2월 12일, 2월 26일 이렇게 사실상 저희들이 합의를 했고 그 합의를 했기 때문에 국회의장께서 이와 같이 일정을 정한 겁니다. 만일 이런 합의가 없었다면 국회의장님께서 26일을 특정해서 운영위원회에 본회의 개최 협의 요청을 하지 않았을 겁니다. 그런데 지금 그전에 했던 합의 내용을 민주당이 운영위원회 전체회의를 열어서 이것을 개최하면서 일정을 사실상 수의 힘으로 일방적으로 변경하려고 시도를 하는 것이 바로 오늘의 이 모임입니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;좋습니다. 다수의 의견으로 표결을 해야 될 때 또 우리가 의견 조율이 안 될 때 이것에 대해서 회의를 여는 것은 가능합니다. 그러나 이미 여야 원내대표단과 의장 간에 사실상 12일, 26일로 합의를 해 가지고 일정이 진행됐고 그에 따라서 국회의장이 26일 날 보내는 이 일정까지 이렇게 일방적으로 민주당이 바꾼다면 앞으로 민주당이 혼자서 국회를 꾸려 가면 되지 않겠습니까?</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;합의된 일정마저도 일방적으로 이렇게 바꾸려는 시도와 이 표결을 가지고 결국 국회의장한테 협의 내용이 이렇다, 협의가 안 돼서 다수가 결국 표결을 통해서 이 일정을 정했습니다라고 해서 국회의장으로 하여금 이미 예정된 26일을 24일로 바꾸려는 이 시도, 이게 우리가 말하는……</span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;1분 더 넣으세요.</span><br/></div></div></div><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;고맙습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;우리가 말하는 소위 다수결의 폭정입니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;모든 일정을 진행함에 있어서 그나마 지금 우리 여야 원내대표단이 노력하면서 자주 만나고 서로 소통하면서 합의를 이루어 왔는데 그것이 당 지도부의 뜻에 다소 어긋나는 측면이 있거나 또는 당 지도부가 더 강한 요구를 한다고 그래서 합의사항까지 바꾸게 된다면 이제 이런 일들이 비일비재하게 됩니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;지금 이미 이와 같은 유사한 똑같은 일이 아동수당법과 관련돼서 보건복지위에서 합의 처리된 것을 법사위에서 일방적으로 내용을 수정해 가지고 상정을 해서 국회가 갖고 있던 그동안의 운영에 있어서 가장 중요한 원칙을 완전히 깡그리 망가뜨리고 지금 법안이 상정되고 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;(발언시간 초과로 마이크 중단)</span><br/><div class="line_dot">&nbsp;</div><span class="spk_sub" id="spk_sub11-6">&nbsp;(마이크 중단 이후 계속 발언한 부분)</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;이렇게 되면 더 이상 소수 야당의 역할, 무슨 의미가 있겠습니까? 여당 혼자서 국회를 운영하면 되는 것 아니겠어요? 이런 식으로 진행돼서는 안 된다고 생각합니다.</span><br/><div class="line_dot">&nbsp;</div></div></div></div><div id="spk_12" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;천준호 위원님.</span><br/></div></div></div><div id="spk_13" class="item1 speaker spk_mem" data-mem_id="6622" data-name="천준호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">천준호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1ecd18672c604ef5a6c90dd06133006e.jpg" alt="천준호"></span><span class="txt"><strong class="name">천준호</strong><span class="position">위원</span><span class="area">(서울 강북구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;지난 2월 12일 본회의에서 저희가 법안을 처리하는 일정을 준비하는 과정에 여야가 80여 건 정도의 민생법안을 처리하기로 합의를 한 바 있었습니다. 그런데 돌연 그 합의가 있은 지 불과 몇 시간이 되지 않은 후에 합의가 파기되고 법안 처리가 제대로 되지 못했습니다. 필버를 걸어 놓았던 8개 법안을 제한 63건의 법안이 처리되었습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;어쨌든 본회의를 통해서 국정과제와 민생과제를 실현하기 위한 또 개혁입법을 실현하기 위한 여러 노력을 하는 과정에서 여야가 우선적으로 합의할 수 있는 법안부터 처리하자는 취지에서 80여 건의 법안이 합의가 되었다가 국회운영위의 다른 건으로, 별건으로 그 건에 대해서 처리를, 예를 들면 합의가 깨지는 그런 안타까운 일이 있었다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;그런데 이 과정에 또 하나 숨겨진 합의의 파기가 있었습니다. 지난번에 국회법을 처리하는 과정에서 여야는 그동안에 필리버스터가 걸려 있던 법안들을 처리 해제하기로 약속한 바가 있었습니다. 하지만 그 약속도 지켜지지 않았고 결국에는 2월 12일 본회의를 앞두고 합의한 80여 건의 민생법안 처리를 제대로 할 수 없는 그런 상황의 또 한 원인을 제기하게 되었습니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;24일 본회의는 국민의힘이 그동안에 지속적으로 민생법안에 대한 인질극을 하면서 여러 가지 국정과제 법안이 또 개혁법안이 또 민생법안이 제대로 처리되지 못하고 지연되는 상황에 불가피하게 한 건이라도 법안을 더 처리하겠다라고 하는 의지로 24일 본회의 개최를 수차례 요구해 왔습니다. 지난 주말부터 여야가 그와 관련된 비공식적인 협의가 있어 왔고 또 국회의장을 만나 뵙고도 24일 본회의를 열어서 법안을 하나라도 더 처리할 수 있도록 소집해 달라는 요구를 지속적으로 해 왔다는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;하지만 앞서서 말씀하셨던 것처럼 국힘이 거기에 동의하지 않으셨고 이에 오늘 변경 절차를, 의사일정에 대한 협의 절차를 통해서 다시 한번 저희는 국회의장에게 24일 민생법안 개혁법안 처리를 위한 본회의 진행을 요청할 그런 계획이라는 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;지금 국가가 여러 가지로 많이 어려운 상황입니다. 국정과제 수행을 위해서 법안 처리에 적극적으로 협조해 주실 것을 다시 한번 강력하게 요청드립니다.</span><br/></div></div></div><div id="spk_14" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;더 이상 토론할 위원님 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;강선영 위원님.</span><br/></div></div></div><div id="spk_15" class="item1 speaker spk_mem" data-mem_id="6846" data-name="강선영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">강선영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGSUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/89a10eac7851470598886907100ae5ad.jpg" alt="강선영"></span><span class="txt"><strong class="name">강선영</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;여기 계신 모든 존경하는 위원님들께서는 우리가 지금 현재 헌법기관으로서 각각의 국회의원 배지를 달고 있지만 사실은 개인의 위치로 이 자리에 와 있다고 생각하지 않습니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;제가 잠깐 검색을 해 보니까 지난 2024년에 저희가 총선을 거치면서 더불어민주당은 50.5%, 1457만 표를 획득하셨고요 저희 국민의힘은 45.1%, 1317만 표를 획득했습니다. 득표율에서는 약 5.4% 차이가 나는데 승자 독식의 현재 총선 시스템에 의거해서 5.4%지만 더불어민주당은 161석, 저희 국민의힘은 90석의 의석을 지역구 기준으로 확보해서 이 자리에 이렇게 와 있습니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;당연히 민주주의에서 더불어민주당이 주장하는 민주당, 민주라는 것은 주권이 국민에게 있다라는 것을 인정하시지 않습니까? 그렇다면 물론 다수당인 더불어민주당의 의사도 매우 중요하지만 1457만 더불어민주당을 지지하신 분들은 대한민국 국민이고 국민의힘을 지지한 1317만 명의 국민들은 누가 대표하게 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;모든 것들을 다 이렇게 다수라는 이유로 결정되는 대로 따르라고 하면, 모든 것을 다 표로 하고 다 손 들어서 하게 되면 이미 22대 총선을 마친 대한민국국회는 어떤 것도 협의라든지 합의라든지 아니면 소수가 존중받지 못하는, 1457만이 1317만 표를 무조건 무시하는 그런 국회가 되지 않겠습니까?</span><br/><span class="spk_sub" id="spk_sub15-5">&nbsp;그래서 여기 계시는 위원장님 또 여기 많은 위원님들이 내일 여나 26일 여나 이틀의 차이기 때문에 사실 제가 볼 때는 이틀 차이가 그렇게 크겠냐. 중요하지 않을 수 있습니다, 일견.</span><br/><span class="spk_sub" id="spk_sub15-6">&nbsp;그러나 그전에 그것은 양당 원내대표라는 그 당의 대표들이 합의하셨고 그것을 국회의장께서 승인해서 그대로 진행되기로 한 합의를 뭔가 특별한 사유가, 엄청나게 중요해서 당장 해결해야 될 문제가 아닌데도 불구하고 표결이라든지 이렇게 일방적으로 진행하는 것이…… 민생 매우 중요하고 저도 국민 중요하다고 생각하지만 여기 계신 더불어민주당을 지지하신 많은 국민들이 느끼는 효능감만큼이나 1317만 국민의힘을 지지했던 국민들이 느낄 좌절감도 한번 생각해 보신다면 이틀이라는 차이가 그렇게 중요하지 않다면, 최초 합의되지 않은 것이 아니지 않습니까? 합의된 사안대로 가시는 게 어떨까 하는 게 제 의견입니다.</span><br/><span class="spk_sub" id="spk_sub15-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_16" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;서미화 위원님 말씀하십시오.</span><br/></div></div></div><div id="spk_17" class="item1 speaker spk_mem" data-mem_id="6772" data-name="서미화" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">서미화 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0694f551f21c40b2a4bbccd2e90ce40c.jpg" alt="서미화"></span><span class="txt"><strong class="name">서미화</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;제가 한 가지 묻고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;일정을 좀 바꾸자고 제안을 하는 것이 폭거라면 상임위 통과된 법안을 필버 하고 또 방해하고 국회부의장씩이나 되시면서 필버 할 때 사회도 안 보고 이런 것이 진짜 폭거 아닐까요? 여기 국회에서 일하고 있는 우리 국회의원들은 국민이 원하고 부르면 언제든지 일해야 된다고 봅니다. 그것이 24일이든 26일이든 뭐가 중합니까? 내란 수괴 윤석열과 절연도 못 하고 민생도 못 챙기면 국민들이 주시는 세비 반납해야 되는 거 아니겠습니까?</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;자꾸 또 입법 폭거라고 말씀들을 그 당에서 하시던데 내란 수괴 윤석열에게 무죄추정 원칙을 들이대는 것이 저는 폭거라고 생각합니다. 본회의를 좀 당겨서 하자고, 아까 존경하는 위원님이 말씀하신 것처럼 24일이든 26일이든 이틀 미루고 당기고 하는 게 뭐가 중하냐 이런 말씀 하신 것으로 이해가 됐는데요. 당겨서 미리 하자 이 의견에 합의를 못 해 줄 이유가 저는 없다고 봅니다. 법안이 마음에 안 드시는 건지, 상임위에서 이미 통과된 이런 법안들을 계속 미루고 민생입법도 개혁입법도 아닌 것처럼 이런 기괴한 논리를 국민들은 납득하지 못할 것이라고 저는 보고요.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;우리가 처리할 법안들은 쟁점 법안도 아니고 개혁법안과 민생법안이에요. 3차 상법, 행정통합법 등 처리해야 될 법안들이 산적합니다. 그런데 이런 법안들을 놓고 필버를 하겠다고 하시면서 이런 양상을 보이니까 법안을 처리할 의지가 있는가 하는 의심이 듭니다. 오늘 정청래 대표께서도 행정통합법 처리를 위해서 장동혁 대표에게 공식적인 회담까지 제안을 했는데요. 누가 협치를 안 하고 거부하고 폭거를 하고 있는 건지 국민들이 판단할 거라고 보고요. 이런 국민의힘의 행동이 이재명 정부의 국정 운영의 발목 잡기로밖에 보이지 않습니다. 이제 그만 윤 어게인 절연하고 진짜 일 좀 하게 협조를 해 주실 것을 간곡히 호소드립니다.</span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_18" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;최수진 위원님 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_19" class="item1 speaker spk_mem" data-mem_id="6780" data-name="최수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">최수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOISOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/748a08387b2f4395b76fc870d2184cbf.png" alt="최수진"></span><span class="txt"><strong class="name">최수진</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;국민의힘 최수진입니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;지금 존경하는 민주당 위원님들 말씀을 들어 보면 마치 우리 국민의힘이 민생법안이나 국민들이, 앞으로 중요한 법안을 발목 잡은 것처럼 자꾸 얘기를 하셔서 그 부분에 대해서는 좀 정정이 필요할 거라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;24일이 됐든 26일이 됐든 민생법안을 처리하는 것에 대해서 저희는 동의합니다. 그런데 아시다시피 이미 사법개악법을 처리하고 있는 거 아닙니까? 법왜곡죄, 재판소원법, 대법관 증원 이런 것들이 과연 국민들이 원하는 법일까요? 그거는 민주당과 이재명 정권을 위한 법이라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;그리고 설사 그거를 다수의 숫자로 밀어붙인다고 하는데, 그러면 굳이 26일 날 합의된 것까지 당겨 가며 24일로 해야 되는 이유에 대해서 도저히 납득되지 않습니다. 그 부분에 대해서 저희를 설득해 주시든지 아니면 26일로 한 것에 대해서 최소한 일정 정도는 합의하는 모습을 보여 줘야 되는 거 아닙니까?</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;그래서 이 부분에 대해서 저희는 적극 수용할 수 없고 또 더군다나 같이 일정 정도는 서로 합의하는 그런 모습을 보여야 저희가 국회의원으로서 뭔가라도 해 볼 의지가 있다고 저는 생각을 합니다. 그래서 이 부분에 대해서 동의할 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub19-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_20" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;다음, 전용기 위원님.</span><br/></div></div></div><div id="spk_21" class="item1 speaker spk_mem" data-mem_id="6640" data-name="전용기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">전용기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7ebec69fa93042139121370390887458.png" alt="전용기"></span><span class="txt"><strong class="name">전용기</strong><span class="position">위원</span><span class="area">(경기 화성시정)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;경기 화성정의 전용기입니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;위원장님, 저는 표결 진행해 주셨으면 좋겠습니다. 말씀을 들어 보니까 국민의힘 위원님들께서는 해당 부분에 대해서 동의를 못 하시겠다고 말씀하시는데 이 부분은 쟁점이 있는 부분이라 표결을 진행해서 의사일정이 원활하게 진행되어야 된다라는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;제가 운영위원회를, 지금 네 분의 운영위원장님을 모시고 있습니다. 굉장히 많은 횟수의 운영위원회에 참가한 경험이 있는데 이렇게 의사일정 변경동의를 하는 것이 처음이라고 말씀 주셨지만 저는 몇 차례 경험을 해 봤습니다. 그래서 시급한 일정이 있을 때는 의사일정 변경동의를 우리 국회운영위원회에서 할 수 있게끔 돼 있고 그로 인해서 본회의 일정을 잡는 것은 큰 무리는 없다라는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;그리고 발목 잡은 적 없다라고 말씀을 해 주시고 수정을 해 주시는 부분에 대해서는 어느 정도 공감을 합니다만 저희 입장에서는 그렇게 느낄 수밖에 없는 상황이었습니다. 그 이유가 무엇이냐면 아동수당법 아직도 필리버스터 걸려 있지 않습니까?</span><br/></div></div></div><div id="spk_22" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;아닌데.</span><br/></div></div></div><div id="spk_23" class="item1 speaker spk_mem" data-mem_id="6640" data-name="전용기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">전용기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7ebec69fa93042139121370390887458.png" alt="전용기"></span><span class="txt"><strong class="name">전용기</strong><span class="position">위원</span><span class="area">(경기 화성시정)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;철회했습니까?</span><br/></div></div></div><div id="spk_24" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;그것은 필리버스터가 걸린 법이 아니지요.</span><br/></div></div></div><div id="spk_25" class="item1 speaker spk_mem" data-mem_id="6640" data-name="전용기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">전용기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7ebec69fa93042139121370390887458.png" alt="전용기"></span><span class="txt"><strong class="name">전용기</strong><span class="position">위원</span><span class="area">(경기 화성시정)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;그렇지요? 그러나 우리가 지난 12일에 본회의가 열렸을 때 80여 건의 법안을 처리했어야 됐는데 60여 건밖에 처리가 되지 않았던 것은 과거 합의에서 필리버스터 풀기로 했던 부분을 풀지 않았기 때문에 60여 건의 법안만 처리된 것 아닙니까? 그러면 그 20건은 발목 잡은 게 아니다라고 할 수 있겠습니까? 충분히 아니라고 말씀하실 수 있겠습니다만 저희는 그렇게 느꼈기 때문에 그렇게 말씀드렸다라는 말씀을 안 드릴 수가 없는 것입니다. 그렇기 때문에 합의는 누가 먼저 깼는가를 한번 볼 필요가 있는 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;그래서 저희는 민생과 개혁 법안을 통과시켜야 되기 때문에 하루라도 시급해서 이틀을 당겨 달라고 요청을 드리는 것이라서 서면동의서를 국회운영위원장께 제출했다는 말씀을 드리는 것이고요. 사법개혁 가지고 지금 운영위원회에서 얘기할 필요 없다고 저는 봅니다. 본회의 의사를 조정하는 것이기 때문에 지금 다른 논의로 빠지지 않고 의사일정 변경동의 안건을 표결로 처리해 주실 것을 운영위원장님께 요청드리는 바입니다.</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_26" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;박수민 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_27" class="item1 speaker spk_mem" data-mem_id="6790" data-name="박수민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">박수민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9ad8cb999cab47f6b28aa03733c969d0.jpg" alt="박수민"></span><span class="txt"><strong class="name">박수민</strong><span class="position">위원</span><span class="area">(서울 강남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;위원장님, 감사합니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;의사일정 이틀 바꾸는 거지만 저희가 좀 불편한 내막을 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;윤석열 대통령 유죄 나왔습니다. 많은 분들이 지귀연 판사를 걱정했다고, 민주당 진영에서 특히 걱정했다고 저는 이해합니다. 그러나 유죄 나왔습니다. 그런데 사법개혁에 대한 얘기는 계속 진행이 됩니다. 법왜곡죄는 판사에게 강력한 심리적 압박을 주는 법안입니다. 재판소원제, 4심제 가면 국민 중에 몇 명 혜택 보는 것입니까? 제가 독일 사례 검토하니까 한 일이 % 정도의 아주 예외적인 일입니다. 힘없는 서민들이 4심제의 혜택 받을 수 있는지 모르겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;대법관을 무려 22명으로 증원해서 행정 효율을 높인다, 법무행정의 효율을 높인다, 그럴 수 있습니다. 그러나 민주주의를 운영한 경험을 보면 대법관 1명이 진보 좌파냐 보수 우파냐 이것은 전 세계 민주주의에서 굉장히 치열한 수싸움이 있는 부분입니다. 그래서 대법관이 어떤 대통령 임기에 임명되느냐가 미국 포함해서 모든 민주주의 선진국에서 굉장히 중요한 운동장의 기울기입니다. 무려 22명으로 2배를 늘려서 지금 10명이 넘는 대법관이 갑자기 한 대통령의 임기에서 임명될 수 있습니다. 이것을 저희가 민주주의의 안정성으로 볼 수 있겠습니까?</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;입법부도 아니고 행정부도 아니고 가장 보수적이어야 되는 삼권분립의 주체, 객체가 바로 사법부입니다. 왜 삼권을 분립하겠습니까? 입법부는 직접민주주의로 민심을 바로 듣고 그때그때 변화해라. 그러나 집행의 전문성은 행정부가 유지해라. 그러나 행정부와 입법부의 충돌이 있을 때, 마지막 민사재판이 있고 형사재판이 있을 때 사법부는 판례에 입각해서 가장 보수적으로 보아라.</span><br/><span class="spk_sub" id="spk_sub27-6">&nbsp;지금 사법부 대법관의 숫자가 급격히 바뀌는 것은 저희는 불편할 수밖에 없습니다. 이러한 법들이 진행되는 과정에 다수당께서 일정도 이렇게 계속 흔드니 저희가 걱정하지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub27-7">&nbsp;지금 대한민국이 선진국이 됐는데도 계속 변동이 크고 정치의 책임이 큽니다. 정치는 예측 가능하게, 가급적이면 26일을 지켜 가서, 큰 이유가 없다면 지켜 가는 게 저는 좋다고 생각하고 큰 이유가 있다면 얘기를 주십시오. 그러면 저희가 듣겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_28" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;수고하셨습니다.</span><br/></div></div></div><div id="spk_29" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;잠깐 1분만 주실래요?</span><br/></div></div></div><div id="spk_30" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;먼저 김남근 위원님……</span><br/></div></div></div><div id="spk_31" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;더 얘기할 것 없잖아요. 여당에서 얘기할 게 뭐 있나?</span><br/></div></div></div><div id="spk_32" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;잠깐만요. 김남근 위원님 말씀 듣고 유상범 위원님에게 특별히 또, 원래 돌아가면서 했는데 한 번 더 드리고 그다음에 김한규 위원님 말씀 듣고 그렇게 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub32-2">&nbsp;먼저 김남근 위원님.</span><br/></div></div></div><div id="spk_33" class="item1 speaker spk_mem" data-mem_id="6757" data-name="김남근" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">김남근 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/66bc8c4d4026465da6cfed67b0fbfe5e.png" alt="김남근"></span><span class="txt"><strong class="name">김남근</strong><span class="position">위원</span><span class="area">(서울 성북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;우리가 과거 전두환 정권 시절에, 1980년에 내란은 전두환 군사반란 집단이 일으켰는데 막상 그 피해자인 김대중 대통령이 내란죄로 사형 선고를 받은 역사가 있습니다. 그 점에 대해서는 지금도 사법부가 철저하게 반성을 하고 있고 다시는 그런 일이 일어나지 않아야 된다 이렇게 얘기를 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;우리가 유신시대 때―1975년경으로 알고 있습니다―인혁당 사건이라는 게 있었는데 상당히 많은 고문을 받은 분들이 재판을 받고 그 고문받은 사실이 재판 과정에서도 많이 드러나고 그랬었는데 그걸 대법원이 사형 확정판결을 하고 불과 몇 시간 만에 십여 명이, 8명이 사형 집행을 당했습니다. 재심에서 억울한 게 밝혀졌고 사법부는 다시는 우리 사법부에 이런 어두운 과거가 일어나서는 안 된다라는 그런 반성들을 했습니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;비슷하게 나치 정권 때 독일에서 나치의 폭압적인 상황 속에서 법관들이 자신들이 법관으로서의 양심과 법리를 지키지 못하고 사법살인을 했던 아픈 과거들이 있었기 때문에 그것에 대해서 반성적인 고려로, 다시는 나치 시대와 같은 그런 일이 일어나지 않도록 하자라는 반성적 고려에서 만든 것이 법왜곡죄라는 것이었습니다. 이건 처벌에 중심이 있다기보다는 과거의 역사를 반성하면서 다시는 이런 일이 일어나지 않도록 하자라는 상징적인 것이었고 실제로 처벌보다는 예방적 효과를 갖춰 가지고 독일의 사법부가 정치적 압박이나 이런 것으로부터 독립적인 재판을 할 수 있도록 하는 아주 중요한 근거가 되었던 것입니다.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;지난 내란 극복과 대통령선거 과정 속에서 우리 사법부도 다시는 이런 어두운 과거로 가서는 안 된다, 다시는 이런 일이 반복되지 않도록 해야 된다라는 어떤 상징적인 입법 조치들이 있어야 된다라는 국민적 요구가 있었고 그게 저는 법왜곡죄의 도입이라는 것으로 나타나고 있다고 생각이 됩니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;재판소원제도에 대해서도 헌법재판소에서 법률 자체가 잘못된 것은 아닌데 법원의 해석 자체가 잘못됐기 때문에 그 법원의 해석 자체를 고치면 해결될 수 있다라고 하는 판결들이 상당히 많이 있었습니다. 예를 들면 일반교통방해죄라는 게 도로에서의, 도로를 파괴하거나 장애물을 설치하는 걸 처벌하는 것인데 법원이 그것을 도로에서 시위하는 사람에 대해서도 일반교통죄로 판결을 해 왔는데 헌법재판소는 법관의 해석을 통해서 이걸 극복할 수 있다라고 그러면서 결정을 한 적이 있었습니다. 그렇지만 법원은 그 해석을 바꾸지 않았습니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;한정위헌 판결이라는 게 있습니다. 한정합헌 판결이라는 게 있습니다. 법원이 법의 해석을 바꾸게 되면 위헌성을 극복할 수 있기 때문에 위헌 판결을 하는 것보다는 법원의 해석을 바꿔서 극복을 해야 된다라고 헌법재판소가 결정한 게 여러 개 있었습니다. 우리 법원은 그걸 바꾸지 않았습니다, 해석에 대한 권한들은 법원만이 할 수 있다 그러면서. 과거 유신시대와 전두환 정권 시대에 그렇게 형성됐던 판례들을 우리가 극복하지 못하고 있는 것들이 많이 있습니다. 그런 점에서도 재판소원제도라는 것은 반드시 필요하고.</span><br/><span class="spk_sub" id="spk_sub33-7">&nbsp;이미 헌법재판소법을 만들 때 재판에 대한 헌법소원도 도입해야 된다라고 했었지만 그 당시 판단을 유보해 두고 있었을 뿐입니다. 이번에 우리가 대통령선거를 거치면서 우리 사회의 사법질서를 바로잡는 데 있어서 이런 것들을 같이 바로잡아야 된다라는 국민적 요구가 있어서 이렇게 개혁을 시도하고 있는 것입니다. 민생개혁도 그렇고 사법개혁도 그렇고 우리 국민들이 약속한 개혁들이 지지부진하고 잘 진행되지 못하고 있다라는 불만들을 많이 표출하고 있습니다. 그런 점에서 이미 많은 논의가 되어 왔던 사법개혁·민생개혁에 대해서는 이번 기회에 적극적으로 해결하고 넘어가야 될 시기가 되지 않았나 이렇게 생각이 들고요.</span><br/><span class="spk_sub" id="spk_sub33-8">&nbsp;그런 점에서 저는 본회의 시간을 충분히 확보해서 이런 사법개혁·민생개혁들을 한꺼번에 다 처리할 수 있는 그런 본회의가 진행됐으면 하는 바람입니다. 그런 점에서 위원장님께서 적극적인 표결 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_34" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;다음, 유상범 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_35" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;오늘 의사일정 협의 안건이 주가 되는 게 아니라 사법개혁 법안에 대해서 언급이 됐기 때문에 제가 추가로 언급하는 건 적절치 않고 일단 먼저 전용기 위원께서 말씀하신 부분에 대해서 한마디 지적을 할 필요가 있어서 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;그전까지 운영위에서 이와 같이 의사일정 협의안을 여기서 표결하는 것은 여야 간 협의가 전혀 되지 않았기 때문에, 결국 의장께서 일정을 정하시면서 그 형식을 갖추기 위해서 운영위원회에서 결정한 겁니다. 그러나 이렇게 합의된 걸 가지고 운영위에 보냈을 때 이것을 운영위원회 전체회의를 열어서 변경하는 것은 지금 제 기억에는 처음 있는 겁니다. 이렇게 가서는 안 된다는 겁니다. 이렇게 되면 결국은 다수당이 마음대로 합의된 일정까지 변경하면서 국회를 일방적으로 끌고 간다는 얘기고 결국 여러분들이 그렇게 싸워 왔던 독재라는 형태의 모습이 또 다른 다수의 힘으로 이렇게 발현이 되는 겁니다.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;과거의 군사독재는 1인의 독재지만 다수는 다양한 많은 사람들이 있기 때문에 내가 독재를 하는 책임을 지는 것 같지는 않지만 그 힘이 더 무섭다. 그것이 그래서 알렉시 드 토크빌이 미국 민주주의를 보면서도 지적한 부분이기도 합니다.</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;그래서 이 부분에 대해서는 정말로, 과거 지난번에 있었던 이 의사일정 변경 협의안은 합의가 안 됐을 때 벌어지는 일이라는 것을 다시 한번 여러분이 명심하시고 합의된 사안에 대해서는 이렇게 일방적으로 변경하지는 않는다, 그것이 국회의 전통이었다는 것을 생각해 보십시오. 그것이 유리하든 불리하든 그것은 굉장히 중요한 전통입니다. 그것이 깨지는 순간 세월이 지나면 여러분이 소수당이 됐을 때 다수당인 다른 정당에서 이 예를 가지고 똑같이 일을 벌일 겁니다. 이런 일이 반복돼서야 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub35-5">&nbsp;마치겠습니다.</span><br/></div></div></div><div id="spk_36" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;더 이상 토론할 위원님 안 계십니까?</span><br/></div></div></div><div id="spk_37" class="item1 speaker spk_mem" data-mem_id="6690" data-name="유상범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">유상범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9d4701db5dcd4eafa39d36c1dbc44e47.jpg" alt="유상범"></span><span class="txt"><strong class="name">유상범</strong><span class="position">위원</span><span class="area">(강원 홍천군횡성군영월군평창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;표결에는 저희가 참여를 못 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;(일부 위원 퇴장)</span><br/></div></div></div><div id="spk_38" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;알겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;더 이상 토론하실 위원님이 안 계시면 토론을 종결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-3">&nbsp;그러면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-4">&nbsp;의사일정 제1항 제432회국회(임시회) 회기 전체 의사일정 협의의 건은 천준호 위원 등이 제안한 수정안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub38-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub38-6">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub38-7"><div class="taR">(의사일정(안)은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub38-8">&nbsp;그러면 오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-9">&nbsp;위원님 여러분 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub38-10">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(15시36분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><p class="tit">제432회국회(임시회) 회기 전체 의사일정(안)</p>2026.2.2.(월)~2.26.(목)<div class="table_wrap2"><table class="normal"><caption>제432회국회(임시회) 회기 전체 의사일정(안)</caption><colgroup><col width="26.24351998629022%"><col width="48.217728460648644%"><col width="25.53875155306114%"></colgroup><thead><tr><th scope="col">일자</th><th scope="col">부의안건</th><th scope="col">비고</th></tr></thead><tr><td>2. 2.(월)<br/>14:00<br/></td><td>개회식<br/></td><td><br/></td></tr><tr><td>개회식<br/>직후<br/></td><td>1. 국무총리 및 국무위원 등 출석요구의 건<br/></td><td><br/></td></tr><tr><td>2. 3.(화)<br/>10:00<br/></td><td>1. 국정에 관한 교섭단체대표연설<br/></td><td>○더불어민주당<br/></td></tr><tr><td>2. 4.(수)<br/>10:00<br/></td><td>1. 국정에 관한 교섭단체대표연설(계속)<br/></td><td>○국민의힘<br/></td></tr><tr><td>2. 5.(목)～<br/>2. 8.(일)<br/></td><td><br/></td><td>○위원회 활동<br/>- 법률안 등 안건심사<br/></td></tr><tr><td>2. 9.(월)<br/>14:00<br/></td><td>1. 정치·외교·통일·안보에 관한 질문<br/></td><td><br/></td></tr><tr><td>2. 10.(화)<br/>14:00<br/></td><td>1. 경제에 관한 질문<br/></td><td><br/></td></tr><tr><td>2. 11.(수)<br/>14:00<br/></td><td>1. 교육·사회·문화에 관한 질문<br/></td><td><br/></td></tr><tr><td>2. 12.(목)<br/>14:00<br/></td><td>1. 안건심의<br/></td><td><br/></td></tr><tr><td>2. 13.(금)～<br/>2. 25.(수)<br/></td><td><br/></td><td>○위원회 활동<br/>- 법률안 등 안건심사<br/></td></tr><tr><td>2. 26.(목)<br/>14:00<br/></td><td>1. 안건심의<br/></td><td><br/></td></tr></table></div><br/><p class="taL">※ 2. 27.(금) 이후 의사일정은 추후작성</p><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(24인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNYOUNG" target="_blank"><span class="name lts3 ">강선영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank"><span class="name lts3 ">김남근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank"><span class="name lts3 ">김은혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank"><span class="name lts3 ">박민규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSOOMIN" target="_blank"><span class="name lts3 ">박수민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKCHOONGKWON" target="_blank"><span class="name lts3 ">박충권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAKSEUNGA" target="_blank"><span class="name lts3 ">백승아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANTAEJUN" target="_blank"><span class="name lts3 ">안태준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank"><span class="name lts3 ">유상범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank"><span class="name lts3 ">윤종오</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank"><span class="name lts3 ">이기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGWOOLEE" target="_blank"><span class="name lts3 ">이용우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank"><span class="name lts3 ">이훈기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank"><span class="name lts3 ">전용기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJIYEON" target="_blank"><span class="name lts3 ">조지연</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank"><span class="name lts3 ">천준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOISOOJIN" target="_blank"><span class="name lts3 ">최수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 김상수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 이동훈</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국가인권위원회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 29. 서미화 의원 대표발의)(의안번호 2216417)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 30일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 2. 이수진 의원 대표발의)(의안번호 2216493)</div></div><div class="con"><p class="tit_sm"><strong>국가인권위원회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 2. 김남근 의원 대표발의)(의안번호 2216503)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 2월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 13. 김준혁 의원 대표발의)(의안번호 2216873)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가인권위원회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 19. 신장식 의원 대표발의)(의안번호 2216886)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 20일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>차별금지법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 5. 정춘생 의원 대표발의)(의안번호 2216610)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 6일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>공공기관의 공정채용에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 13. 고민정 의원 대표발의)(의안번호 2216855)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 19일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯요청서 회부</strong></p><div class="con"><p class="tit_sm"><strong>제431회국회(임시회) 회기 전체 의사일정 협의요청</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 28. 의장 제의)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>제432회국회(임시회) 회기 전체 의사일정 협의요청</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 2. 의장 제의)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>제432회국회(임시회) 회기 전체 의사일정 협의요청</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 9. 의장 제의)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 9일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>제432회국회(임시회) 회기 전체 의사일정 협의요청</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 23. 의장 제의)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 23일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56295;
+			const class_id = 2;
+			const confer_num = "N053995";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640723863" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640723863"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640723863"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640723863"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

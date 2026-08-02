@@ -1,0 +1,747 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56110" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제430회 (임시회) 제1차 보건복지위원회(법안심사제1소위원회)</strong><span class="date">(2026.01.07.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김미애 소위원장 (부산 해운대구을)"> 
+							김미애 소위원장 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="서명옥 위원 (서울 강남구갑)"> 
+							서명옥 위원 (서울 강남구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="서영석 위원 (경기 부천시갑)"> 
+							서영석 위원 (경기 부천시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="전진숙 위원 (광주 북구을)"> 
+							전진숙 위원 (광주 북구을)
+						</option>
+					
+					
+						<option value="이지민 수석전문위원">이지민 수석전문위원</option>
+					
+						<option value="이스란 보건복지부제1차관">이스란 보건복지부제1차관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(4명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6589" data-name="김미애" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">김미애</span>
+												<span class="position">소위원장</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6813" data-name="서명옥" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">서명옥</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강남구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6712" data-name="서영석" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">서영석</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6752" data-name="전진숙" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">전진숙</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 북구을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="이지민" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">이지민</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"> 
+											<label for="spk_attend1">
+												<span class="name">이스란</span>
+												<span class="position">보건복지부제1차관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56110&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제430회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>보건복지위원회회의록</h1><p class="tit_sm">(법안심사제1소위원회)</p></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 1월 7일(수)</p></li><li><div class="sbj lts2">장소</div><p class="con">보건복지위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</li><li><span class="num">2.</span> 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</li><li><span class="num">3.</span> 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</li><li><span class="num">4.</span> 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</li><li><span class="num">5.</span> 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</li><li><span class="num">6.</span> 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</li><li><span class="num">7.</span> 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</li><li><span class="num">8.</span> 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</li><li><span class="num">9.</span> 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</li><li><span class="num">10.</span> 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</li><li><span class="num">11.</span> 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</li><li><span class="num">12.</span> 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</li><li><span class="num">13.</span> 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</li><li><span class="num">14.</span> 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</li><li><span class="num">15.</span> 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</li><li><span class="num">16.</span> 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(13시00분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;그리고 새해 복 많이 받으십시오.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;성원이 되었으므로 제430회 국회(임시회) 제1차 법안심사제1소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;법안심사에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2W4F0W5W3X0X1M7N1Q2F2O5N9E5H4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2W4T0N6F0M5T1G4U3I6Q3J8A0A7I1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G4H0O6P1N2M1M5K5L0H4H0G8E4F7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2Z4Z0Y6W0X5W1W6E4E4D4B7C4A7A4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2S4Q0Y6Z1X0Y2W2X3V9R2S0Q6R5P0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z4X0W6E1F8K1J7I5J4I5Q9O6N3O7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Y4Z0X7Y0W2X1F7D5E3C5D2B4J1K4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2O4N0M6S2S0S1B1A2Z0F1E5E0K9J0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2H4H0G9E1F3D0D8L2M4K2L3J5K4I8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2I4G1I1G2G8V0U8U4S5U1S7S0A7Z7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2L5J0I2I0G7H1P8Q0O3O0N0L7M1T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Q4R1M1N1L2J1K7J1J4R5P9Q1O3P7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2U5T0R6S1Q6R1Z4Z1X7W2X2V4V6D6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H5H0F9B0C2A1B4Z3Y8Y4G9H8F9G3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2J5K0I9J0H2I1G5O2P1N5O4M3M7L3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q5P0D9E1C5D1B6C5A3I1J7H3H4G6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시01분)</p><br/><div id="spk_4" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항부터 제16항까지 이상 16건의 아동수당법 일부개정법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;심사 대상 안건의 명칭 및 순서는 배부해 드린 의사일정을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;보건복지부 이스란 1차관님 수고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;의사일정 제1항부터 제16항까지 아동수당법 일부개정법률안을 심사하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;수석전문위원 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item16 speaker spk_mem" data-mem_id="0" data-name="이지민" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">수석전문위원 이지민 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이지민"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">이지민</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;대안 조문자료로 간략히 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;개정안은 아동수당 지급연령을 8세 미만에서 13세 미만으로 상향하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;안 제4조 6항은 대통령령으로 정하는 비수도권 또는 인구감소지역에 거주하는 수급아동에게는 매월 최대 2만 원의 범위에서 대통령령으로 정하는 금액을 추가로 지급하도록 하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;4쪽입니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;부칙 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;시행일은 공포한 날부터인데 4조 6항 지역 차등지급 규정은 하위 법령 정비를 위하여 공포한 날부터 3개월이 넘지 않는 범위에서 대통령령으로 정하는 날부터 시행하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;지역 차등지급 규정은 2026년 한시적으로 적용하기 위하여 2조에 유효기간을 두었습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;3조 특례는 지급연령을 매년 1세씩 5년간 상향하여 2030년에 13세에 도달하도록 하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;5쪽, 제3조제2항은 연령 제한 경계에 있어서 25년에 수급대상에 제외되었던 2017년생 아동에 대하여 25년 중단기간 보전을 위한 지급특례 규정입니다.</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;4조 1항은 공포일 당시 8세 생일이 도과한 2017년생·2018년생 아동에 대해서도 26년 1월부터 아동수당이 소급하여 지급되도록 하는 것이고 2항은 지역 차등지급 규정이 26년 1월부터 소급 적용되도록 하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;5조는 이 법 시행 당시 지원이 종료된 2017년 아동의 편의를 위하여 신청 간주 규정을 두는 것입니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;7쪽 부대의견입니다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;세 가지 부대의견이 제시돼 있는데요 의결해 주시면 법률안에 첨부해서 정리하면 될 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_6" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;정부 측 의견 듣겠습니다.</span><br/></div></div></div><div id="spk_7" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;수석전문위원님의 제시안에 대해서 동의합니다.</span><br/></div></div></div><div id="spk_8" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;질의하실 위원님 계십니까?</span><br/></div></div></div><div id="spk_9" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;예.</span><br/></div></div></div><div id="spk_10" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;서명옥 위원님.</span><br/></div></div></div><div id="spk_11" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;차관님.</span><br/></div></div></div><div id="spk_12" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;예, 위원님.</span><br/></div></div></div><div id="spk_13" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;새해 복 많이 받으세요.</span><br/></div></div></div><div id="spk_14" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;새해 복 많이 받으십시오.</span><br/></div></div></div><div id="spk_15" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;여러 가지 고심 끝에 지금 개정법률안을 내셨는데 저희도 그 고민 충분히 이해합니다. 그렇지만 반드시 개정법률안에 담긴 안대로 지역하고 차별적으로 아동수당 지급하는 것에 대해서는 금년 한시적으로 분명히 말씀하셨지요?</span><br/></div></div></div><div id="spk_16" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 법안에는 지금 그렇게 정리되어 있습니다.</span><br/></div></div></div><div id="spk_17" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;그것 다시 한번 강조드리고요.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;여기 부대의견에 보면 가, 나, 다가 제시되어 있지요?</span><br/></div></div></div><div id="spk_18" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;예.</span><br/></div></div></div><div id="spk_19" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;거기 보면 세 번째에 ‘정부는 서울시에도 타 지역 수준의 국고보조율을 적용할 수 있도록 노력한다’로 되어 있습니다. 제 개인적인 생각에는 ‘노력한다’보다도 ‘적용할 수 있도록 하여야 한다’고 했으면 더 좋겠습니다만 일단 복지부의 여러 가지 믿고 저는 여기에 일단 동의를 하는데요.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;제가 지난번 상임위에서도 누누이 강조했습니다. 서울에 있는 우리 어머니들 반지하에서, 열악한 환경에서 아이 키우느라 정말 고군분투하고 있습니다. 그리고 물가도 서울이 지방보다 거의 30～100%까지 훨씬 더 비쌉니다. 그만큼 육아를 하는 데 더 많은 부담이 있다는 거겠지요.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;그러니까 서울에 거주하는 그런 젊은, 더구나 맞벌이 부부 정말 많지요. 맞벌이를 하면서 아기 키우기는 정말 더 어렵습니다. 그렇기 때문에 이 아동복지법 육아수당은 궁극적으로 육아의 부담을 덜어 주는 거잖아요. 그러면 보편적인 복지이기 때문에 우리 서울시에 있는 젊은 엄마에게도 전국적으로 저는 국고보조율도 동일 적용해서 육아를 이왕이면 도와주는 것 같이 좀 했으면 좋겠습니다. 그래서 ‘다’ 부분에 대해서는 다시 한번 제가 차관님께 강조, 요청드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;답변 좀 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_20" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;위원님, 저희가 서울시 부시장도 한 번 만났었고요. 또 서울시 재정 상황에 대한 이야기도 들었고요. 이것 관련해서는 말씀 주신 대로 저희가 재정 당국은 아닙니다만 재정 당국과 정말 최선의 노력을 다하겠습니다.</span><br/></div></div></div><div id="spk_21" class="item16 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;그것은 복지부차관님의 의지에 달려 있다고 봅니다. 차관님만 굳게 믿겠습니다. 내년도에 꼭 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_22" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;예, 챙기겠습니다, 위원님.</span><br/></div></div></div><div id="spk_23" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;차관님, 굳게 믿겠다는데 굳게 믿음에 답해 주십시오.</span><br/></div></div></div><div id="spk_24" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;노력하겠습니다, 위원님. 최선의 노력을 다하겠습니다.</span><br/></div></div></div><div id="spk_25" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;또 다른 위원님.</span><br/></div></div></div><div id="spk_26" class="item16 speaker spk_mem" data-mem_id="6712" data-name="서영석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">서영석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/bdf94a0756144b4a9ff6e71eb8bed16e.jpg" alt="서영석"></span><span class="txt"><strong class="name">서영석</strong><span class="position">위원</span><span class="area">(경기 부천시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;위원장님!</span><br/></div></div></div><div id="spk_27" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;서영석 위원님.</span><br/></div></div></div><div id="spk_28" class="item16 speaker spk_mem" data-mem_id="6712" data-name="서영석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">서영석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/bdf94a0756144b4a9ff6e71eb8bed16e.jpg" alt="서영석"></span><span class="txt"><strong class="name">서영석</strong><span class="position">위원</span><span class="area">(경기 부천시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;관련해서 이게 지금 서울시만의 문제가 아니고 이번 2026년 예산 세우는 것 보니까 지방정부의 재정 형편이 사실 복지 재정이 늘어나면서 거의 아사 직전에 있는 상황입니다. 그러니까 이게 단순히 복지혜택을 늘리는 것에는 반드시 중앙정부의 책임이 뒤따라야 되는데 서울시의 국고보조율을 늘리는 수준의 문제가 아니고 지방정부의 재정도 국고 비율이 좀 확대될 수 있도록 하는 것이, 이것을 부대의견으로 달아야 되는지에 대해서는 좀 고민스럽기는 한데 그 부분도 이게 서울시만의 문제로 국한할 게 아니고 아예 차제에, 부대의견에 그것을 지방정부에 대한 국고보조율도 확대하도록 명시할 필요가 있지 않나 이런 생각이 드는데 거기에 대한 차관의 의견을, 지난번 소위 논의 때도 충분히 의견을 내기는 했습니다마는 그게 안 담아져서, 이게 가능한지.</span><br/></div></div></div><div id="spk_29" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;저희가 복지재정 때문에 지방정부의 재정부담이 커지는 것은 저희들이 인식을 하고 있고요. 전에 한 번 소위 때도 말씀드렸습니다만 내부적으로 좀 고민을 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;그런데 자료가 정리되고 방향이 되면 한 번 제가 설명드리도록 하고요. 그 이후에 방향성이 좀 정리되면 구체적으로 진행되는 게 좋지 않을까 그런 생각입니다. 오늘 이 정도, ‘지방자치단체 재정여건을 고려하여 단계적으로 확대하기 위해 노력한다’ 이것을 저희가 부대조건으로 받고 이것을 근거로 세부적인 내용을 검토하고 보고드리도록 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_30" class="item16 speaker spk_mem" data-mem_id="6712" data-name="서영석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">서영석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/bdf94a0756144b4a9ff6e71eb8bed16e.jpg" alt="서영석"></span><span class="txt"><strong class="name">서영석</strong><span class="position">위원</span><span class="area">(경기 부천시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;그렇게 하면 좋겠습니다.</span><br/></div></div></div><div id="spk_31" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;예, 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_32" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;추가로……</span><br/><span class="spk_sub" id="spk_sub32-2">&nbsp;전진숙 위원님.</span><br/></div></div></div><div id="spk_33" class="item16 speaker spk_mem" data-mem_id="6752" data-name="전진숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">전진숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/96be0f17dc92446d9570067f9b664a5a.jpg" alt="전진숙"></span><span class="txt"><strong class="name">전진숙</strong><span class="position">위원</span><span class="area">(광주 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;전진숙입니다.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;참 어렵게 어렵게 오늘 법안이 그래도 통과가 될 것 같아서 신년 초에 참 다행이다 이런 생각을 합니다. 수고해 주셔서 감사합니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;원래 냈던 제 법안과 관련해서 상당히 후퇴한 부분이 있습니다. 저는 ‘18세 미만’과 ‘20만 원을 지급해야 된다’라고 하는 주장을 했음에도 불구하고 실제로 그렇게 담지 못한 것에 대해서 대단히 아쉽다라는 생각이 들고요.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;실제 저는 보건복지부에서 아동수당이라고 하는 게 아이들을 키우는 부모에게 일정 정도 양육에 대한 부담을 덜기 위한 것부터 출발을 했으니 이 이후에 한 아이의 사교육비를 포함하는 것은 맞지 않고요 공교육비도 마찬가지입니다. 이런 것들을 빼고 진짜 한 아이를 키우는 데 있어서 한 가정이 어느 정도 비용이 드는지에 대한 것들은 꾸준히 조사를 하셔야 된다고 저는 생각합니다. 5년은 금방 갑니다. 저희가 어쩔 수 없이 지금 여러 가지 재정적 여건 때문에 13세까지만 한계를 짓고 있고 10만 원이라고 하는 금액의 한계를 짓고 있지만 실제 부모가 감당을 해야 될 아이를 키우는 비용에 대해서 이게 어느 정도 수준인지에 대해서는 계속 그 감각을 가지고 계셔야만 이 이후에 금액을 더 확대하거나 이럴 수 있는 근거가 된다고 저는 생각하기 때문에 오늘은 통과가 돼서 5년은 이렇게 진행을 한다 하더라도 이후의 준비를 사전에 하고 기재부하고 늘 고민을 같이 나누시는 게 저는 필요하다 싶어서 그 부분에 대해서 당부를 좀 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_34" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;추가로 질의하실 위원님 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub34-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub34-3">&nbsp;제가 그러면 몇 가지만 다시 한번 확인하고 당부드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub34-4">&nbsp;부대의견에 ‘인구감소지역을 정할 때 지방자치분권 및 지역균형발전에 관한 특별법에 따른 인구감소지역을 모두 포함하도록 한다’인데, 사실은 정부안이 합리적 이유 없이 대구와 부산만 제외시켰습니다. 그렇지요?</span><br/></div></div></div><div id="spk_35" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;예, 광역이 제외되어 있습니다.</span><br/></div></div></div><div id="spk_36" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;그러니까요. 그래서 향후에는 이런 일이 없도록 각별히 유념해 주시길 바랍니다. 꼭 지켜 주시고요.</span><br/></div></div></div><div id="spk_37" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;예, 위원장님.</span><br/></div></div></div><div id="spk_38" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;그다음에 또 ‘자산형성지원사업(디딤씨앗통장)의 직접적립 방식 전환 검토 등 저소득층 아동의 지원을 강화하도록 노력한다’라고 돼 있는데 노력한다가 아니라 꼭 그렇게 하도록 해 주십시오.</span><br/></div></div></div><div id="spk_39" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;예, 이것은 지금……</span><br/></div></div></div><div id="spk_40" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;지금 계속 기재부와도 협의 중이고 거의 이렇게 한다고 제가 들었는데 어떻습니까?</span><br/></div></div></div><div id="spk_41" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;협의 중이고요. 지난번에 국회에서도 말씀 여러 분들이 주셔서 하고 있는데요. 재정 규모가 한 1300억 정도 추가 소요가 있어 가지고요 이것을 이렇게 할지 아니면 다른 방식이 있는지 조금 고민하고 있는 중입니다. 이것은 어떻게든 정부가 온전히 지원할 수 있는……</span><br/></div></div></div><div id="spk_42" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;그러면 가장 어려운 계층에 먼저 하고 점차 늘려 가는 방식이든 해서…… 사실은 시드머니가 꼭 필요한 계층인데 스스로 자부담 능력이 안 돼서 못 하기 때문에 꼭 해야 되는 것은 알고 계시고 공감하시잖아요.</span><br/></div></div></div><div id="spk_43" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;예, 그렇습니다, 위원장님.</span><br/></div></div></div><div id="spk_44" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;그렇게 순차적으로 늘려 가는 것도 좋으니까 꼭 좀 해 주시길 부탁드립니다.</span><br/></div></div></div><div id="spk_45" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;예, 유념하겠습니다.</span><br/></div></div></div><div id="spk_46" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;그러면 더 질의하실 위원님 안 계시는 것 같아서 의사일정 제1항부터 제16항까지 이상……</span><br/></div></div></div><div id="spk_47" class="item16 speaker spk_mem" data-mem_id="0" data-name="이지민" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">수석전문위원 이지민 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이지민"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">이지민</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;위원장님, 그러면 부대의견이 4개가 되는 거지요?</span><br/></div></div></div><div id="spk_48" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;4개가 되지요.</span><br/></div></div></div><div id="spk_49" class="item16 speaker spk_mem" data-mem_id="0" data-name="이지민" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">수석전문위원 이지민 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이지민"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">이지민</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;예, 알겠습니다.</span><br/></div></div></div><div id="spk_50" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;의사일정 제1항부터 제16항까지 이상 16건의 아동수당법 일부개정법률안은 이를 통합 조정하고 위원님들과 전문위원의 의견을 반영하여 위원회 대안으로 채택하며 부대의견을 첨부하여 본회의에 부의하지 않는 것으로 의결하고자 합니다. 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub50-3">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div id="spk_51" class="item16 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_52" class="item16 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;이스란 1차관님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub52-2">&nbsp;이상으로 오늘 법안 심사를 모두 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub52-3">&nbsp;오늘 의결한 법안의 체계와 자구 정리는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub52-4">&nbsp;위원님 여러분 수고 많이 하셨습니다.</span><br/><span class="spk_sub" id="spk_sub52-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(13시12분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(9인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank"><span class="name lts3 ">김선민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYEAJI" target="_blank"><span class="name lts3 ">김예지</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank"><span class="name lts3 ">서명옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank"><span class="name lts3 ">서영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank"><span class="name lts3 ">안상훈</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이지민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 오세일</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>보건복지부</p><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 이스란</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56110;
+			const class_id = 2;
+			const confer_num = "N053909";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640757566" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640757566"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640757566"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640757566"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

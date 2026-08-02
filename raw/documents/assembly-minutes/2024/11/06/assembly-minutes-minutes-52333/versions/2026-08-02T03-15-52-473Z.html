@@ -1,0 +1,942 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52333" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제418회 (정기회) 제10차 교육위원회</strong><span class="date">(2024.11.06.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">o 의사일정 상정의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">1. 지방교육재정교부금법 일부개정법률안(문정복 의원 대표발의)(의안번호 2201812)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">2. 지방교육재정교부금법 일부개정법률안(진선미 의원 대표발의)(의안번호 2203332)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">3. 지방교육재정교부금법 일부개정법률안(서영교 의원 대표발의)(의안번호 2204091)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">4. 지방교육재정교부금법 일부개정법률안(강경숙 의원 대표발의)(의안번호 2204812)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">5. 지방교육재정교부금법 일부개정법률안(조정훈 의원 대표발의)(의안번호 2204891)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">6. 지방교육재정교부금법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">o 의사일정 변경동의의 건(조정훈 위원 서면동의)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">7. 2024년도 교육위원회 국정감사 결과에 따른 감사원에 대한 감사요구안(위원회안)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+			<div class="list list3">
+				<a href="#pop_appendix" class="tit btn_pop" id="btn_apdinx" >부록</a>
+			</div>
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김영호 위원장 (서울 서대문구을)"> 
+							김영호 위원장 (서울 서대문구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="문정복 위원 (경기 시흥시갑)"> 
+							문정복 위원 (경기 시흥시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조정훈 위원 (서울 마포구갑)"> 
+							조정훈 위원 (서울 마포구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김민전 위원 (비례대표)"> 
+							김민전 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정성국 위원 (부산 부산진구갑)"> 
+							정성국 위원 (부산 부산진구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서지영 위원 (부산 동래구)"> 
+							서지영 위원 (부산 동래구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김대식 위원 (부산 사상구)"> 
+							김대식 위원 (부산 사상구)
+						</option>
+					
+					
+						<option value="김정규 행정실장">김정규 행정실장</option>
+					
+						<option value="오석환 교육부차관">오석환 교육부차관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6602" data-name="김영호" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">김영호</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 서대문구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6683" data-name="문정복" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">문정복</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 시흥시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6627" data-name="조정훈" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">조정훈</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 마포구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6762" data-name="김민전" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">김민전</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6778" data-name="정성국" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">정성국</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 부산진구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6724" data-name="서지영" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">서지영</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 동래구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6753" data-name="김대식" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">김대식</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 사상구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="김정규" data-pos="행정실장"> 
+											<label for="spk_attend0">
+												<span class="name">김정규</span>
+												<span class="position">행정실장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="오석환" data-pos="교육부차관"> 
+											<label for="spk_attend1">
+												<span class="name">오석환</span>
+												<span class="position">교육부차관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52333&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제418회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>교육위원회회의록</h1></div></div><p class="num">제10호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 11월 6일(수)</p></li><li><div class="sbj lts2">장소</div><p class="con">교육위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 지방교육재정교부금법 일부개정법률안(문정복 의원 대표발의)(의안번호 2201812)</li><li><span class="num">2.</span> 지방교육재정교부금법 일부개정법률안(진선미 의원 대표발의)(의안번호 2203332)</li><li><span class="num">3.</span> 지방교육재정교부금법 일부개정법률안(서영교 의원 대표발의)(의안번호 2204091)</li><li><span class="num">4.</span> 지방교육재정교부금법 일부개정법률안(강경숙 의원 대표발의)(의안번호 2204812)</li><li><span class="num">5.</span> 지방교육재정교부금법 일부개정법률안(조정훈 의원 대표발의)(의안번호 2204891)</li><li><span class="num">6.</span> 지방교육재정교부금법 일부개정법률안(대안)</li><li><span class="num">7.</span> 2024년도 교육위원회 국정감사 결과에 따른 감사원에 대한 감사요구안(위원회안)(추가)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1">o 의사일정 상정의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">1.</span> 지방교육재정교부금법 일부개정법률안(문정복 의원 대표발의)(의안번호 2201812)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">2.</span> 지방교육재정교부금법 일부개정법률안(진선미 의원 대표발의)(의안번호 2203332)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">3.</span> 지방교육재정교부금법 일부개정법률안(서영교 의원 대표발의)(의안번호 2204091)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">4.</span> 지방교육재정교부금법 일부개정법률안(강경숙 의원 대표발의)(의안번호 2204812)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">5.</span> 지방교육재정교부금법 일부개정법률안(조정훈 의원 대표발의)(의안번호 2204891)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">6.</span> 지방교육재정교부금법 일부개정법률안(대안)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8">o 의사일정 변경동의의 건(조정훈 위원 서면동의)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">7.</span> 2024년도 교육위원회 국정감사 결과에 따른 감사원에 대한 감사요구안(위원회안)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(13시27분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈해 주십시오.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제418회 국회 제10차 교육위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘 회의에서는 오전에 안건조정위원회에서 심사를 마친 지방교육재정교부금법 일부개정법률안을 의결하겠습니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">o 의사일정 상정의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;그리고 이에 더하여 위원장과 간사 협의에 따라 강경숙·조정훈 의원님이 각각 대표발의한 법안으로서 의사일정 1항부터 3항까지의 개정안과 취지 및 내용이 유사하거나 겹치는 4항, 5항도 함께 상정하여 심사 의결하고자 합니다. </span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;다만 의사일정 4항과 5항의 개정안은 우리 위원회에 회부된 날부터 15일이 지나지 않았습니다. 이에 국회법 제59조에 따라 긴급하고 불가피한 사유로 상정하고자 하는데 이의 없으십니까? </span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;가결되었음을 선포합니다. </span><br/><span class="spk_sub" id="spk_sub3-5">&nbsp;그리고 이주호 교육부장관이 강원도에서 열린 중앙지방협력회의에 참석하고 있어 출석하지 못했다는 점 말씀드립니다. </span><br/><span class="spk_sub" id="spk_sub3-6">&nbsp;지금 차관님 오셨고요. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S4Q0Q7M1K5I1J8Q1R6Q0Q5O9P8O0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 지방교육재정교부금법 일부개정법률안(문정복 의원 대표발의)(의안번호 2201812)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2J4R0S8Q2P0P1N5O1W7X5V6V8U6S3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 지방교육재정교부금법 일부개정법률안(진선미 의원 대표발의)(의안번호 2203332)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2Y4W0X9F1F9D1C1D2B0B0X1Y5W3X3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 지방교육재정교부금법 일부개정법률안(서영교 의원 대표발의)(의안번호 2204091)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2D4E1Z0A1Y6X1X4V2W1E0F8D7B0C2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 지방교육재정교부금법 일부개정법률안(강경숙 의원 대표발의)(의안번호 2204812)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G4C1Z0Y2J3G1F8N3M5J0S3R1Q1P7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 지방교육재정교부금법 일부개정법률안(조정훈 의원 대표발의)(의안번호 2204891)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" class="tit">6. 지방교육재정교부금법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시29분)</p><br/><div id="spk_5" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;의사일정 1항부터 6항까지 대안을 포함하여 6건의 지방교육재정교부금법 일부개정법률안을 일괄 상정합니다. </span><br/><span class="spk_sub" id="spk_sub5-2"><div class="taR">(제안설명서는 부록에 실음)</div></span><span class="spk_sub" id="spk_sub5-3">&nbsp;우선 문정복 안건조정위원장 나오셔서 조정위원회 심사 결과를 보고해 주십시오. </span><br/></div></div></div><div id="spk_6" class="item7 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="조정위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">조정위원장 문정복 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><span class="position">조정위원장</span><strong class="name">문정복</strong><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;안건조정위원장 문정복입니다. </span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;우리 위원회는 11월 6일 회의를 열어 4건의 지방교육재정교부금법 일부개정법률안을 심사하였습니다. </span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;위원회에서 가결한 조정안은 문정복 의원, 진선미 의원, 서영교 의원이 각각 대표발의한 3건의 지방교육재정교부금법 일부개정법률안을 통합 조정한 것으로 고교 무상교육에 대한 특례 규정의 유효기간을 3년 연장하는 내용이며 지난 10월 29일 법안심사소위원회에서 의결한 대안과 같습니다. </span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;보다 자세한 내용은 배부해 드린 유인물을 참고해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;감사합니다. </span><br/></div></div></div><div id="spk_7" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;수고하셨습니다. </span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;안건조정위원회 심사 결과와 의사일정 4항, 5항에 관해 토론할 위원님 계십니까? </span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;(손을 드는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;조정훈 위원님.</span><br/></div></div></div><div id="spk_8" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;조정훈입니다. </span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;국회법상 저희가 어제 요청한 안건조정위원회는 90일의 안건조정할 수 있는 숙려기간을 허용합니다. 90일을 1시간에 마무리했습니다. 저희가 강력하게 항의를 했고 논의를 좁히기 위해서 저희의 주장에 대한 반대 의견을 객관적 수치로 제공해 달라고까지 여러 번 수차례 요청을 했음에도 불구하고 안건조정위원회의 토론을 중단하고 표결로 가 버리고 말았습니다. </span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;저는 우리 국회가 안건조정위원회라는 제도를 도입했을 때 소수 정당의 의견을 무시하지 말고 3 대 3 동수를 이루어서 최대한 90일이나 주면서 합의를 해 보라는 선배 의원들의 정신을 우리 교육위 상임위는 지키지 못했다고 생각합니다. 그럴 바에는 1시간 주겠다고, 하루 주겠다고 법에 박지 왜 90일까지 했겠습니까? </span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;또 물었습니다. 뭐가 이렇게 급해서 빨리 이 법안을 안건조정위원회를 마무리하려고 하느냐? 여기에 대한 답도 없었습니다. 그냥 한 가지 답은 이것은 합의가 안 될 것이다라는 일방적인 주장만 돌아왔습니다. 양당의 입장이 다른 건 저도 이해하고 있고 앞으로도 그럴 거라는 짐작도 합니다만 그러면 이 주장의 차이는 어디서 나온 건지, 저희 주장이 어디가 잘못된 건지 또 민주당이 주장하는 내용을 저희가 이해를 못 하겠으니까 어떻게 하면 좋을지 알려 달라고 했는데 어떤 대답도 받지 못했습니다. </span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;위원장님이 토론 얘기를 하셨으니까 제가 말씀드리겠습니다. 지금 논의가 되고 있는 이 법안의 핵심은 3년 동안 1조 정도에 달하는 국비를 고교 무상교육에 투입하겠다라는 주장과 그럴 필요가 없다라는 주장입니다. 초등교육법에 고등학교 교육은 무상으로 하고 학생과 보호자로부터 이를 받을 수 없다라고 명시돼 있어서 지금 우리가 고교 무상교육이냐 유상교육이냐 이 논쟁이 아니라 이 재원을 어디서 마련하냐 이 논쟁이지 않습니까? 어제 위원장님도 그렇게 얘기하셨고요. </span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;제가 그래서 숫자를 다 해 봤습니다. 내년에 올해 기준으로 추가되는 교육 예산이 5조 원입니다. 3.4조 교부금 추가 그리고 어렵게 연장한 담배소비세가 1.6조 해서 5조 원이 내년에 올해보다 더 들어옵니다. 이건 사실입니다. 다 아실 겁니다. 그러면 얼마나 더 드냐? 고교 무상교육에 1조 들고요 또 늘봄, 유보통합, 디지털교과서 3조 들어서 합이 4조가 듭니다. </span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;국가가 교육 예산을 5조 더 책정하고 4조 원에 해당하는 추가 지출을 요구하는 게 잘못된 겁니까? 1조 남지 않습니까. 교육부는 여기에도 동의하지 않아요. 추가 지출이 3조가 아니라 1조라고 주장합니다. 그러면 5조 더 배정하고 2조 추가 지출을 요구해서 3조 원의 여유 재원을 주겠다는데 이게 뭐가 잘못된 일이고 비난받을 일입니까. </span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;교육 예산 늘려 가고 있고 교육 예산 확보하기 위해서 상임위에서 노력하고 있고 집권 여당으로서 책임 있는 발언과 행동을 하기 위해 교육부와 기재부와 필요한 모든 관계자들과 상의해서 이렇게 대안을 마련해 왔는데 이것을 이렇게 논의 없이, 그러면 어디에 돈이 더 필요하기에 이 돈으로 모자란다고 하신 건지 그렇게 수없이 물었지만 답은 하지 않으셨습니다. </span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;마지막으로 또 한 가지, 저희는 지난달부터 시작된 법안소위에서도 일관적으로 고교 무상교육은 동의한다, 다만 이렇게 국비를 주는 방법은 동의하지 않는다. 이렇게 법안이 일방적으로 상임위를 오늘 통과하고 만약에 법사위를 통과하고 본회의를 통과하면 저희 정부로서는 이 법안을 반대할 수밖에 없는 입장으로 민주당에 의해서 몰려갈 것입니다. 그렇다면 저희가 재의요구권을 행사해서 국회에서 부결이 되면 오늘 상정된 법안보다 교육 예산은 결과적으로 더 줄어들게 됩니다. </span><br/><span class="spk_sub" id="spk_sub8-10">&nbsp;저는 일몰조항이 5년이나 있었음에도 불구하고 각 교육청에 5년의 준비기간을 주었음에도 불구하고 준비하지 못한 것 이해합니다. 문재인 정부 시절에 일몰조항을 민주당에서 요구하시면서 고등 교육에 관한 중장기 계획을 세우자고 했지만 안 세워서 지금 이 상황에 몰렸음에도 불구하고, 지방교육청의 여러 가지 의견을 들어서 단계적 지원 그리고 단계적 일몰을 제안한 법안보다 총액으로는 더 적은 교육 예산이 확정될 것이라는 것을 분명히 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub8-11">&nbsp;이게 과연 우리가 그렇게 얘기했던 교육만큼은 정쟁을 빼고 순수하게 교육을 위해서 기여하고 헌신하고 봉사하자라는 취지에 맞는지, 저는 동의할 수가 없습니다. 다시 한번 어제 아침에 오늘 아침에 참석하신 많은 위원님 중에 누구라도 저희가 5조 더 드리고 4조 쓰라고 해서 1조 남기겠다는데 이게 뭐가 잘못됐는지 얘기해 주시고.</span><br/><span class="spk_sub" id="spk_sub8-12">&nbsp;아까 문정복 위원님이 경기도교육청 얘기해 주셨습니다. 상당히 합리적이었습니다. 그러면 그런 사례들을 서울 나머지 16개 교육청을 분석해 본 자료를 놓고 한번 얘기해 봤으면 좋겠습니다. 이런 것 하라고 안건조정위원회를 90일이나 준 겁니다. 그런데 1시간 만에 이것을 끝내고 서울교육청에 무슨 일이 발생하는지 경남교육청에 무슨 일이 발생하는지 대전에는 무슨 일이 발생하는지 아무것도 모르면서 교육은 돈 들 일이 너무 많으니까 떠밀 수 없다, 저희가 늘렸고요 방식도 더 지속적으로 했습니다. 그런데 이것을 왜 반대하신다고 하시는지 아직도 이해할 수 없는 상황이라는 것을 분명히 말씀드립니다.</span><br/></div></div></div><div id="spk_9" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;저는 위원님들의 말씀에 대해서 제 평가를 최대한 자제하는데요. 하여튼 여당 입장에서 이런 제안이 있었다는 것은 저는 일부 좀 수용하는 편인데요. 또 현장의 목소리는 아시다시피 교육감님들도 이 문제에 대해서 굉장히 민감한 반응이 있고 그래서, 또 야당의 입장도 저는 충분히 이해를 합니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;혹시 야당에서 하실 말씀 있으십니까?</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;없으시면 기록으로 남기셨으니까요, 이것은 이제 질의할 위원님이 없으면 의결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;개정안은 소위원회와 안건조정위원회에서 조문별로 충실히 심사했기 때문에 위원회 축조심사를 생략하고자 하는데 이의 없으시지요?</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;(「예」 하는 위원 있음)</span><br/></div></div></div><div id="spk_10" class="item7 speaker spk_mem" data-mem_id="6762" data-name="김민전" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">김민전 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMEENGEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d856bf1d1b14476f84af3c07c1ea864e.jpg" alt="김민전"></span><span class="txt"><strong class="name">김민전</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;있는데 어떻게 하지?</span><br/></div></div></div><div id="spk_11" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;표결하셔야지요.</span><br/></div></div></div><div id="spk_12" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;예, 표결하겠습니다.</span><br/></div></div></div><div id="spk_13" class="item7 speaker spk_mem" data-mem_id="6778" data-name="정성국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">정성국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGSUNGKOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a02c8dbf04f44c91a1ef88b432f9e220.jpg" alt="정성국"></span><span class="txt"><strong class="name">정성국</strong><span class="position">위원</span><span class="area">(부산 부산진구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;이의 있습니다.</span><br/></div></div></div><div id="spk_14" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/></div></div></div><div id="spk_15" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;뭐가 가결됐습니까? 지금 이의 있다니까요. </span><br/></div></div></div><div id="spk_16" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;이의 있으세요? </span><br/></div></div></div><div id="spk_17" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예. </span><br/></div></div></div><div id="spk_18" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;이의 있으세요? 그러면……</span><br/></div></div></div><div id="spk_19" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;반대 표결……</span><br/></div></div></div><div id="spk_20" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;표결로 하시겠다고요?</span><br/></div></div></div><div id="spk_21" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;예.</span><br/></div></div></div><div id="spk_22" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;알겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;그러면 표결을 어떻게……</span><br/></div></div></div><div id="spk_23" class="item7 speaker spk_mem" data-mem_id="0" data-name="김정규" data-pos="행정실장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">행정실장 김정규 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김정규"></span><span class="txt"><span class="position">행정실장</span><strong class="name">김정규</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;지금은 축조심사 생략에 대해서 말씀하신 겁니다.</span><br/></div></div></div><div id="spk_24" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;축조심사는 동의합니다.</span><br/></div></div></div><div id="spk_25" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;그러니까 축조심사는 이의 없으신 거지요?</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;저도 좀 혼란이 있었는데요. 축조심사를 생략하고자 하는 데는 이의 없으시니까 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;의사일정 1항부터 5항까지 5건의 법률안은 각각 본회의에 부의하지 않고 안건조정위원회 조정안과 같이 의사일정 6항 지방교육재정교부금법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 여기에는 이의가 있으시다는 거지요?</span><br/><span class="spk_sub" id="spk_sub25-5">&nbsp;그러면 이것은 표결 절차를 밟아야 되겠어요.</span><br/><span class="spk_sub" id="spk_sub25-6">&nbsp;대안 의결에 찬성하시는 분 거수해 주십시오.</span><br/><span class="spk_sub" id="spk_sub25-7">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub25-8">&nbsp;죄송한데 반대도 손을 한번 들어 주실래요?</span><br/><span class="spk_sub" id="spk_sub25-9">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub25-10">&nbsp;여당 위원님 전원 반대하신 거고.</span><br/><span class="spk_sub" id="spk_sub25-11">&nbsp;표결 결과를 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub25-12">&nbsp;재석 16인, 찬성 10인, 반대 6인으로 가결되었음을 선포합니다.</span><br/></div></div></div><div id="spk_26" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;위원장님, 의사진행발언 있습니다.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;저희가 지난……</span><br/></div></div></div><div id="spk_27" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;이것만 마무리하고 의사진행발언해 주시지요. 죄송합니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;법률안 의결을 마쳤고요. 앞서 의결한 법률안은 신속한 처리를 위해 국회법 제79조의2에 따라 추계서를 생략하고자 하는데 여기는 이의 없으시지요?</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;법률안 의결을 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-6">&nbsp;경미한 자구 정리는 위원장에게 위임해 주시고 의결한 법률안과 관련해서 오석환 차관 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_28" class="item7 speaker spk_mem" data-mem_id="0" data-name="오석환" data-pos="교육부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">교육부차관 오석환 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="오석환"></span><span class="txt"><span class="position">교육부차관</span><strong class="name">오석환</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;존경하는 김영호 위원장님과 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;우리 부는 가정환경, 지역, 계층에 관계없이 모든 학생들에게 공평한 교육 기회를 보장하기 위해 고교 무상교육 정책을 시행해 왔습니다. 초기에는 지방교육재정 상황을 고려하여 한시적으로 국고를 증액 교부하였으나 현재의 지방교육재정 여건은 5년 전에 비해 개선되었고 내년도 지방 교육재정도 늘어날 것으로 전망하고 있습니다. 지방교육재정교부금법 개정안에 전체적인 국가재정 및 지방재정 여건을 고려한 정부의 의견이 반영되지 않아 아쉬움이 남습니다.</span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;향후 교육부는 우리 학생들이 공평한 교육 기회를 누릴 수 있는 교육환경을 조성해 나가는 데 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub28-4">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_29" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;의사진행발언해 주시지요.</span><br/></div></div></div><div id="spk_30" class="item7 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;의사일정 추가 요구를 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;어제 여야 간의 합의 또는 논의하는 과정에서 민주당이 제시한 고발, 감사원 감사, 교육부 감사를 의결하였습니다. 오늘은 저희 당이 요구하는 감사원 감사를 의사일정에 추가해 주실 것을 요구합니다. 특히 저희는 웅동학원 사회 환원 및 허위 입장문 배포와 관련해서 경남교육청, 교육부에 대한 감사원 감사 그리고 국가교육위원회 전문위원회 파행 운영의 원인이 된 안건 유출 사건 관련 그리고 국가교육위원회 정대화 상임위원의 정치적중립의무 위반 의혹 등에 관한 감사원 감사를 요구합니다.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;요구서를 제출합니다.</span><br/></div></div></div><div id="spk_31" class="item7 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;이것 저희가 복사해서 배포하는 동안 잠시만 기다려 주십시오.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item8" class="tit">o 의사일정 변경동의의 건(조정훈 위원 서면동의)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시41분)</p><br/><div id="spk_33" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;지금 조정훈 위원님이 2024년도 국정감사 결과에 따른 감사원에 대한 감사요구안을 새로운 의사일정으로 추가해 달라는 동의를 서면으로 제출했습니다.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;국회법 제71조에 따라 동의가 의제로 성립하기 위해서는 1인 이상의 찬성이 필요합니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;조정훈 위원님 동의에 찬성하는 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;(「찬성합니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;찬성하는 위원님이 계시므로 조정훈 위원님의 동의는 의제로 성립되었습니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;조정훈 위원님이 동의한 안건을 의사일정 7항으로 추가하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub33-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub33-8">&nbsp;없으세요?</span><br/><span class="spk_sub" id="spk_sub33-9">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub33-10">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div id="spk_34" class="item8 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;의사진행발언 좀 해도 될까요?</span><br/></div></div></div><div id="spk_35" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;예, 하십시오.</span><br/></div></div></div><div id="spk_36" class="item8 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;어제 민주당의 의사일정 변경안에 대해서 저희가 처리를 했잖아요? 국민의힘 조정훈 간사님이 똑같이 그렇게 한 것인데 어제와 동일하게 이것은 표결로써 정리해 주시면 좋을 듯 싶습니다. 그렇게 요청드립니다.</span><br/></div></div></div><div id="spk_37" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;그러니까 협의를 두 분이 안 하셨나요, 간사님들끼리?</span><br/></div></div></div><div id="spk_38" class="item8 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;일단은 협의는 잘 안 됩니다. 왜냐하면 우리가 요구하는 안을 국민의힘에서 받을 수 없고 국민의힘에서 요구하는 안을 저희가 받을 수 없는 상황이기 때문에 어제와 동일하게 표결로 해 주실 것을 요청드립니다.</span><br/></div></div></div><div id="spk_39" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;이것을 전체회의 하시기 전에 좀 일부 협의해서 하시지. 왜냐하면 저희도 지금 추가, 보류시켜 놓은 게 있었잖아요. 우리 어저께 간사님이 요청하신 두 분 관련돼서 좀……</span><br/></div></div></div><div id="spk_40" class="item8 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;아니, 그것은 어제 위원장님도 말씀하셨다시피 고발 건은 굉장히 중요한 것이기 때문에 여야 간 합의를 하게 하셨고 교육부 감사와 감사원 감사는 어차피 추가적인 논의가 있었기 때문에 교육부가, 지금 민주당 원안대로 통과시키셨지 않습니까? 그래서 표결로 가시겠다면, 저희는 동의해 주실 것을 기대하고 요청드립니다만 표결로 가시겠다면 표결하고요. 만약에 여기서 반대를 해 주시면 저는 왜 감사원 감사를 반대하시는지, 저희는 충분히 국정감사 기간 동안에 이 문제에 대해서 어제 나왔던 많은 논의만큼 문제의식을 여야 위원들이 공유했다고 저는 생각합니다. 그래서 문제가 없으면 감사원 감사에서 깨끗하게 밝혀질 것이고 문제가 있다면 그에 따른 처벌을 받으면 됩니다. 그런데 감사원 감사를 해야 되지 않아야 될 이유는 저희는 없다고 생각합니다.</span><br/></div></div></div><div id="spk_41" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;제가 사실 간사님께 드릴 말씀이 있는데 공개적으로는 안 드리고요 이것 회의 끝나고 한번 말씀을 좀 드릴게요. 저도 간사님이랑은 좀 드릴 말씀이 있을 것 같습니다.</span><br/></div></div></div><div id="spk_42" class="item8 speaker spk_mem" data-mem_id="6778" data-name="정성국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">정성국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGSUNGKOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a02c8dbf04f44c91a1ef88b432f9e220.jpg" alt="정성국"></span><span class="txt"><strong class="name">정성국</strong><span class="position">위원</span><span class="area">(부산 부산진구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;위원장님, 의사진행발언하겠습니다.</span><br/></div></div></div><div id="spk_43" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;정성국 위원님.</span><br/></div></div></div><div id="spk_44" class="item8 speaker spk_mem" data-mem_id="6778" data-name="정성국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">정성국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGSUNGKOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a02c8dbf04f44c91a1ef88b432f9e220.jpg" alt="정성국"></span><span class="txt"><strong class="name">정성국</strong><span class="position">위원</span><span class="area">(부산 부산진구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;저희가 감사 요구하는 이것도 충분히 설득력이 있는 것이라고 생각하고요. 민주당 쪽에서는 전문위원회 파행 운영을 국가교육위원장에게로 했지만 사실 이 회의 내용이나 이런 것들이 유출되면 안 되는 것은 알지 않습니까? 유출돼서는 안 되는 거지요? 이것을 유출한 사람이 분명히 있는 것이고요. 그게 누군지도 지금 어느 정도는 우리가 짐작을 다 하고 있습니다. 그래서 국가교육위원회 그 자료를 마음대로 이렇게 밖으로 외부로 유출해서는 안 된다는 것은 다 아는 사실입니다. 이것을 어겼기 때문에 감사원 감사가 반드시 필요하고요.</span><br/><span class="spk_sub" id="spk_sub44-2">&nbsp;그다음에 정대화 상임위원의 정치적 중립의무 위반 의혹도 국가교육위원회 상임위원은 정치적 중립의무를 가져야 된다는 게 분명히 국가교육위원회법에 나와 있습니다. 그래서 그것을 어겼다고 저희들은 확신을 갖고 있기 때문에 이 부분에 대해서 민주당에서 충분히 공감하고 함께해 주실 것이라고 저는 기대합니다.</span><br/><span class="spk_sub" id="spk_sub44-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_45" class="item8 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;어차피 안건을 상정해야 될 것 같습니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item9" class="tit">7. 2024년도 교육위원회 국정감사 결과에 따른 감사원에 대한 감사요구안(위원회안)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시45분)</p><br/><div id="spk_47" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;그러면 의사일정 7항 2024년도 교육위원회 국정감사 결과에 따른 감사원에 대한 감사요구안을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub47-2">&nbsp;안건에 대한 또 다른 질의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub47-3">&nbsp;김민전 위원님.</span><br/></div></div></div><div id="spk_48" class="item9 speaker spk_mem" data-mem_id="6762" data-name="김민전" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">김민전 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMEENGEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d856bf1d1b14476f84af3c07c1ea864e.jpg" alt="김민전"></span><span class="txt"><strong class="name">김민전</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;질의라기보다는 어저께 회의에서 저희가 감사원 감사요구안 등에 대해서 상당히 많은 내용임에도 불구하고 갑자기 이게 들어왔기 때문에 제대로 읽어 보지도 못했다라고 하는 저희 쪽의 반론이 있었고요. 여기에 대해서 뭐 제대로 안 읽어 봐도 이것 다 나왔던 안이다라고 하는 말씀이었고 또 우리가 원하는 것도 가지고 오면 그대로 하면 된다라고 하는 게 어저께 말씀이셨던 것으로 제가 기억합니다, 지금 속기록을 복사해 오지는 않았습니다마는. 그렇다라고 하면 어저께 여당이 원하는 것들이 대거 통과되었듯이 저희가 원하는 것도 같이 통과시켜야 이게 공정하다 이렇게 얘기할 수 있지 않을까 싶고요. 저희가 요구하는 안은 많지는 않습니다. 단 3건밖에 되지 않습니다. 이것도 하지 않겠다라고 한다면 그것은 그야말로 다수 야당의 폭주다 이렇게 얘기할 수밖에 없는 것이 아닌가 이런 생각을 합니다.</span><br/></div></div></div><div id="spk_49" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;제가 말씀을 좀 한마디 드리자면 저희가 사학비리 문제부터 여러 가지 청문회도 도입을 하자 또 우리 국회의 권위를 세우기 위해서 자료 미제출이나 증인 불출석 등 여러 가지 문제에 대해서는 우리가 확실히 문제를 좀 강력하게 문제 제기를 하자 이런 말씀을 드렸는데요. 저는 이 마음은 변치 않고 있습니다. 아마 여야 위원님도 같으셔서, 이것이 국정감사 끝났다고 그래서 이번이 처음이고 마지막이 아니라 저는 상시로 이런 고발 문제나 또 여러 가지 행정부를 견제하고 감시하는 일에 대해서는 우리 교육위원회가 좀 강력하게 많은 일들을 추진해 나가겠다라는 생각을 갖고 있는데요. </span><br/><span class="spk_sub" id="spk_sub49-2">&nbsp;지금 문제는 여당 위원님들이 문제 제기하는 것에 대해서 야당 위원님들께서, 어저께도 야당 위원님들이 문제 제기한 것을 잘 이해를 못 하셨다시피 야당 위원님들은 사실 많은 이해를 못 하신 것 같습니다. 저는 오늘 처음 들었는데요.</span><br/><span class="spk_sub" id="spk_sub49-3">&nbsp;그래서 이 문제에 대해서는 어찌 됐든 저희가 수용은 하겠습니다. 그래서 표결을 부치겠습니다. 제가 그렇게밖에 할 수가 없는 것이에요. 그래서 표결을 부치고 표결 끝나고 제가 비공식적으로 조정훈 간사님께 또 이 문제에 대해서 말씀을 나누도록 할게요.</span><br/><span class="spk_sub" id="spk_sub49-4">&nbsp;이 문제에 대해서는 이의가 있으므로 본 제안에 대해서는 표결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-5">&nbsp;의사일정 7항 감사요구안 제안에 찬성하는 분은……</span><br/></div></div></div><div id="spk_50" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;이의가 있다는 게 위원장님이 이의가 있으시다는 건가요?</span><br/></div></div></div><div id="spk_51" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;아니요, 저는 아니라 지금 우리……</span><br/></div></div></div><div id="spk_52" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;아직 확인도 안 하셨지 않습니까? </span><br/></div></div></div><div id="spk_53" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;이의 있지요.</span><br/></div></div></div><div id="spk_54" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;아까 의결해 달라고 한 것을 이의가 있다고 저는 받아들인 거거든요. 그러면 다시 한번 확인을 할게요.</span><br/><span class="spk_sub" id="spk_sub54-2">&nbsp;지금 여당 위원님들의 제안에 대해서 이의 있으세요?</span><br/><span class="spk_sub" id="spk_sub54-3">&nbsp;(「이의 있습니다」 하는 위원 있음)</span><br/></div></div></div><div id="spk_55" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;어떤 이의가 있으십니까? </span><br/><span class="spk_sub" id="spk_sub55-2">&nbsp;감사 내용이 뭐가 잘못됐다고 생각하십니까? </span><br/></div></div></div><div id="spk_56" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;노코멘트입니다.</span><br/></div></div></div><div id="spk_57" class="item9 speaker spk_mem" data-mem_id="6724" data-name="서지영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">서지영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOJIYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7e0edac99dd4fb89cbbc8bec657f222.png" alt="서지영"></span><span class="txt"><strong class="name">서지영</strong><span class="position">위원</span><span class="area">(부산 동래구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;위원장님, 잠깐 짧게 제가 위원장님께 질문을……</span><br/></div></div></div><div id="spk_58" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;예, 말씀해 주세요.</span><br/></div></div></div><div id="spk_59" class="item9 speaker spk_mem" data-mem_id="6724" data-name="서지영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">서지영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOJIYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7e0edac99dd4fb89cbbc8bec657f222.png" alt="서지영"></span><span class="txt"><strong class="name">서지영</strong><span class="position">위원</span><span class="area">(부산 동래구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;지금 방금 위원장님께서 굉장히 중요한 말씀 하셨는데 ‘어제 여러 가지 감사요구안이나 고발 건에 대해서 국민의힘 위원들이 충분히 이해하지 못한 상태에서 진행이 되었다. 그리고 오늘도 유사하다’. 이해하지 못한 것을 어떻게 표결합니까, 위원장님?</span><br/></div></div></div><div id="spk_60" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;언제요?</span><br/></div></div></div><div id="spk_61" class="item9 speaker spk_mem" data-mem_id="6724" data-name="서지영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">서지영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOJIYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7e0edac99dd4fb89cbbc8bec657f222.png" alt="서지영"></span><span class="txt"><strong class="name">서지영</strong><span class="position">위원</span><span class="area">(부산 동래구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;방금 그렇게 얘기하셨고, 오늘 같은 경우에도 위원님들이 충분히 이해하지 못했다라고 하셨고 그리고 위원장님도 유사하게 이해하지 못한 상황이다. 이해하지 못한 것을 어떻게 표결합니까?</span><br/></div></div></div><div id="spk_62" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;그런데 어저께 저는……</span><br/></div></div></div><div id="spk_63" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;아니, 이해에 더 시간이 필요하시면……</span><br/></div></div></div><div id="spk_64" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;표결해 주세요. 어제 위원님들도 반대하셨어요.</span><br/></div></div></div><div id="spk_65" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;아니요. 그러니까 어저께 그 문건을 못 보신 것은 아니잖아요? 다만 우리가 숙고 과정이나 여러 가지 충분한 토론이 안 됐다는 취지인데 어찌 됐든 국회법을 근거로 해서 입장이 좁혀지지 않았기 때문에 표결을 한 것이고요. 제가 위원장의 직권으로 야당 위원님이나 여당 위원님들 의견을 무시하고 의결할 수 있는 부분은 아니라서, 최대한 합의를 안 해 오시면 어쩔 수 없이 표결로 갈 수밖에 없는 거잖아요. </span><br/><span class="spk_sub" id="spk_sub65-2">&nbsp;그런데 제가 이 회의를 마치고 나서 생각한 부분이 좀 있어요. 그래서 여당 위원님들의 답답함도 제가 충분히 공감하는 부분이 있어서 이 회의 끝나고 제가 조정훈 간사님께 따로 말씀을 좀 드릴게요.</span><br/></div></div></div><div id="spk_66" class="item9 speaker spk_mem" data-mem_id="6724" data-name="서지영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">서지영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOJIYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7e0edac99dd4fb89cbbc8bec657f222.png" alt="서지영"></span><span class="txt"><strong class="name">서지영</strong><span class="position">위원</span><span class="area">(부산 동래구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;위원장님, 지금 저희 국민의힘에서 감사 요구하는 내용은 이미 문정복 간사님하고 조정훈 간사님께서 사전에 충분히 함께 논의하셨으면 함께 논의되었을 상황입니다.</span><br/></div></div></div><div id="spk_67" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_67"><label for="spk_cnt_chk_67">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub67-1">&nbsp;논의가 안 됩니다.</span><br/></div></div></div><div id="spk_68" class="item9 speaker spk_mem" data-mem_id="6724" data-name="서지영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">서지영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOJIYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7e0edac99dd4fb89cbbc8bec657f222.png" alt="서지영"></span><span class="txt"><strong class="name">서지영</strong><span class="position">위원</span><span class="area">(부산 동래구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;그러니까 일방적으로 하셨고. 또 저희가 추가적으로 전체회의에서 안건을 올린 건데 감사요구안을 올린 건데 이 감사요구안 하나하나 내용을 보시면 민주당에서 제기했던 터무니없는 감사요구안에 비해서 훨씬 더 의미 있는 내용들입니다. 그리고 심지어는 포렌식까지 하자고 하지 않으셨습니까?</span><br/><span class="spk_sub" id="spk_sub68-2">&nbsp;이런 것들에 대해서 왜 반대하는지에 대해서, 적어도 반대 입장이 무엇인지에 대해서 근거는 저희들한테 얘기해 주셔야 되는 거 아닌가 생각합니다.</span><br/></div></div></div><div id="spk_69" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;문정복 간사님.</span><br/></div></div></div><div id="spk_70" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_70"><label for="spk_cnt_chk_70">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub70-1">&nbsp;이 국민의힘 안은 저희가 받아들일 수 없는 거고요. 저희 안을 국민의힘이 받아들이지 못해서 어제 반대 표결하셨던 거와 같은 이유입니다. 그렇기 때문에 이것은 여러 가지 의견이 필요 없는 거고, 저희는 이 안을 수용하지 못한다라는 말씀을 드리고요. 표결해 주실 것을 부탁드립니다.</span><br/></div></div></div><div id="spk_71" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;김민전 위원님.</span><br/></div></div></div><div id="spk_72" class="item9 speaker spk_mem" data-mem_id="6762" data-name="김민전" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">김민전 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMEENGEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d856bf1d1b14476f84af3c07c1ea864e.jpg" alt="김민전"></span><span class="txt"><strong class="name">김민전</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;제가 잠시만 의사진행발언을 하고 싶은데요.</span><br/><span class="spk_sub" id="spk_sub72-2">&nbsp;어저께 저희가 받아들이지 못한다라는 표현보다는 이게 뭔지 이해할 수 없다, 너무 양이 많다 그리고 금방 받았다 이렇게 얘기드렸습니다. 그렇기 때문에 우리는 전혀 알지도 못하는 상황에서 어저께 위원장님 말씀은 ‘일단 그러면 이렇게 하고 내일 우리가 원하는 것 가져와라’ 이렇게 말씀하셨잖아요.</span><br/></div></div></div><div id="spk_73" class="item9 speaker spk_mem" data-mem_id="6753" data-name="김대식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">김대식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMDAISIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a3a98ad4d2b24e3ba8de8de37631a192.png" alt="김대식"></span><span class="txt"><strong class="name">김대식</strong><span class="position">위원</span><span class="area">(부산 사상구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;두 분의 간사님이 좀 더 협의를 하는 게, 어제도 협의를 해서 보류할 것은 보류하고 이렇게 했잖아요. 그런데 이것을 굳이 그렇게 할 그게 없다 저는 이렇게 생각하고 두 분 간사님이 좀 더 협의를 하고 나서……</span><br/></div></div></div><div id="spk_74" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;그래서 저는 상정하는 게 사실 적절치 않았다는 거거든요. 조금 협의가 필요하다고 봤는데 상정을 하셨기 때문에, 하여튼 야당 위원님들은 이견이 있는 거잖아요.</span><br/></div></div></div><div id="spk_75" class="item9 speaker spk_mem" data-mem_id="6753" data-name="김대식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">김대식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMDAISIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a3a98ad4d2b24e3ba8de8de37631a192.png" alt="김대식"></span><span class="txt"><strong class="name">김대식</strong><span class="position">위원</span><span class="area">(부산 사상구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;그러니까 우리가 세 가지니까, 그러면 왜 이 세 가지에 대해서 의문을 제기하시는지 그건 설명도 좀 하시고 처리하는 것도 좋지 않겠습니까?</span><br/></div></div></div><div id="spk_76" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_76"><label for="spk_cnt_chk_76">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub76-1">&nbsp;그러면 제가 한번 대안을 드려도 될까요, 위원장님?</span><br/><span class="spk_sub" id="spk_sub76-2">&nbsp;상정하면 반드시 의결해야 됩니까?</span><br/></div></div></div><div id="spk_77" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_77"><label for="spk_cnt_chk_77">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub77-1">&nbsp;그렇습니다.</span><br/></div></div></div><div id="spk_78" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_78"><label for="spk_cnt_chk_78">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub78-1">&nbsp;그런 법안이 있습니까, 상정하면?</span><br/></div></div></div><div id="spk_79" class="item9 speaker spk_mem" data-mem_id="6753" data-name="김대식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_79"><label for="spk_cnt_chk_79">김대식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMDAISIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a3a98ad4d2b24e3ba8de8de37631a192.png" alt="김대식"></span><span class="txt"><strong class="name">김대식</strong><span class="position">위원</span><span class="area">(부산 사상구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub79-1">&nbsp;상정하면 의결해야 됩니까? 보류는 안 됩니까?</span><br/></div></div></div><div id="spk_80" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_80"><label for="spk_cnt_chk_80">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub80-1">&nbsp;보류하는 결정은 못 합니까?</span><br/></div></div></div><div id="spk_81" class="item9 speaker spk_mem" data-mem_id="6753" data-name="김대식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_81"><label for="spk_cnt_chk_81">김대식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMDAISIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a3a98ad4d2b24e3ba8de8de37631a192.png" alt="김대식"></span><span class="txt"><strong class="name">김대식</strong><span class="position">위원</span><span class="area">(부산 사상구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub81-1">&nbsp;상정하면 ‘가’ 아니면 ‘부’ 아니면 ‘보류’까지도 있을 수 있지요?</span><br/></div></div></div><div id="spk_82" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_82"><label for="spk_cnt_chk_82">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub82-1">&nbsp;보류도 가능하다고 그럽니다.</span><br/></div></div></div><div id="spk_83" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_83"><label for="spk_cnt_chk_83">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub83-1">&nbsp;그러면 위원장님께서 동의해 주시면 제가 문정복 간사님이랑 저희 3개의 감사 건에 대해서 충분하게 소상하게 설명을 한번 드려 보겠습니다. 그리고 반대하시더라도……</span><br/></div></div></div><div id="spk_84" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_84"><label for="spk_cnt_chk_84">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub84-1">&nbsp;그러시겠어요?</span><br/></div></div></div><div id="spk_85" class="item9 speaker spk_mem" data-mem_id="6683" data-name="문정복" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_85"><label for="spk_cnt_chk_85">문정복 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20e051935a914f069c35c6e00dc22d70.png" alt="문정복"></span><span class="txt"><strong class="name">문정복</strong><span class="position">위원</span><span class="area">(경기 시흥시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub85-1">&nbsp;위원장님, 그렇게 안 되는 것이 조정훈 간사님도 그렇게 표현을 하셨고, 우리가 내는 안을 본인들이 동의할 수도 없고 국민의힘이 내는 안도 우리가 동의할 수 없는 것 아니냐라는 그런 공감대는 있었습니다. 그렇기 때문에 결국 이것이 계류되어서 다음번 전체회의를 통해서 하더라도 저희는 이 안을 동의할 수 없는 거고요. 저희 안을 국민의힘이 동의를 못 하셔서 부결 처리한 것과 같은 내용입니다. 그렇기 때문에 이 안을 더 이상 미루는 것은 큰 의미가 없다라고 보여지는 겁니다.</span><br/></div></div></div><div id="spk_86" class="item9 speaker spk_mem" data-mem_id="6627" data-name="조정훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_86"><label for="spk_cnt_chk_86">조정훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/adbf0bf5375e47fba83d7834d3e70a0d.jpg" alt="조정훈"></span><span class="txt"><strong class="name">조정훈</strong><span class="position">위원</span><span class="area">(서울 마포구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub86-1">&nbsp;위원장님, 저는 상당히 다른 차이가 있다고 생각합니다. 어제 주신 안 처음 받았지만 국감을 같이 치렀기 때문에 몇몇 일부 사학 그리고 증인과 참고인 자격으로 나오지 않은 분들에 대해서는 저희가 그 자리에서 동의를 했고요. 위원장님도 같이 대화를 나누셨기 때문에 아시리라고 짐작하고, 일부 고발인 또는 감사 대상에 대해서는 검토가 필요하고 지금 동의하기는 난처하다라고 분명히 말씀을 드렸습니다.</span><br/><span class="spk_sub" id="spk_sub86-2">&nbsp;따라서 지금 저희가 충분한 설명을 드리겠다고 하는 그 제안까지도 거부하시고 부결을 하시겠다면 그건 저희는 막을 수는 없습니다만……</span><br/><span class="spk_sub" id="spk_sub86-3">&nbsp;(위원장, 간사와 협의)</span><br/></div></div></div><div id="spk_87" class="item9 speaker spk_mem" data-mem_id="6602" data-name="김영호" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_87"><label for="spk_cnt_chk_87">위원장 김영호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3567968cbf624c2a93cc299e39bee78f.png" alt="김영호"></span><span class="txt"><span class="position">위원장</span><strong class="name">김영호</strong><span class="area">(서울 서대문구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub87-1">&nbsp;하여튼 이견을 좁히지 못해서 본 제안에 대해서는 표결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub87-2">&nbsp;의사일정 7항 감사요구안 제안에 찬성하는 분 손 들어 주십시오.</span><br/><span class="spk_sub" id="spk_sub87-3">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub87-4">&nbsp;여당 위원 전원 다 찬성하셨고요.</span><br/><span class="spk_sub" id="spk_sub87-5">&nbsp;반대하는 분 손 들어 주십시오.</span><br/><span class="spk_sub" id="spk_sub87-6">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub87-7">&nbsp;표결 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub87-8">&nbsp;재석 16인, 찬성 6인, 반대 10인, 부결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub87-9">&nbsp;하여튼 오늘 조금 입장 차이가 좁혀지지 않은 상황 속에서도 여야 위원님들께서 발언을 다 굉장히 품격 있게 또 상대 위원님들에 대한 존중을 해 주신 점 깊이 감사드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub87-10">&nbsp;앞으로 여야 간사님뿐만 아니라 저도 앞으로 간사님들과 좀 더 대화를 통해서 우리 교육위원회가 조금 더 좋은 분위기 속에서 회의가 원만하게 진행될 수 있도록 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub87-11">&nbsp;위원님들 모두 고생하셨습니다.</span><br/><span class="spk_sub" id="spk_sub87-12">&nbsp;교육부차관을 비롯한 정부 관계자, 보좌진과 전문위원 등 국회 관계자 그리고 언론인 여러분들 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub87-13">&nbsp;회의를 마칩니다.</span><br/><span class="spk_sub" id="spk_sub87-14">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(13시56분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(16인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGKYUNGSOOK" target="_blank"><span class="name lts3 ">강경숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KOMINJUNG" target="_blank"><span class="name lts3 ">고민정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDAISIK" target="_blank"><span class="name lts3 ">김대식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMOONSOO" target="_blank"><span class="name lts3 ">김문수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMEENGEON" target="_blank"><span class="name lts3 ">김민전</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank"><span class="name lts3 ">김영호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNHYUK" target="_blank"><span class="name lts3 ">김준혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank"><span class="name lts3 ">문정복</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGJOON" target="_blank"><span class="name lts3 ">박성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAKSEUNGA" target="_blank"><span class="name lts3 ">백승아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOJIYOUNG" target="_blank"><span class="name lts3 ">서지영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGSUNGKOOK" target="_blank"><span class="name lts3 ">정성국</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGEULHO" target="_blank"><span class="name lts3 ">정을호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJUNGHUN" target="_blank"><span class="name lts3 ">조정훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNMEE" target="_blank"><span class="name lts3 ">진선미</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 천우정</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 강대훈</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>교육부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 오석환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 박성민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">책임교육정책실장</span></span><span class="name lts3"> 고영종</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">학생건강정책관</span></span><span class="name lts3"> 이해숙</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52333;
+			const class_id = 2;
+			const confer_num = "054276";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641337739" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641337739"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641337740"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641337740"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

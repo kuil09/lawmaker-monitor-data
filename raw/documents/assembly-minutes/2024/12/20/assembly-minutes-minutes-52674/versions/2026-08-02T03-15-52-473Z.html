@@ -1,0 +1,635 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52674" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제420회 (임시회) 제1차 대법관(마용주)임명동의에관한인사청문특별위원회</strong><span class="date">(2024.12.20.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 위원장 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">o 위원장(이춘석) 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">2. 간사 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">o 간사(박상혁) 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">3. 대법관(마용주) 임명동의안(의안번호 2206435)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">4. 대법관(마용주) 임명동의안(의안번호 2206435) 심사를 위한 인사청문회 실시계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">5. 자료제출요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="소병훈 위원 (경기 광주시갑)"> 
+							소병훈 위원 (경기 광주시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박상혁 위원 (경기 김포시을)"> 
+							박상혁 위원 (경기 김포시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이춘석 위원장 (전북 익산시갑)"> 
+							이춘석 위원장 (전북 익산시갑)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(3명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6719" data-name="소병훈" data-pos="위원장직무대행"> 
+											<label for="spk_mem0">												
+												<span class="name">소병훈</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 광주시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6678" data-name="박상혁" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">박상혁</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 김포시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6742" data-name="이춘석" data-pos="위원장"> 
+											<label for="spk_mem2">												
+												<span class="name">이춘석</span>
+												<span class="position">위원장</span>
+												<span class="area">(전북 익산시갑)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52674&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제420회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>대법관(마용주)임명동의에관한인사청문특별위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 12월 20일(금)</p></li><li><div class="sbj lts2">장소</div><p class="con">법제사법위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 위원장 선임의 건</li><li><span class="num">2.</span> 간사 선임의 건</li><li><span class="num">3.</span> 대법관(마용주) 임명동의안(의안번호 2206435)</li><li><span class="num">4.</span> 대법관(마용주) 임명동의안(의안번호 2206435) 심사를 위한 인사청문회 실시계획서 채택의 건</li><li><span class="num">5.</span> 자료제출요구의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 위원장 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2">o 위원장(이춘석) 인사</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">2.</span> 간사 선임의 건</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4">o 간사(박상혁) 인사</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">3.</span> 대법관(마용주) 임명동의안(의안번호 2206435)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">4.</span> 대법관(마용주) 임명동의안(의안번호 2206435) 심사를 위한 인사청문회 실시계획서 채택의 건</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">5.</span> 자료제출요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시04분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6719" data-name="소병훈" data-pos="위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장직무대행 소병훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8512c3a87fe463c9d063ecb7a34680c.jpg" alt="소병훈"></span><span class="txt"><span class="position">위원장직무대행</span><strong class="name">소병훈</strong><span class="area">(경기 광주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제420회 국회(임시회) 제1차 대법관(마용주) 임명동의에 관한 인사청문특별위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;위원장직무대행을 맡게 된 소병훈 위원입니다. 국회법 제47조제2항에 따라 우리 특별위원회 위원 중 연장자로서 위원장 선임을 위해 회의를 주재하게 되었습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;그러면 바로 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 위원장 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6719" data-name="소병훈" data-pos="위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장직무대행 소병훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8512c3a87fe463c9d063ecb7a34680c.jpg" alt="소병훈"></span><span class="txt"><span class="position">위원장직무대행</span><strong class="name">소병훈</strong><span class="area">(경기 광주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정 제1항 위원장 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;인사청문특별위원회의 위원장은 인사청문회법 제3조제5항에 따라 위원회에서 호선하고 본회의에 보고하도록 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;그러면 여러 위원님들께서는 위원장으로 추천하실 위원이 있으시면 추천해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;박상혁 위원님.</span><br/></div></div></div><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6678" data-name="박상혁" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">박상혁 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/963e0c49236e4f5a83fb777e6225456b.jpg" alt="박상혁"></span><span class="txt"><strong class="name">박상혁</strong><span class="position">위원</span><span class="area">(경기 김포시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;더불어민주당 박상혁 위원입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;저희 위원회에서 4선으로 가장 다선이시고 그동안 법사위에서도 경험을 많이 갖고 계신 이춘석 위원님을 위원장으로 추천합니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6719" data-name="소병훈" data-pos="위원장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장직무대행 소병훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a8512c3a87fe463c9d063ecb7a34680c.jpg" alt="소병훈"></span><span class="txt"><span class="position">위원장직무대행</span><strong class="name">소병훈</strong><span class="area">(경기 광주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;다른 위원님, 추천하실 위원 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;(「없습니다」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;그러면 더 이상 추천하실 위원이 안 계시므로 박상혁 위원님께서 추천하신 이춘석 위원님을 우리 위원회의 위원장으로 선임하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;(「예」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;이의가 없으면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;그러면 존경하는 이춘석 위원장님 나오셔서 회의를 주재해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;(소병훈 위원장직무대행, 이춘석 위원장과 사회교대)</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">o 위원장(이춘석) 인사</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시06분)</p><br/><div id="spk_7" class="item2 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 이춘석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><span class="position">위원장</span><strong class="name">이춘석</strong><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;존경하는 소병훈 위원님 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;부족한 저를 우리 위원회의 위원장으로 선출해 주신 위원님들께 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;대법관 임명동의안에 대한 심사가 보다 원활하고 내실 있게 진행될 수 있도록 위원장으로서 최선의 노력을 다하겠다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub7-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub7-5">&nbsp;오늘 이 자리에 정치적 상황 때문에 국민의힘 위원님들께서 참석을 안 하셨는데 다음 청문회 날에는 꼭 참석해 주실 것을 촉구드립니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">2. 간사 선임의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_8" class="item3 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 이춘석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><span class="position">위원장</span><strong class="name">이춘석</strong><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;이어서 의사일정 제2항 간사 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;인사청문회법 제3조제5항에서는 각 교섭단체별로 간사 1인을 위원회에서 호선하고 이를 본회의에 보고하도록 규정하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;우리 국회에서는 각 교섭단체에서 추천하신 위원님을 간사 위원으로 선임하는 것을 오랜 관례로 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;오늘 국민의힘 위원들께서 회의에 참석하지 않으셨으므로 우선 더불어민주당 박상혁 위원님을 우리 위원회의 간사로 선임하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;(「없습니다」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;그러면 간사 위원으로 선임되신 박상혁 위원님으로부터 간단하게 인사말씀을 듣도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" class="tit">o 간사(박상혁) 인사</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시07분)</p><br/><div id="spk_10" class="item4 speaker spk_mem" data-mem_id="6678" data-name="박상혁" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">박상혁 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/963e0c49236e4f5a83fb777e6225456b.jpg" alt="박상혁"></span><span class="txt"><strong class="name">박상혁</strong><span class="position">위원</span><span class="area">(경기 김포시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;방금 간사로 선임된 더불어민주당 경기도 김포을의 박상혁 위원입니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;짧게 한 말씀 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;지금은 무엇보다도 사법부의 안정이 가장 중요한 시기라고 생각됩니다. 현재 김상환 대법관의 임기가 27일 종료됩니다. 내란 위기를 극복하고 국가의 안정을 위해서는 사법부의 공백이 하루라도 발생하면 안 될 상황입니다. 따라서 대법관 임기 종료 12월 27일 전에 인사청문회를 개최해서 임명동의 여부를 결정하는 것이 저는 우리 국회의 소임이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;현재 추천된 마용주 대법관후보자는 대법원장의 추천에 따라서 윤석열 대통령이 탄핵되기 전에 국회에 요청한 사안입니다. 절차적으로 적법하게 요청된 임명동의안이기 때문에 국회법에 따라서 국회는 20일 내에 인사청문회를 개최하는 등 국회의 의무를 다할 필요가 있다라는 것이 아주 지극히 상식적인 얘기고 법률과 절차에 따른 사안이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub10-5">&nbsp;그럼에도 불구하고 국민의힘이 헌법재판관 임명 문제와 연동해서 오늘 현재 전체회의에 참석하지 않고 있는 것은 대단히 유감스러운 일이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub10-6">&nbsp;이미 한덕수 대통령 권한대행이 굉장히 부적절하다는 평가를 받음에도 불구하고 법률안의 재의요구권까지 행사한 상황입니다. 국민의힘이 헌법재판관 임명과 관련돼서 대통령 권한대행이 권한이 없다라는 주장 자체가 설득력을 잃어 가고 있고 또한 이를 주장하고 있는 권성동 원내대표께서도 과거에 헌법재판관과 대법원장 임명에 불참하는 것은 국회의 의무를 소홀히하는 것이자 사법부의 안정을 방해하는 행위라고 밝힌 바도 있었습니다.</span><br/><span class="spk_sub" id="spk_sub10-7">&nbsp;그리고 현재 국민의힘은 이미 5명의 특위 위원 명단을 국회의장에게 제출한 상태입니다. 따라서 오늘 의결에 따라서 앞으로 열리게 될 인사청문회에는 모든 위원님들이 참석해서 말씀드린 바대로 사법부의 안정을 위해서 내란 위기를 극복하는 데 국회의 역할을 성실히 다해 주실 것을 다시 한번 정중하게 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub10-8">&nbsp;감사합니다. </span><br/></div></div></div><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 이춘석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><span class="position">위원장</span><strong class="name">이춘석</strong><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;국민의힘 간사 위원 선출은 추후에 국민의힘 위원들이 참석하시면 진행하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2N4D1L2Y1H2J1D5G4J1L3R6Q5I5S1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 대법관(마용주) 임명동의안(의안번호 2206435)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" class="tit">4. 대법관(마용주) 임명동의안(의안번호 2206435) 심사를 위한 인사청문회 실시계획서 채택의 건</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" class="tit">5. 자료제출요구의 건</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시11분)</p><br/><div id="spk_13" class="item7 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 이춘석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><span class="position">위원장</span><strong class="name">이춘석</strong><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;다음은 의사일정 제3항 대법관(마용주) 임명동의안, 의사일정 제4항 대법관(마용주) 임명동의안 심사를 위한 인사청문회 실시계획서 채택의 건 및 의사일정 제5항 자료제출요구의 건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;인사청문회 실시계획서는 위원장이 미리 내정되신 교섭단체 간사 위원님들과 협의를 거쳐 마련했습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;주요 내용을 간단히 말씀드리면 인사청문회를 12월 26일 오전 10시에 실시하도록 하고 인사청문회의 진행 순서는 후보자의 선서와 모두발언을 들은 후 위원님들의 질의 답변 등을 진행하고 후보자의 최종 발언을 듣는 것으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;보다 자세한 사항은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;이에 대해서 의견 있으신 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;그러면 의사일정 제4항 대법관(마용주) 임명동의안 심사를 위한 인사청문회 실시계획서 채택의 건은 배부해 드린 유인물과 같이 의결하고자 하는데 이의 없으십니까? </span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;다음은 자료제출요구의 건입니다.</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;지금까지 행정실로 제출한 자료제출 요구는 42개 기관에 대해서 848건이고 자료제출 기한은 12월 24일 12시로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-12">&nbsp;인사청문회법 제12조에 따르면 재적의원 3분의 1 이상의 요구로도 자료제출을 요구할 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub13-13">&nbsp;위원님들께서는 오늘 회의 이후라도 이 조항을 통하여 필요한 자료에 대한 요구서를 제출해 주시면 해당 기관에 관련 자료를 제출하도록 요구하겠습니다. </span><br/><span class="spk_sub" id="spk_sub13-14">&nbsp;그러면 이와 같이 의사일정 제5항을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub13-15">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-16">&nbsp;없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub13-17">&nbsp;이상으로 오늘 예정된 안건에 대한 심사를 모두 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub13-18">&nbsp;다음 회의는 말씀드린 대로 12월 26일 목요일 오전 10시에 개회하여 인사청문회를 실시하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-19">&nbsp;위원님들 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-20">&nbsp;보좌진과 전문위원을 비롯한 위원회 직원 및 경위, 속기사 여러분들도 모두 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-21">&nbsp;그러면 산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시13분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(8인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKSANGEON" target="_blank"><span class="name lts3 ">곽상언</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank"><span class="name lts3 ">김남근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank"><span class="name lts3 ">박상혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank"><span class="name lts3 ">이춘석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNHARAM" target="_blank"><span class="name lts3 ">천하람</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIKISANG" target="_blank"><span class="name lts3 ">최기상</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 김성완</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>대법관(마용주) 임명동의안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 12. 12. 대통령 제출)(의안번호 2206435)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 13일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52674;
+			const class_id = 3;
+			const confer_num = "054619";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641206613" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641206613"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641206613"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641206613"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

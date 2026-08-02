@@ -1,0 +1,954 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=54945" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제426회 (임시회) 제2차 보건복지위원회</strong><span class="date">(2025.07.01.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 간사 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">o 간사(이수진) 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">2. 2025년도 제2회 추가경정예산안(의안번호 2210977)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">  가. 보건복지부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">  나. 식품의약품안전처 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">  다. 질병관리청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">3. 2025년도 국민건강증진기금운용계획변경안(의안번호 2210994)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">  가. 보건복지부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">  나. 질병관리청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">4. 2025년도 응급의료기금운용계획변경안(의안번호 2210995)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">  가. 보건복지부 소관</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박주민 위원장 (서울 은평구갑)"> 
+							박주민 위원장 (서울 은평구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김미애 위원 (부산 해운대구을)"> 
+							김미애 위원 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이수진 위원 (경기 성남시중원구)"> 
+							이수진 위원 (경기 성남시중원구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이소영 위원 (경기 의왕시과천시)"> 
+							이소영 위원 (경기 의왕시과천시)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서미화 위원 (비례대표)"> 
+							서미화 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="남인순 위원 (서울 송파구병)"> 
+							남인순 위원 (서울 송파구병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김윤 위원 (비례대표)"> 
+							김윤 위원 (비례대표)
+						</option>
+					
+					
+						<option value="이스란 보건복지부제1차관">이스란 보건복지부제1차관</option>
+					
+						<option value="오유경 식품의약품안전처장">오유경 식품의약품안전처장</option>
+					
+						<option value="지영미 질병관리청장">지영미 질병관리청장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6691" data-name="박주민" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">박주민</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 은평구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6589" data-name="김미애" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">김미애</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6664" data-name="이수진" data-pos="소위원장"> 
+											<label for="spk_mem2">												
+												<span class="name">이수진</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 성남시중원구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6684" data-name="이소영" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">이소영</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 의왕시과천시)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6772" data-name="서미화" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">서미화</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6663" data-name="남인순" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">남인순</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 송파구병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6818" data-name="김윤" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">김윤</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"> 
+											<label for="spk_attend0">
+												<span class="name">이스란</span>
+												<span class="position">보건복지부제1차관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="오유경" data-pos="식품의약품안전처장"> 
+											<label for="spk_attend1">
+												<span class="name">오유경</span>
+												<span class="position">식품의약품안전처장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="지영미" data-pos="질병관리청장"> 
+											<label for="spk_attend2">
+												<span class="name">지영미</span>
+												<span class="position">질병관리청장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=54945&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제426회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>보건복지위원회회의록</h1></div></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 7월 1일(화)</p></li><li><div class="sbj lts2">장소</div><p class="con">보건복지위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 간사 선임의 건</li><li><span class="num">2.</span> 2025년도 제2회 추가경정예산안(의안번호 2210977)</li><li class="pl20">  가. 보건복지부 소관</li><li class="pl20">  나. 식품의약품안전처 소관</li><li class="pl20">  다. 질병관리청 소관</li><li><span class="num">3.</span> 2025년도 국민건강증진기금운용계획변경안(의안번호 2210994)</li><li class="pl20">  가. 보건복지부 소관</li><li class="pl20">  나. 질병관리청 소관</li><li><span class="num">4.</span> 2025년도 응급의료기금운용계획변경안(의안번호 2210995)</li><li class="pl20">  가. 보건복지부 소관</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 간사 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2">o 간사(이수진) 인사</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">2.</span> 2025년도 제2회 추가경정예산안(의안번호 2210977)</a></li><li id="head_item4" class="pl20"><a href="#" class="move" data-target="#item4">  가. 보건복지부 소관</a></li><li id="head_item5" class="pl20"><a href="#" class="move" data-target="#item5">  나. 식품의약품안전처 소관</a></li><li id="head_item6" class="pl20"><a href="#" class="move" data-target="#item6">  다. 질병관리청 소관</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">3.</span> 2025년도 국민건강증진기금운용계획변경안(의안번호 2210994)</a></li><li id="head_item8" class="pl20"><a href="#" class="move" data-target="#item8">  가. 보건복지부 소관</a></li><li id="head_item9" class="pl20"><a href="#" class="move" data-target="#item9">  나. 질병관리청 소관</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">4.</span> 2025년도 응급의료기금운용계획변경안(의안번호 2210995)</a></li><li id="head_item11" class="pl20"><a href="#" class="move" data-target="#item11">  가. 보건복지부 소관</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시05분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제426회 국회(임시회) 제2차 보건복지위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 노트북 단말기 자료를 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;의사일정에 들어가기에 앞서 우리 위원회에 위원 개선이 있어서 말씀드리겠는데요. 6월 30일 자로 더불어민주당의 천준호 위원님께서 저하고 한마디 상의도 없이 우리 위원회를 사임하시고 이소영 위원님께서 새로 보임하였습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;이소영 위원님은 오늘 예결위가 있으셔 가지고 다음에 인사말씀을 좀 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;정부위원 출석과 관련해서 안내말씀을 드리겠는데요. 조규홍 보건복지부장관님은 국무회의 출석 때문에, 그다음에 이형훈 보건복지부2차관님은 예산결산특별위원회 출석을 사유로 오늘 불출석을 요청하셔 가지고 위원장과 간사 위원님 간의 협의를 거쳐서 이를 허가하였다는 말씀을 알려 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 간사 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시06분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항 간사 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;더불어민주당 간사 위원이셨던 강선우 위원님께서 여성가족부장관후보자로 지명됨에 따라 간사 위원을 사임하셨습니다. 이에 따라서 더불어민주당은 후임으로 이수진 위원님을 간사 위원으로 추천하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;국회 및 우리 위원회의 관례에 따라 이수진 위원님을 간사 위원으로 선임하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;국민의힘 위원님들은 이의 있으세요? 왜 말씀 안 하세요?</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;이의 있으면 뭐 바꿔 주실 거예요? 서영석 위원님으로 좀……</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;(웃음소리)</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;물어보지 말 걸 그랬네.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;이의가 없으시니까 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">o 간사(이수진) 인사</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_7" class="item2 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;그러면 이수진 간사 위원님의 인사말씀을 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_8" class="item2 speaker spk_mem" data-mem_id="6664" data-name="이수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">이수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/813a596915cc475d89c50722ce5764bc.jpg" alt="이수진"></span><span class="txt"><strong class="name">이수진</strong><span class="position">위원</span><span class="area">(경기 성남시중원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;민생이 너무나 어려운 시기에 중요한 역할을 맡게 돼서 무한한 책임감을 느끼고 또 소임을 맡겨 주신 우리 여야 위원님들께 다시 한번 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;하루빨리 무너진 의료체계 그리고 복지를 회복시켜 국민의 삶의 무게를 덜어드릴 수 있도록 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;국민의 삶을 챙기는 데 있어서 여야가 따로 있을 수 없다라고 생각합니다. 우리 보건복지위원회가 잘 운영될 수 있도록 야당과도 잘 소통해 나가고 늘 열어 놓는 그런 활동들을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;다시 한번 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;열심히 하겠습니다.</span><br/></div></div></div><div id="spk_9" class="item2 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;수고하셨습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2H5M0Y6E2S3T1I5C2S9Z3B7M1V4Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 2025년도 제2회 추가경정예산안(의안번호 2210977)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2H5M0Y6E2S3T1I5C2S9Z3B7M1V4Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">  가. 보건복지부 소관</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2H5M0Y6E2S3T1I5C2S9Z3B7M1V4Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">  나. 식품의약품안전처 소관</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2H5M0Y6E2S3T1I5C2S9Z3B7M1V4Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">  다. 질병관리청 소관</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2H5E0M6W2E3J1T5O3W9M5N1L5Y0B6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 2025년도 국민건강증진기금운용계획변경안(의안번호 2210994)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2H5M0Y6E2S3T1I5C2S9Z3B7M1V4Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">  가. 보건복지부 소관</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2H5E0M6W2E3J1T5O3W9M5N1L5Y0B6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">  나. 질병관리청 소관</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2W5X0N6T2X3N1L5X4A1N4J1V3P0W4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 2025년도 응급의료기금운용계획변경안(의안번호 2210995)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2H5M0Y6E2S3T1I5C2S9Z3B7M1V4Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">  가. 보건복지부 소관</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시08분)</p><br/><div id="spk_11" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;다음으로 의사일정 제2항 2025년도 제2회 추가경정예산안, 의사일정 제3항 2025년도 국민건강증진기금운용계획변경안, 의사일정 제4항 2025년도 응급의료기금운용계획변경안 등 이상 3건을 계속하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;예산결산심사소위원회의 이수진 소위원장님, 소위원회 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_12" class="item11 speaker spk_mem" data-mem_id="6664" data-name="이수진" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">소위원장 이수진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/813a596915cc475d89c50722ce5764bc.jpg" alt="이수진"></span><span class="txt"><span class="position">소위원장</span><strong class="name">이수진</strong><span class="area">(경기 성남시중원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;예산결산심사소위원장 이수진 위원입니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;제가 좀 몸이 불편해서 자리에 앉아서 말씀드리는 점 양해 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;우리 소위원회가 보건복지부, 식품의약품안전처, 질병관리청 소관 2025년도 제2회 추가경정예산안 및 기금운용계획변경안에 대하여 심사한 결과를 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;우리 소위원회는 지난 6월 26일 회의를 열어 여러 위원님들께서 대체토론을 통해 질의하신 내용들에 대하여 심도 있게 심사하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;심사 결과를 총괄적으로 말씀드리면 보건복지부 소관에 대하여는 21억 6500만 원을 감액하고 2조 443억 7200만 원을 증액하여 총 2조 422억 700만 원을 순증하였고, 식품의약품안전처 소관에 대하여는 감액 없이 67억 5300만 원을 증액하였으며, 질병관리청 소관에 대하여는 감액 없이 478억 9600만 원을 증액하기로 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;다음은 각 기관별 세부사업에 대한 주요 심사 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-7">&nbsp;먼저 보건복지부 소관입니다.</span><br/><span class="spk_sub" id="spk_sub12-8">&nbsp;일반회계에서 국민연금기금으로의 전출금은 국민연금공단 관리운영비에 대한 일반회계 지원 비율을 10% 수준으로 상향하고자 452억 8800만 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-9">&nbsp;발달장애인 지원사업은 주간활동서비스 신규 이용자 확대를 반영하고 최중증 발달장애인을 대상으로 하는 일대일 맞춤형 지원 강화를 위하여 193억 9300만 원을 증액하였고, 아동발달지원계좌 사업은 취약계층 아동의 자립 기반이 약화되는 것을 방지하기 위하여 149억 9900만 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-10">&nbsp;노인단체 지원사업은 경로당 급식이 확대될 수 있도록 부식비 및 취사비를 지원하기 위하여 172억 2700만 원을 증액하였고, 의료인력 양성 및 적정 수급관리 사업은 사직 전공의의 하반기 복귀 가능성을 고려하여 정부가 추경안에서 감액한 1236억 원 중 9월부터 12월까지의 감액분에 해당하는 248억 7200만 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-11">&nbsp;간호사 교대제 지원 시범사업은 건강보험 재정을 통해 충분히 지원하지 못하는 추가간호사에 대한 인건비 등을 지원하기 위하여 20억 3000만 원을 신규로 반영하였으며, 건강보험 가입자 지원사업은 국민건강보험법에 따라 건강보험 재정에 대한 국고지원을 2025년도 건강보험료 예상수입액의 14% 수준으로 하기 위하여 1조 6379억 800만 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-12">&nbsp;지역거점병원 혁신지원 사업은 지역거점 공공의료기관의 경영 정상화를 지원하기 위해 지방의료원과 적십자병원의 운영비 621억 원을 증액하였고, 전 국민 마음투자 지원사업은 심리상담 건수가 더 줄어들 것으로 예상되어 21억 6500만 원을 감액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-13">&nbsp;다음, 식품의약품안전처 소관 중 급식안전 지원 및 관리 강화 사업은 영양사가 없는 소규모 급식시설에 대하여 위생 및 영양 관리 등을 효율적으로 지원할 수 있도록 인공지능 기술 기반 급식지원시스템 구축을 위하여 40억 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-14">&nbsp;질병관리청 소관 중 생물테러 대비·대응 역량강화 사업은 생물테러 발생 대비 신속한 대응을 위하여 두창백신·탄저백신 구입비 100억 1200만 원을 증액하였고, 국가예방접종 실시 사업은 2024년도에 발생한 지방자치단체 위탁의료기관 접종비 미지급금 지급을 위하여 356억 2300만 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-15">&nbsp;그리고 부대의견으로 기초연금지급 예산안 편성의 정확도 개선, 의료급여 정률제 도입안에 대한 충분한 의견수렴, 전공의 수련환경 혁신지원 사업 확대를 촉구하는 내용 등 총 19건을 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-16">&nbsp;이상으로 보고를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-17">&nbsp;보다 자세한 내용은 배부해 드린 유인물을 참고해 주시고, 아무쪼록 우리 예산결산심사소위원회가 심사보고한 대로 의결해 주시기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub12-18">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_13" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;예산안 심사에 애써 주신 이수진 소위원장님과 소위 위원님들께 감사말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;예산결산심사소위원회의 심사 결과에 대한 의견을 듣기 앞서서 아까 말씀드렸던 이소영 위원님께서 자리해 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;인사말씀 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_14" class="item11 speaker spk_mem" data-mem_id="6684" data-name="이소영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">이소영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ecb476c1bd0747d8b310964db044aa9f.jpg" alt="이소영"></span><span class="txt"><strong class="name">이소영</strong><span class="position">위원</span><span class="area">(경기 의왕시과천시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;안녕하세요? 경기도 의왕·과천 국회의원 이소영입니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;국토교통위원회에서 활동하다가 이번에 보건복지위에 보임하게 되었습니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;보건복지위원회는 처음 소속되어 보게 되었는데요. 우리 국민들 중에서도 가장 도움을 많이 필요로 하는 분들을 살피고 또 그분들의 삶을 개선시키기 위해서 노력하는 상임위원회라고 이해하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;우리 훌륭하신 위원님들 또 위원장님 잘 모시고 앞으로 의정활동 열심히 해 보도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_15" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;표정이 별로 안 밝아 보이시는데 괜찮으세요?</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;(웃음소리)</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;그러면 예산결산심사소위원회의 심사 결과에 대해서 의견이 있으신 위원님은 좀 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;희망자분에 한해서 의견을 듣도록 하고요, 질의 답변 5분으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-5">&nbsp;서미화 위원님.</span><br/><span class="spk_sub" id="spk_sub15-6">&nbsp;서미화 위원님은 7분이시지요?</span><br/></div></div></div><div id="spk_16" class="item11 speaker spk_mem" data-mem_id="6772" data-name="서미화" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">서미화 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0694f551f21c40b2a4bbccd2e90ce40c.jpg" alt="서미화"></span><span class="txt"><strong class="name">서미화</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 5분 안 걸립니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;소리로 보는 시각장애인 더불어민주당 서미화 위원입니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;이번 복지위 추경을 통해서 충분하지는 않지만 장애인, 노인, 위기아동 등 사회적 약자와 민생 현장의 시급한 요구에 대응할 긴급한 예산 증액을 이루어 낼 수 있었다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;한편으로는 전 국민 마음투자사업과 같이 졸속과 부실로 점철된 사업에 대해서 핀셋 심사를 통해서 일부 감액도 진행을 했습니다. 특히 이 사업에 대해서는 사업 전반에 걸쳐서 다시 처음부터 살펴보면서 국민 혈세가 함부로 낭비되지 않도록 철저히 관리돼야 한다는 점을 강조합니다. 향후 복지위에서 결산, 국정감사 또 내년의 본예산 심사까지 계속 살펴보고자 합니다.</span><br/><span class="spk_sub" id="spk_sub16-5">&nbsp;끝으로 복지부에 한 말씀 더 당부드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-6">&nbsp;여당의 추경심사 기조에 발달장애인 주간활동서비스 지원 인원 확대 증액 등이 포함된 만큼 예결위 단계에서 보건복지부가 최선을 다해서 적극적으로 대응해 주실 것을 요청드립니다. 그렇게 해 주실 거지요, 복지부?</span><br/></div></div></div><div id="spk_17" class="item11 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예, 위원님 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_18" class="item11 speaker spk_mem" data-mem_id="6772" data-name="서미화" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">서미화 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0694f551f21c40b2a4bbccd2e90ce40c.jpg" alt="서미화"></span><span class="txt"><strong class="name">서미화</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_19" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;또 의견……</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;남인순 위원님.</span><br/></div></div></div><div id="spk_20" class="item11 speaker spk_mem" data-mem_id="6663" data-name="남인순" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">남인순 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b265059dddd24f329d9361e3d0f62e4e.jpg" alt="남인순"></span><span class="txt"><strong class="name">남인순</strong><span class="position">위원</span><span class="area">(서울 송파구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;서울 송파병의 남인순 위원입니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;아동권리보장원 운영지원 예산 관련인데요.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;어제 저희 의원실로 해외입양아들이 찾아왔습니다. 올해 입양법이 7월부터 시행이 되지요. 굉장히 역사적 의미가 있다고 생각을 합니다. 그리고 저희가 헤이그 협약을 실천할 수 있게 돼서 굉장히 다행이라고 생각하는데, 결국은 뭐냐 하면 입양기록을 그동안 이관을 해 오고 있었고 이관해서 기록을 보관해야 되는데 그 보관하는 시설을 만들려면 어쨌든 제대로 보관할 수 있는 여러 가지 설치가 돼야 됩니다. 통풍도 잘돼야 되고 화재 위험도 없어야 되고 이래야 되는데 예산이 부족해서 아마 어디 임대를 얻은 것 같습니다. 그런데 무슨 그게, 저한테 보여 줬는데 쿠팡이 들어 있는 그런 시설에 임대를 하게 된다고 그래요.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;그래서 해외입양인들이 긴급하게 연대회의를 만들어 가지고 그렇게 임시로 하느니, 임시로 해서 하게 되면 그게 화재 위험이라든지 아니면 여러 가지, 어쨌든 그런 옛날 자료를 보관하는 데 적절치 않다. 그래서 이것을 제대로 보관할 수 있게끔 예산을 이번에 제대로 편성을 해 주든지 아니면 내년에 예산을 제대로 편성해 주든지 이런 요구사항이 있습니다.</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;그래서 이 부분을 복지부에서 좀 파악을 하셔 가지고, 어쨌든 첫걸음을 하는 거니까…… 해외입양인들의 굉장히 열망이 있는 사안 중의 하나입니다. 기록을 제대로 보존·관리하는 문제거든요. 그래서 그걸 좀 체크를 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item11 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;예, 위원님 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_22" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;김미애 간사님.</span><br/></div></div></div><div id="spk_23" class="item11 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;제가 말씀 안 드리려고 하다가 존경하는 남인순 위원님이 말씀하셨기에 덧붙여서……</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;정말 중요한 겁니다. 입양인들의 자기 알권리 보호를 위해서 반드시 기록물이 잘 관리돼야 되는데 사실은 예산이 상당히 적었습니다. 그 큰일을 함에 있어서 적은 예산이 편성됐었고, 그런데 올해는 여의치 않다 하더라도 내년 본예산에 반드시 제대로 편성돼서 기록물이 잘 관리되어서 해외뿐만 아니라 우리 국내의 입양아동들이 본인의 알권리를 충분히 보호받을 수 있도록 국가가 그 역할을 잘하도록 해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;그리고 덧붙여서 아동발달지원계좌 사업도 역시 마찬가지입니다.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;우리가 이 아이들에게 나중에 성인으로서 자립할 때, 보호력이 뛰어난 주 양육자, 보조 양육자가 있는 경우에는 부모님들이 알아서 출발할 수 있도록 도움이 되는데 대부분 그렇지 못한 아동입니다. 이들에게 국가가 출발을 지원하는 겁니다. 좀 더 이 아동들이 저축 습관을 들일 수 있도록 이 사업비가 충분히 쓰여질 수 있도록 복지부가 홍보는 물론이고 매칭도 잘되도록 애써 주시기 바랍니다.</span><br/></div></div></div><div id="spk_24" class="item11 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;예, 위원님 그렇게 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;발달계좌의 경우에는 본인이 납입하는 걸 전제로 하고 있어서 그런 부분이 좀 어렵거든요. 그러니까 매칭 비율을 포함해서 전체적으로 잘 활성화되도록 지원방안을 검토하겠습니다.</span><br/></div></div></div><div id="spk_25" class="item11 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;검토가 아니라 실행을 해야 됩니다.</span><br/></div></div></div><div id="spk_26" class="item11 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;예, 실행하겠습니다.</span><br/></div></div></div><div id="spk_27" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;더 의견을 주실 위원님……</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;김윤 위원님.</span><br/></div></div></div><div id="spk_28" class="item11 speaker spk_mem" data-mem_id="6818" data-name="김윤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">김윤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e7f6c2e0d06240658849cb82b2e5960e.jpg" alt="김윤"></span><span class="txt"><strong class="name">김윤</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;전공의 교육수련환경 개선 관련해서 저희가 부대의견을 드렸고 그것을 수용 의견을 주셨는데 답변을 주실 때 복지부 전 차관께서 예산의 항목 내에서 충분히 지금 비필수과목으로 분류되어 있는 전문과목에 대해서도 교육수련 프로그램의 예산을 확보할 수 있다라고 말씀하셨는데 그러면 연내에 지금 수련환경 개선에 포함된 8개 전문과목 이외에 나머지 전문과목들에 대해서도 수련교육환경이 개선될 수 있도록 복지부가 사업과 예산을 실행해 주시면 감사하겠습니다.</span><br/></div></div></div><div id="spk_29" class="item11 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;예, 현재 그 예산 범위 내에서 할 수 있는 걸로는 알고 있는데요. 말씀 주신 대로 비필수과목도 필요한 부분의 경우에는 그렇게 하도록 검토, 실행하겠습니다. 검토하겠다는 말씀을 드리면 안 될 것 같네요.</span><br/></div></div></div><div id="spk_30" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;더 의견을 주실 위원님들 계십니까? 안 계신가요?</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;그러면 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;의사일정 제2항 2025년도 제2회 추가경정예산안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 정부 원안대로 하되 부대의견을 첨부하여 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub30-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub30-5">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub30-6">&nbsp;의사일정 제3항 2025년도 국민건강증진기금운용계획변경안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 정부 원안대로 하되 부대의견을 첨부하여 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub30-7">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub30-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub30-9">&nbsp;의사일정 제4항 2025년도 응급의료기금운용계획변경안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 정부 원안대로 하되 부대의견을 첨부하여 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub30-10">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub30-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub30-12">&nbsp;오늘 의결된 추가경정예산안에 관한 구체적인 계수와 부대의견 등의 자구 조정은 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub30-13">&nbsp;그리고 국회법 제84조제5항에 따라 소관 상임위원회가 삭감한 세출예산 각 항의 금액을 예산결산특별위원회에서 증액하거나 새 비목을 설치할 경우에는 소관 상임위원회의 동의를 받아야 합니다.</span><br/><span class="spk_sub" id="spk_sub30-14">&nbsp;예산결산특별위원회의 심사과정에서 동 국회법 규정에 따라 우리 위원회에 동의 요청이 오는 경우 위원장이 간사 위원님들과 협의하여 처리하는 것으로 위임하고자 하는데 위원님들 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub30-15">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub30-16">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub30-17">&nbsp;그러면 추가경정예산안 의결에 따른 정부 측 인사를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-18">&nbsp;이스란 보건복지부1차관님 나오셔서 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_31" class="item11 speaker spk_mem" data-mem_id="0" data-name="이스란" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">보건복지부제1차관 이스란 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이스란"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이스란</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;존경하는 박주민 위원장님, 이수진 예산소위 위원장님, 소위 간사님과 위원님 그리고 보건복지위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub31-2">&nbsp;2025년도 보건복지부 소관 제2차 추가경정예산안 및 기금운용계획변경안을 심의 의결하여 주신 데 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub31-3">&nbsp;위원님들께서 심의 의결하여 주신 예산안이 차질 없이 집행되도록 최선을 다할 것이며 예산심의 과정에서 여러 위원님들이 지적해 주신 사항은 보건복지정책 수립에 적극 반영하겠습니다.</span><br/><span class="spk_sub" id="spk_sub31-4">&nbsp;추가경정예산안 심의를 통해 위원님들께서 보내 주신 귀중한 의견과 격려말씀에 다시 한번 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub31-5">&nbsp;앞으로도 보건복지 업무에 대한 끊임없는 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub31-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_32" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub32-2">&nbsp;다음은 오유경 식품의약품안전처장님 나오셔서 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_33" class="item11 speaker spk_mem" data-mem_id="0" data-name="오유경" data-pos="식품의약품안전처장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">식품의약품안전처장 오유경 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="오유경"></span><span class="txt"><span class="position">식품의약품안전처장</span><strong class="name">오유경</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;존경하는 박주민 위원장님, 보건복지위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;2025년도 제2회 추가경정예산안에 디지털의료제품 허가시스템 도입 사업 등을 증액 의결해 주신 데 대해서 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;특히 예산심사소위원회에서 우리 처 사업을 면밀히 검토해 주신 이수진 위원장님과 소위 위원님 여러분께도 진심으로 감사하다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;오늘 위원님들께서 의결해 주신 예산안이 최종적으로 반영될 수 있도록 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;앞으로도 위원님들의 지속적인 관심과 지원 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_34" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;고생하셨습니다.</span><br/><span class="spk_sub" id="spk_sub34-2">&nbsp;마지막으로 지영미 질병관리청장님 나오셔서 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_35" class="item11 speaker spk_mem" data-mem_id="0" data-name="지영미" data-pos="질병관리청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">질병관리청장 지영미 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="지영미"></span><span class="txt"><span class="position">질병관리청장</span><strong class="name">지영미</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;존경하는 박주민 위원장님 그리고 보건복지위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;질병관리청 소관 2025년도 제2차 추가경정예산안을 심의 의결하여 주신 데 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;이번 보건복지위원회에서 국가필수예방접종 시행에 필요한 356억 원, 조류 인플루엔자 초동 대응을 위한 백신 구매비 23억 원, 생물테러 대비·대응을 위한 두창과 탄저백신 구매비 100억 원을 증액하여 의결해 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;심의과정에서 위원님들께서 지적해 주신 사항들은 깊이 유념하여 향후 정책을 추진하는 과정에서 적극 반영해 나가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub35-5">&nbsp;추경예산안 심의를 위해 수고해 주신 박주민 위원장님, 이수진 예산결산심사소위원장님 그리고 소위 위원님들을 비롯한 보건복지위 모든 위원님들께 다시 한번 감사드리며 앞으로도 질병관리청에 대한 위원님들의 많은 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub35-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_36" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;청장님, 예산이 확보된 만큼 백신들 구입에 좀 만전을 기해 주세요.</span><br/></div></div></div><div id="spk_37" class="item11 speaker spk_mem" data-mem_id="0" data-name="지영미" data-pos="질병관리청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">질병관리청장 지영미 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="지영미"></span><span class="txt"><span class="position">질병관리청장</span><strong class="name">지영미</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;예, 위원장님 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_38" class="item11 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;서면질의하신 위원님들이 안 계시답니다.</span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;오늘 회의에 참석해 주신 위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub38-3">&nbsp;정부 측 관계자 여러분과 수석전문위원을 비롯한 위원회 직원 여러분, 보좌 직원 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub38-4">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시26분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(22인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWEONSEONGDONG" target="_blank"><span class="name lts3 ">권성동</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank"><span class="name lts3 ">김선민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYEAJI" target="_blank"><span class="name lts3 ">김예지</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank"><span class="name lts3 ">박주민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEKJONGHEAN" target="_blank"><span class="name lts3 ">백종헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank"><span class="name lts3 ">서명옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank"><span class="name lts3 ">서영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank"><span class="name lts3 ">안상훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank"><span class="name lts3 ">이소영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUYOUNGLEE" target="_blank"><span class="name lts3 ">이주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHANGJONGTAE" target="_blank"><span class="name lts3 ">장종태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank"><span class="name lts3 ">한지아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이지민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 정경윤</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 오세일</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>보건복지부</p><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 이스란</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">인구·사회서비스정책실장</span></span><span class="name lts3"> 은성호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">보건의료정책실장</span></span><span class="name lts3"> 정윤순</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">의료개혁추진단장</span></span><span class="name lts3"> 정경실</span></a></li><p>식품의약품안전처</p><li><a class="in_nm"><span class="pos"><span class="lts2">처장</span></span><span class="name lts3"> 오유경</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">차장직무대리</span></span><span class="name lts3"> 우영택</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">식품소비안전국장</span></span><span class="name lts3"> 김현정</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">의료기기안전국장</span></span><span class="name lts3"> 이남희</span></a></li><p>질병관리청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 지영미</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차장</span></span><span class="name lts3"> 임숙영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 이상진</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="25.0%"><col width="25.0%"><col width="25.0%"><col width="25.0%"></colgroup><thead><tr><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>천준호<br/></td><td>이소영<br/></td><td>더불어민주당<br/></td><td>2025. 6. 30.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>장사 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 25. 장종태 의원 대표발의)(의안번호 2211060)</div></div><div class="con"><p class="tit_sm"><strong>식품 등의 표시·광고에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 25. 오세희 의원 대표발의)(의안번호 2211069)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 6월 26일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>감염병의 예방 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박정하 의원 대표발의)(의안번호 2211086)</div></div><div class="con"><p class="tit_sm"><strong>장애인·노인·임산부 등의 편의증진 보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박정현 의원 대표발의)(의안번호 2211089)</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 김윤 의원 대표발의)(의안번호 2211092)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 6월 27일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>시청각장애인 권리보장 및 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 27. 김예지 의원 대표발의)(의안번호 2211118)</div></div><div class="con"><p class="tit_sm"><strong>마음건강심리사 및 마음건강상담사에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 27. 남인순 의원·김예지 의원 대표발의)(의안번호 2211134)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 6월 30일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯예비심사기간 통보</strong></p><div class="con"><p class="tit_sm"><strong>2025년도 제2회 추가경정예산안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 23. 정부 제출)(의안번호 2210977)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 국민건강증진기금운용계획변경안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 23. 정부 제출)(의안번호 2210994)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 응급의료기금운용계획변경안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 23. 정부 제출)(의안번호 2210995)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 6월 27일 의장으로부터 예비심사기간이 6월 30일 09시 30분까지로 확정되었다는 통보가 있었음</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="21.045521795998884%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"></colgroup><thead><tr><th scope="col">구분</th><th scope="col">대통령령</th><th scope="col">총리령</th><th scope="col">부령</th><th scope="col">훈령</th><th scope="col">예규</th><th scope="col">고시</th></tr></thead><tr><td>보건복지부<br/></td><td>1<br/></td><td>-<br/></td><td>3<br/></td><td>-<br/></td><td>-<br/></td><td>9<br/></td></tr><tr><td>질병관리청<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>1<br/></td><td>1<br/></td></tr></table></div><br/></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 54945;
+			const class_id = 2;
+			const confer_num = "N053091";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641047650" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641047650"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641047650"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641047650"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

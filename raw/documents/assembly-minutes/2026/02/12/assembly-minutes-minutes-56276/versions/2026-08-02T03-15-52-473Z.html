@@ -1,0 +1,564 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56276" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제432회 (임시회) 제1차 정보위원회</strong><span class="date">(2026.02.12.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 소위원회 위원 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 국가정보원직원법 일부개정법률안(박선원 의원 대표발의)(의안번호 2205007)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 국가정보원직원법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2209712)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 국가정보원직원법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 국가정보원법 일부개정법률안(박수영 의원 대표발의)(의안번호 2213753)(비공개)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 국민보호와 공공안전을 위한 테러방지법 일부개정법률안(이건태 의원 대표발의)(의안번호 2214691)(비공개)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 국가정보원 현안보고(비공개)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="신성범 위원장 (경남 산청군함양군거창군합천군)"> 
+							신성범 위원장 (경남 산청군함양군거창군합천군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="한병도 위원 (전북 익산시을 )"> 
+							한병도 위원 (전북 익산시을 )
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(2명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6741" data-name="신성범" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">신성범</span>
+												<span class="position">위원장</span>
+												<span class="area">(경남 산청군함양군거창군합천군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6617" data-name="한병도" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">한병도</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 익산시을 )</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56276&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제432회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>정보위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 2월 12일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">정보위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 소위원회 위원 선임의 건</li><li><span class="num">2.</span> 국가정보원직원법 일부개정법률안(박선원 의원 대표발의)(의안번호 2205007)</li><li><span class="num">3.</span> 국가정보원직원법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2209712)</li><li><span class="num">4.</span> 국가정보원직원법 일부개정법률안(대안)</li><li><span class="num">5.</span> 국가정보원법 일부개정법률안(박수영 의원 대표발의)(의안번호 2213753)</li><li><span class="num">6.</span> 국민보호와 공공안전을 위한 테러방지법 일부개정법률안(이건태 의원 대표발의)(의안번호 2214691)</li><li><span class="num">7.</span> 국가정보원 현안보고</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 소위원회 위원 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 국가정보원직원법 일부개정법률안(박선원 의원 대표발의)(의안번호 2205007)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 국가정보원직원법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2209712)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 국가정보원직원법 일부개정법률안(대안)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 국가정보원법 일부개정법률안(박수영 의원 대표발의)(의안번호 2213753)(비공개)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 국민보호와 공공안전을 위한 테러방지법 일부개정법률안(이건태 의원 대표발의)(의안번호 2214691)(비공개)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 국가정보원 현안보고(비공개)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시05분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제432회 국회(임시회) 제1차 정보위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;의사일정에 들어가기 전에 우리 위원회에 새로 보임되신 한병도 위원님의 인사말씀을 듣겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;환영합니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">한병도 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><strong class="name">한병도</strong><span class="position">위원</span><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;반갑습니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;존경하는 위원장님 또 위원님들 모시고 우리 정보위원회 활동 열심히 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;다시 한번 환영 드립니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;다음은 우리 위원회에 새로 보임된 사무처 직원을 소개하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;김월래 입법심의관님이십니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;(인사)</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;환영합니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;수고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 소위원회 위원 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시06분)</p><br/><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;의사일정 제1항 소위원회 위원 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;이 안건은 지난 1월 14일 사보임으로 인해 공석이 되었던 청원심사소위에 한병도 위원님을 선임하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;이와 같이 선임하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;소위원회 위원 선임의 건은 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub6-6"><div class="taR">(소위원회 구성 명단은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub6-7">&nbsp;다음은 지난 2월 3일 법안심사소위를 통과한 법률안을 먼저 처리하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2O4M0N7L1M6K1L4T1T4R3Q9Q5P8P3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 국가정보원직원법 일부개정법률안(박선원 의원 대표발의)(의안번호 2205007)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2I5H0H4G0N8O1N1N2L8K2L3G2H0F0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 국가정보원직원법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2209712)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2M6G0C2G0G6K1Z4P3N9W1D0V0G6B9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 국가정보원직원법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_7" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;의사일정 제2항부터 제4항까지 3건의 법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;이 법안의 의사일정에 대해서는 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;다음 회의 진행에 앞서 비공개회의에 대한 의결을 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;이후 진행되는 회의는 국회법 제75조제1항 단서 규정에 따라 비공개로 하고자 하는데 이의 있으십니까?</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;회의 비공개의 건은 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;지금부터는 회의를 비공개로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;회의 관계자 외에는 모두 장내를 정리해 주시기 바랍니다.</span><br/></div></div></div><p class="tit_sm taR">(10시07분 비공개회의개시)</p><br/><p class="tit_sm taR">(11시54분 비공개회의종료)</p><br/><div id="spk_8" class="item4 speaker spk_mem" data-mem_id="6741" data-name="신성범" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 신성범 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/90ebb7eaa3a648f5a96eea2037be33bf.jpg" alt="신성범"></span><span class="txt"><span class="position">위원장</span><strong class="name">신성범</strong><span class="area">(경남 산청군함양군거창군합천군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;지금부터는 회의를 공개로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;대체토론을 마친 2건의 법률안은 법안심사소위원회로 각각 회부하여 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;오늘 회의에 참석해 주신 위원님들과 수석전문위원을 비롯한 위원회 직원 및 속기사 여러분 그리고 이종석 국가정보원장님과 관계 직원 여러분 모두 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(11시55분 산회)</p><br/></div><div class="minutes_footer"><p class="tit"><strong>소위원회 구성 명단</strong></p><div class="table_wrap2"><table class="normal"><caption>소위원회 구성 명단</caption><colgroup><col width="33.33333333333333%"><col width="33.33333333333333%"><col width="33.33333333333333%"></colgroup><thead><tr><th scope="col">소위원회</th><th scope="col">위원명</th><th scope="col">교섭단체</th></tr></thead><tr><td rowspan=2>법안심사(5인)<br/></td><td>박선원<br/>이기헌<br/>이인영<br/></td><td>더불어민주당(3)<br/></td></tr><tr><td>유영하<br/>◎이성권<br/></td><td>국민의힘(2)<br/></td></tr><tr><td rowspan=2>예산결산심사(5인)<br/></td><td>김영진<br/>◎박선원<br/>윤건영<br/></td><td>더불어민주당(3)<br/></td></tr><tr><td>유영하<br/>이성권<br/></td><td>국민의힘(2)<br/></td></tr><tr><td rowspan=2>청원심사(5인)<br/></td><td>박지원<br/>이기헌<br/>한병도<br/></td><td>더불어민주당(3)<br/></td></tr><tr><td>◎권영세<br/>송언석<br/></td><td>국민의힘(2)<br/></td></tr></table></div><br/>◎표시는 소위원장임<div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(9인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank"><span class="name lts3 ">권영세</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank"><span class="name lts3 ">박지원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank"><span class="name lts3 ">신성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank"><span class="name lts3 ">유영하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINYOUNG" target="_blank"><span class="name lts3 ">이인영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 김건오</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 김월래</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>국가정보원</p><li><a class="in_nm"><span class="pos"><span class="lts2">원장</span></span><span class="name lts3"> 이종석</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제1차장</span></span><span class="name lts3"> 이동수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제2차장</span></span><span class="name lts3"> 김호홍</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제3차장</span></span><span class="name lts3"> 김창섭</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김희수</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="25.0%"><col width="25.0%"><col width="25.0%"><col width="25.0%"></colgroup><thead><tr><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>김병기<br/></td><td>한병도<br/></td><td>더불어민주당<br/></td><td>2026. 1. 14.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국민보호와 공공안전을 위한 테러방지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 28. 이건태 의원 대표발의)(의안번호 2214691)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 1일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가정보원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 이성권 의원 대표발의)(의안번호 2215074)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 11일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>헌법재판소법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 나경원 의원 대표발의)(의안번호 2215089)</div></div><div class="con"><p class="tit_sm"><strong>법원조직법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 나경원 의원 대표발의)(의안번호 2215090)</div></div><div class="con"><p class="tit_sm"><strong>선거관리위원회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 나경원 의원 대표발의)(의안번호 2215097)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 11일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>행정수도 건설을 위한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 엄태영 의원·복기왕 의원 대표발의)(의안번호 2215514)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 24일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>부동산 거래신고 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 30. 염태영 의원 대표발의)(의안번호 2216435)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 2일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="13.547806331311484%"><col width="47.91135306599224%"><col width="19.27042030134814%"><col width="19.27042030134814%"></colgroup><thead><tr><th scope="col">소관부처</th><th scope="col">제명</th><th scope="col">구분</th><th scope="col">제출일</th></tr></thead><tr><td>국가정보원<br/></td><td>안보침해 범죄 및 활동 등에 관한 대응업무규정 일부개정령안<br/></td><td>대통령령<br/></td><td>2026. 1. 29.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯보고서 제출</strong></p><div class="con"><p class="tit_sm"><strong>2025년도 4분기 준법심사제도 운영현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"><strong>2025년도 4분기 위법명령심사청구 제도 운영현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(이상 2건 2026. 1. 21. 국가정보원장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2025회계연도 4분기 예산집행현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 5. 국가정보원장 제출)</div></div><p class="tit"><span class="num"></span><strong>◯통보</strong></p><div class="con"><p class="tit_sm"><strong>2025년도 후반기 감청설비 도입 및 폐기 현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2026. 1. 13. 국군방첩사령부로부터 위 건에 관한 통보가 있었음</div></div><div class="con"><p class="tit_sm"><strong>2025년도 후반기 감청설비 도입 및 폐기 현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2026. 1. 14. 국가정보원으로부터 위 건에 관한 통보가 있었음</div></div><div class="con"><p class="tit_sm"><strong>2025년도 후반기 감청설비 도입 및 폐기 현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2026. 1. 20. 경찰청으로부터 위 건에 관한 통보가 있었음</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56276;
+			const class_id = 2;
+			const confer_num = "N053972";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640730267" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640730267"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640730267"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640730267"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

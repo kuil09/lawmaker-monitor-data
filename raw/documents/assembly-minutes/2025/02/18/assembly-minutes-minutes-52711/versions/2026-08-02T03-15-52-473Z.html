@@ -1,0 +1,952 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52711" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제422회 (임시회) 제2차 기획재정위원회(경제재정소위원회)</strong><span class="date">(2025.02.18.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 담배사업법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2201749)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 담배사업법 일부개정법률안(김태년 의원 대표발의)(의안번호 2202471)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 담배사업법 일부개정법률안(김선민 의원 대표발의)(의안번호 2202563)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2202872)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 담배사업법 일부개정법률안(한지아 의원 대표발의)(의안번호 2202898)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 담배사업법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2204643)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 담배사업법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2205037)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205041)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 담배사업법 일부개정법률안(최은석 의원 대표발의)(의안번호 2205149)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 담배사업법 일부개정법률안(조은희 의원 대표발의)(의안번호 2205523)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2203144)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2204115)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="정태호 소위원장 (서울 관악구을)"> 
+							정태호 소위원장 (서울 관악구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="정일영 위원 (인천 연수구을)"> 
+							정일영 위원 (인천 연수구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박대출 위원 (경남 진주시갑)"> 
+							박대출 위원 (경남 진주시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="윤호중 위원 (경기 구리시)"> 
+							윤호중 위원 (경기 구리시)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김영진 위원 (경기 수원시병)"> 
+							김영진 위원 (경기 수원시병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박수영 위원 (부산 남구)"> 
+							박수영 위원 (부산 남구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박성훈 위원 (부산 북구을)"> 
+							박성훈 위원 (부산 북구을)
+						</option>
+					
+					
+						<option value="정지은 전문위원">정지은 전문위원</option>
+					
+						<option value="안상열 기획재정부재정관리관">안상열 기획재정부재정관리관</option>
+					
+						<option value="정혜은 보건복지부건강증진과장">정혜은 보건복지부건강증진과장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6633" data-name="정태호" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">정태호</span>
+												<span class="position">소위원장</span>
+												<span class="area">(서울 관악구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6636" data-name="정일영" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">정일영</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 연수구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6671" data-name="박대출" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">박대출</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 진주시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6673" data-name="윤호중" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">윤호중</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 구리시)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6601" data-name="김영진" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">김영진</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 수원시병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6686" data-name="박수영" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">박수영</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 남구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6852" data-name="박성훈" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">박성훈</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 북구을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="정지은" data-pos="전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">정지은</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"> 
+											<label for="spk_attend1">
+												<span class="name">안상열</span>
+												<span class="position">기획재정부재정관리관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="정혜은" data-pos="보건복지부건강증진과장"> 
+											<label for="spk_attend2">
+												<span class="name">정혜은</span>
+												<span class="position">보건복지부건강증진과장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52711&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제422회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>기획재정위원회회의록</h1><p class="tit_sm">(경제재정소위원회)</p></div></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 2월 18일(화)</p></li><li><div class="sbj lts2">장소</div><p class="con">기획재정위원회소회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 담배사업법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2201749)</li><li><span class="num">2.</span> 담배사업법 일부개정법률안(김태년 의원 대표발의)(의안번호 2202471)</li><li><span class="num">3.</span> 담배사업법 일부개정법률안(김선민 의원 대표발의)(의안번호 2202563)</li><li><span class="num">4.</span> 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2202872)</li><li><span class="num">5.</span> 담배사업법 일부개정법률안(한지아 의원 대표발의)(의안번호 2202898)</li><li><span class="num">6.</span> 담배사업법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2204643)</li><li><span class="num">7.</span> 담배사업법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2205037)</li><li><span class="num">8.</span> 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205041)</li><li><span class="num">9.</span> 담배사업법 일부개정법률안(최은석 의원 대표발의)(의안번호 2205149)</li><li><span class="num">10.</span> 담배사업법 일부개정법률안(조은희 의원 대표발의)(의안번호 2205523)</li><li><span class="num">11.</span> 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2203144)</li><li><span class="num">12.</span> 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2204115)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 담배사업법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2201749)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 담배사업법 일부개정법률안(김태년 의원 대표발의)(의안번호 2202471)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 담배사업법 일부개정법률안(김선민 의원 대표발의)(의안번호 2202563)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2202872)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 담배사업법 일부개정법률안(한지아 의원 대표발의)(의안번호 2202898)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 담배사업법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2204643)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 담배사업법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2205037)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205041)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 담배사업법 일부개정법률안(최은석 의원 대표발의)(의안번호 2205149)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 담배사업법 일부개정법률안(조은희 의원 대표발의)(의안번호 2205523)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2203144)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2204115)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(09시57분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;성원이 되었으므로 제422회 국회(임시회) 기획재정위원회 제2차 경제재정소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;먼저 전문위원의 보고를 들은 이후 정부 측 의견을 듣고 여러 위원님들의 질의와 답변을 거친 이후에 합의가 된 건들은 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;원활한 회의 진행을 위해서 위원님들 발언 시에는 마이크를 사용해 주시기 바라며, 배석자는 위원장 허가를 받은 후에 발언해 주시고 발언 전에 소속, 직위와 성명을 먼저 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2P4Q0P7P0N5V1W5U4V7T2U0S8A6B6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 담배사업법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2201749)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T4S0V7U2T3B1Z1Y5Z4Y1G4E8D3C7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 담배사업법 일부개정법률안(김태년 의원 대표발의)(의안번호 2202471)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2Y4Z0X8X0W2U1V8D0D1C4A1B0Z6Z3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 담배사업법 일부개정법률안(김선민 의원 대표발의)(의안번호 2202563)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2V4U0P8Q0O1O1N5O0M5U0V0T2T0S0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2202872)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2S4R0S7Q2P2L1K5I1J0I2Q5P8N6S1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 담배사업법 일부개정법률안(한지아 의원 대표발의)(의안번호 2202898)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2O4P0N8O1M4N0U8V5T7S0S3Q5R8Z0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 담배사업법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2204643)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2S4B1A0Z2Y1G1F5B3K9I5I7G4D7C8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 담배사업법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2205037)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y4X1W0S2R3Q1W6W5U3T2C1B1A5G5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205041)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z4Y1G0F3D0C1Y4Z1Y2W5V4D3C5B8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 담배사업법 일부개정법률안(최은석 의원 대표발의)(의안번호 2205149)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2S4N1O1M1N2L0M8K4S9T5R7S4Q6R5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 담배사업법 일부개정법률안(조은희 의원 대표발의)(의안번호 2205523)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2X4Y0T8V0T1T1R5S0Q6R2Z2X0Y3W7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 담배사업법 일부개정법률안(남인순 의원 대표발의)(의안번호 2203144)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2C4B0I9J0H6I1G3H3F0F0B6A7B6Z4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 담배사업법 일부개정법률안(송언석 의원 대표발의)(의안번호 2204115)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(09시58분)</p><br/><div id="spk_4" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항부터 12항까지 총 12건의 담배사업법 일부개정법률안을 일괄 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;정지은 전문위원께서 소위 자료를 설명해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item12 speaker spk_mem" data-mem_id="0" data-name="정지은" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">전문위원 정지은 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정지은"></span><span class="txt"><span class="position">전문위원</span><strong class="name">정지은</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;지금 2건의 자료가 배부되어 있는데요. 경제재정소위 심사자료 9페이지에는 지난번 소위 때 논의사항 심사요지를 정리해 두었습니다. 그리고 오늘 다시 배부해 드린 담배사업법 소위 자료 요약본은 간사위원님들 간의 협의 내용을 중심으로 정리한 것이고, 이 자료를 중심으로 간략히 보고를 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;먼저 담배 정의 확대 부분입니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;연초의 잎에서 연초 또는 니코틴으로 담배 정의를 확대하는 부분이고요.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;청소년의 흡연율 상승 등 규제 사각지대 문제의 해소를 위해서 담배 정의 확대의 필요성이 있고, 다만 이 경우에는 니코틴 껌이나 연초유 등과 같이 니코틴이나 연초를 원료로 제조한 의약품 등이 담배에 포함되는 것으로 해석될 소지가 있기 때문에 약사법에 따른 의약품 및 의약외품을 제외할 필요가 있다라는 단서 규정을 둘 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_6" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;다 설명하세요.</span><br/></div></div></div><div id="spk_7" class="item12 speaker spk_mem" data-mem_id="0" data-name="정지은" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">전문위원 정지은 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정지은"></span><span class="txt"><span class="position">전문위원</span><strong class="name">정지은</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;그러면 총괄적으로 보고드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;두 번째는 담배 지정소매인 거리제한 유예에 관련된 부분입니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;소위에서도 논의된 바와 같이 담배 정의 확대로 인한 합성니코틴 등 액상형 전자담배를 판매하는 자영업자 등의 피해를 최소화하기 위해서 거리제한 적용을 유예할 필요성이 인정되므로 부칙에서 관련 유예 방안을 마련하였습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;내용은 공포 시를 기준으로 해서 개정규정에 따라서 추가되는 담배를 판매하는 판매자가 담배소매인 지정을 신청하는 경우에 2년간―이건 개정안의 시행 시점을 공포 후 6개월로 보았을 때 법 시행 후 1년 6개월까지로 규정을 하였고요―담배소매인 지정요건 중에서 영업소 간 거리기준의 적용을 예외로 하는 것으로 규정을 하였습니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;2항의 경우에는 유예기간이 종료된 2년 이후의 문제에서 행정상 집행의 혼란을 방지하기 위해서 담배소매인 지정을 받은 자가 이 법 시행 이후에, 영업소 간 거리기준을 적용받지 아니하고 소매인 지정을 받은 자가 이 법 시행 이후에 1년 6개월까지 거리기준을 충족하지 못한 경우에는 소매인 지정이 취소된 것으로 본다라고 규정을 명확히 하였습니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;다음, 몰수 대상 확대와 관련되는 부분입니다.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;개정안의 주요 내용은, 현행은 담배와 관련된 범죄, 이 법의 범죄와 관련된 담배 또는 담배 제조 원료를 몰수 대상으로 규정을 하고 있습니다. 그런데 담배 정의가 연초·니코틴으로 확대가 되는 경우에는 몰수 대상도 입법체계에 맞추어서 확대되는 것이 필요하다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;그리고 3페이지, 시행일 부분입니다.</span><br/><span class="spk_sub" id="spk_sub7-9">&nbsp;지금 개정안은 시행일이 즉시 시행부터 6개월까지 다양하게 규정이 되어 있습니다. 여기에 대해서는 액상형 전자담배 제조업 허가기준 마련을 위해서 시행령 개정이 필요하고 새로운 규제 도입과 관련해서 집행 준비 시간이 필요하다는 점을 고려해서 공포 후 6개월 시행이 적정한 것으로 보아서 대안으로 제시를 하였습니다.</span><br/><span class="spk_sub" id="spk_sub7-10">&nbsp;4페이지 이후부터는 담배 정의 확대와 직접 관련되는 부분은 아니지만 관련해서 논의가 가능한 부분을 중심으로 정리를 하였습니다.</span><br/><span class="spk_sub" id="spk_sub7-11">&nbsp;먼저 유통질서 확립의 목적 규정 추가와 관련되는 부분입니다.</span><br/><span class="spk_sub" id="spk_sub7-12">&nbsp;개정안은 유통질서 확립을 목적 규정에 추가하는 것이고, 최근에 담배 성분 규제라든지 오도문구 제한과 같은 담배 유통질서 확립을 위한 규정들이 계속 추가되고 있는 점들을 감안할 때 담배사업법의 변화하는 내용과 성격을 분명하게 보여 줄 수 있다는 측면에서 목적 규정에 유통질서 확립을 추가하는 것이 별다른 문제가 없다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub7-13">&nbsp;다음, 소매인 우선지정 근거와 관련된 부분입니다.</span><br/><span class="spk_sub" id="spk_sub7-14">&nbsp;개정안의 주요 내용은, 현재는 국가유공자·장애인 및 그 가족에 대한 담배소매인 우선지정 관련 근거를 시행규칙에서 규정하고 있습니다. 개정안은 이 내용을 법률로 상향하는 내용이고, 영업의 자유라든지 이런 부분들에 대해서는 기본권 제한과 관련되는 부분이기 때문에 법률유보 원칙에 비추어서 담배소매인 우선지정 근거를 법률에 두는 것은 바람직한 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub7-15">&nbsp;5페이지, 소매인 명의 대여자 제재근거 마련입니다.</span><br/><span class="spk_sub" id="spk_sub7-16">&nbsp;개정안은 타인에게 담배소매인 명의를 빌려주는 행위를 금지하고 위반 시 소매인 지정취소 근거를 마련하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub7-17">&nbsp;명의 대여를 통한 담배 판매 근절 효과를 고려할 때 타당한 것으로 보았습니다. 다만 관련해서 이게 명의 대여 금지로 인한 담배소매인 지정을 취소할 수 있는 근거규정을 마련하는 부분이기 때문에 부칙의 적용례를 통해서 이 법 시행 이후 명의를 대여하는 경우부터 규제가 적용됨을 명확히 할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub7-18">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_8" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;정부 측 의견 말씀해 주십시오.</span><br/></div></div></div><div id="spk_9" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;두 가지 부분의 의견을 잠시 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;첫 번째, 담배사업법 정의 관련하여서 단서조항에 대한 이야기입니다. 저희 실무 의견으로는 기존에 있는 정의조항에 따르면 금연보조제를 저희가 담배로 취급하지 않았는데 개정된 조항으로 가면, ‘다만’으로 들어가면 기존에 있는 금연보조제가 담배로 취급되면서 빼 준다는 의미가 됩니다. 그래서 금연보조제가 기존에는 담배로 취급 안 받다가 이렇게 바뀌면 담배로 취급받는 문제가 있지 않냐 하는 우려가 하나 있었고.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;두 번째는 단서조항에 이걸 넣으면 향후에 니코틴이 포함된 어떤 제품이 나오는 경우에 이걸 일일이 다 예외조항을 통해서 빼야 되는 거냐 그런 우려가 있습니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;하지만 논의 과정에서 이렇게 단서조항을 넣는다 하더라도 실제적인 변화는 없기 때문에, 어차피 지금도 의약품과 의약외품은 담배로 취급을 안 하기 때문에, 실질적인 변화가 없기 때문에 이건 논의해 주시는 대로 따르겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;그리고 두 번째 건에 대해서는, 부칙 4조 1항 관련된 내용입니다. 4조 1항에 보시면 ‘직접 소비자에게 판매하는 자가 제16조에 따른 소매인의 지정을 신청한 때’ 이 문구가 좀 부담이 됩니다. 왜냐하면 기존의 담배, 궐련담배와 천연니코틴을 판매하지 않고 합성니코틴만 판매하던 사람이 다시 담배소매인 지정을 신청해서 이걸 적용받으면 이 사람은 합성니코틴만 팔다가 다시 천연니코틴도 팔 수 있고 궐련도 팔 수 있는 문제가 생기기 때문에……</span><br/></div></div></div><div id="spk_10" class="item12 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">정일영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><strong class="name">정일영</strong><span class="position">위원</span><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;좀 요약해서 합시다.</span><br/></div></div></div><div id="spk_11" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;알겠습니다. </span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;그렇기 때문에 기존에 합성니코틴만 판매하는 사람에 대해서는 동일 제품, 해당 담배를 판매하는 경우에 한정하여 합성니코틴만 판매하게 해 주는 게 맞는 거지 합성니코틴을 판매하는 사람한테 천연니코틴과 궐련을 판매하는 권리까지 줄 필요는 없다는 판단입니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;그래서 문구를 ‘소매인의 지정을 신청한 때에는’ 그다음에다가 ‘해당 담배를 판매하는 경우에 한정하여’라고 하면 합성니코틴만 판매하는 사람은 합성니코틴만 판매하는 허가를 해 주는 동일 효과를 가지게 될 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;나머지는 다 수용입니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_12" class="item12 speaker spk_mem" data-mem_id="6671" data-name="박대출" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">박대출 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8abadb32da7241088899ad56720b57e1.png" alt="박대출"></span><span class="txt"><strong class="name">박대출</strong><span class="position">위원</span><span class="area">(경남 진주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;지금 다른 조항에 담배업체 지정할 때 조건 있잖아요. 거기에 해당되잖아. 안 그런가요?</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;기존의 담배업체 지정기준이, 현행법으로 지정할 때 지정하는 그 기준이 있잖아요. 그 기준에 적용하면 문제없는 것 아닌가요?</span><br/></div></div></div><div id="spk_13" class="item12 speaker spk_mem" data-mem_id="0" data-name="정지은" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">전문위원 정지은 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정지은"></span><span class="txt"><span class="position">전문위원</span><strong class="name">정지은</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;그렇습니다. 기본적으로는 현재 담배사업법 16조에 따라서 담배소매인 지정과 관련된 기준들이 나열되어 있습니다. 그래서 지금 합성니코틴 등 담배가, 그 제품이 담배 정의에 포함되게 되면 이 제품을 판매하고 있는 판매자들은 이 소매인 지정의 기준에 따라서 담배소매인 지정 신청을 하게 되고요. 이 중에서 문제가 되는 부분으로 거리제한 규정에 대해서만 적용을 유예하는 것으로 하고 나머지 부분에 대해서는 지정을 신청해서 그 요건을 충족하도록 하는 그런 문안이고요.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;지금 기재부에서 말씀하시는 부분은 이런 경우에도 거리제한 규정 적용이 되지 않는 해당 업소인 경우에는 현재 팔고 있는 합성니코틴만, 현재 취급하고 있는 그 물품에 한정해서만 판매할 수 있도록 제한을 둘 필요가 있다는 그런 의견입니다.</span><br/></div></div></div><div id="spk_14" class="item12 speaker spk_mem" data-mem_id="6671" data-name="박대출" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">박대출 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8abadb32da7241088899ad56720b57e1.png" alt="박대출"></span><span class="txt"><strong class="name">박대출</strong><span class="position">위원</span><span class="area">(경남 진주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;그래도 선뜻 이해가 안 가는데요, 이것은. 그건 실익이 별로 없을 것 같은데.</span><br/></div></div></div><div id="spk_15" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;정일영 위원님.</span><br/></div></div></div><div id="spk_16" class="item12 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">정일영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><strong class="name">정일영</strong><span class="position">위원</span><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;감사합니다, 위원장님.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;지금 우리 상임위가 10시로 예정돼 있지 않은가요?</span><br/></div></div></div><div id="spk_17" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예.</span><br/></div></div></div><div id="spk_18" class="item12 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">정일영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><strong class="name">정일영</strong><span class="position">위원</span><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;그런데 벌써 10시 넘고 한은 총재나 기재부 많이들 와서 기다리고 있을 텐데, 오늘 보고·질의가 계속 될 텐데요. 이게 지금 상임위 전체회의 앞두고 이렇게 시급히 처리해야 될 안건은 아니라고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;그리고 이와 관련해서 여러 가지 민원도 많고 문자도 많이 오던데 그러면 정부에서도 차관이 여기에 대해서 확실히 책임지고 이것 개정이 필요하다, 도입해야 된다라는…… 물론 직급을 따지는 건 아니지만 그래도 통상적으로 차관이 와서 거기에 대한 소신 있는, 책임감 있는 발언이 필요하다고 보고요.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;세 번째는 쟁점이, 제가 질의할 것도 많은데 여기 보니까 또 위원님들이 낸 추가사항들도 있고 이것 다 논의를 하려면 최소한 오늘 오전까지도 필요할 겁니다.</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;저는 제안을, 다음 주에 소위를 다시 열고요. 충분히 논의를 하고 다음 주에 청 단위 전체 업무보고라든지 또 질의시간이 있을 테니까 그때 의결을 하고…… 그러니까 그렇게 시급한 내용은 아닌 것 같은데요, 일주일 이주일 단위로. 오늘은 일단 넘기고 따로 날짜를 잡아서 충분히 논의를 하고 결정을 하고 다음에 처리했으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub18-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_19" class="item12 speaker spk_mem" data-mem_id="6671" data-name="박대출" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">박대출 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8abadb32da7241088899ad56720b57e1.png" alt="박대출"></span><span class="txt"><strong class="name">박대출</strong><span class="position">위원</span><span class="area">(경남 진주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;그것 관련해서 잠깐 저도……</span><br/></div></div></div><div id="spk_20" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;박대출 위원님.</span><br/></div></div></div><div id="spk_21" class="item12 speaker spk_mem" data-mem_id="6671" data-name="박대출" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">박대출 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8abadb32da7241088899ad56720b57e1.png" alt="박대출"></span><span class="txt"><strong class="name">박대출</strong><span class="position">위원</span><span class="area">(경남 진주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;이 담배 개정 문제와 관련해 가지고는 우리 소위에서 그동안 참 많이 논의가 됐습니다. 그리고 큰 방향도 대체로 이견 없이 정해진 것이, 국민의 건강권이 최우선이라는 기본 원칙 그것 하나는 정했고 다들 동의를 하셨고요.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;다만 기존 업체들의 생존권 문제가 어떻게 되냐, 이 문제를 조금 더 보완해 줄 수 있느냐의 차원에서 적용이 됐고 그런 부분들이, 유예기간이라든지 그런 게 감안돼야 되는데 이 법안에는……</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;위원장님, 제가 제안을 하나 드리자면 만일에 오늘 이 법안 의결을 한다면 지금 기존 4만이라고 그랬나요, 4000……</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;기존 업체들, 지금 담배법 적용을 반대하는 업체들이 앞으로 업종 전환을 한다든지 그런 데 각종 지원책, 불가피하게 그렇게 해야 되는 부분에 대해서 지원책을 정부가 좀 더 강구를 해 줬으면 좋겠다라는 내용을 우리 논의에 좀 담아 가지고 의결하면 어떨까 하는 생각을 제안드려 봅니다.</span><br/></div></div></div><div id="spk_22" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;저도 잠깐 좀 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;지금 와 계신 분이 누구지요?</span><br/></div></div></div><div id="spk_23" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;안상열 재정관리관입니다.</span><br/></div></div></div><div id="spk_24" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;재정관리관, 지금 여기 ‘의약품 또는 의약외품은 제외한다’ 이렇게 돼 있는데 의약품은 알겠어요.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;그런데 의약외품은 의사의 처방전이 있을 때 판매되는 겁니까, 아니면 의약품도 그런 겁니까? 처방에 의해서 판매되는 겁니까? 약사법에 따른……</span><br/></div></div></div><div id="spk_25" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;복지부에 답을 시키면 안 될까요?</span><br/></div></div></div><div id="spk_26" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;복지부가 와 있습니까?</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;‘의약품 및 의약외품’이라고 하면 이게 의사의 처방에 의해서 판매되는 것인가요?</span><br/></div></div></div><div id="spk_27" class="item12 speaker spk_mem" data-mem_id="0" data-name="정혜은" data-pos="보건복지부건강증진과장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">보건복지부건강증진과장 정혜은 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정혜은"></span><span class="txt"><span class="position">보건복지부건강증진과장</span><strong class="name">정혜은</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;예, 의약품이 있고 의약외품이 있고요. 의약품 안에도 전문의약품과 일반의약품이 있습니다. 그래서 처방이 필요한 건 전문의약품이 되겠고요 일반의약품과 의약외품은 처방이 필요하지 않습니다.</span><br/></div></div></div><div id="spk_28" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;그러면 약국에 가서 합성니코틴을, 일반인이 그냥 살 수 있는 의약품으로 분류가 되나요?</span><br/></div></div></div><div id="spk_29" class="item12 speaker spk_mem" data-mem_id="0" data-name="정혜은" data-pos="보건복지부건강증진과장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">보건복지부건강증진과장 정혜은 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정혜은"></span><span class="txt"><span class="position">보건복지부건강증진과장</span><strong class="name">정혜은</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;만약에 의약품 또는 의약외품으로 허가가 된 품목이라면 일반인이 사용할 수 있습니다. 구입할 수 있습니다.</span><br/></div></div></div><div id="spk_30" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;알겠고요. 됐습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;그다음에 두 번째는 거리규정에 미치지 못하는, 그러니까 거리제한 이내에 있는 업장의 경우에 기존 제품 외에 일반 담배까지 판매할 수 있다 이렇게 돼 있잖아요.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;그러면 우리가 이것 담배규정을 변경하면 지금 담배를 취급하고 있는 그런 매장들은 합성니코틴 담배도 판매하게 되는 거지요? 지금까지는 판매를 안 했을 것 아닙니까?</span><br/></div></div></div><div id="spk_31" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;예.</span><br/></div></div></div><div id="spk_32" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;그러면 같은 조건 아닌가요, 양쪽이 다?</span><br/></div></div></div><div id="spk_33" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;기존에 궐련 담배와 천연 담배를 신고하고 파는 사람이 있었고 신고하지 않고 합성니코틴만 판매하는 사람이 있었는데 합성니코틴만 팔고 있는 사람이 담배소매인 지정을 신청해서 받게 되면 담배소매인 지정을 받았으니까 합성니코틴 말고 천연과 궐련도 팔 수 있게 되는 것 아니냐, 거리제한을 유예받고.</span><br/></div></div></div><div id="spk_34" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;그러니까 2년간은.</span><br/></div></div></div><div id="spk_35" class="item12 speaker spk_mem" data-mem_id="0" data-name="안상열" data-pos="기획재정부재정관리관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">기획재정부재정관리관 안상열 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안상열"></span><span class="txt"><span class="position">기획재정부재정관리관</span><strong class="name">안상열</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;예, 2년간.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;그래서 저희가 의견 낸 것은 합성니코틴만 판매하던 사람은 합성니코틴만 판매하는 것에 대해서만 거리제한 유예를 해 주겠다.</span><br/></div></div></div><div id="spk_36" class="item12 speaker spk_mem" data-mem_id="6673" data-name="윤호중" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">윤호중 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a474780e3fb144e18a389ec50b76f694.png" alt="윤호중"></span><span class="txt"><strong class="name">윤호중</strong><span class="position">위원</span><span class="area">(경기 구리시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;그렇게까지 할……</span><br/></div></div></div><div id="spk_37" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;지금 정부가 자꾸 새로운 이슈를 제기하는 바람에…… </span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;어제도 제가 말씀을 드렸습니다마는 이게 물론 청소년 건강을 지키는 것도 있지만 한 사람이라도 억울한 피해자가 나와서는 안 되잖아요, 그 사람들은 전 재산을 들여 가지고 사업을 하는 사람들인데.</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;그래서 이렇게 자꾸 새로운 문제 제기를 해 가지고 이 결론을 또다시 논의해야 될 것 같아. 지금 이 정의 개념에서부터 또 문제가 생기고 있잖아요, 그다음에 또 거리제한 문제도 있는 거고. 이렇게 되면 결론을 내릴 수가 없어요, 지금 전체회의가 있는데.</span><br/></div></div></div><div id="spk_38" class="item12 speaker spk_mem" data-mem_id="6601" data-name="김영진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">김영진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4a532fc2b0bf46fd81d7d51ea73c61be.jpg" alt="김영진"></span><span class="txt"><strong class="name">김영진</strong><span class="position">위원</span><span class="area">(경기 수원시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;그러면 시간을 잡고 충분히 얘기를 하지요, 이런 정도로 갈등이 있으니까.</span><br/></div></div></div><div id="spk_39" class="item12 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">정일영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><strong class="name">정일영</strong><span class="position">위원</span><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;시간을 따로 잡아서……</span><br/></div></div></div><div id="spk_40" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;지금 박대출 위원님도 피해 문제를 얘기하셨는데 지금 결론을 제가 못 내리겠어요. 완전히 새로운 문제 제기를 또 하셨기 때문에 다시 논의를 하겠습니다. 지금 전체 상임위가 있기 때문에…… 이 논의를 결론 내려면 시간이 더 필요해요. 오늘은 결론 안 내리겠습니다.</span><br/></div></div></div><div id="spk_41" class="item12 speaker spk_mem" data-mem_id="6671" data-name="박대출" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">박대출 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8abadb32da7241088899ad56720b57e1.png" alt="박대출"></span><span class="txt"><strong class="name">박대출</strong><span class="position">위원</span><span class="area">(경남 진주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;그 대안을 지금 제시를 해야지요, 다음 회의 때는 의결할 수 있게.</span><br/></div></div></div><div id="spk_42" class="item12 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;아니, 그런데 재정관리관은 사전 회의에서 아무 제기도 안 했던 그런 것을 왜 지금 갑자기 끄집어내고 그러는 거예요? 미리 얘기를 해야지.</span><br/></div></div></div><div id="spk_43" class="item12 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;제가 말씀드리고 싶은 부분이 바로 이 부분인데요. 지난주에 저희가 논의할 때 기재부에서 논의됐던, 저희가 제기했던 문제들에 대해서 다 정리가 된 상태로 오늘 여야 간사님들끼리 입장을 정리해서 오신 것 아닌가요?</span><br/></div></div></div><div id="spk_44" class="item12 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;다 했는데 왜 새로운 걸 갖고 오냐고.</span><br/></div></div></div><div id="spk_45" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;논의를 했는데 지금 또 새로운 얘기를 하고 있는 거라……</span><br/></div></div></div><div id="spk_46" class="item12 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;지금 와서 기재부의 의견을 또 추가로 말씀하시게 되면 지금까지 논의됐던 내용들을 시간만 계속 끄는 거 아닙니까? 그러면 기재부의 의도가 오해를 받을 수가 있어서……</span><br/></div></div></div><div id="spk_47" class="item12 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;오늘 여기서 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub47-2">&nbsp;이상으로 산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시17분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(10인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank"><span class="name lts3 ">박대출</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank"><span class="name lts3 ">박성훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank"><span class="name lts3 ">박수영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank"><span class="name lts3 ">윤호중</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJONHWOOK" target="_blank"><span class="name lts3 ">이종욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank"><span class="name lts3 ">정태호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank"><span class="name lts3 ">차규근</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 정지은</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>기획재정부</p><li><a class="in_nm"><span class="pos"><span class="lts3">차관보</span></span><span class="name lts3"> 윤인대</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">재정관리관</span></span><span class="name lts3"> 안상열</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">국고국장</span></span><span class="name lts3"> 황순관</span></a></li><p>보건복지부</p><li><a class="in_nm"><span class="pos"><span class="lts6">건강증진과장</span></span><span class="name lts3"> 정혜은</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52711;
+			const class_id = 2;
+			const confer_num = "054768";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641157608" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641157608"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641157608"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641157608"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

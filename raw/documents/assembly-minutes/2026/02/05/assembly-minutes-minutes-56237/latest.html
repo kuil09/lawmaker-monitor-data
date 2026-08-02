@@ -1,0 +1,888 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56237" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제432회 (임시회) 제1차 성평등가족위원회</strong><span class="date">(2026.02.05.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김선민 의원 대표발의)(의안번호 2202584)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2202773)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김용만 의원 대표발의)(의안번호 2203876)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(백승아 의원 대표발의)(의안번호 2207474)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(강경숙 의원 대표발의)(의안번호 2207648)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(박홍배 의원 대표발의)(의안번호 2211965)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(이정헌 의원 대표발의)(의안번호 2213865)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 일본군 ‘위안부’ 피해사실을 부정하고 피해자를 모욕하는 이들을 강력히 처벌할 수 있도록 법 개정 요청에 관한 청원(강경란 외 50,008인 국민동의로 제출)(청원번호 2200057)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 아이돌봄 지원법 일부개정법률안(정부 제출)(의안번호 2201057)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2202211)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2213913)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 청소년 보호법 일부개정법률안(이인선 의원 대표발의)(의안번호 2204979)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 청소년 보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210025)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 청소년 보호법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2211610)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 청소년 보호법 일부개정법률안(오세희 의원 대표발의)(의안번호 2211635)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 청소년복지 지원법 일부개정법률안(김용태 의원 대표발의)(의안번호 2211707)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 아이돌봄 지원법 일부개정법률안(김예지 의원 대표발의)(의안번호 2211813)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 아이돌봄 지원법 일부개정법률안(송석준 의원 대표발의)(의안번호 2212125)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212498)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 성매매방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212504)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 한부모가족지원법 일부개정법률안(김태선 의원 대표발의)(의안번호 2212527)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 청소년 보호법 일부개정법률안(강대식 의원 대표발의)(의안번호 2212617)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(권칠승 의원 대표발의)(의안번호 2212745)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">27. 한부모가족지원법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2212750)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">28. 스토킹방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2212760)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">29. 한부모가족지원법 일부개정법률안(최혁진 의원 대표발의)(의안번호 2212821)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">30. 청소년복지 지원법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2212835)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">31. 아동·청소년의 성보호에 관한 법률 일부개정법률안(주진우 의원 대표발의)(의안번호 2213103)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">32. 결혼중개업의 관리에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2213149)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">33. 청소년 기본법 일부개정법률안(김남근 의원 대표발의)(의안번호 2213371)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">34. 아동·청소년의 성보호에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2213540)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">35. 양육비 이행확보 및 지원에 관한 법률 일부개정법률안(이인선 의원 대표발의)(의안번호 2213633)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">36. 건강가정기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213804)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">37. 청소년복지 지원법 일부개정법률안(강선우 의원 대표발의)(의안번호 2214029)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">38. 아동·청소년의 성보호에 관한 법률 일부개정법률안(김준혁 의원 대표발의)(의안번호 2214080)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">39. 청소년 기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214445)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">40. 양성평등기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214448)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">41. 청소년복지 지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2214640)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">42. 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2214642)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">43. 양성평등기본법 일부개정법률안(조계원 의원 대표발의)(의안번호 2214706)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">44. 청소년복지 지원법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215163)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">45. 청소년복지 지원법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215165)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">46. 청소년복지 지원법 일부개정법률안(정점식 의원 대표발의)(의안번호 2215214)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">47. 청소년 기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215248)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">48. 여성폭력방지기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215250)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">49. 다문화가족지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215251)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">50. 청소년 기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215339)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">51. 양성평등기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215340)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">52. 아동·청소년의 성보호에 관한 법률 일부개정법률안(김재섭 의원 대표발의)(의안번호 2215341)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">53. 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215342)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">54. 여성의 경제활동 촉진과 경력단절 예방법 일부개정법률안(신장식 의원 대표발의)(의안번호 2215345)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">55. 성범죄 관련 사회적 비용을 범죄자 개인에게 전액 청구하는 법 도입에 관한 청원(백선영 외 50,985인 국민동의로 제출)(청원번호 2200243)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+			<div class="list list3">
+				<a href="#pop_appendix" class="tit btn_pop" id="btn_apdinx" >부록</a>
+			</div>
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이인선 위원장 (대구 수성구을)"> 
+							이인선 위원장 (대구 수성구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="장철민 위원 (대전 동구)"> 
+							장철민 위원 (대전 동구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김한규 위원 (제주 제주시을)"> 
+							김한규 위원 (제주 제주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정춘생 위원 (비례대표)"> 
+							정춘생 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서영교 위원 (서울 중랑구갑)"> 
+							서영교 위원 (서울 중랑구갑)
+						</option>
+					
+					
+						<option value="원민경 성평등가족부장관">원민경 성평등가족부장관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(5명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6722" data-name="이인선" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">이인선</span>
+												<span class="position">위원장</span>
+												<span class="area">(대구 수성구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6641" data-name="장철민" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">장철민</span>
+												<span class="position">위원</span>
+												<span class="area">(대전 동구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6659" data-name="김한규" data-pos="소위원장"> 
+											<label for="spk_mem2">												
+												<span class="name">김한규</span>
+												<span class="position">위원</span>
+												<span class="area">(제주 제주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6855" data-name="정춘생" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">정춘생</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6711" data-name="서영교" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">서영교</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 중랑구갑)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="원민경" data-pos="성평등가족부장관"> 
+											<label for="spk_attend0">
+												<span class="name">원민경</span>
+												<span class="position">성평등가족부장관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56237&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제432회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>성평등가족위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 2월 5일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">성평등가족위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김선민 의원 대표발의)(의안번호 2202584)</li><li><span class="num">2.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2202773)</li><li><span class="num">3.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김용만 의원 대표발의)(의안번호 2203876)</li><li><span class="num">4.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(백승아 의원 대표발의)(의안번호 2207474)</li><li><span class="num">5.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(강경숙 의원 대표발의)(의안번호 2207648)</li><li><span class="num">6.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(박홍배 의원 대표발의)(의안번호 2211965)</li><li><span class="num">7.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(이정헌 의원 대표발의)(의안번호 2213865)</li><li><span class="num">8.</span> 일본군 ‘위안부’ 피해사실을 부정하고 피해자를 모욕하는 이들을 강력히 처벌할 수 있도록 법 개정 요청에 관한 청원(강경란 외 50,008인 국민동의로 제출)(청원번호 2200057)</li><li><span class="num">9.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(대안)</li><li><span class="num">10.</span> 아이돌봄 지원법 일부개정법률안(정부 제출)(의안번호 2201057)</li><li><span class="num">11.</span> 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2202211)</li><li><span class="num">12.</span> 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2213913)</li><li><span class="num">13.</span> 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(대안)</li><li><span class="num">14.</span> 청소년 보호법 일부개정법률안(이인선 의원 대표발의)(의안번호 2204979)</li><li><span class="num">15.</span> 청소년 보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210025)</li><li><span class="num">16.</span> 청소년 보호법 일부개정법률안(대안)</li><li><span class="num">17.</span> 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2211610)</li><li><span class="num">18.</span> 청소년 보호법 일부개정법률안(오세희 의원 대표발의)(의안번호 2211635)</li><li><span class="num">19.</span> 청소년복지 지원법 일부개정법률안(김용태 의원 대표발의)(의안번호 2211707)</li><li><span class="num">20.</span> 아이돌봄 지원법 일부개정법률안(김예지 의원 대표발의)(의안번호 2211813)</li><li><span class="num">21.</span> 아이돌봄 지원법 일부개정법률안(송석준 의원 대표발의)(의안번호 2212125)</li><li><span class="num">22.</span> 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212498)</li><li><span class="num">23.</span> 성매매방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212504)</li><li><span class="num">24.</span> 한부모가족지원법 일부개정법률안(김태선 의원 대표발의)(의안번호 2212527)</li><li><span class="num">25.</span> 청소년 보호법 일부개정법률안(강대식 의원 대표발의)(의안번호 2212617)</li><li><span class="num">26.</span> 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(권칠승 의원 대표발의)(의안번호 2212745)</li><li><span class="num">27.</span> 한부모가족지원법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2212750)</li><li><span class="num">28.</span> 스토킹방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2212760)</li><li><span class="num">29.</span> 한부모가족지원법 일부개정법률안(최혁진 의원 대표발의)(의안번호 2212821)</li><li><span class="num">30.</span> 청소년복지 지원법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2212835)</li><li><span class="num">31.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(주진우 의원 대표발의)(의안번호 2213103)</li><li><span class="num">32.</span> 결혼중개업의 관리에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2213149)</li><li><span class="num">33.</span> 청소년 기본법 일부개정법률안(김남근 의원 대표발의)(의안번호 2213371)</li><li><span class="num">34.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2213540)</li><li><span class="num">35.</span> 양육비 이행확보 및 지원에 관한 법률 일부개정법률안(이인선 의원 대표발의)(의안번호 2213633)</li><li><span class="num">36.</span> 건강가정기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213804)</li><li><span class="num">37.</span> 청소년복지 지원법 일부개정법률안(강선우 의원 대표발의)(의안번호 2214029)</li><li><span class="num">38.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(김준혁 의원 대표발의)(의안번호 2214080)</li><li><span class="num">39.</span> 청소년 기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214445)</li><li><span class="num">40.</span> 양성평등기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214448)</li><li><span class="num">41.</span> 청소년복지 지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2214640)</li><li><span class="num">42.</span> 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2214642)</li><li><span class="num">43.</span> 양성평등기본법 일부개정법률안(조계원 의원 대표발의)(의안번호 2214706)</li><li><span class="num">44.</span> 청소년복지 지원법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215163)</li><li><span class="num">45.</span> 청소년복지 지원법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215165)</li><li><span class="num">46.</span> 청소년복지 지원법 일부개정법률안(정점식 의원 대표발의)(의안번호 2215214)</li><li><span class="num">47.</span> 청소년 기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215248)</li><li><span class="num">48.</span> 여성폭력방지기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215250)</li><li><span class="num">49.</span> 다문화가족지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215251)</li><li><span class="num">50.</span> 청소년 기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215339)</li><li><span class="num">51.</span> 양성평등기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215340)</li><li><span class="num">52.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(김재섭 의원 대표발의)(의안번호 2215341)</li><li><span class="num">53.</span> 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215342)</li><li><span class="num">54.</span> 여성의 경제활동 촉진과 경력단절 예방법 일부개정법률안(신장식 의원 대표발의)(의안번호 2215345)</li><li><span class="num">55.</span> 성범죄 관련 사회적 비용을 범죄자 개인에게 전액 청구하는 법 도입에 관한 청원(백선영 외 50,985인 국민동의로 제출)(청원번호 2200243)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김선민 의원 대표발의)(의안번호 2202584)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2202773)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김용만 의원 대표발의)(의안번호 2203876)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(백승아 의원 대표발의)(의안번호 2207474)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(강경숙 의원 대표발의)(의안번호 2207648)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(박홍배 의원 대표발의)(의안번호 2211965)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(이정헌 의원 대표발의)(의안번호 2213865)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 일본군 ‘위안부’ 피해사실을 부정하고 피해자를 모욕하는 이들을 강력히 처벌할 수 있도록 법 개정 요청에 관한 청원(강경란 외 50,008인 국민동의로 제출)(청원번호 2200057)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 아이돌봄 지원법 일부개정법률안(정부 제출)(의안번호 2201057)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2202211)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2213913)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 청소년 보호법 일부개정법률안(이인선 의원 대표발의)(의안번호 2204979)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 청소년 보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210025)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 청소년 보호법 일부개정법률안(대안)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2211610)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 청소년 보호법 일부개정법률안(오세희 의원 대표발의)(의안번호 2211635)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 청소년복지 지원법 일부개정법률안(김용태 의원 대표발의)(의안번호 2211707)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 아이돌봄 지원법 일부개정법률안(김예지 의원 대표발의)(의안번호 2211813)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 아이돌봄 지원법 일부개정법률안(송석준 의원 대표발의)(의안번호 2212125)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212498)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 성매매방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212504)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 한부모가족지원법 일부개정법률안(김태선 의원 대표발의)(의안번호 2212527)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">25.</span> 청소년 보호법 일부개정법률안(강대식 의원 대표발의)(의안번호 2212617)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">26.</span> 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(권칠승 의원 대표발의)(의안번호 2212745)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">27.</span> 한부모가족지원법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2212750)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">28.</span> 스토킹방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2212760)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">29.</span> 한부모가족지원법 일부개정법률안(최혁진 의원 대표발의)(의안번호 2212821)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">30.</span> 청소년복지 지원법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2212835)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">31.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(주진우 의원 대표발의)(의안번호 2213103)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">32.</span> 결혼중개업의 관리에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2213149)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">33.</span> 청소년 기본법 일부개정법률안(김남근 의원 대표발의)(의안번호 2213371)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">34.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2213540)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">35.</span> 양육비 이행확보 및 지원에 관한 법률 일부개정법률안(이인선 의원 대표발의)(의안번호 2213633)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">36.</span> 건강가정기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213804)</a></li><li id="head_item37"><a href="#" class="move" data-target="#item37"><span class="num">37.</span> 청소년복지 지원법 일부개정법률안(강선우 의원 대표발의)(의안번호 2214029)</a></li><li id="head_item38"><a href="#" class="move" data-target="#item38"><span class="num">38.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(김준혁 의원 대표발의)(의안번호 2214080)</a></li><li id="head_item39"><a href="#" class="move" data-target="#item39"><span class="num">39.</span> 청소년 기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214445)</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">40.</span> 양성평등기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214448)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">41.</span> 청소년복지 지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2214640)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">42.</span> 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2214642)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">43.</span> 양성평등기본법 일부개정법률안(조계원 의원 대표발의)(의안번호 2214706)</a></li><li id="head_item44"><a href="#" class="move" data-target="#item44"><span class="num">44.</span> 청소년복지 지원법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215163)</a></li><li id="head_item45"><a href="#" class="move" data-target="#item45"><span class="num">45.</span> 청소년복지 지원법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215165)</a></li><li id="head_item46"><a href="#" class="move" data-target="#item46"><span class="num">46.</span> 청소년복지 지원법 일부개정법률안(정점식 의원 대표발의)(의안번호 2215214)</a></li><li id="head_item47"><a href="#" class="move" data-target="#item47"><span class="num">47.</span> 청소년 기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215248)</a></li><li id="head_item48"><a href="#" class="move" data-target="#item48"><span class="num">48.</span> 여성폭력방지기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215250)</a></li><li id="head_item49"><a href="#" class="move" data-target="#item49"><span class="num">49.</span> 다문화가족지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215251)</a></li><li id="head_item50"><a href="#" class="move" data-target="#item50"><span class="num">50.</span> 청소년 기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215339)</a></li><li id="head_item51"><a href="#" class="move" data-target="#item51"><span class="num">51.</span> 양성평등기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215340)</a></li><li id="head_item52"><a href="#" class="move" data-target="#item52"><span class="num">52.</span> 아동·청소년의 성보호에 관한 법률 일부개정법률안(김재섭 의원 대표발의)(의안번호 2215341)</a></li><li id="head_item53"><a href="#" class="move" data-target="#item53"><span class="num">53.</span> 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215342)</a></li><li id="head_item54"><a href="#" class="move" data-target="#item54"><span class="num">54.</span> 여성의 경제활동 촉진과 경력단절 예방법 일부개정법률안(신장식 의원 대표발의)(의안번호 2215345)</a></li><li id="head_item55"><a href="#" class="move" data-target="#item55"><span class="num">55.</span> 성범죄 관련 사회적 비용을 범죄자 개인에게 전액 청구하는 법 도입에 관한 청원(백선영 외 50,985인 국민동의로 제출)(청원번호 2200243)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(11시09분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제432회 국회(임시회) 제1차 성평등가족위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;법안 회부 등 보고사항은 노트북 단말기의 자료를 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 회의 진행 순서를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;가셔야 됩니까?</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;성원이 되었으므로 시작했으니까, 겸직위원회라서 양해를 하겠습니다. 가십시오.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;(「의결정족수가 안 됩니다」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub2-9">&nbsp;빨리 진행하겠습니다. 조금만 앉아 계십시오.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6641" data-name="장철민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">장철민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e37f006d030a4d14b04f17a0de512540.jpg" alt="장철민"></span><span class="txt"><strong class="name">장철민</strong><span class="position">위원</span><span class="area">(대전 동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의결할 수 있는 것 10분 안에 했으면 좋겠어요.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;그럽시다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;그러면 바로 우리 위원회에서 회부한 법률안 상정하는 심사 순서로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2W4E0F7E2C6B1J3I3H8H3G3C6B7Z1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김선민 의원 대표발의)(의안번호 2202584)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2S4Q0R8Q0L7M1K0L4J4J2I9J1P7Q8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2202773)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I4G0G9F0F3E1L4M1K4L4J5K4I6Q0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(김용만 의원 대표발의)(의안번호 2203876)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2N4L1M2K0L5J1K4F5E6F5D5E9C5K6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(백승아 의원 대표발의)(의안번호 2207474)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2T5S0Q1Q1Y3Z1X0Y0W4X1V2D2E1C5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(강경숙 의원 대표발의)(의안번호 2207648)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Q5R0M6N3L0L0K9I3J0Q3S9Q4Q2O3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(박홍배 의원 대표발의)(의안번호 2211965)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E5F1D0D2C8C1Y0Z2X3Y5W0U7V7D6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(이정헌 의원 대표발의)(의안번호 2213865)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2W4G1D1Z2L0W1W1C1V4Y2D3P6O6K9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 일본군 ‘위안부’ 피해사실을 부정하고 피해자를 모욕하는 이들을 강력히 처벌할 수 있도록 법 개정 요청에 관한 청원(강경란 외 50,008인 국민동의로 제출)(청원번호 2200057)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2U6W0V2S0T4U1X8J0F2L2N9I9C2M7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_S2E4D0V6K2H7F1N6J0D6Y1F1I8C8C0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 아이돌봄 지원법 일부개정법률안(정부 제출)(의안번호 2201057)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2E4C0D6L1L1J1K1I5H9H3P2Q0O0P5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2202211)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2J5R0Q8O1P1O1K4I3X8W5U3Q5P2Q0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2213913)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Q6I0G2X0V4U1H8N0W3C4I4G7O8V7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2J4I1H0G2O1N1M7L2U8T2R4L9K3J3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 청소년 보호법 일부개정법률안(이인선 의원 대표발의)(의안번호 2204979)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2D5D0C4D1B7C1X8Y2W5U3V7U7U7C1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 청소년 보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210025)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2I6K0O2S0Z4B1Q8Y0X7G0U7M7Y6X1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 청소년 보호법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시10분)</p><br/><div id="spk_6" class="item16 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;의사일정 제1항부터 제16항까지 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안 등 15건의 법률안과 1건의 청원을 일괄 상정합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;김한규 법안심사소위원장님 나오셔서 소위원회 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_7" class="item16 speaker spk_mem" data-mem_id="6659" data-name="김한규" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">소위원장 김한규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5607570161f4879b98311c104e21485.jpg" alt="김한규"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김한규</strong><span class="area">(제주 제주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;법안심사소위원장 김한규입니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;우리 소위원회는 총 18건의 법률안 및 1건의 청원에 대한 심사를 진행한 결과 12건의 법률안 및 1건의 청원을 의결했습니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;먼저 김선민 의원, 서영교 의원, 김용만 의원, 백승아 의원, 강경숙 의원, 박홍배 의원, 이정헌 의원이 각각 대표발의한 7건의 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안과 국민동의 청원 1건은 통합 조정해서 우리 위원회의 대안으로 제안하기로 했습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;대안의 주요 내용은 일본군위안부 피해에 대한 허위사실 유포 시 형사처벌을 할 수 있게 하고 일본군위안부 피해자의 명예훼손 금지 규정을 신설하며 일본군위안부 피해자 추모 상징물 또는 조형물의 실태조사 근거를 마련했습니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;여야 합의로 처리할 수 있게 조율해 주신 조은희 국민의힘 간사님을 포함한 여러 위원님들께 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;다음은 정부가 제출한 아이돌봄 지원법 일부개정법률안은 아이돌보미 채용 업무를 광역지원센터에서 서비스제공기관으로 변경하는 등의 내용 등이고 개정안의 내용을 2026년 4월 23일 시행 예정인 법률에 반영했습니다.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;다음, 이만희 의원, 위성곤 의원이 각각 대표발의한 2건의 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안은 통합 조정하여 우리 위원회의 대안으로 제안하기로 했습니다.</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;대안의 주요 내용은 사법경찰관리의 현장조사를 거부·기피한 가정폭력행위자에 대한 제재를 과태료에서 형벌로 상향했습니다.</span><br/><span class="spk_sub" id="spk_sub7-9">&nbsp;다음, 이인선 의원, 이성윤 의원이 각각 대표발의한 청소년 보호법 일부개정법률안은 각 법률안의 내용을 통합 조정해서 우리 위원회의 대안으로 제안하기로 했습니다.</span><br/><span class="spk_sub" id="spk_sub7-10">&nbsp;주요 내용은 노래연습장업을 청소년출입·고용금지업에서 고용금지업소로 변경하고 청소년게임제공업 등은 청소년고용금지업소에서 제외했습니다.</span><br/><span class="spk_sub" id="spk_sub7-11">&nbsp;구체적인 사항은 배부해 드린 자료를 참조해 주시고 아무쪼록 소위원회에서 심사보고한 대로 의결해 주시기를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub7-12">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_8" class="item16 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;간사님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;이상 법안심사소위원회의 심사 결과에 대해 의견이 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;특별한 의견이 없으시면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;법률안 의결에 앞서 축조심사와 비용추계를 생략하는 의결을 먼저 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;오늘 의결할 일부개정법률안에 대해서는 소위원회에서 조문별로 축조심사를 심도 있게 진행하였으므로 국회법 제58조 5항에 따라 축조심사를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;이의가 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;오늘 의결할 안건 중에서 비용추계가 필요한 법안에 대해서는 시간적인 여유가 부족한 점을 감안해서 국회법 제79조의2제3항의 단서에 따라서 비용추계서 첨부를 생략하고 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-11">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-12">&nbsp;그러면 각 안건에 대해서 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-13">&nbsp;먼저 의사일정 제1항부터 제8항까지 7건의 법률안과 1건의 청원은 법안소위에서 심사보고한 바와 같이 각각 본회의에 부의하지 아니하고 의사일정 제9항 일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안(대안)을 우리 위원회의 안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-14">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-15">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-16">&nbsp;의사일정 제10항 아이돌봄 지원법 일부개정법률안은 법안소위에서 심사보고한 수정안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-17">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-18">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-19">&nbsp;의사일정 제11항 및 제12항 2건의 법률안은 법안소위에서 심사보고한 바와 같이 각각 본회의에 부의하지 아니하고 의사일정 제13항 가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-20">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-21">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-22">&nbsp;의사일정 제14항 및 제15항 2건의 법률안은 법안소위에서 심사보고한 바와 같이 각각 본회의에 부의하지 아니하고 의사일정 제16항 청소년 보호법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-23">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-24">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-25">&nbsp;오늘 제가 좀 빨리 진행을 하고 있습니다. 겸직위원회라서 의결정족을 금방 했기 때문에……</span><br/><span class="spk_sub" id="spk_sub8-26">&nbsp;정춘생 위원님 오셨네요.</span><br/><span class="spk_sub" id="spk_sub8-27">&nbsp;조금 진행하고 질의하면 안 되겠습니까? 잠깐만 기다려 주십시오.</span><br/></div></div></div><div id="spk_9" class="item16 speaker spk_mem" data-mem_id="6855" data-name="정춘생" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">정춘생 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/69ac62e637b447b6a7ada23613cb4193.jpg" alt="정춘생"></span><span class="txt"><strong class="name">정춘생</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;예.</span><br/></div></div></div><div id="spk_10" class="item16 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;어디까지 갔는지도 모르겠습니다, 다들 지금 정신을 없게 만들어서.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;오늘 의결할 법률안에 대한 체계·자구 정리 및 심사보고서의 문안 작성 등에 대해서는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;다음은 오늘 의결한 법률안과 관련하여 정부 측 인사가 있겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;원민경 성평등가족부장관님 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item16 speaker spk_mem" data-mem_id="0" data-name="원민경" data-pos="성평등가족부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">성평등가족부장관 원민경 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="원민경"></span><span class="txt"><span class="position">성평등가족부장관</span><strong class="name">원민경</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;존경하는 이인선 위원장님 그리고 성평등가족위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;심도 있는 법안 심사를 통해 위안부 피해자법 일부개정법률안 등 12건의 법률안과 1건의 청원을 심의 의결해 주신 것에 대해 깊은 감사의 말씀을 드립니다. 특히 법안심사소위원회에서 애써 주신 김한규 위원장님을 비롯한 위원님들께도 깊은 감사 드립니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;이번 성평등가족위원회에서 심의 의결해 주신 법률안은 법사위 심의 과정에서 적극 반영될 수 있도록 더욱 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_12" class="item16 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;장관님 수고하셨습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2H5I0Q7R0P8P1N0M1N1V1V6T2U8T4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2211610)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2B5A0B4Z1X1Y1G6G0F5F4E2E5D1K3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 청소년 보호법 일부개정법률안(오세희 의원 대표발의)(의안번호 2211635)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2D5E0D7D2B1C0A8W4X8V2V1U8V4T0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 청소년복지 지원법 일부개정법률안(김용태 의원 대표발의)(의안번호 2211707)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q5O0O7N2O8V0W8U5V0T3S8S0A2A0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 아이돌봄 지원법 일부개정법률안(김예지 의원 대표발의)(의안번호 2211813)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2W5Q0P8Y0U8U1C4B0A1Z1W7C0C3B2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 아이돌봄 지원법 일부개정법률안(송석준 의원 대표발의)(의안번호 2212125)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2G5E0M8L0L6R2P2P0O2W5T0S2P8Y9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212498)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2V5E0C8E0C6L2H2H0D3C5B8H4H5Q1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 성매매방지 및 피해자보호 등에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2212504)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2C5Z0V8V0D6C2Z1I5G4C2B2K6J3G9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 한부모가족지원법 일부개정법률안(김태선 의원 대표발의)(의안번호 2212527)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J5R0R6P0Q9O1N4N3V2W2U6V7T5U3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 청소년 보호법 일부개정법률안(강대식 의원 대표발의)(의안번호 2212617)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2R5Q0R9Y0Z1X1W8W4U7V4D5E5C8B2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(권칠승 의원 대표발의)(의안번호 2212745)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2M5N0L9M0K1I1J0R5R1Q1R4P4P0O1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 한부모가족지원법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2212750)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2X5W0U8D1K1I1H4G3C6B5B6A1Z6H9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 스토킹방지 및 피해자보호 등에 관한 법률 일부개정법률안(위성곤 의원 대표발의)(의안번호 2212760)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2A5C0A7Y0Z4H1H7F1G6F1F8D3E4M7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 한부모가족지원법 일부개정법률안(최혁진 의원 대표발의)(의안번호 2212821)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2A5Y0H8F2L2K1L0T5S9Q1P1X6W8X7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 청소년복지 지원법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2212835)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2F5E0C9B1J6J1I5J0R9Q2V3U2T3S8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 아동·청소년의 성보호에 관한 법률 일부개정법률안(주진우 의원 대표발의)(의안번호 2213103)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2S5T0R9R1Q7R1P6P2L8K1J0J7I5I7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 결혼중개업의 관리에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2213149)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2K5S0P8O0X5V2U0U0C9A1Z5Y9T5R2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 청소년 기본법 일부개정법률안(김남근 의원 대표발의)(의안번호 2213371)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2M5G0F9E0D9L1I4H4P6O3N9M4V7U1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 아동·청소년의 성보호에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2213540)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2N5L0U9S2T2R1Q4Y1X4W5W7V4D9C8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 양육비 이행확보 및 지원에 관한 법률 일부개정법률안(이인선 의원 대표발의)(의안번호 2213633)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2H5I1G0H2F7N1O0M3M0L1M6K0K0S5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 건강가정기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213804)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item37" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2I4I0G6H1F0E2E1M4M2L1M9K9I8J2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">37. 청소년복지 지원법 일부개정법률안(강선우 의원 대표발의)(의안번호 2214029)</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item38" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E5F1E1E0M4K1L0J1K2I3J2F8D1E1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">38. 아동·청소년의 성보호에 관한 법률 일부개정법률안(김준혁 의원 대표발의)(의안번호 2214080)</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item39" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2G5O1O1N0L7M1K6L0T3T2R6Q5R4P1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">39. 청소년 기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214445)</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2L5J1K1I0I7R1P6P0O4P2N8N0V0W3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">40. 양성평등기본법 일부개정법률안(김남희 의원 대표발의)(의안번호 2214448)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V5T1U1S2T5B1B3A3A9Z0X8X6F9G8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">41. 청소년복지 지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2214640)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2A5Y1X1X2V0W1E3F3D6D1C6A2B5W8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">42. 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2214642)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2O5M1L1L2T4T1S5T2R4R2P0M4M9K6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">43. 양성평등기본법 일부개정법률안(조계원 의원 대표발의)(의안번호 2214706)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item44" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2R5P1Q1O2P7N1J8J2I3I5G7H9G8G5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">44. 청소년복지 지원법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215163)</a><a class="btn_move move" data-target="#head_item44" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item45" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2F5G1E2F1D0D0B9C2K1L2J4J8I8G8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">45. 청소년복지 지원법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215165)</a><a class="btn_move move" data-target="#head_item45" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item46" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z5Z1H1G0G3E1F0D0D2T3U6S3S9Q8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">46. 청소년복지 지원법 일부개정법률안(정점식 의원 대표발의)(의안번호 2215214)</a><a class="btn_move move" data-target="#head_item46" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item47" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P5N1P2N0N9V1W5U4S7T2R5S4A3A6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">47. 청소년 기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215248)</a><a class="btn_move move" data-target="#head_item47" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item48" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2J5I1J2H0H9G1V5W4U8U0S6T2S3S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">48. 여성폭력방지기본법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215250)</a><a class="btn_move move" data-target="#head_item48" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item49" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2M5N1V2T0U9S1T5R4R8A4A5Y9Z3X5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">49. 다문화가족지원법 일부개정법률안(김한규 의원 대표발의)(의안번호 2215251)</a><a class="btn_move move" data-target="#head_item49" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item50" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2P5O1M2U0V4U1S6R2S6A2Y1Z1Y8W0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">50. 청소년 기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215339)</a><a class="btn_move move" data-target="#head_item50" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item51" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U5V1T1T2S7S1A3Z2Z9Y4Y1X2X8F3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">51. 양성평등기본법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2215340)</a><a class="btn_move move" data-target="#head_item51" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item52" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2T5R1S2Q1R2Y1A4Y4Y8X1X3V8D1E0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">52. 아동·청소년의 성보호에 관한 법률 일부개정법률안(김재섭 의원 대표발의)(의안번호 2215341)</a><a class="btn_move move" data-target="#head_item52" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item53" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G5G1E2F0D9E1A0A3Y0Z2X5W9W8E1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">53. 양성평등기본법 일부개정법률안(이주희 의원 대표발의)(의안번호 2215342)</a><a class="btn_move move" data-target="#head_item53" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item54" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Y5Y1W1X2F7G1E6F1D3D4B0K5K7I3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">54. 여성의 경제활동 촉진과 경력단절 예방법 일부개정법률안(신장식 의원 대표발의)(의안번호 2215345)</a><a class="btn_move move" data-target="#head_item54" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item55" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2P5T1U1I0P6G1Q0C1Y1O1Z1J1Z8P4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">55. 성범죄 관련 사회적 비용을 범죄자 개인에게 전액 청구하는 법 도입에 관한 청원(백선영 외 50,985인 국민동의로 제출)(청원번호 2200243)</a><a class="btn_move move" data-target="#head_item55" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시17분)</p><br/><div id="spk_14" class="item55 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;다음은 의사일정 제17항 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안부터 의사일정 제55항 성범죄 관련 사회적 비용을 범죄자 개인에게 전액 청구하는 법 도입에 관한 청원까지 38건의 법률안과 1건의 청원을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;안건의 상세한 내용은 노트북 단말기를 통해 확인해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;법률안 등에 대한 제안설명은 단말기 자료로 대체하였습니다.</span><br/><span class="spk_sub" id="spk_sub14-4"><div class="taR">(제안설명서 및 취지설명서는 부록에 실음)</div></span><span class="spk_sub" id="spk_sub14-5">&nbsp;다음은 수석전문위원의 검토보고 순서입니다마는 검토보고서를 사전에 위원님들께 배부하여 드렸으므로 효율적인 회의 진행을 위하여 검토보고는 서면으로 대체하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-6"><div class="taR">(검토보고서는 부록으로 보존함)</div></span><span class="spk_sub" id="spk_sub14-7">&nbsp;그러면 다음은 상정된 법안에 대한 위원님들의 대체토론 순서입니다. 대체토론은 간사위원님들 간의 합의에 따라 원하시는 위원님들만 발언하시는 것으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-8">&nbsp;발언 시간은 필요에 따라서 우선 1인당 3분을 드리도록 하겠습니다. 발언 시간은 답변이 포함된다는 것을 숙지하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub14-9">&nbsp;정춘생 위원님 기다려 주셔서 감사합니다. 하십시오.</span><br/></div></div></div><div id="spk_15" class="item55 speaker spk_mem" data-mem_id="6855" data-name="정춘생" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">정춘생 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/69ac62e637b447b6a7ada23613cb4193.jpg" alt="정춘생"></span><span class="txt"><strong class="name">정춘생</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;기회를 주셔서 감사합니다. 제가 행정안전위원회하고 동시에 하다 보니까 시기를 좀 놓쳤는데요. 그래도 말씀은 좀 드려야 될 것 같아서, 위안부 피해자 보호법 관련해서요.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;소위에서 굉장히 어렵게 어렵게 논의가 돼서 처리된 부분에 대해서 저는 적극적으로 환영을 합니다. 하지만 아쉬운 부분이 있어서 그 부분은 명확히 말씀을 드리고 이 부분도 나중에 다시 개정이 필요하다 그렇게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;명예훼손 관련해서 금지조항은 들어갔지만 그에 따른 처벌규정은 빠졌습니다. 처벌규정이 없으면 실효성이 없다는 것 장관님께서 너무너무 잘 아실 거라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;그래서 허위사실 유포 금지에 대해서는 처벌규정이 있고요. 그리고 명예훼손 관련해서는 형법에서도 처벌규정이 함께 담겨 있습니다. 그것은 범죄에 대한 정확한 처벌을 하기 위해서 그리고 재발 방지를 위해서도 필요한 부분인데 이 부분이 빠져 있는 부분이 굉장히 유감입니다. 추후에 논의해서 적극적으로 반영이 됐으면 좋겠다는 의견 말씀드리겠습니다.</span><br/></div></div></div><div id="spk_16" class="item55 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;장관님……</span><br/></div></div></div><div id="spk_17" class="item55 speaker spk_mem" data-mem_id="6855" data-name="정춘생" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">정춘생 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/69ac62e637b447b6a7ada23613cb4193.jpg" alt="정춘생"></span><span class="txt"><strong class="name">정춘생</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;한 가지만……</span><br/></div></div></div><div id="spk_18" class="item55 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;예, 좀 더 하십시오.</span><br/></div></div></div><div id="spk_19" class="item55 speaker spk_mem" data-mem_id="0" data-name="원민경" data-pos="성평등가족부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">성평등가족부장관 원민경 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="원민경"></span><span class="txt"><span class="position">성평등가족부장관</span><strong class="name">원민경</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;저는 이번의 이 법 개정안의 취지에 맞춰서 향후에 법원에서도 적극적 판단으로 더 이상 위안부 피해자분들의 명예가 훼손되는 일이 없어야 될 것이라고 보고 있습니다. 그리고 위원님 말씀해 주신 어떤 보완적인 입법은 저희도 추가로 더 노력하겠습니다.</span><br/></div></div></div><div id="spk_20" class="item55 speaker spk_mem" data-mem_id="6855" data-name="정춘생" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">정춘생 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/69ac62e637b447b6a7ada23613cb4193.jpg" alt="정춘생"></span><span class="txt"><strong class="name">정춘생</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;적극적으로 해 주시면 좋겠고요.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;한 가지만 더 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;지금 교제폭력 관련돼서 성평등가족부하고 관계 부처하고 논의가 진행되고 있는 걸로 알고 있습니다. 그리고 법무부도 입장을 정리해서 곧 입법하겠다 그런 계획인 걸로 알고 있는데요. 그런데 교제폭력 관련돼서는 가정폭력 처벌법 전부개정안으로 나간 법률이 있고 스토킹범죄 처벌법에 규율해서 나간 법률이 있고요. 그리고 교제폭력 처벌법 별도의 법으로 제정안으로 나간 법률이 있습니다. 그런데 법무부의 입장은 성평등가족부의 의견이 반영됐는지 안 됐는지 모르겠으나 스토킹범죄 처벌법 개정안으로 추진한다고 합니다.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;그런데 이 부분은 이렇게 추진하게 되면 가정폭력 처벌법에 규율해서 많은 포괄적인 내용들을 담고 있는데 그런 부분이 빠지지 않을까, 예를 들어서 상담조건부 기소유예제도라든가 이런 것들이 반영됩니까? 그 폐지하는 부분이 반영됩니까?</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;왜냐하면 상담조건으로 해서 기소유예를 했더니 상담받는 그 기간에 살해됐어요. 그러니까 이런 사례들을 아시고 주무 부처에서는 적극적인 의견을 주셔야 됩니다. 그리고 여성의전화 등 여성단체에서는 가정폭력 처벌법 전부개정안으로 하는 것이 맞다 이런 의견들을 주고 계시거든요.</span><br/><span class="spk_sub" id="spk_sub20-6">&nbsp;그러니까 본 의원이 낸 법안대로 해야 된다 이런 의미가 아닙니다. 그러니까 그동안 문제되어 왔던 이런 것들이 충분하게 담길 수 있도록 법무부와 보다 더 적극적으로 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item55 speaker spk_mem" data-mem_id="0" data-name="원민경" data-pos="성평등가족부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">성평등가족부장관 원민경 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="원민경"></span><span class="txt"><span class="position">성평등가족부장관</span><strong class="name">원민경</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;예, 알겠습니다, 위원님.</span><br/></div></div></div><div id="spk_22" class="item55 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;서영교 위원님 발언하시겠습니까?</span><br/></div></div></div><div id="spk_23" class="item55 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;저도 같은 내용인데요. 저희가 고맙습니다. 그래도 우리 성평등가족위에서 위안부 피해자 보호법을 통과시켜 주셨습니다. 아쉬운 측면이 있지요. 아쉬운 측면은 또다시 채워 나갔으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;이제 시작입니다. 위안부 할머니들을 매춘이라고 한 그자들 꼭 처벌해야 합니다. 명예훼손을 떠나서 허위사실로 5년짜리 징역 때려야 합니다.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;지금 대통령께서 인면수심이다, 얼굴은 사람인데 그 말하는 품새를 보니 짐승이다라고 이야기하셨습니다. 그랬더니 그자들이 다시 대통령을 고발했다고 합니다. 참으로 황당무계한데요. 청와대에 몰려간 이자들에 대해서 저희들이 꼭 법적조치 할 수 있도록 이 법안이 빠르게 통과되어야 합니다.</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;여기에 항상 문제가 됐던 김병헌이라고 하는 자 그리고 류석춘이라고 하는 연대 교수, 이자는 정대협이 위안부 할머니들에게 허위 증언을 강요했다는 발언으로 유죄를 받았어요. 그리고 이영훈 이 사람은 ‘일제하에는 그들을 가리켜 창기라고 했어요. 영어로는 prostitute(창녀)다. 이게 역사적 사실이에요’라고 말을 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-6">&nbsp;도대체 일본 사람인지, 그것을 넘어서 너무 험한 이야기들을 하는 자들에 대해서 법적조치 되어야 하고 그리고 5년짜리 징역 때려 나가야 된다 이렇게 생각하는데요.</span><br/><span class="spk_sub" id="spk_sub23-7">&nbsp;대한민국의 역사 우리가 보듬어야 하고요. 말씀처럼 소녀상에 대해서도 그래도 여야가 같이 공공조형물로 좀 더 조치하겠다라고 하는 데 의미를 두지만 소녀상에 매춘이라고 쓰여 있는 그 글씨를 볼 때마다 가슴이 아픕니다. 이게 우리가 상처가 돼요. 그리고 소녀상 목에 쇠사슬을 감아 놨는데 그냥 소녀상인데 우리 목에 쇠사슬이 감긴 것 같아요. 그래서 참을 수가 없어요. 잠을 잘 수가 없어요.</span><br/><span class="spk_sub" id="spk_sub23-8">&nbsp;저는 이인선 위원장님과 조은희 간사님 애써 주셔서 감사드리고 우리 위원님들께 애써 주셔서 감사드리고 그렇지만 아직 부족한 부분을 마저 더 넣어서 통과시켜야 된다 이렇게 말씀드리겠습니다. 그래서 이 자리를 빌려서 또한 애써 주심에 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub23-9">&nbsp;그리고 김한규 간사님 하신다고 하더니 이렇게 해 주셔서, 우리 위원님들께 너무 고맙습니다. 더 채워 나가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-10">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_24" class="item55 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;다른 위원님 발언이 없으시면, 지금 다들 마음이 막 급하신 상황이라서 오늘은 대체토론을 이만하면 나름대로…… 긴 의견이 있은 걸로 하고 대체토론을 끝내도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;더 이상 발언하실 위원이 안 계시면 이것으로 대체토론을 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;오늘 상정된 법률안은 보다 심도 있는 심사를 위해서 법안심사소위원회에 회부하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-5">&nbsp;서면질의하신 위원님이 계십니까?</span><br/><span class="spk_sub" id="spk_sub24-6">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub24-7">&nbsp;오늘은 여러 가지 굉장히 긴급한 상황인데 저희가 무리하게 개회를 하기는 했습니다마는 바쁜 가운데 회의에 참석해 주신 위원님들께 감사의 말씀을 드리고.</span><br/><span class="spk_sub" id="spk_sub24-8">&nbsp;원민경 장관님을 비롯한 정부 관계자들, 수석전문위원을 비롯한 위원회 직원, 보좌진 여러분 수고 많으셨고요.</span><br/><span class="spk_sub" id="spk_sub24-9">&nbsp;특히 어제 법안소위에서 위원님들 수고 많으셨고 스드메법 공청회까지 다 마치느라고 하루 종일 법안소위에 매여 있는 걸 보면서 너무 감사하다는 생각을 했습니다. 일단 이렇게 한발, 한발 가면서 우리가 법안을 서로 보도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-10">&nbsp;이상으로 오늘 회의를 모두 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-11">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(11시25분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(14인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank"><span class="name lts3 ">박홍배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank"><span class="name lts3 ">서범수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank"><span class="name lts3 ">서영교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEDALHEE" target="_blank"><span class="name lts3 ">이달희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYEONHEE" target="_blank"><span class="name lts3 ">이연희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank"><span class="name lts3 ">이인선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LeeJuhee" target="_blank"><span class="name lts3 ">이주희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank"><span class="name lts3 ">장철민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank"><span class="name lts3 ">정춘생</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank"><span class="name lts3 ">조은희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAIHYUNIL" target="_blank"><span class="name lts3 ">채현일</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank"><span class="name lts3 ">서명옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이옥순</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 김태규</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>성평등가족부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 원민경</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 최은주</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">성평등정책실장</span></span><span class="name lts3"> 이경숙</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">청소년가족정책실장</span></span><span class="name lts3"> 최성지</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 김권영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">성평등정책관</span></span><span class="name lts3"> 조민경</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">안전인권정책관</span></span><span class="name lts3"> 김가로</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">가족정책관직무대리</span></span><span class="name lts3"> 이윤아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 10. 김준혁 의원 대표발의)(의안번호 2214080)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">11월 11일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 20. 김남희 의원 대표발의)(의안번호 2214445)</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 20. 김남희 의원 대표발의)(의안번호 2214448)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 21일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 김한규 의원 대표발의)(의안번호 2214640)</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 이주희 의원 대표발의)(의안번호 2214642)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 28. 조계원 의원 대표발의)(의안번호 2214706)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 1일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 11. 이주희 의원 대표발의)(의안번호 2215163)</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 11. 민형배 의원 대표발의)(의안번호 2215165)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 12월 12일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 12. 정점식 의원 대표발의)(의안번호 2215214)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 15일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 15. 김한규 의원 대표발의)(의안번호 2215248)</div></div><div class="con"><p class="tit_sm"><strong>여성폭력방지기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 15. 김한규 의원 대표발의)(의안번호 2215250)</div></div><div class="con"><p class="tit_sm"><strong>다문화가족지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 15. 김한규 의원 대표발의)(의안번호 2215251)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 정춘생 의원 대표발의)(의안번호 2215339)</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 정춘생 의원 대표발의)(의안번호 2215340)</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 김재섭 의원 대표발의)(의안번호 2215341)</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 이주희 의원 대표발의)(의안번호 2215342)</div></div><div class="con"><p class="tit_sm"><strong>여성의 경제활동 촉진과 경력단절 예방법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 신장식 의원 대표발의)(의안번호 2215345)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 12월 18일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 26. 이주희 의원 대표발의)(의안번호 2215645)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 29일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>학교 밖 청소년 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 이건태 의원 대표발의)(의안번호 2215740)</div></div><div class="con"><p class="tit_sm"><strong>일제하 일본군위안부 피해자에 대한 보호·지원 및 기념사업 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서미화 의원 대표발의)(의안번호 2215746)</div></div><div class="con"><p class="tit_sm"><strong>건강가정기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 전진숙 의원 대표발의)(의안번호 2215759)</div></div><div class="con"><p class="tit_sm"><strong>건강가정기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 김기웅 의원 대표발의)(의안번호 2215774)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 12월 31일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 이달희 의원 대표발의)(의안번호 2215846)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 6일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 12. 김기현 의원 대표발의)(의안번호 2215960)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 13일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 13. 김남희 의원 대표발의)(의안번호 2216016)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 14일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가정폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 15. 김선민 의원 대표발의)(의안번호 2216066)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양육비 이행확보 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 16. 이연희 의원 대표발의)(의안번호 2216085)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 19. 김재섭 의원 대표발의)(의안번호 2216134)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양육비 이행확보 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 28. 민형배 의원 대표발의)(의안번호 2216390)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 29일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 2. 차지호 의원 대표발의)(의안번호 2216504)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 3일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>돌봄자 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 손솔 의원 대표발의)(의안번호 2215557)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2026년 1월 2일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>남녀고용평등과 일·가정 양립 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 김영진 의원 대표발의)(의안번호 2215699)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 30일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가정폭력범죄의 처벌 등에 관한 특례법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서명옥 의원 대표발의)(의안번호 2215750)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 31일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>성폭력 2차가해 방지를 위한 성폭력범죄의 처벌 등에 관한 특별법 개정에 관한 청원</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 18. 이수아 외 51,780인 국민동의로 제출)(청원번호 2200269)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">1월 19일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>대구경북특별시 설치 및 한반도 신경제 중심축 조성을 위한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 30. 구자근 의원 대표발의)(의안번호 2216468)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 2일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="13.950844985845414%"><col width="52.82019387492494%"><col width="16.614480569614823%"><col width="16.614480569614823%"></colgroup><thead><tr><th scope="col">공포번호</th><th scope="col">행정입법명</th><th scope="col">공포일자</th><th scope="col">구분</th></tr></thead><tr><td>제35850호<br/></td><td>청소년복지 지원법 시행령 일부개정령<br/></td><td>2025. 11. 18.<br/></td><td>시행령<br/></td></tr><tr><td>제35851호<br/></td><td>학교 밖 청소년 지원에 관한 법률 시행령 일부개정령안<br/></td><td>2025. 11. 18.<br/></td><td>시행령<br/></td></tr><tr><td>제4호<br/></td><td>성평등가족부 직제 시행규칙 일부개정령<br/></td><td>2026. 1. 6.<br/></td><td>시행규칙<br/></td></tr><tr><td>제5호<br/></td><td>성매매방지 및 피해자보호 등에 관한 법 시행규칙 일부개정령<br/></td><td>2026. 1. 13.<br/></td><td>시행규칙<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯보고서 제출</strong></p><div class="con"><p class="tit_sm"><strong>2025회계연도 4분기 일반회계 세출예산 전용 이체 및 기금운용계획 변경 명세서</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 27. 성평등가족부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>2024회계연도 결산 심사결과 시정요구사항에 대한 조치결과</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 3. 정부 제출)</div></div><p class="tit"><span class="num"></span><strong>◯계획서 제출</strong></p><div class="con"><p class="tit_sm"><strong>2026년도 법률안 국회 제출계획</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 28. 정부 제출)</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56237;
+			const class_id = 2;
+			const confer_num = "N053955";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640741903" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640741903"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640741903"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640741903"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

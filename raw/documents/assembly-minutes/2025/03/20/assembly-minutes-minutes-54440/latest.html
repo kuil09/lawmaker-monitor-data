@@ -1,0 +1,698 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=54440" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제423회 (임시회) 제1차 보건복지위원회(법안심사제2소위원회)</strong><span class="date">(2025.03.20.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200176)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200189)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200334)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200379)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 국민연금법 일부개정법률안(성일종 의원 대표발의)(의안번호 2200380)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 국민연금법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200609)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 국민연금법 일부개정법률안(서영석 의원 대표발의)(의안번호 2200808)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200952)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201056)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 국민연금법 일부개정법률안(김예지 의원 대표발의)(의안번호 2201093)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201250)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201505)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 국민연금법 일부개정법률안(김미애 의원 대표발의)(의안번호 2203723)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 국민연금법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204609)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 국민연금법 일부개정법률안(주호영 의원 대표발의)(의안번호 2204625)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2204830)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 국민연금법 일부개정법률안(김남희 의원 대표발의)(의안번호 2205233)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 국민연금법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205437)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2205785)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2206006)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2207030)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 국민연금법 일부개정법률안(안상훈 의원 대표발의)(의안번호 2207525)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 국민연금법 일부개정법률안(김윤 의원 대표발의)(의안번호 2207563)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2207994)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208014)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김미애 소위원장 (부산 해운대구을)"> 
+							김미애 소위원장 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김선민 위원 (비례대표)"> 
+							김선민 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="서미화 위원 (비례대표)"> 
+							서미화 위원 (비례대표)
+						</option>
+					
+					
+						<option value="이지민 수석전문위원">이지민 수석전문위원</option>
+					
+						<option value="이기일 보건복지부제1차관">이기일 보건복지부제1차관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(3명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6589" data-name="김미애" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">김미애</span>
+												<span class="position">소위원장</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6783" data-name="김선민" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">김선민</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6772" data-name="서미화" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">서미화</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="이지민" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">이지민</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="이기일" data-pos="보건복지부제1차관"> 
+											<label for="spk_attend1">
+												<span class="name">이기일</span>
+												<span class="position">보건복지부제1차관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=54440&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제423회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>보건복지위원회회의록</h1><p class="tit_sm">(법안심사제2소위원회)</p></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 3월 20일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">보건복지위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200176)</li><li><span class="num">2.</span> 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200189)</li><li><span class="num">3.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200334)</li><li><span class="num">4.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200379)</li><li><span class="num">5.</span> 국민연금법 일부개정법률안(성일종 의원 대표발의)(의안번호 2200380)</li><li><span class="num">6.</span> 국민연금법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200609)</li><li><span class="num">7.</span> 국민연금법 일부개정법률안(서영석 의원 대표발의)(의안번호 2200808)</li><li><span class="num">8.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200952)</li><li><span class="num">9.</span> 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201056)</li><li><span class="num">10.</span> 국민연금법 일부개정법률안(김예지 의원 대표발의)(의안번호 2201093)</li><li><span class="num">11.</span> 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201250)</li><li><span class="num">12.</span> 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201505)</li><li><span class="num">13.</span> 국민연금법 일부개정법률안(김미애 의원 대표발의)(의안번호 2203723)</li><li><span class="num">14.</span> 국민연금법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204609)</li><li><span class="num">15.</span> 국민연금법 일부개정법률안(주호영 의원 대표발의)(의안번호 2204625)</li><li><span class="num">16.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2204830)</li><li><span class="num">17.</span> 국민연금법 일부개정법률안(김남희 의원 대표발의)(의안번호 2205233)</li><li><span class="num">18.</span> 국민연금법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205437)</li><li><span class="num">19.</span> 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2205785)</li><li><span class="num">20.</span> 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2206006)</li><li><span class="num">21.</span> 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2207030)</li><li><span class="num">22.</span> 국민연금법 일부개정법률안(안상훈 의원 대표발의)(의안번호 2207525)</li><li><span class="num">23.</span> 국민연금법 일부개정법률안(김윤 의원 대표발의)(의안번호 2207563)</li><li><span class="num">24.</span> 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2207994)</li><li><span class="num">25.</span> 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208014)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200176)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200189)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200334)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200379)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 국민연금법 일부개정법률안(성일종 의원 대표발의)(의안번호 2200380)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 국민연금법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200609)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 국민연금법 일부개정법률안(서영석 의원 대표발의)(의안번호 2200808)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200952)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201056)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 국민연금법 일부개정법률안(김예지 의원 대표발의)(의안번호 2201093)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201250)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201505)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 국민연금법 일부개정법률안(김미애 의원 대표발의)(의안번호 2203723)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 국민연금법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204609)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 국민연금법 일부개정법률안(주호영 의원 대표발의)(의안번호 2204625)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2204830)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 국민연금법 일부개정법률안(김남희 의원 대표발의)(의안번호 2205233)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 국민연금법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205437)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2205785)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2206006)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2207030)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 국민연금법 일부개정법률안(안상훈 의원 대표발의)(의안번호 2207525)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 국민연금법 일부개정법률안(김윤 의원 대표발의)(의안번호 2207563)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2207994)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">25.</span> 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208014)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시07분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제423회 국회(임시회) 제1차 법안심사제2소위원회를 개회하겠습니다. </span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;법안심사에 들어가도록 하겠습니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2N4L0T5S3T0R2Z0A5Y3X2T1S3Q3R7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200176)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2W4U0V5U3S0A2Z0Y5Z4X2T2S9Q1R4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 국민연금법 일부개정법률안(남인순 의원 대표발의)(의안번호 2200189)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2J4J0I6I0H5O1P3N4O6M3N3M8A2B3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200334)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2P4N0O6M0U5U1T3T3S5S2Q7Z1Z3X5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200379)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z4V0U6U0T3S0A9Y2Z2Y3X6F6D1E7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 국민연금법 일부개정법률안(성일종 의원 대표발의)(의안번호 2200380)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2K4I0R6P1O8N1V4W4V2T3R5S4B4Z8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 국민연금법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200609)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2D4L0L6K1K1I1H5I0P7Q4O7P8N5O2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 국민연금법 일부개정법률안(서영석 의원 대표발의)(의안번호 2200808)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S4R0Z6X1W9X1V7D3C0B5B5A8W9U6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2200952)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2F4E0C6D2C5K1J3H5I6H1P8N1M6L8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201056)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Z4A0Y6X2W7E1F3D3C3A1W9V4W0V0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 국민연금법 일부개정법률안(김예지 의원 대표발의)(의안번호 2201093)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F4E0L6K2L5K1J3R5Q6O5N8O8W0K0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 국민연금법 일부개정법률안(한정애 의원 대표발의)(의안번호 2201250)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2C4B0B7Z0A3Y1Z2H2F1G1E2F9D2E9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201505)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2K4R0S8Q3P0P1N1O2W2X5V2V8T3S7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 국민연금법 일부개정법률안(김미애 의원 대표발의)(의안번호 2203723)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2I4H1Q0O0N2T1B0A2Y7Z0Y0G5F5E4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 국민연금법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204609)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2K4J1H0G0C2B0A9A5Z2H5G2E9F1E1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 국민연금법 일부개정법률안(주호영 의원 대표발의)(의안번호 2204625)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U4V0D9D1C0A1A4Z2Z8V0W1U5U3T8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 국민연금법 일부개정법률안(김선민 의원 대표발의)(의안번호 2204830)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z4X1Y0G0F4D0C9K1L6K5I5H7P0O8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 국민연금법 일부개정법률안(김남희 의원 대표발의)(의안번호 2205233)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z4A1Z0H3G1N1M3K4T5R1Q1P0P9Y0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 국민연금법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205437)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2T4R1Q0P0Q8L1K4J3H3I5R8P3O8M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 국민연금법 일부개정법률안(이수진 의원 대표발의)(의안번호 2205785)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B4Q1R1P2Q7O1P1N1N3V5U4U8T3U4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2206006)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S4Q1P2P2X6Y1W5X4V7U4U5C3C1A7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 국민연금법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2207030)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2B4A1Y2Z2H0H1F8G2E3F2D1E7M4K3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 국민연금법 일부개정법률안(안상훈 의원 대표발의)(의안번호 2207525)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Q5R0P1P1O4P1W8X0V6W2U8S4T2B3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 국민연금법 일부개정법률안(김윤 의원 대표발의)(의안번호 2207563)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H5H0G2G0F5N1N6L1M7L2L7U6T1T6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2207994)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P5N0P2N0N5L1M6I2G0H0F3G0E7F8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 국민연금법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208014)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item25 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정 제1항부터 제25항까지 이상 25건의 국민연금법 일부개정법률안을 일괄하여 상정합니다. </span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;심사 대상 안건의 명칭 및 순서는 배부해 드린 의사일정을 참고해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;이기일 1차관님 수고하여 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;의사일정 제1항부터 제25항까지 25건의 국민연금법 일부개정법률안을 심사하겠습니다. </span><br/><span class="spk_sub" id="spk_sub3-5">&nbsp;수석전문위원 보고해 주십시오. </span><br/></div></div></div><div id="spk_4" class="item25 speaker spk_mem" data-mem_id="0" data-name="이지민" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">수석전문위원 이지민 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이지민"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">이지민</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;대안 조문자료를 봐 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;오늘 오전 연금개혁 관련 합의문을 토대로 정리한 대안 조문 보고드리겠습니다. </span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;먼저 안 제3조의2는 국가의 지급보장을 명문화한 것입니다. </span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;안 제18조는 군복무크레딧 추가 산입 기간을 현행 6개월에서 12개월 내 실제 복무기간으로 확대하는 내용입니다. </span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;안 제19조는 출산크레딧 관련하여 첫째 자녀의 경우에도 12개월을 추가 산입하도록 하고 현행 50개월인 추가 산입 기간 상한을 폐지하려는 것입니다. </span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;2쪽의 중간 부분입니다. </span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;안 제51조는 소득대체율을 43%로 인상하려는 것입니다. </span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;다음, 3쪽입니다. </span><br/><span class="spk_sub" id="spk_sub4-9">&nbsp;88조는 보험료율을 13%로 인상하는 것인데 안 부칙 제4조에 따라 매년 0.5%p씩 8년간 인상하게 됩니다. </span><br/><span class="spk_sub" id="spk_sub4-10">&nbsp;안 제100조의4는 저소득 지역가입자 연금보험료 지원을 확대하기 위하여 납부 재개 요건을 삭제하려는 것입니다. </span><br/><span class="spk_sub" id="spk_sub4-11">&nbsp;다음, 5쪽입니다. </span><br/><span class="spk_sub" id="spk_sub4-12">&nbsp;부칙입니다. </span><br/><span class="spk_sub" id="spk_sub4-13">&nbsp;시행일은 2026년부터이고 현재 군 복무 중인 경우에도 개정 규정을 적용하기 위하여 군복무크레딧은 이 법 시행 이후 복무기간을 마친 사람부터 적용하도록 적용례를 두었습니다. </span><br/><span class="spk_sub" id="spk_sub4-14">&nbsp;출산크레딧은 이 법 시행 이후 첫째 자녀를 얻은 사람부터 개정 규정을 적용하도록 하되 종전 규정 적용을 받는 사람의 경우에도 이 법 시행 이후 자녀를 얻는 경우에는 50개월의 상한을 적용하지 않도록 경과조치를 두었습니다. </span><br/><span class="spk_sub" id="spk_sub4-15">&nbsp;이상입니다. </span><br/></div></div></div><div id="spk_5" class="item25 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;정부 측 의견 듣겠습니다. </span><br/></div></div></div><div id="spk_6" class="item25 speaker spk_mem" data-mem_id="0" data-name="이기일" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">보건복지부제1차관 이기일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이기일"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이기일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;수적전문위원 대안에 동의합니다. </span><br/></div></div></div><div id="spk_7" class="item25 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;질의하실 위원님 계십니까? </span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;김선민 위원님. </span><br/></div></div></div><div id="spk_8" class="item25 speaker spk_mem" data-mem_id="6783" data-name="김선민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">김선민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ae483328582e4add9e57312dfdd896a0.jpg" alt="김선민"></span><span class="txt"><strong class="name">김선민</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;우선 18년 만에 연금개혁에 여야가 합의를 했다는 점에서 의미가 있을 것 같습니다. 하지만 저는 같이 법안을 발의했던 의원으로서 매우 아쉬움이 큽니다. 애초에 21대 국회에서 국민연금특별위원회가 1년 반 가까이 지속이 되었고 우리나라 역사상 매우 어렵고도 정석인 국민연금 공론화위원회를 개최해서, 운영을 해서 국민들의 합의를 이끌어 낸 적이 있습니다. </span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;당시 국민들은 처음에 예상했던 것과 다르게, 우려와도 다르게 더 내고 더 받자는 안에 찬성을 많이 보내 주셨습니다. 그것이 보험료율 13% 그리고 소득대체율 50% 안이었습니다. </span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;하지만 그사이에 논의를 거듭하면서 지금 현재 소득대체율인 41.5%에서 그냥 1.5% 더 되는 43%에 합의하기에 이른 것 같습니다. 국민들이 원하는 소득대체율인 50%에는 턱없이 미치지 못하고 있습니다. 또 중간에 자동조정장치라는 것이 논의가 된 것도 굉장히 가슴을 철렁하게 만든 그런 우려 사항이었습니다. </span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;또 현재 이 안으로 가게 되면 미래세대는 어떻게 될지 모르지만 당장 저소득 노인들을 위한 보강 정책은 매우 절실한 상황입니다. 이 구조상 국민연금은 실제로 양질의 노동환경에서 근무하지 못한 그런 저소득 노인들을 잘 커버하기에는 부족한 정책이고 특히 소득대체율이 올라간다 하더라도 충분한 노동 기간을 담보해야 하고 그리고 미래세대가 되어야지만 올라간다는 점에서 현세대 저소득 노인을 위한 기초연금이 반드시 뒷받침되어야 할 것 같습니다. 그렇게 해야만 이번 개혁의 의미가, 조금이나마 진전한 의미가 빛을 발할 것 같습니다. </span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;해서 앞으로 어느 단위에서든지 국민연금에 대한 지속적인 논의를 할 것을 촉구해야 할 것 같습니다. 참 마음이 착잡한 그런 국민연금 개혁안이라서 어떠한 안을 내기가 참 어려운 상황임을 좀 이해해 주시기를 부탁드립니다. </span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;국민연금이라는 것이 고령화 시대에 가장 필수적인 노후소득보장 대책인데 이것이 충분히 노후소득을 보장하는 쪽으로 개선되지 못하는 것 같아서 마음이 매우 착잡합니다. 지속적인 논의를 필요로 한다고 위원장님께 말씀드립니다. </span><br/></div></div></div><div id="spk_9" class="item25 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;다른 위원님 계십니까? </span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;서미화 위원님 말씀해 주세요. </span><br/></div></div></div><div id="spk_10" class="item25 speaker spk_mem" data-mem_id="6772" data-name="서미화" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">서미화 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0694f551f21c40b2a4bbccd2e90ce40c.jpg" alt="서미화"></span><span class="txt"><strong class="name">서미화</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;연금개혁 협의를 이루기까지 우리 여야 위원님들 또 관계부처 공무원들 정말 너무 많이 수고를 하셨다는 말씀 드리고요. </span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;그렇지만 김선민 위원님께서도 말씀하셨는데 국민 여러분들 눈높이에서 봤을 때는 다소 미흡하고 좀 아쉬운 점이 있는 것 같습니다. 그렇지만 앞으로 연금특위에서 좀 더 논의하고 정말 이번 개정안에 미치지 못한 부분들을 좀 더 고려하면서 연금개혁특위에서 계속적인 논의가 될 수 있기를 바랍니다. </span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;수고 많이 하셨다는 말씀 드립니다. </span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;이상입니다. </span><br/></div></div></div><div id="spk_11" class="item25 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;다른 위원님들 안 계십니까? </span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;그러면 저도 한 말씀을 드려야 되겠습니다. </span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;위원님들 정말 수고하셨습니다. </span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;지난 소위 때 안건을 그래도 1차로 어느 정도 심사를 한 덕분에 추후에 지도부를 비롯해서 우리 위원장, 양당 간사가 논의할 수 있었고 그 과정에서 이기일 차관님을 비롯한 복지부의 연금 관련한 연금실장, 정책국장 여러분 모두 모두 고생하셨습니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;그리고 사실은 우리 모두가 만족할 수 있는 게 없지요. 세대도 다르고 또 생각하는 바도 다르고 또 이것을 보니까 나름의 계산하는 방식도 또 다른 것 같습니다. 그러나 정치라는 것은 그 모두를 만족하기 어렵고 그럴 때는 조금이라도 지금보다 나은 방향으로 한 발자국이라도 가는 겁니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;그리고 모수개혁 중심으로 지금 오늘 소위를 통과하지만 구조개혁은 오늘 합의문 2항에 보면 구체적으로 설시되어 있고 또 2의 5항에 보면 논의 내용들이 뭔지에 대해서 설명이 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-8">&nbsp;자동조정장치, 즉 재정안정화 조치를 비롯한 4대 연금 등을 개혁 논의 방안으로 설시를 해 놓았기 때문에 이런 부분도 앞으로 충분히 구조개혁이 이루어져서 오늘 조금 미흡하다고 여겨지는 부분도 개선이 될 것으로 기대합니다. 그 과정에서도 존경하는 우리 소위원님들 정말 관심 갖고 수고해 주시길 바라고 함께하신 모든 분들 정말 고생하셨습니다.</span><br/><span class="spk_sub" id="spk_sub11-9">&nbsp;추가로 없으시지요?</span><br/><span class="spk_sub" id="spk_sub11-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub11-11">&nbsp;그러면 의사일정 제1항부터 제14항까지, 제16항부터 제25항까지 이상 24건의 국민연금법 일부개정법률안은 이를 통합 조정하고 위원님들과 전문위원의 의견을 반영하여 위원회 대안으로 채택하며 본회의에 부의하지 않는 것으로 의결하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub11-12">&nbsp;이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub11-13">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub11-14">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub11-15">&nbsp;이기일 1차관님, 그 표정을 감출 수가 없네요.</span><br/><span class="spk_sub" id="spk_sub11-16">&nbsp;(웃음소리)</span><br/><span class="spk_sub" id="spk_sub11-17">&nbsp;연금개혁 배지도 달고 다니시는데 지금도 달고 계십니까?</span><br/></div></div></div><div id="spk_12" class="item25 speaker spk_mem" data-mem_id="0" data-name="이기일" data-pos="보건복지부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">보건복지부제1차관 이기일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이기일"></span><span class="txt"><span class="position">보건복지부제1차관</span><strong class="name">이기일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;여기 오른쪽에 달았습니다.</span><br/></div></div></div><div id="spk_13" class="item25 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;수고하셨습니다. 지난 크리스마스 때 안 되고 지금 벚꽃이 필 때 됐습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;이상으로 오늘 법안심사를 모두 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;오늘 의결한 법안의 체계와 자구 정리는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;위원님 여러분 수고 많이 하셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(14시17분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(10인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank"><span class="name lts3 ">김선민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYEAJI" target="_blank"><span class="name lts3 ">김예지</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHANGJONGTAE" target="_blank"><span class="name lts3 ">장종태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank"><span class="name lts3 ">한지아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이지민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 정경윤</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 오세일</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>보건복지부</p><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 이기일</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">연금정책관</span></span><span class="name lts3"> 진영주</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 54440;
+			const class_id = 2;
+			const confer_num = "054855";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641117780" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641117780"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641117780"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641117780"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,786 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56050" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제430회 (임시회) 제8차 12.29여객기참사진상규명과피해자및유가족의피해구제를위한특별위원회</strong><span class="date">(2025.12.30.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(백선희 의원 대표발의)(의안번호 2212170)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(손명수 의원 대표발의)(의안번호 2215147)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동결과보고서 채택의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+			<div class="list list3">
+				<a href="#pop_appendix" class="tit btn_pop" id="btn_apdinx" >부록</a>
+			</div>
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="권영진 위원장 (대구 달서구병)"> 
+							권영진 위원장 (대구 달서구병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="손명수 위원 (경기 용인시을)"> 
+							손명수 위원 (경기 용인시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김미애 위원 (부산 해운대구을)"> 
+							김미애 위원 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김은혜 위원 (경기 성남시분당구을)"> 
+							김은혜 위원 (경기 성남시분당구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="권향엽 위원 (전남 순천시광양시곡성군구례군을)"> 
+							권향엽 위원 (전남 순천시광양시곡성군구례군을)
+						</option>
+					
+					
+						<option value="김윤덕 국토교통부장관">김윤덕 국토교통부장관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(5명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6743" data-name="권영진" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">권영진</span>
+												<span class="position">위원장</span>
+												<span class="area">(대구 달서구병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6831" data-name="손명수" data-pos="소위원장"> 
+											<label for="spk_mem1">												
+												<span class="name">손명수</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 용인시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6589" data-name="김미애" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김미애</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6761" data-name="김은혜" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">김은혜</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 성남시분당구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6828" data-name="권향엽" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">권향엽</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 순천시광양시곡성군구례군을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"> 
+											<label for="spk_attend0">
+												<span class="name">김윤덕</span>
+												<span class="position">국토교통부장관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56050&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제430회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>12.29여객기참사진상규명과피해자및유가족의피해구제를위한특별위원회회의록</h1></div></div><p class="num">제8호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 12월 30일(화)</p></li><li><div class="sbj lts2">장소</div><p class="con">국토교통위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(백선희 의원 대표발의)(의안번호 2212170)</li><li><span class="num">2.</span> 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(손명수 의원 대표발의)(의안번호 2215147)</li><li><span class="num">3.</span> 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(대안)</li><li><span class="num">4.</span> 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동결과보고서 채택의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(백선희 의원 대표발의)(의안번호 2212170)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(손명수 의원 대표발의)(의안번호 2215147)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(대안)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동결과보고서 채택의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시05분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제430회 국회(임시회) 제8차 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘 회의는 소위원회에서 의결한 법안을 심사하고 우리 위원회 활동결과보고서를 채택하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T5U0P7Q0O1O1N3L3M3U3U9T1T0S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(백선희 의원 대표발의)(의안번호 2212170)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U5V1D2E0C8C1B3B4Z1I2I9G3H8F8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(손명수 의원 대표발의)(의안번호 2215147)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2C5L1N2M2W4L1N0V3P3B5V3X0L8J7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item3 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일장 제1항부터 제3항까지 총 3건의 법률안을 일괄 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;피해자와 유가족 지원 및 추모사업 지원 소위원회 손명수 소위원장님 나오셔서 소위원회의 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item3 speaker spk_mem" data-mem_id="6831" data-name="손명수" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 손명수 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SONMYOUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f39b502c4f4c92924909bebebd123e.jpg" alt="손명수"></span><span class="txt"><span class="position">소위원장</span><strong class="name">손명수</strong><span class="area">(경기 용인시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;피해자와 유가족 지원 및 추모사업 지원 소위원장 손명수 위원입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;우리 소위원회는 12월 18일 2건의 법률안에 대해 심사를 진행하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;본 의원과 백선희 의원이 각각 대표발의한 2건의 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안은 모두 본회의에 부의하지 아니하기로 하고 이들 내용을 통합 조정한 위원회 대안을 제안하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;대안의 주요 내용은 공무원인 피해자의 신체적·정신적 피해를 치유하기 위한 휴직제도를 보완하기 위해 국가공무원법 등에서 운영되고 있는 공무원의 질병휴직 제도에 대한 특례를 신설하여 질병휴직을 이유로 인사상 불이익한 처우를 하지 못하도록 하고 질병휴직기간을 직무에 종사한 기간으로 보도록 하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;보다 자세한 사항은 배부해 드린 유인물을 참조하여 주시고 우리 소위원회에서 심사보고한 대로 의결해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_5" class="item3 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;다음은 소위원회에서 심사보고한 법률안에 대해 토론하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;의견이 없으시면 토론을 종결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;안건을 의결하기 전에 축조심사 및 비용추계서 첨부 생략을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;먼저 오늘 의결할 일부개정법률안에 대해서는 소위원회에서 심도 있는 심사가 이루어졌으므로 국회법 제58조제5항에 따라 축조심사를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;그리고 오늘 의결할 법률안 중 재정상의 조치를 수반하는 내용이 경미하거나 비용추계를 의뢰하였으나 본회의 부의 전까지 비용추계서가 회신되지 못하는 법률안에 대해서는 비용추계서 첨부를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;그러면 법률안을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;의사일정 제1항부터 제2항까지 이상 2건의 법률안은 각각 본회의에 부의하지 않고 그 내용을 통합 조정한 제3항 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 일부개정법률안(대안)을 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-15">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-16">&nbsp;오늘 의결한 법률안의 체계·자구의 정리와 대안 및 심사보고서 작성 등에 대해서는 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-17">&nbsp;다음은 오늘 의결한 법률안에 대해서 국토교통부장관의 인사말씀을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-18">&nbsp;장관께서 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_6" class="item3 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;존경하는 권영진 위원장님 그리고 여러 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;바쁘신 일정 가운데 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 개정법률안을 심의 의결하여 주신 것에 대하여 감사의 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;이번 법 개정을 통해 유가족 분들께 더욱 실효적인 지원을 드릴 수 있도록 관계기관과 적극 소통하여 법 개정 내용을 충실히 이행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;한편 어제는 12·29 여객기 참사가 발생한 지 1년이 되는 날이었습니다. 여객기 참사의 기억과 아픔을 가진 분들께 다시 한번 깊은 위로의 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;국토부는 항공 안전을 강화하고 국민 신뢰를 회복할 수 있도록 항공안전 혁신 방안을 차질 없이 이행하고 있습니다. 또한 항공·철도사고조사위원회의 국무조정실 이관 필요성에 공감하고 있으며 법 개정 논의에도 적극 참여하고 있습니다. 실제 이관·이전에도 독립적인 사고 조사가 진행될 수 있도록 최선을 다하겠다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;아울러 지난 22일부터 시작된 12.29 여객기 참사 진상규명을 위한 국정조사에도 성실하게 임하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_7" class="item3 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;장관님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;이것으로 소위원회에서 의결된 법률안에 대한 심사를 마치도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" class="tit">4. 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동결과보고서 채택의 건</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시11분)</p><br/><div id="spk_9" class="item4 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;의사일정 제4항 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동결과보고서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;국회법 제44조제6항에 따르면 특별위원회는 활동기간을 종료한 후 15일 이내에 국회운영위원회에 활동결과보고서를 제출하도록 규정하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;활동결과보고서에 대하여 말씀드리면 우리 특별위원회 구성 이후 12·29여객기참사 피해구제 및 지원 등을 위한 특별법 제정 경과를 비롯해 그동안 개최된 회의와 현장방문 등 활동 내용을 중심으로 전문위원실에서 초안을 작성하고 각 의원실에 회람하여 의견을 청취하였습니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;보다 상세한 활동결과보고서 내용은 배부된 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;결과보고서 내용에 대해 의견이 있으신 위원님께서는 말씀하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;특별한 의견 없으십니까?</span><br/><span class="spk_sub" id="spk_sub9-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub9-8">&nbsp;의견이 없으시면 토론을 종결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-9">&nbsp;그러면 활동결과보고서를 채택하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-10">&nbsp;의사일정 제4항 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동결과보고서를 배부해 드린 바와 같이 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub9-11">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub9-12">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub9-13">&nbsp;오늘 채택된 활동결과보고서의 자구정리 등은 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub9-14">&nbsp;오늘 정해진 의사일정은 모두 마쳤습니다만 오늘이 사실상 마지막 회의인 만큼 위원장과 간사위원 간 협의에 따라 희망하시는 위원님들에게 5분간 질의 시간을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-15">&nbsp;희망하시는 위원님들은 손을 들어 주시기 바랍니다.</span><br/></div></div></div><div id="spk_10" class="item4 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;국정조사도 하고, 하다 보니까 다 된 것 같습니다.</span><br/></div></div></div><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;질의하실 위원님 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;김은혜 위원님.</span><br/></div></div></div><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6761" data-name="김은혜" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">김은혜 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2d0fedee640c4683b571177b2f21e1c2.jpg" alt="김은혜"></span><span class="txt"><strong class="name">김은혜</strong><span class="position">위원</span><span class="area">(경기 성남시분당구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;장관님, 저희가 지난 회의 과정에서 국가적 참사로 부부가 동시에 사망해서 자녀가 혼자 남았을 경우 상속세 공제 방안을 마련해야 된다는 국회 차원의 건의를 드린 바가 있었습니다. 그래서 기재부와 국토부가 협의를 해서 이 부분에 대한 유가족분들의 불안과 그리고 이분들의 상처가 더 돋아지지 않도록 한번 살펴봐 주셨으면 했었는데요. 기재부의 답변이 왔었는데 이 부분에 대해서 다른 특례를 운영한 전례가 없다, 그래서 사실상의 거절 의사를 표명을 받았습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;유가족의 의사를 적극적으로 수렴해서 유가족 분들의 의사가 반영될 수 있도록 장관님께 요청을 드렸었는데 이 부분에 대해서는 어떻게 하실 계획이십니까?</span><br/></div></div></div><div id="spk_13" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;그 문제에 대해서는 현재 기재부와 다시 한번 얘기를 해 보도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;다만 동시 사망과 순차 사망에 따른 상속세의 증가 여부가 경우에 따라서는 굉장히 달라질 수 있다는 근거가 조금 있습니다. 그래서 그 근거에 대해서 다시 한번 위원님께도 설명을 드릴 예정이고요. 거기에 대해서 정리가 되면 기재부와 협의를 해 보겠다, 그래서 동시 사망과 순차 사망을 하게 될 경우에 유족들이 좀 더 혜택을 보는 방향으로 가는 원칙은 동의하고 진행 방향을 잡고 있지만 세세한 문제에 가서 생길 수 있는 문제를 다시 한번 논의해 보는 게 필요하다고 생각을 하고 있습니다.</span><br/></div></div></div><div id="spk_14" class="item4 speaker spk_mem" data-mem_id="6761" data-name="김은혜" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">김은혜 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2d0fedee640c4683b571177b2f21e1c2.jpg" alt="김은혜"></span><span class="txt"><strong class="name">김은혜</strong><span class="position">위원</span><span class="area">(경기 성남시분당구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;제가 이해가 잘 안 되는데 즉 저희가 그때 순차 사망이 될 경우 홀로 남겨진 그 자녀가 상속세 부담을 덜 받을 수 있기 때문에 동시 사망으로 일률적으로 하지 말고 순차 사망을 준해서 하되 기재부에서 상속세의 특례를 그럼에도 불구하고 유가족들에게 적용할 수 있는 부분을 요청드렸는데 그러면 특례가 될 수 있는 방향으로 해 주시겠다는 건가요?</span><br/></div></div></div><div id="spk_15" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;그러니까 유가족이 좀 더 유리하게 상속세 혜택을 볼 수 있도록 하는 방향은 동의하고 있지만 동시 사망이 아니고 순차 사망으로 할 경우에 유가족이 세제혜택 면에서 더 문제가 있거나 내지는 혼란을 줄 수 있는 측면도 존재한다고 하는, 구체적인 내용에 대해서는 저도 아직 좀 더 디테일하게 파악을 해야 될 상황입니다. 그런 문제가 있다고 현재 보고를 받은 상태입니다. 그래서 그 문제를 좀 따져 보고 따져 본 데에 기초해서 기재부와의 협의가 필요하다고 현재 국토부는 판단하고 있습니다.</span><br/></div></div></div><div id="spk_16" class="item4 speaker spk_mem" data-mem_id="6761" data-name="김은혜" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">김은혜 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2d0fedee640c4683b571177b2f21e1c2.jpg" alt="김은혜"></span><span class="txt"><strong class="name">김은혜</strong><span class="position">위원</span><span class="area">(경기 성남시분당구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;다음 국정조사 때 이 부분에 대해서 추가적인 답변을 부탁드립니다.</span><br/></div></div></div><div id="spk_17" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예.</span><br/></div></div></div><div id="spk_18" class="item4 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;김미애 위원님.</span><br/></div></div></div><div id="spk_19" class="item4 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;장관님, 제가 질의를 안 하려고 하다가 이 부분에 대해서 제 의견을 한번 제시해 볼까 해서입니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;순차 사망과 동시 사망의 경우에 특별히 미성년 자녀들이 문제가 되고 있는데 동시 사망과 순차 사망의 경우에 상속세에 있어서 공제 부분에 이런 것들이 더 유리한 쪽으로 하는 것으로 간주 규정을 두면 어떨까 싶습니다. 그리고 또 이것 우리가 참사뿐만 아니라 민법에 규정이 있기 때문에 그것을 또 무시하고 하기도 어렵잖아요. 그래서 이 상속세 특례 규정을 일반화하는 것도 한번 기재부와 같이 논의해 보시면 어떨까 싶습니다. 더 유리한 것으로 간주한다라고 하면 비단 이 사건뿐만 아니라 다른 사건에도 적용될 수 있기 때문에 무리 없을 것 같기도 합니다.</span><br/></div></div></div><div id="spk_20" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;저도 위원님 말씀에 내용적으로 공감하고 있습니다, 사실. 그런데 법적 구성이라든가 이런 것을 좀 따져서 정리된 안을 가지고 기재부하고 협의를 하는 게 필요하겠다고 생각하고 있는 겁니다. 문제 인식에 대해서 또 방향에 대해서는 적극 공감하고 있습니다.</span><br/></div></div></div><div id="spk_21" class="item4 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;다른 위원……</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;권향엽 위원님.</span><br/></div></div></div><div id="spk_22" class="item4 speaker spk_mem" data-mem_id="6828" data-name="권향엽" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">권향엽 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e25ff63bda9c446c81919549ba09c6c6.jpg" alt="권향엽"></span><span class="txt"><strong class="name">권향엽</strong><span class="position">위원</span><span class="area">(전남 순천시광양시곡성군구례군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;장관님 고생 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;다시 또 국정조사가 진행이 될 것이기 때문에 더 심도 있는 그리고 또 철저한 진상규명이 이루어지리라고 봅니다만 제가 이 특위 활동을 하면서 지난번 4월 달에도 국토부가 우선 사고의 가장 큰 원인이 로컬라이저 문제가 굉장히 사고를 키웠다 하는 그런 지적이 있었고 또 그것에 대해서는 연내에 개선하겠다 하는 발표도 있었는데 최근에 저희가 이렇게 보니까 로컬라이저가 개선이 된 곳은 공항 7개 중에서 2개는 개선이 되었고 나머지는 지금 현재 진행 중 이렇게 되고 있는데 그 문제가 역으로 다시 생각한다면 그동안 사고가 없었기 때문에 다행이지만 만약에 유사한 상황이 있었다면 또한 참사가 있을 수도 있었던 그런 상황에서 우리가 지난 1년을 보냈습니다. 유가족들이 굉장히 힘들어하는 부분이기도 하고요. 그렇다면 지금 현재 진행 중인 나머지 부분이 어느 정도 진행이 됐는지 그리고 왜 그렇게 늦어지고 있는지, 언제쯤 마무리가 될 계획인지 혹시 계획이 있다면 이 자리를 빌려서 듣고 싶습니다.</span><br/></div></div></div><div id="spk_23" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;현재 포항경주, 광주, 김해, 사천 여기는 공사가 완료되었다고 보고를 받았고요. 다만 여수공항은 연말까지 하는 것으로 예정이 되어 있습니다.</span><br/></div></div></div><div id="spk_24" class="item4 speaker spk_mem" data-mem_id="6828" data-name="권향엽" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">권향엽 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e25ff63bda9c446c81919549ba09c6c6.jpg" alt="권향엽"></span><span class="txt"><strong class="name">권향엽</strong><span class="position">위원</span><span class="area">(전남 순천시광양시곡성군구례군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;완료되었다고 하는 시점은 언제 시점이었던가요? 제가 12월 22일 인터뷰 때도 확인을 했었는데 그때까지 완성이 안 된 상태였거든요.</span><br/></div></div></div><div id="spk_25" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;제가 설명을 드리면, 자료에 포항경주공항 9월 29일, 광주공항 10월 27일, 김해공항 12월 12일, 사천공항 12월 5일, 여수공항은 12월 31일 완료 예정으로 되어 있고요. 다만 제주는 비행기가 뜨고 내리는 게 굉장히 많기 때문에 문제의 핵심 쟁점은 방위각 시설이 있는 것과 없는 것 그래서 없는 것도 또한 사고 날 위험성이 있다고 생각을 해서 일단 굉장히 성수기를 지난 그런 시점에 하는 것을 원칙으로 현재 협의가 되어서 국토부에서는 그렇게 진행하는 것으로 예정이 되어 있고요. 나머지에 대해서는 일부 늦어지기는 했지만 진행을 하는 것으로 그렇게 생각하면 좋을 것 같습니다.</span><br/></div></div></div><div id="spk_26" class="item4 speaker spk_mem" data-mem_id="6828" data-name="권향엽" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">권향엽 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e25ff63bda9c446c81919549ba09c6c6.jpg" alt="권향엽"></span><span class="txt"><strong class="name">권향엽</strong><span class="position">위원</span><span class="area">(전남 순천시광양시곡성군구례군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;하여튼 정말 그렇게 다 개선이 되었다면 정말 다행이고요.</span><br/></div></div></div><div id="spk_27" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;잠깐만, 제가……</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;방위각 시설이 2개인 곳이 있습니다. 그래서 김해와 사천공항은 지금 순차적으로 진행을 해서 최종 마무리하는 것은 26년 2월까지 나머지 1개소도 하는 것으로 예정돼 있다고 제가 수정 보고드리겠습니다.</span><br/></div></div></div><div id="spk_28" class="item4 speaker spk_mem" data-mem_id="6828" data-name="권향엽" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">권향엽 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e25ff63bda9c446c81919549ba09c6c6.jpg" alt="권향엽"></span><span class="txt"><strong class="name">권향엽</strong><span class="position">위원</span><span class="area">(전남 순천시광양시곡성군구례군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;안전에 대한 것이기 때문에 각별하게 잘 좀 챙겨 봐 주셨으면 좋겠고요.</span><br/></div></div></div><div id="spk_29" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;예.</span><br/></div></div></div><div id="spk_30" class="item4 speaker spk_mem" data-mem_id="6828" data-name="권향엽" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">권향엽 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e25ff63bda9c446c81919549ba09c6c6.jpg" alt="권향엽"></span><span class="txt"><strong class="name">권향엽</strong><span class="position">위원</span><span class="area">(전남 순천시광양시곡성군구례군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;그리고 저희가 특위 활동하면서 조류 충돌 가능성 그리고 생태계에 대해서 조금 더 면밀하게 챙기셔야 한다 하는 지적을 여러 차례 했었고 얼마 전에 보니까 시애틀공항에서는 조류 충돌 예방을 위해서 어떻게 활동하고 있는지 방송으로도 자세히 보도가 된 바가 있습니다만 그런 것 참고하셔서 조류 생태계에 관한 분석, 지금 현재 매뉴얼에 조금 더 보완이 될 필요가 있다라고 봅니다. 그런 것도 잘 챙겨 주셨으면 좋겠습니다.</span><br/></div></div></div><div id="spk_31" class="item4 speaker spk_mem" data-mem_id="0" data-name="김윤덕" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">국토교통부장관 김윤덕 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김윤덕"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">김윤덕</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;예, 알겠습니다.</span><br/></div></div></div><div id="spk_32" class="item4 speaker spk_mem" data-mem_id="6828" data-name="권향엽" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">권향엽 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e25ff63bda9c446c81919549ba09c6c6.jpg" alt="권향엽"></span><span class="txt"><strong class="name">권향엽</strong><span class="position">위원</span><span class="area">(전남 순천시광양시곡성군구례군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_33" class="item4 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;수고하셨습니다, 권향엽 위원님.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;또 질의하실 위원님 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;더 이상 질의하실 위원님이 안 계시므로 질의를 종결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-4">&nbsp;회의를 마무리하기에 앞서 위원장으로서 한말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-5">&nbsp;어제가 바로 12·29여객기 참사 1주기였습니다. 1년이라는 시간이 흘렀지만 그날의 아픔과 상처는 여전히 우리 사회와 유가족 여러분의 마음속에 깊이 남아 있습니다. 희생자 한 분 한 분의 삶과 이름을 다시 떠올리며 위원장으로서 깊은 애도와 추모의 마음을 표합니다.</span><br/><span class="spk_sub" id="spk_sub33-6">&nbsp;지난 1월 8일 본회의 의결로 구성된 이후 한 차례 활동기간을 연장하여 역할을 수행해 온 우리 특별위원회는 오늘로 사실상 마지막 회의를 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub33-7">&nbsp;우리 특위는 제한된 시간과 여건 속에서도 의미 있는 성과를 이루어 냈습니다. 특히 12·29여객기참사 피해구제 및 지원 등을 위한 특별법을 제정하여 국가가 피해자와 유가족을 제도적으로 보호하고 지원할 수 있는 법적 토대를 마련했습니다. 이는 참사 이후 방치되어서는 안 될 최소한의 국가적 책임을 국회가 함께 확인한 결과라 생각합니다. 특위의 종료는 결코 책임의 종료가 아닙니다. 참사의 고통과 상처는 시간이 지난다고 해서 저절로 치유되지 않습니다. 오히려 시간이 흐를수록 정부와 국회가 사고 원인에 대한 진상을 명명백백하게 밝히고 책임을 물을 것은 엄격히 묻고 또 그 교훈을 어떻게 제도화하고 정책으로 연결시키는지가 무엇보다도 중요합니다.</span><br/><span class="spk_sub" id="spk_sub33-8">&nbsp;오늘 특위는 막을 내리지만 우리에게 남겨진 문제의식과 과제는 계속 이어져야 합니다. 우리 특위 활동 과정에서 미진했다고 판단되는 부분들에 대해서는 국정조사특별위원회로 충실히 이어져 보다 엄정하고 깊이 있는 조사가 이루어질 수 있도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-9">&nbsp;유가족 여러분께서 흘리신 눈물을 끝까지 기억하겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-10">&nbsp;아울러 특위 위원님 여러분의 헌신과 책임 있는 활동에도 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub33-11">&nbsp;그러면 이상으로 오늘의 의사일정을 모두 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub33-12">&nbsp;원만한 회의 진행에 협조해 주신 여러 위원님들과 장관을 비롯한 정부 관계자 여러분, 국회직원과 의원실 보좌직원 여러분 그리고 언론인 여러분께 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub33-13">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시24분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(13인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank"><span class="name lts3 ">권영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGWOOK" target="_blank"><span class="name lts3 ">김상욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank"><span class="name lts3 ">김은혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHCHEONHO" target="_blank"><span class="name lts3 ">서천호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONMYOUNGSOO" target="_blank"><span class="name lts3 ">손명수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGJUNHO" target="_blank"><span class="name lts3 ">정준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGKUN" target="_blank"><span class="name lts3 ">윤종군</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEDALHEE" target="_blank"><span class="name lts3 ">이달희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDAISIK" target="_blank"><span class="name lts3 ">김대식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEKSUNHEE" target="_blank"><span class="name lts3 ">백선희</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 박재유</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 임종수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts4"> 남궁인철</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>국토교통부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 김윤덕</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">항공정책실장</span></span><span class="name lts3"> 주종완</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">항공정책관</span></span><span class="name lts3"> 김영국</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">항공안전정책관</span></span><span class="name lts3"> 유경수</span></a></li><p>12.29여객기참사피해자지원단</p><li><a class="in_nm"><span class="pos"><span class="lts2">단장</span></span><span class="name lts3"> 방현하</span></a></li><p>항공·철도사고조사위원회</p><li><a class="in_nm"><span class="pos"><span class="lts4">사무국장</span></span><span class="name lts3"> 김기훈</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">조사단장</span></span><span class="name lts3"> 이승열</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56050;
+			const class_id = 3;
+			const confer_num = "N053903";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640759253" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640759253"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640759253"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640759253"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

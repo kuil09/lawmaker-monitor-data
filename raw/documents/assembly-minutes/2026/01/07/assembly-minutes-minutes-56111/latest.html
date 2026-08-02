@@ -1,0 +1,743 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56111" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제430회 (임시회) 제1차 보건복지위원회</strong><span class="date">(2026.01.07.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 청원 심사기간 연장 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 아동수당법 일부개정법률안(대안)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박주민 위원장 (서울 은평구갑)"> 
+							박주민 위원장 (서울 은평구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김미애 위원 (부산 해운대구을)"> 
+							김미애 위원 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="백종헌 위원 (부산 금정구)"> 
+							백종헌 위원 (부산 금정구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이수진 위원 (경기 성남시중원구)"> 
+							이수진 위원 (경기 성남시중원구)
+						</option>
+					
+					
+						<option value="정은경 보건복지부장관">정은경 보건복지부장관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(4명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6691" data-name="박주민" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">박주민</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 은평구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6589" data-name="김미애" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">김미애</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6704" data-name="백종헌" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">백종헌</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 금정구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6664" data-name="이수진" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">이수진</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 성남시중원구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="정은경" data-pos="보건복지부장관"> 
+											<label for="spk_attend0">
+												<span class="name">정은경</span>
+												<span class="position">보건복지부장관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56111&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제430회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>보건복지위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 1월 7일(수)</p></li><li><div class="sbj lts2">장소</div><p class="con">보건복지위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 청원 심사기간 연장 요구의 건</li><li><span class="num">2.</span> 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</li><li><span class="num">3.</span> 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</li><li><span class="num">4.</span> 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</li><li><span class="num">5.</span> 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</li><li><span class="num">6.</span> 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</li><li><span class="num">7.</span> 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</li><li><span class="num">8.</span> 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</li><li><span class="num">9.</span> 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</li><li><span class="num">10.</span> 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</li><li><span class="num">11.</span> 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</li><li><span class="num">12.</span> 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</li><li><span class="num">13.</span> 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</li><li><span class="num">14.</span> 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</li><li><span class="num">15.</span> 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</li><li><span class="num">16.</span> 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</li><li><span class="num">17.</span> 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</li><li><span class="num">18.</span> 아동수당법 일부개정법률안(대안)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 청원 심사기간 연장 요구의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 아동수당법 일부개정법률안(대안)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(13시32분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제430회 국회(임시회) 제1차 보건복지위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 노트북 단말기 자료를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 새해 맞아서 첫 전체회의입니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;상임위원회에 소속된 위원님들과 또 보좌진 여러분 그리고 국회 직원 여러분, 정책위원 여러분 그리고 장관님, 차관님을 비롯한 부처분들 다 복 많이 받으세요.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;예, 위원장님도 새해 복 많이 받으세요.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;사실은 제가 제일 복을 많이 받고 싶어요. 제가 복이 좀 필요합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;(웃음소리)</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;오늘 회의에서는 청원 심사기간 연장 요구의 건을 처리한 후에 법안심사소위원회에서 심사한 법률안에 대해서 소위원장으로부터 심사 결과를 듣고 의결하는 순서로 진행하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;의사일정에 들어가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;의사일정 제1항 청원 심사기간 연장 요구의 건을 상정하겠는데요.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;사실 백 위원님이 계신데 이런 말씀 드리는 게 저도 불편합니다만 백 위원님께서도 여러 차례 약속을 하셨던 바가 있어요. 그래서 이게 또 연장이 된다는 것 자체가 저로서는 매우 유감이다라는 말씀을 드리겠고, 국민동의 청원 제도를 만든 사람이 저예요. 제가 이 법안을 해서 통과시킨 거거든요. 그런데 이게 이렇게 제가 위원장을 맡고 있는 상임위에서 작동이 안 되니까 제가 참 더 어렵고 힘듭니다. 그래서 이 부분에 대해서 꼭 좀 잘 살펴 주시고……</span><br/></div></div></div><div id="spk_5" class="item0 speaker spk_mem" data-mem_id="6704" data-name="백종헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">백종헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEKJONGHEAN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/335e79371cec41a7991431788b9fead9.jpg" alt="백종헌"></span><span class="txt"><strong class="name">백종헌</strong><span class="position">위원</span><span class="area">(부산 금정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;예, 곧 열겠습니다.</span><br/></div></div></div><div id="spk_6" class="item0 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;진짜요?</span><br/></div></div></div><div id="spk_7" class="item0 speaker spk_mem" data-mem_id="6704" data-name="백종헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">백종헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEKJONGHEAN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/335e79371cec41a7991431788b9fead9.jpg" alt="백종헌"></span><span class="txt"><strong class="name">백종헌</strong><span class="position">위원</span><span class="area">(부산 금정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;예.</span><br/></div></div></div><div id="spk_8" class="item0 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;꼭 그렇게 해 주세요.</span><br/></div></div></div><div id="spk_9" class="item0 speaker spk_mem" data-mem_id="6704" data-name="백종헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">백종헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEKJONGHEAN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/335e79371cec41a7991431788b9fead9.jpg" alt="백종헌"></span><span class="txt"><strong class="name">백종헌</strong><span class="position">위원</span><span class="area">(부산 금정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;예.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 청원 심사기간 연장 요구의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시34분)</p><br/><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;청원 심사기간 연장 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;국회법 제125조제6항에 따르면 장기간 심사를 필요로 하는 청원은 위원회의 의결로 의장에게 심사기간의 연장을 요구할 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;배부해 드린 유인물과 같이 폰히펠린다우증후군의 치료제인 MSD사 웰리렉의 보험급여 적용 요청에 관한 청원 등 8건의 청원에 대하여 소위원회에서 심도 있게 심사하도록 2026년 3월 31일까지로 심사기간을 연장하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2W4F0W5W3X0X1M7N1Q2F2O5N9E5H4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 아동수당법 일부개정법률안(박정 의원 대표발의)(의안번호 2200041)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2W4T0N6F0M5T1G4U3I6Q3J8A0A7I1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 아동수당법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2200147)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G4H0O6P1N2M1M5K5L0H4H0G8E4F7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 아동수당법 일부개정법률안(박성준 의원 대표발의)(의안번호 2200509)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2Z4Z0Y6W0X5W1W6E4E4D4B7C4A7A4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 아동수당법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2200527)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2S4Q0Y6Z1X0Y2W2X3V9R2S0Q6R5P0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 아동수당법 일부개정법률안(한병도 의원 대표발의)(의안번호 2200566)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z4X0W6E1F8K1J7I5J4I5Q9O6N3O7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 아동수당법 일부개정법률안(이수진 의원 대표발의)(의안번호 2200710)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Y4Z0X7Y0W2X1F7D5E3C5D2B4J1K4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 아동수당법 일부개정법률안(박민규 의원 대표발의)(의안번호 2201436)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2O4N0M6S2S0S1B1A2Z0F1E5E0K9J0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 아동수당법 일부개정법률안(황정아 의원 대표발의)(의안번호 2202573)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2H4H0G9E1F3D0D8L2M4K2L3J5K4I8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 아동수당법 일부개정법률안(김태년 의원 대표발의)(의안번호 2204028)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2I4G1I1G2G8V0U8U4S5U1S7S0A7Z7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 아동수당법 일부개정법률안(장종태 의원 대표발의)(의안번호 2206822)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2L5J0I2I0G7H1P8Q0O3O0N0L7M1T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 아동수당법 일부개정법률안(남인순 의원 대표발의)(의안번호 2208381)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Q4R1M1N1L2J1K7J1J4R5P9Q1O3P7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 아동수당법 일부개정법률안(강선우 의원 대표발의)(의안번호 2208749)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2U5T0R6S1Q6R1Z4Z1X7W2X2V4V6D6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 아동수당법 일부개정법률안(서영교 의원 대표발의)(의안번호 2210913)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H5H0F9B0C2A1B4Z3Y8Y4G9H8F9G3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 아동수당법 일부개정법률안(이용우 의원 대표발의)(의안번호 2212685)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2J5K0I9J0H2I1G5O2P1N5O4M3M7L3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 아동수당법 일부개정법률안(황명선 의원 대표발의)(의안번호 2212823)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q5P0D9E1C5D1B6C5A3I1J7H3H4G6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 아동수당법 일부개정법률안(정준호 의원 대표발의)(의안번호 2213298)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2R6X0Y1R0L7O1W3Q1G8V0B1A1H3O4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 아동수당법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시35분)</p><br/><div id="spk_13" class="item18 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;다음 의사일정 제2항입니다. 아동수당법 일부개정법률안부터 의사일정 제18항 아동수당법 일부개정법률안(대안)까지 이상 17건의 안건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;그러면 법안심사소위원회의 심사 결과를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;김미애 소위원장님께서 법안심사제1소위원회 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_14" class="item18 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">소위원장 김미애 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김미애</strong><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;법안심사제1소위원장 김미애 위원입니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;우리 법안심사제1소위원회는 아동수당법 일부개정법률안 16건을 심사한 결과 16건을 통합 조정하여 1건의 대안으로 제안하기로 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;아동수당법 일부개정법률안(대안)은 박정 의원, 전진숙 의원, 박성준 의원, 용혜인 의원, 한병도 의원, 이수진 의원, 박민규 의원, 황정아 의원, 김태년 의원, 장종태 의원, 남인순 의원, 강선우 의원, 서영교 의원, 이용우 의원, 황명선 의원, 정준호 의원이 각각 대표발의한 16건의 법률안을 통합 조정한 것으로 주요 내용은 아동수당 지급 연령을 만 8세 미만에서 만 13세 미만으로 상향하되 재정 지원의 지속가능성을 고려하여 2026년부터 2030년까지 연령을 단계적으로 상향하도록 하고, 비수도권 또는 인구감소지역에 거주하는 아동에게는 2026년도에 한하여 매월 최대 2만 원을 추가 지급하도록 하는 것으로 저소득층 아동 지원 강화 등에 대한 부대의견도 함께 첨부하였습니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;보다 자세한 내용은 배포해 드린 유인물을 참고해 주시고, 아무쪼록 우리 법안심사제1소위원회가 심사보고한 대로 심사 의결하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_15" class="item18 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;법안심사에 애써 주신 김미애 소위원장님과 소위 위원님들께 감사의 말씀을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;법안심사소위원회의 심사 결과에 대해서 의견이 있으신 위원님 계시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;발언 시간은 간사 위원님들과의 협의에 따라 3분입니다.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;김미애 위원님.</span><br/></div></div></div><div id="spk_16" class="item18 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;아동수당은 아이들의 기본권을 보장하는 보편복지 제도로 국민의힘은 모든 아동에게 차별 없이 지급돼야 한다는 입장에 변함이 없습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;지역 차등지급은 제도의 원칙을 훼손하는 것이며 수도권 아동에 대한 명백한 역차별입니다. 정부와 여당이 주장하는 양육 인프라 및 여건의 차이는 아동수당이 아닌 별도의 정책으로 해결해야 된다는 점도 다시 한번 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;국민의힘은 연령 상향 지급이라는 국민의 정책적 신뢰를 저버릴 수 없기에 불가피하게 2026년 한시적 차등 지급안을 수용했습니다. 그러나 어디까지나 한시적 조치일 뿐입니다. 따라서 내년도 예산안에는 국민의힘이 일관되게 주장한 모든 아동들에게 상향된 금액이 지급될 수 있는 내용이 반드시 반영돼야 한다는 점을 강조드립니다.</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;논의 과정에서 국민의힘이 제안한 부산 동구·서구·영도구, 대구 남구·서구 인구감소지역에 대한 추가 지급, 저소득 아동의 자산형성지원사업인 디딤씨앗통장 전액 국비 지원, 서울시 국고보조율 확대 등에 대해 정부가 수용 의사를 밝혔고 또 여기에 추가해서 서영석 위원이 제안한 지방의 국고보조율을 단계적으로 확대하는 안 역시 마찬가지입니다.</span><br/><span class="spk_sub" id="spk_sub16-5">&nbsp;이들 의견을 부대의견으로 남겼습니다. 일부 사안은 예산 당국과 협의가 필요하지만 여야 공감대가 있는 만큼 복지부에서 적극적으로 노력해 주시고 저 역시 힘을 보태겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-6">&nbsp;장관님, 관련하여 의견이 있으면 말씀해 주십시오.</span><br/></div></div></div><div id="spk_17" class="item18 speaker spk_mem" data-mem_id="0" data-name="정은경" data-pos="보건복지부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">보건복지부장관 정은경 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정은경"></span><span class="txt"><span class="position">보건복지부장관</span><strong class="name">정은경</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;부대의견 주신 것 충실히 이행하도록 노력하겠습니다.</span><br/></div></div></div><div id="spk_18" class="item18 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;이수진 위원님.</span><br/></div></div></div><div id="spk_19" class="item18 speaker spk_mem" data-mem_id="6664" data-name="이수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">이수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/813a596915cc475d89c50722ce5764bc.jpg" alt="이수진"></span><span class="txt"><strong class="name">이수진</strong><span class="position">위원</span><span class="area">(경기 성남시중원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;아동수당의 지급 대상 연령의 확대 그리고 지급 수준 강화 이것은 이재명 정부의 국정과제이고 또 아동복지와 초저출생사회 대응을 위해서 매우 중요한 의미가 담겨져 있는 정책입니다. 따라서 인구감소지역에 대한 우대 그리고 또 지역사회 활성화와 연계되도록 하고 또 추가 지급을 통해서 지급 수준도 높이는 것은 꼭 추진해 나가야 될 필요가 있다라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;일부 내용에 대해 이견이 있었지만 아동수당 확대에 대한 공감대가 있는 만큼 합의 처리를 위해서 여야가 함께 조금씩 양보했다는 것은 매우 큰 의미가 있습니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;물론 그 과정에서 지자체장들은 이미 예산에 담긴 지역화폐 지원 근거를 꼭 담아 달라 이런 요청들이 있었습니다만 그것까지 담지는 못했습니다. 앞으로 지역 우대 또 지역화폐를 통한 추가 지급에 대해서 더 공감대가 형성되기를 바라는 마음입니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;그리고 오늘 합의 처리에 함께해 주신 김미애 야당 간사님과 여야 전체 모든 위원님들께 특별하게 감사드립니다. 고생 많으셨습니다.</span><br/></div></div></div><div id="spk_20" class="item18 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;더 말씀 주실 위원님이 안 계시지요?</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;그러면 법안 의결 절차를 진행하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;먼저 축조심사와 비용추계 생략을 위한 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;오늘 의결하는 일부개정법률안들에 대해서는 소위원회에서 심도 있게 논의가 되었으므로 국회법 제58조제5항에 따라 축조심사를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-6">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub20-7">&nbsp;그리고 국회법 제79조의2제3항 단서에 따라 예산상 또는 기금상의 조치를 수반하는 대안에 대해 국회예산정책처의 비용추계서 첨부를 생략하도록 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub20-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-9">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub20-10">&nbsp;그러면 법안을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-11">&nbsp;의사일정 제18항 아동수당법 일부개정법률안(대안)을 소위원회에서 심사보고한 대로 채택하고 의사일정 제2항부터 제17항까지의 법률안은 본회의에 부의하지 않는 것으로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub20-12">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-13">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub20-14">&nbsp;이것으로 법안에 대한 의결을 모두 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-15">&nbsp;오늘 의결한 법률안의 체계와 자구의 정리는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub20-16">&nbsp;그러면 법률안 의결에 따른 정부 측 인사를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-17">&nbsp;정은경 보건복지부장관님 나오셔서 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item18 speaker spk_mem" data-mem_id="0" data-name="정은경" data-pos="보건복지부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">보건복지부장관 정은경 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정은경"></span><span class="txt"><span class="position">보건복지부장관</span><strong class="name">정은경</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;존경하는 박주민 위원장님 그리고 보건복지위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;아동수당법 일부개정법률안을 심사 의결하여 주신 것에 대하여 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;아동수당법이 개정되면 아동수당을 올해 9세 미만, 2030년까지는 순차적으로 13세 미만으로 확대하여 지원할 수 있습니다. 개정안은 또한 인구감소지역과 비수도권에 대한 한시적 추가 지급 근거를 포함하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;미래세대를 위한 위원님들의 결정에 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;정부는 법안심사 과정에서 위원님들이 주신 고견을 충실히 반영하여 아동수당제도 개선을 위해 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-6">&nbsp;법안심사에 애써 주신 법안소위 김미애 위원장님을 비롯한 위원님들께 다시 한번 진심으로 감사드립니다.</span><br/></div></div></div><div id="spk_22" class="item18 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;고생하셨습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;오늘 회의에 참석해 주신 위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;정부 측 관계자분들과 수석전문위원을 비롯한 위원회 직원분들 그리고 보좌직원 여러분도 수고 많으셨고, 아까 말씀드렸던 것처럼 올 한 해 복 많이 받으시기를 바라겠습니다.</span><br/></div></div></div><div id="spk_23" class="item18 speaker spk_mem" data-mem_id="6664" data-name="이수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">이수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/813a596915cc475d89c50722ce5764bc.jpg" alt="이수진"></span><span class="txt"><strong class="name">이수진</strong><span class="position">위원</span><span class="area">(경기 성남시중원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;위원장님, 제일 많이 받으세요.</span><br/></div></div></div><div id="spk_24" class="item18 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;제가 제일 많이 받을 거예요.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;(웃음소리)</span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(13시43분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(19인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank"><span class="name lts3 ">김선민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYEAJI" target="_blank"><span class="name lts3 ">김예지</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank"><span class="name lts3 ">박주민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHEESEONG" target="_blank"><span class="name lts3 ">박희승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEKJONGHEAN" target="_blank"><span class="name lts3 ">백종헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank"><span class="name lts3 ">서명옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank"><span class="name lts3 ">서영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUYOUNGLEE" target="_blank"><span class="name lts3 ">이주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIBOYUN" target="_blank"><span class="name lts3 ">최보윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank"><span class="name lts3 ">한지아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank"><span class="name lts3 ">안상훈</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank"><span class="name lts3 ">윤호중</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHANGJONGTAE" target="_blank"><span class="name lts3 ">장종태</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이지민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 오세일</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>보건복지부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 정은경</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 이스란</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts3">대변인</span></span><span class="name lts3"> 현수엽</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 임호근</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">인구·사회서비스정책실장</span></span><span class="name lts3"> 은성호</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국민건강증진법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 20. 정부 제출)(의안번호 2214442)</div></div><div class="con"><p class="tit_sm"><strong>아동복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 20. 김남희 의원 대표발의)(의안번호 2214446)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 21일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>소아청소년 건강 기본법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 김윤 의원 대표발의)(의안번호 2214455)</div></div><div class="con"><p class="tit_sm"><strong>장애인·노인·임산부 등의 편의증진 보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 서미화 의원 대표발의)(의안번호 2214461)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 서영석 의원 대표발의)(의안번호 2214466)</div></div><div class="con"><p class="tit_sm"><strong>국민건강보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 김남희 의원 대표발의)(의안번호 2214468)</div></div><div class="con"><p class="tit_sm"><strong>국민건강보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 서미화 의원 대표발의)(의안번호 2214470)</div></div><div class="con"><p class="tit_sm"><strong>국민건강증진법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 남인순 의원 대표발의)(의안번호 2214471)</div></div><div class="con"><p class="tit_sm"><strong>국민연금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 21. 김남희 의원 대표발의)(의안번호 2214472)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 7건 11월 24일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>디지털 헬스케어 및 보건의료정보 활용 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 24. 서영석 의원 대표발의)(의안번호 2214515)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">11월 25일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>장기등 이식에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 25. 이주영 의원 대표발의)(의안번호 2214525)</div></div><div class="con"><p class="tit_sm"><strong>아동복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 25. 정을호 의원 대표발의)(의안번호 2214526)</div></div><div class="con"><p class="tit_sm"><strong>장애인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 25. 박은정 의원 대표발의)(의안번호 2214544)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 11월 26일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국민영양관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 25. 소병훈 의원 대표발의)(의안번호 2214541)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 26. 서영석 의원 대표발의)(의안번호 2214577)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 27일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>응급의료에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 문진석 의원 대표발의)(의안번호 2214619)</div></div><div class="con"><p class="tit_sm"><strong>생명윤리 및 안전에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 권칠승 의원 대표발의)(의안번호 2214622)</div></div><div class="con"><p class="tit_sm"><strong>노인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 남인순 의원 대표발의)(의안번호 2214647)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 남인순 의원 대표발의)(의안번호 2214648)</div></div><div class="con"><p class="tit_sm"><strong>국민건강증진법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 남인순 의원 대표발의)(의안번호 2214649)</div></div><div class="con"><p class="tit_sm"><strong>아동복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 강경숙 의원 대표발의)(의안번호 2214650)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 서영석 의원 대표발의)(의안번호 2214651)</div></div><div class="con"><p class="tit_sm"><strong>장애인·노인 등을 위한 보조기기 지원 및 활용촉진에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 남인순 의원 대표발의)(의안번호 2214660)</div></div><div class="con"><p class="tit_sm"><strong>장애인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 남인순 의원 대표발의)(의안번호 2214661)</div></div><div class="con"><p class="tit_sm"><strong>국민건강보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 강경숙 의원 대표발의)(의안번호 2214667)</div></div><div class="con"><p class="tit_sm"><strong>보건의료기술 진흥법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 김용태 의원 대표발의)(의안번호 2214672)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 11건 11월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>모자보건법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 28. 강대식 의원 대표발의)(의안번호 2214681)</div></div><div class="con"><p class="tit_sm"><strong>노인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 28. 강대식 의원 대표발의)(의안번호 2214682)</div></div><div class="con"><p class="tit_sm"><strong>저출산·고령사회기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 28. 소병훈 의원 대표발의)(의안번호 2214713)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 1일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>공중위생관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 남인순 의원 대표발의)(의안번호 2214658)</div></div><div class="con"><p class="tit_sm"><strong>건축물 등의 위생관리에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 2. 이수진 의원 대표발의)(의안번호 2214778)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 12월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>수입식품안전관리 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 3. 장종태 의원 대표발의)(의안번호 2214815)</div></div><div class="con"><p class="tit_sm"><strong>농수산물 품질관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 3. 정부 제출)(의안번호 2214820)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 12월 4일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동수당법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 서영석 의원 대표발의)(의안번호 2214858)</div></div><div class="con"><p class="tit_sm"><strong>의사상자 등 예우 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 김병기 의원 대표발의)(의안번호 2214895)</div></div><div class="con"><p class="tit_sm"><strong>자살예방 및 생명존중문화 조성을 위한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 남인순 의원 대표발의)(의안번호 2214904)</div></div><div class="con"><p class="tit_sm"><strong>건강검진기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 남인순 의원 대표발의)(의안번호 2214905)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 남인순 의원 대표발의)(의안번호 2214906)</div></div><div class="con"><p class="tit_sm"><strong>보건의료기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 남인순 의원 대표발의)(의안번호 2214909)</div></div><div class="con"><p class="tit_sm"><strong>장애인·노인 등을 위한 보조기기 지원 및 활용촉진에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 4. 진성준 의원 대표발의)(의안번호 2214929)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 7건 12월 5일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국민건강증진법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 5. 김민전 의원 대표발의)(의안번호 2214966)</div></div><div class="con"><p class="tit_sm"><strong>국민기초생활 보장법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 5. 최혁진 의원·이수진 의원 대표발의)(의안번호 2214963)</div></div><div class="con"><p class="tit_sm"><strong>노인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 5. 임종득 의원 대표발의)(의안번호 2214940)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 8일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 8. 이성권 의원 대표발의)(의안번호 2214980)</div></div><div class="con"><p class="tit_sm"><strong>중증장애인생산품 우선구매 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 8. 김예지 의원 대표발의)(의안번호 2214991)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 12월 9일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국민연금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 9. 소병훈 의원 대표발의)(의안번호 2215016)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 10일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>치매관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 백혜련 의원 대표발의)(의안번호 2215062)</div></div><div class="con"><p class="tit_sm"><strong>국민연금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 백혜련 의원 대표발의)(의안번호 2215073)</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 10. 백혜련 의원 대표발의)(의안번호 2215077)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 11일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국민건강보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 11. 전종덕 의원 대표발의)(의안번호 2215149)</div></div><div class="con"><p class="tit_sm"><strong>체외진단의료기기법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 11. 강선우 의원 대표발의)(의안번호 2215183)</div></div><div class="con"><p class="tit_sm"><strong>모자보건법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 11. 강명구 의원 대표발의)(의안번호 2215185)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 12일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>제약산업 육성 및 지원에 관한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 12. 박성훈 의원 대표발의)(의안번호 2215195)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 15일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>장애인활동 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 15. 이개호 의원 대표발의)(의안번호 2215239)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>감염병의 예방 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 김남희 의원 대표발의)(의안번호 2215290)</div></div><div class="con"><p class="tit_sm"><strong>고독사 예방 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 구자근 의원 대표발의)(의안번호 2215294)</div></div><div class="con"><p class="tit_sm"><strong>노인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 양문석 의원 대표발의)(의안번호 2215300)</div></div><div class="con"><p class="tit_sm"><strong>사회보장급여의 이용·제공 및 수급권자 발굴에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 소병훈 의원 대표발의)(의안번호 2215301)</div></div><div class="con"><p class="tit_sm"><strong>식품위생법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 서영석 의원 대표발의)(의안번호 2215302)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 12월 17일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>응급의료에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 김남희 의원 대표발의)(의안번호 2215310)</div></div><div class="con"><p class="tit_sm"><strong>아동복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 김미애 의원 대표발의)(의안번호 2215311)</div></div><div class="con"><p class="tit_sm"><strong>노숙인 등의 복지 및 자립지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 김예지 의원 대표발의)(의안번호 2215323)</div></div><div class="con"><p class="tit_sm"><strong>모자보건법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 17. 강명구 의원 대표발의)(의안번호 2215347)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 12월 18일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 18. 김예지 의원 대표발의)(의안번호 2215352)</div></div><div class="con"><p class="tit_sm"><strong>국민영양관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 18. 서영석 의원 대표발의)(의안번호 2215368)</div></div><div class="con"><p class="tit_sm"><strong>식품위생법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 18. 서영석 의원 대표발의)(의안번호 2215376)</div></div><div class="con"><p class="tit_sm"><strong>화장품법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 18. 서영석 의원 대표발의)(의안번호 2215378)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 12월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 19. 구자근 의원 대표발의)(의안번호 2215398)</div></div><div class="con"><p class="tit_sm"><strong>국민연금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 19. 김윤 의원 대표발의)(의안번호 2215453)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 12월 22일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>장애인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 22. 김선민 의원 대표발의)(의안번호 2215493)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 23일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>첨단재생의료 및 첨단바이오의약품 안전 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 박성훈 의원 대표발의)(의안번호 2215523)</div></div><div class="con"><p class="tit_sm"><strong>국민건강보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 김예지 의원 대표발의)(의안번호 2215524)</div></div><div class="con"><p class="tit_sm"><strong>장애인 가족 지원법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 최혁진 의원 대표발의)(의안번호 2215527)</div></div><div class="con"><p class="tit_sm"><strong>국민기초생활 보장법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 김예지 의원 대표발의)(의안번호 2215554)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 12월 24일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국민건강보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 서영석 의원 대표발의)(의안번호 2215588)</div></div><div class="con"><p class="tit_sm"><strong>돌봄정책기본법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 손솔 의원 대표발의)(의안번호 2215602)</div></div><div class="con"><p class="tit_sm"><strong>사회복지사 등의 처우 및 지위 향상을 위한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 이수진 의원 대표발의)(의안번호 2215619)</div></div><div class="con"><p class="tit_sm"><strong>노인장기요양보험법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 남인순 의원 대표발의)(의안번호 2215623)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 12월 26일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>실종아동등의 보호 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 26. 이수진 의원 대표발의)(의안번호 2215638)</div></div><div class="con"><p class="tit_sm"><strong>식품 등의 표시·광고에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 26. 김상훈 의원 대표발의)(의안번호 2215641)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 26. 김상훈 의원 대표발의)(의안번호 2215642)</div></div><div class="con"><p class="tit_sm"><strong>화장품법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 26. 김상훈 의원 대표발의)(의안번호 2215643)</div></div><div class="con"><p class="tit_sm"><strong>의료기기법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 26. 김상훈 의원 대표발의)(의안번호 2215644)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 12월 29일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 이수진 의원 대표발의)(의안번호 2215662)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 이주영 의원 대표발의)(의안번호 2215675)</div></div><div class="con"><p class="tit_sm"><strong>식품 등의 표시·광고에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 이주영 의원 대표발의)(의안번호 2215676)</div></div><div class="con"><p class="tit_sm"><strong>의료기기법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 이주영 의원 대표발의)(의안번호 2215677)</div></div><div class="con"><p class="tit_sm"><strong>화장품법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 이주영 의원 대표발의)(의안번호 2215679)</div></div><div class="con"><p class="tit_sm"><strong>식품 등의 표시·광고에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 김남희 의원 대표발의)(의안번호 2215694)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 29. 김남희 의원 대표발의)(의안번호 2215695)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 7건 12월 30일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>치매관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 전진숙 의원 대표발의)(의안번호 2215711)</div></div><div class="con"><p class="tit_sm"><strong>모자보건법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 박주민 의원 대표발의)(의안번호 2215713)</div></div><div class="con"><p class="tit_sm"><strong>노인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 최수진 의원 대표발의)(의안번호 2215715)</div></div><div class="con"><p class="tit_sm"><strong>디지털의료제품법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서명옥 의원 대표발의)(의안번호 2215731)</div></div><div class="con"><p class="tit_sm"><strong>식품위생법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서명옥 의원 대표발의)(의안번호 2215735)</div></div><div class="con"><p class="tit_sm"><strong>검역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 이수진 의원 대표발의)(의안번호 2215739)</div></div><div class="con"><p class="tit_sm"><strong>농어촌 등 보건의료를 위한 특별조치법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 이수진 의원 대표발의)(의안번호 2215756)</div></div><div class="con"><p class="tit_sm"><strong>첨단의료복합단지 육성에 관한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 전진숙 의원 대표발의)(의안번호 2215764)</div></div><div class="con"><p class="tit_sm"><strong>의료 해외진출 및 외국인환자 유치 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 이수진 의원 대표발의)(의안번호 2215770)</div></div><div class="con"><p class="tit_sm"><strong>국민건강증진법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서명옥 의원 대표발의)(의안번호 2215772)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 10건 12월 31일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>돌봄자 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 손솔 의원 대표발의)(의안번호 2215557)</div></div><div class="con"><p class="tit_sm"><strong>응급의료에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 박정하 의원 대표발의)(의안번호 2215784)</div></div><div class="con"><p class="tit_sm"><strong>장애인 건강권 및 의료접근성 보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 김예지 의원 대표발의)(의안번호 2215790)</div></div><div class="con"><p class="tit_sm"><strong>장애인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 서미화 의원 대표발의)(의안번호 2215796)</div></div><div class="con"><p class="tit_sm"><strong>화장품산업 육성 및 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 이수진 의원 대표발의)(의안번호 2215798)</div></div><div class="con"><p class="tit_sm"><strong>식품위생법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 정점식 의원 대표발의)(의안번호 2215800)</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 민형배 의원 대표발의)(의안번호 2215801)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 7건 2026년 1월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>사회복지사업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 이기헌 의원 대표발의)(의안번호 2215841)</div></div><div class="con"><p class="tit_sm"><strong>장애인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 이기헌 의원 대표발의)(의안번호 2215844)</div></div><div class="con"><p class="tit_sm"><strong>노인복지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 서영석 의원 대표발의)(의안번호 2215845)</div></div><div class="con"><p class="tit_sm"><strong>의료기기법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 한지아 의원 대표발의)(의안번호 2215850)</div></div><div class="con"><p class="tit_sm"><strong>식품 등의 표시·광고에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 한지아 의원 대표발의)(의안번호 2215851)</div></div><div class="con"><p class="tit_sm"><strong>약사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 1. 5. 한지아 의원 대표발의)(의안번호 2215853)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 6건 1월 6일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>119구조·구급에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 7. 18. 양부남 의원 대표발의)(의안번호 2211576)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">11월 20일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>체육시설의 설치·이용에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 25. 박정훈 의원 대표발의)(의안번호 2214546)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">11월 26일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>출입국관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 26. 한창민 의원·서영교 의원 대표발의)(의안번호 2214581)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">11월 27일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 김한규 의원 대표발의)(의안번호 2214640)</div></div><div class="con"><p class="tit_sm"><strong>주취자 보호 및 안전관리에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 11. 27. 임호선 의원 대표발의)(의안번호 2214646)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 28일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>우주항공복합도시 건설 및 지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 2. 서천호 의원·문금주 의원 대표발의)(의안번호 2214782)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 3일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>형의 집행 및 수용자의 처우에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 3. 최보윤 의원 대표발의)(의안번호 2214806)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 4일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>디지털헬스산업의 육성 및 지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 8. 정태호 의원 대표발의)(의안번호 2214990)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 9일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가재정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 박민규 의원 대표발의)(의안번호 2215286)</div></div><div class="con"><p class="tit_sm"><strong>부담금관리 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 박민규 의원 대표발의)(의안번호 2215289)</div></div><div class="con"><p class="tit_sm"><strong>지방교부세법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 16. 소병훈 의원 대표발의)(의안번호 2215305)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 17일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>행정수도 건설을 위한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 23. 엄태영 의원·복기왕 의원 대표발의)(의안번호 2215514)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 24일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>도심 내 주택공급을 위한 노후 공공청사 등 복합개발 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 박상혁 의원 대표발의)(의안번호 2215614)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 26일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>돌봄노동자의 노동조건 개선 및 지위 향상에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 전종덕 의원 대표발의)(의안번호 2215597)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 29일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>바이오데이터 활용 및 인공지능바이오 연구개발 촉진에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 24. 조인철 의원·최형두 의원 대표발의)(의안번호 2215618)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 30일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>개인정보 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서명옥 의원 대표발의)(의안번호 2215714)</div></div><div class="con"><p class="tit_sm"><strong>가정폭력범죄의 처벌 등에 관한 특례법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 서명옥 의원 대표발의)(의안번호 2215750)</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 30. 이수진 의원 대표발의)(의안번호 2215757)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 12월 31일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>우주항공복합도시 건설을 위한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 12. 31. 박대출 의원 대표발의)(의안번호 2215805)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2026년 1월 2일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯동의 요청</strong></p><div class="con"><p class="tit_sm"><strong>환자기본법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 12. 3. 남인순 의원 대표발의)(의안번호 2206150) 철회 요구</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2026년 1월 6일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="21.045521795998884%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"><col width="13.159079700666855%"></colgroup><thead><tr><th scope="col">구분</th><th scope="col">대통령령</th><th scope="col">총리령</th><th scope="col">부령</th><th scope="col">훈령</th><th scope="col">예규</th><th scope="col">고시</th></tr></thead><tr><td>보건복지부<br/></td><td>8<br/></td><td>-<br/></td><td>9<br/></td><td>3<br/></td><td>2<br/></td><td>52<br/></td></tr><tr><td>식품의약품안전처<br/></td><td>2<br/></td><td>3<br/></td><td>-<br/></td><td>3<br/></td><td>1<br/></td><td>15<br/></td></tr><tr><td>질병관리청<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>4<br/></td><td>-<br/></td><td>1<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯통지</strong></p><div class="con"><p class="tit_sm"><strong>우주항공복합도시 건설 및 개발 특별법안</strong><span>(서천호 의원 대표발의)</span><span> 철회에 대한 통지</span></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">12월 10일 의장으로부터 위 건에 관한 통지가 있었음</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56111;
+			const class_id = 2;
+			const confer_num = "N053910";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640756946" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640756946"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640756946"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640756946"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

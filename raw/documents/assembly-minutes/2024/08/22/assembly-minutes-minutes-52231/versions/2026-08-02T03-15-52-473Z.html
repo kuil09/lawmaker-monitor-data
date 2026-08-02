@@ -1,0 +1,916 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52231" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제417회 (임시회) 제2차 국토교통위원회</strong><span class="date">(2024.08.22.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 공공주택 특별법 일부개정법률안(강선우 의원 대표발의)(의안번호 2201103)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 공공주택 특별법 일부개정법률안(김남근 의원 대표발의)(의안번호 2201767)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 공공주택 특별법 일부개정법률안(문진석 의원 대표발의)(의안번호 2202951)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 공공주택 특별법 일부개정법률안(대안)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="맹성규 위원장 (인천 남동구갑)"> 
+							맹성규 위원장 (인천 남동구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="권영진 위원 (대구 달서구병)"> 
+							권영진 위원 (대구 달서구병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="복기왕 위원 (충남 아산시갑)"> 
+							복기왕 위원 (충남 아산시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김정재 위원 (경북 포항시북구)"> 
+							김정재 위원 (경북 포항시북구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이소영 위원 (경기 의왕시과천시)"> 
+							이소영 위원 (경기 의왕시과천시)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김기표 위원 (경기 부천시을)"> 
+							김기표 위원 (경기 부천시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="염태영 위원 (경기 수원시무)"> 
+							염태영 위원 (경기 수원시무)
+						</option>
+					
+					
+						<option value="박상우 국토교통부장관">박상우 국토교통부장관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6665" data-name="맹성규" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">맹성규</span>
+												<span class="position">위원장</span>
+												<span class="area">(인천 남동구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6743" data-name="권영진" data-pos="소위원장"> 
+											<label for="spk_mem1">												
+												<span class="name">권영진</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 달서구병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6728" data-name="복기왕" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">복기왕</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 아산시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6606" data-name="김정재" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">김정재</span>
+												<span class="position">위원</span>
+												<span class="area">(경북 포항시북구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6684" data-name="이소영" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">이소영</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 의왕시과천시)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6562" data-name="김기표" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">김기표</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6834" data-name="염태영" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">염태영</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 수원시무)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="박상우" data-pos="국토교통부장관"> 
+											<label for="spk_attend0">
+												<span class="name">박상우</span>
+												<span class="position">국토교통부장관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52231&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제417회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>국토교통위원회회의록</h1></div></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 8월 22일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">국토교통위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 공공주택 특별법 일부개정법률안(강선우 의원 대표발의)(의안번호 2201103)</li><li><span class="num">2.</span> 공공주택 특별법 일부개정법률안(김남근 의원 대표발의)(의안번호 2201767)</li><li><span class="num">3.</span> 공공주택 특별법 일부개정법률안(문진석 의원 대표발의)(의안번호 2202951)</li><li><span class="num">4.</span> 공공주택 특별법 일부개정법률안(대안)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 공공주택 특별법 일부개정법률안(강선우 의원 대표발의)(의안번호 2201103)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 공공주택 특별법 일부개정법률안(김남근 의원 대표발의)(의안번호 2201767)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 공공주택 특별법 일부개정법률안(문진석 의원 대표발의)(의안번호 2202951)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 공공주택 특별법 일부개정법률안(대안)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(11시35분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제417회 국회(임시회) 제2차 국토교통위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 단말기 자료를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 회의는 법안심사소위원회에서 의결한 공공주택 특별법 개정안을 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2O4N0J6K2I8H1G0O2M8L4M5L9T5R7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 공공주택 특별법 일부개정법률안(강선우 의원 대표발의)(의안번호 2201103)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y4X0F6E2D0X1X4V4U1D0C5B9Z1I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 공공주택 특별법 일부개정법률안(김남근 의원 대표발의)(의안번호 2201767)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y4X0F6E2D0X1X4V4U1D0C5B9Z1I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 공공주택 특별법 일부개정법률안(문진석 의원 대표발의)(의안번호 2202951)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U4T0U7S0S1B1B0Z1Y9Y1W1X8T7U4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 공공주택 특별법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시36분)</p><br/><div id="spk_4" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항부터 제4항까지 총 4건의 법률안을 계속하여 일괄 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;먼저 국토법안심사소위원장이신 권영진 소위원장님 나오셔서 소위원회 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item4 speaker spk_mem" data-mem_id="6743" data-name="권영진" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 권영진 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d91cfa36267481a8f860816e419f426.png" alt="권영진"></span><span class="txt"><span class="position">소위원장</span><strong class="name">권영진</strong><span class="area">(대구 달서구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;국토법안심사소위원장 권영진 위원입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;우리 소위원회는 오늘 도심 공공주택 복합사업의 일몰 연장 및 제도개선 사항을 내용으로 하는 총 7건의 법률안을 심도 있게 심사하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;심사 결과 다음 달 20일 일몰이 도래하는 도심 공공주택 복합사업의 시급성을 감안하여 단절 없이 사업이 추진될 수 있도록 우선 일몰 연장에 대한 사항만을 내용으로 하는 총 3건의 법률안을 의결하고 그 외에 도심 공공주택 복합사업의 원활한 추진을 위한 제도개선 사항을 담고 있는 개정안들은 추후 국토법안심사소위원회에서 계속 심사하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;강선우 의원, 김남근 의원과 문진석 의원이 각각 대표발의한 3건의 공공주택 특별법 일부개정법률안을 통합 조정한 위원회 대안의 주요 내용을 말씀드리면 올해 9월 20일까지인 도심 공공주택 복합사업의 유효기간을 2026년 12월 31일까지 연장하여 안정적인 사업 추진이 이루어지도록 하고, 도심 공공주택 복합사업의 현물보상을 준용하고 있는 쪽방 밀집지구를 포함하는 공공주택지구 현물보상의 유효기간을 도심 공공주택 복합사업의 유효기간에 맞추어 2026년 12월 31일까지 연장하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;이상으로 심사보고를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;보다 자세한 사항은 배부해 드린 유인물을 참고하여 주시고, 아무쪼록 우리 소위원회에서 심사보고한 대로 의결하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;법안 심사를 위해서 애써 주신 권영진 소위원장님과 법안심사소위원회 위원님들께 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;다음은 법안심사소위원회에서 심사보고한 법률안에 대해 토론하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;복기왕 위원님.</span><br/></div></div></div><div id="spk_7" class="item4 speaker spk_mem" data-mem_id="6728" data-name="복기왕" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">복기왕 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BOKKIWANG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ac9053137f440a69ea0aa559fa65933.png" alt="복기왕"></span><span class="txt"><strong class="name">복기왕</strong><span class="position">위원</span><span class="area">(충남 아산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;토론이라기보다는 이렇게 일몰이 닥쳐서 현장 사업의 피해나 우려 이런 것들이 있을 때는 당연히 정부 부처에서 이렇게 바로 턱밑에 와서 하는 것이 아니고 사전에 충분히 준비해서 의회에 설명을 하고 이해를 구하는 이런 과정이 있어야 되는데요 그런 것들이 전부 다 생략이 됐습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;그리고 사업기간 연장에 대한 여러 가지 의견들이 있습니다. 현장에서는 더 많은 연장기간을 요구를 하고 있고, 그런데 이것을 바라보는 위원들의 시각도 각각 달라요. 이런 것들을 감안해서 부처에서 안을 내야 되는데 오히려 부처에서 갈등을 부추기는 듯한 이런 대안을 갖고 온다라고 하는 것이 저는 정말 이해가 안 됩니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;그래서 향후에 부처에서 안을 가져올 때는 어떤 것들이 여야의 갈등 거리가 될지에 대해서 미리 좀 고민하고 그런 것들에 대해서 가급적이면 미리 조율하고 대안을 가져와야 된다라는 말씀을 드리고 싶어서 발언 신청을 했습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_8" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;김정재 위원님.</span><br/></div></div></div><div id="spk_9" class="item4 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">김정재 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><strong class="name">김정재</strong><span class="position">위원</span><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;조금 전 저희 국토법안소위에서 해당 법안을 잘 통과시켰습니다. 복기왕 위원님 말씀도 잘 들었고요.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;그런데 저는 굉장히 무난하고 각각 위원들이 의견을 잘 개진해서 잘 통과된 법이라고 생각을 합니다. 현장에서 이런저런 사연들이 다 있을 것입니다. 그럼에도 불구하고 이게 3년 한시법인데 어느 정도 연장을 해서 이 일이 진척이 될 수 있도록 했다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;그리고 복기왕 위원님 말씀하신 대로 정부에서는 이런 일몰의 연장이 필요하다고 느끼면 모든 위원님들에게 미리 사전에 좀 더 소상히 설명해 주셨으면 하고요.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;다만 정부가 여야 위원을 갈라친다, 조금 전에도 그런 말씀을 하시던데 저는 전혀 그런 생각을 해 본 적도 없고 또 그런 생각을 가지고 법안 논의를 한 적도 없습니다. 그래서 회의 기록에 남겨 두고자 발언을 하는 바이고요.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;저희 국토법안소위가 합리적으로 지금까지 잘 진행되고 있고 또 중간 지점에서 서로 국민을 생각하는 마음에서 결론을 내리고 있다고 저는 자평하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_10" class="item4 speaker spk_mem" data-mem_id="6684" data-name="이소영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">이소영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ecb476c1bd0747d8b310964db044aa9f.jpg" alt="이소영"></span><span class="txt"><strong class="name">이소영</strong><span class="position">위원</span><span class="area">(경기 의왕시과천시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;위원장님, 저도 한 말씀……</span><br/></div></div></div><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;순서대로 하겠습니다.</span><br/></div></div></div><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;김기표입니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;공공주택 특별법의 일몰 규정만 오늘 급하게 연장을 개정하는데요. 아까 존경하는 권영진 위원께서도 말씀해 주셨지마는 지금 공공주택 특별법에서 기본적으로 일몰 규정을 계속 연장하는 것은 되도록이면 이게 가는 게 좋다는 것을 본바탕으로 하고 있다고 저는 생각합니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;그런데 그것이 잘 진행되기 위해서 개정돼야 할 내용들이 굉장히 많이 있어요. 그것은 지금 일몰 규정을 개정했다고 해서 우리가 방치할 것이 아니고 돌아오는 국토소위에서 바로 논의를 하는 것으로 해서 잘 갈 수 있도록 했으면 하는 바람으로 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;마치겠습니다.</span><br/></div></div></div><div id="spk_13" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;이소영 위원님.</span><br/></div></div></div><div id="spk_14" class="item4 speaker spk_mem" data-mem_id="6684" data-name="이소영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">이소영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ecb476c1bd0747d8b310964db044aa9f.jpg" alt="이소영"></span><span class="txt"><strong class="name">이소영</strong><span class="position">위원</span><span class="area">(경기 의왕시과천시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;저도 복기왕 위원님과 같은 취지라고 볼 수 있어서 짧게 말씀드리겠는데요.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;국토법안소위는 잘 운영되고 있습니다. 저희 법안소위 위원님들께서 토론에 활발하게 참여해 주고 계시고 저는 국회에서 좋은 토론이 이루어지고 있다고 생각하는데 이 법안 통과 과정에서 정부의 모습은 국회를 존중하는 모습은 아니었다고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;지금 22대 국회가 개원하고 3개월이 가까워지고 있는데 이 법의 일몰 기한은 이미 몇 년 전부터 다 정해져 있고 우리가 다 알고 있는 상황에서 8월 19일, 그러니까 지금으로부터 3일 전에 정부안이라고 할 수 있는 여당안이 나왔습니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;그리고 오늘 통과를 시켜 달라고 하는 정부의 요청을 저희가 들으면서 아니, 아무리 단순히 일몰 기한의 문제라고 할지라도 오늘 법안소위만 하더라도 1시간이 훨씬 넘게 이게 1년 3개월이 맞느냐, 3년이 맞느냐, 2년 3개월이 맞느냐 이 토론을 가지고 정말 많은 논의가 이루어졌는데 이것을 3일 전에 법안을 제출해서 제도개선을 포함한 일몰 기한 연장을 오늘까지 처리해 달라, 이런 일은 앞으로 반복되지 않았으면 한다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_15" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;장관님, 자연스럽지 않은 것 같아요. 그렇지요, 처리 과정·절차가? 소위원회에서 논의되는 그 과정 내용이 아니고 정부가 일몰이 예견돼 있었는데 사전에 너무 준비가 부족하지 않았느냐 하는 그런 지적인데 거기에 대해서 입장을 정리해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_16" class="item4 speaker spk_mem" data-mem_id="0" data-name="박상우" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">국토교통부장관 박상우 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박상우"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">박상우</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;여러 위원님들께서 따끔한 지적을 주셨는데요. 사실은 지난 2월 20일 날 21대 국회에서 1차 개정안이 제출이 된 바가 있습니다. 된 바가 있고, 그게 21대 때 충분히 다루어지지 못하고 임기 종료 관계로 폐기되었다가 22대 국회가 구성되면서 6월 달부터 사실은 여당하고 협의도 했던 면이 있습니다. 아마 제출된 게 8월 19일 날 제출이 되어서 위원님들께서 그런 말씀하시는 것은 충분히 이유 있는 지적이라고 생각을 하고 앞으로 이런 사항들에 대해서는 더 미리미리 챙겨서 그런 말씀 안 나오시도록 잘 챙기도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;그리고 김기표 위원님께서 지적하신 제도개선과 내용 보완은 분명히 필요하다고 저희도 인지를 하고 있기 때문에 일정을 잡아 주시면 다음번 법안소위든지 어디든지 간에 또 심도 있는 논의가 될 수 있도록 그렇게 준비를 하도록 하겠습니다.</span><br/></div></div></div><div id="spk_17" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;추가로……</span><br/></div></div></div><div id="spk_18" class="item4 speaker spk_mem" data-mem_id="6834" data-name="염태영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">염태영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YEOMTAEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/62507d5c8b1a48958d932ba76476a7a1.png" alt="염태영"></span><span class="txt"><strong class="name">염태영</strong><span class="position">위원</span><span class="area">(경기 수원시무)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;실제로 오늘 뭐라고 그래도 여야는 나뉘어서 입장 개진을 끝까지 하다가 마지막에 결국 중간 지점에서 절충하다시피 한 겁니다. 그것은 누가 뭐래도 부정할 수 없는 이제까지 법안소위에서 진행됐던 내용이고요 저는 그런 부분에 대해서 굉장히 유감스럽습니다. 왜냐하면 현장의 사정을 알고 현장에서 애로를 겪고 있는 사람들 국민들의 입장에서 좀 융통성 있게 봐 줄 필요가 있지 않았나 하는 생각이 우선 들고요.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;또 하나는 지금 이렇게 시한이 가까워 오는 것으로 예민한 사항이 있는데 좀 전의 장관님 말씀은, 이번 공공주택법도 여당하고는 내밀하게 협의했는지 모르지만 우리하고는 전혀 그와 관련된 교감을 한 게 없었다는 것을 말씀드리고 결국은 정부 입장이라는 것을 엊그저께 알게 됐다는 것이 저희의 솔직한 말씀이고요.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;지금 이것 외에도 10월 14일부로 용도변경 계도기간이 종료되고 또 올해 말부로 숙박업 신고 특례 기간이 종료되고, 그래서 내년부터 이행강제금이 부과될 예정으로 있는 생활숙박시설에 대한 관련 법 또한 목전에 다가왔어요. 그러니까 이것은 바로 주거권의 가장 밑바닥에 있는 계층 사다리의 가장 하부 구조가 흔들리는 문제이기 때문에 이런 예민한 사안도 미리, 기한이 닥쳐 가지고 2～3일 전에 별안간 어떤 입장을 정하지 말고 사전에 검토한 내용들을 여야하고 충분히 협의해서 그 일이 그 시한 안에서 너무 촉박하게 불합리하게 결정되는 일이 없도록 꼭 국토부에 요청을 드린다는 말씀도 함께 덧붙입니다.</span><br/></div></div></div><div id="spk_19" class="item4 speaker spk_mem" data-mem_id="0" data-name="박상우" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">국토교통부장관 박상우 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박상우"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">박상우</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;어제 제가 여야 위원님들께 8·8 대책 발표 등과 관련해서 앞으로 대국회 관계에 있어서의 소통 문제를 한층 개선하겠다는 약속을 드린 바가 있고요, 그 약속의 선상에서 법안이든지 정책이든지 내용에 대해서 미리미리 상의드리고 같이 의견을 모으는 그런 과정을 거치도록 하겠습니다.</span><br/></div></div></div><div id="spk_20" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;추가로 더 말씀 주실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;의견이 없으시면 토론을 종결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;장관님, 어차피 지금 위원님들 지적사항처럼 저희가 일몰 시간에 쫓겨서 논의를 해서 의결을 하는데 내용도 한 번 더 논의를 해야 되잖아요. 그러니까 그 내용에 대해서도 사전에 위원님들하고 서로 충분히 의견을 나누셔 가지고 원활하게 법안이 다시 보완될 수 있도록 해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;안건을 의결하기 전에 축조심사 및 비용추계서 첨부 생략을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-6">&nbsp;먼저 오늘 의결할 일부개정법률안에 대해서는 법안심사소위원회에서 심도 있는 심사가 이루어졌으므로 국회법 제58조제5항에 따라 축조심사를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub20-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-8">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub20-9">&nbsp;그리고 오늘 의결할 법률안 중 재정상의 조치를 수반하는 내용이 경미하거나 비용추계를 의뢰하였으나 본회의 부의 전까지 비용추계서가 회신되지 못하는 법률안에 대해서는 비용추계서 첨부를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub20-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub20-12">&nbsp;그러면 법률안을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub20-13">&nbsp;의사일정 제1항부터 제3항까지 이상 3건의 법률안은 각각 본회의에 부의하지 않고 그 내용을 통합 조정한 제4항의 공공주택 특별법 일부개정법률안(대안)을 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub20-14">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub20-15">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub20-16">&nbsp;오늘 의결한 법률안의 체계·자구의 정리와 대안 및 심사보고서 작성 등에 대해서는 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub20-17">&nbsp;다음은 오늘 의결한 법률안에 대해서 장관의 인사말씀을 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_21" class="item4 speaker spk_mem" data-mem_id="0" data-name="박상우" data-pos="국토교통부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">국토교통부장관 박상우 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박상우"></span><span class="txt"><span class="position">국토교통부장관</span><strong class="name">박상우</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;존경하는 맹성규 위원장님 그리고 권영진 국토법안소위원회 위원장님, 문진석 교통법안심사소위원회 위원장님을 비롯한 여러 위원님!</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;바쁘신 일정 가운데 공공 도심복합사업을 안정적으로 추진할 수 있도록 제도 일몰을 연장하는 내용으로 공공주택 특별법을 심의 의결하여 주신 것에 대하여 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;심의 과정에서 지적해 주신 내용들은 하위 법령의 정비와 운영 과정에서 그 취지가 충실히 반영되도록 노력하겠습니다. 그리고 덧붙여서 오늘 일몰 연장된 내용의 제도개선에 대한 사항도 다음번 심사 기회에 충분히 논의될 수 있도록 충실히 준비해서 사전에 의견을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;위원장님과 여러 위원님들의 노고에 다시 한번 깊은 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_22" class="item4 speaker spk_mem" data-mem_id="6665" data-name="맹성규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 맹성규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/250f36e411ab4b34bf0eb7fcadfbadf7.jpg" alt="맹성규"></span><span class="txt"><span class="position">위원장</span><strong class="name">맹성규</strong><span class="area">(인천 남동구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;이것으로 오늘의 의사일정을 모두 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;원만한 회의 진행에 협조해 주신 여러 위원님들과 장관 및 정부 관계자……</span><br/><span class="spk_sub" id="spk_sub22-4">&nbsp;아니, 안 두들겼는데.</span><br/><span class="spk_sub" id="spk_sub22-5">&nbsp;(웃음소리)</span><br/><span class="spk_sub" id="spk_sub22-6">&nbsp;앉아 계세요. 아, 이제 안 두들기겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-7">&nbsp;그리고 보좌진 여러분 그리고 언론인 여러분께 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub22-8">&nbsp;오늘의 의사일정을 모두 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-9">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(11시51분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(30인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank"><span class="name lts3 ">권영세</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KwonYoungJin" target="_blank"><span class="name lts3 ">권영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank"><span class="name lts3 ">김기표</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDOEUP" target="_blank"><span class="name lts3 ">김도읍</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank"><span class="name lts3 ">김은혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank"><span class="name lts3 ">김정재</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHeeJung" target="_blank"><span class="name lts3 ">김희정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank"><span class="name lts3 ">맹성규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank"><span class="name lts3 ">문진석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINHONGCHUL" target="_blank"><span class="name lts3 ">민홍철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKYONGKAB" target="_blank"><span class="name lts3 ">박용갑</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BOKKIWANG" target="_blank"><span class="name lts3 ">복기왕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank"><span class="name lts3 ">서범수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONMYOUNGSOO" target="_blank"><span class="name lts3 ">손명수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGKIHUN" target="_blank"><span class="name lts3 ">송기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANTAEJUN" target="_blank"><span class="name lts3 ">안태준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/EOMTAEYOUNG" target="_blank"><span class="name lts3 ">엄태영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YEOMTAEYOUNG" target="_blank"><span class="name lts3 ">염태영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank"><span class="name lts3 ">윤영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUNJAEOK" target="_blank"><span class="name lts3 ">윤재옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGKUN" target="_blank"><span class="name lts3 ">윤종군</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank"><span class="name lts3 ">윤종오</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank"><span class="name lts3 ">이소영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYEONHEE" target="_blank"><span class="name lts3 ">이연희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank"><span class="name lts3 ">이춘석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank"><span class="name lts3 ">전용기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGJEOMSIG" target="_blank"><span class="name lts3 ">정점식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGJUNHO" target="_blank"><span class="name lts3 ">정준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANJUNHO" target="_blank"><span class="name lts3 ">한준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGUNHA" target="_blank"><span class="name lts3 ">황운하</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 박재유</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 곽현준</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 문성환</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>국토교통부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 박상우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 진현환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 문성요</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">주택토지실장</span></span><span class="name lts3"> 김규철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">공공주택추진단장</span></span><span class="name lts3"> 김배성</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>자동차관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 20. 이연희 의원 대표발의)(의안번호 2202975)</div></div><div class="con"><p class="tit_sm"><strong>빈집 및 소규모주택 정비에 관한 특례법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 20. 김기표 의원 대표발의)(의안번호 2202979)</div></div><div class="con"><p class="tit_sm"><strong>공공토지의 비축에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 20. 이연희 의원 대표발의)(의안번호 2202984)</div></div><div class="con"><p class="tit_sm"><strong>주택법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 20. 이연희 의원 대표발의)(의안번호 2202985)</div></div><div class="con"><p class="tit_sm"><strong>공공주택 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 20. 천준호 의원 대표발의)(의안번호 2203008)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 8월 21일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52231;
+			const class_id = 2;
+			const confer_num = "053994";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641446302" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641446302"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641446302"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641446302"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

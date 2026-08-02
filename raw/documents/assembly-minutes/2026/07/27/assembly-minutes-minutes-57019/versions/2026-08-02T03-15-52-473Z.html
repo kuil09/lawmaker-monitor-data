@@ -1,0 +1,2385 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57019" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제437회 (임시회) 제2차 국회운영위원회</strong><span class="date">(2026.07.27.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 간사 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 소위원회 구성의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">o 간사(천준호·김승수) 및 소위원장(천준호·김승수·윤종오) 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">3. 청원 심사기간 연장 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">4. 국회상임위원회 위원 정수에 관한 규칙 일부개정규칙안(위원회안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">5. 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213908)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">6. 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213964)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">7. 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2214069)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">8. 국가안전보장회의법 일부개정법률안(임종득 의원 대표발의)(의안번호 2214200)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">9. 인사청문회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2214400)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">10. 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2214488)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">11. 국회법 일부개정법률안(이해민 의원·이주희 의원 대표발의)(의안번호 2214534)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">12. 국회과학기술처법안(이해민 의원·이주희 의원 대표발의)(의안번호 2214535)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">13. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(유상범 의원 대표발의)(의안번호 2214869)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">14. 인사청문회법 일부개정법률안(문금주 의원 대표발의)(의안번호 2214961)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">15. 국회법 일부개정법률안(김준형 의원 대표발의)(의안번호 2214994)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">16. 국회도서관법 일부개정법률안(임오경 의원 대표발의)(의안번호 2215070)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">17. 국회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215160)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">18. 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215162)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">19. 국가미래전략기본법안(위성곤 의원 대표발의)(의안번호 2215198)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">20. 국회법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215199)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">21. 국회법 일부개정법률안(한민수 의원 대표발의)(의안번호 2215210)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">22. 국회법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215220)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">23. 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2215221)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">24. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(전용기 의원 대표발의)(의안번호 2215269)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">25. 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215318)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">26. 국회법 일부개정법률안(김소희 의원 대표발의)(의안번호 2215354)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">27. 국회법 일부개정법률안(서지영 의원 대표발의)(의안번호 2215429)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">28. 국회법 일부개정법률안(김예지 의원 대표발의)(의안번호 2215540)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">29. 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2215546)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">30. 국회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215549)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">31. 인사청문회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215550)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">32. 출신 국가를 이유로 한 혐오표현 규제 법률안(윤후덕 의원 대표발의)(의안번호 2215627)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">33. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2215730)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">34. 국회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2215755)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">35. 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2215842)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">36. 국가인권위원회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2215995)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">37. 국회예산정책처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216042)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">38. 국회입법조사처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216043)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">39. 국가인권위원회법 일부개정법률안(이기헌 의원 대표발의)(의안번호 2216090)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">40. 인사청문회법 일부개정법률안(유상범 의원 대표발의)(의안번호 2216115)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">41. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(정을호 의원 대표발의)(의안번호 2216120)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">42. 국가인권위원회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2216144)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">43. 인사청문회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2216250)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">44. 국회법 일부개정법률안(김승원 의원 대표발의)(의안번호 2216265)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">45. 국가인권위원회법 일부개정법률안(서미화 의원 대표발의)(의안번호 2216417)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">46. 국회법 일부개정법률안(이수진 의원 대표발의)(의안번호 2216493)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">47. 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216503)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">48. 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2216873)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">49. 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216886)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">50. 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216999)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">51. 국가인권위원회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2217042)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">52. 국회법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217102)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">53. 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2217111)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">54. 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2217245)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">55. 국회법 일부개정법률안(김영진 의원 대표발의)(의안번호 2217248)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">56. 국회법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2217301)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">57. 국회도서관법 일부개정법률안(전용기 의원 대표발의)(의안번호 2217449)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">58. 국회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2217711)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">59. 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2218097)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">60. 국회법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218166)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">61. 국회입법조사처법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218167)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">62. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2218338)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">63. 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2218814)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item65">64. 국회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218888)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item66">65. 인사청문회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218890)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item67">66. 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219005)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item68">67. 국정감사 및 조사에 관한 법률 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219006)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item69">68. 대한민국 헌법 개정(안)에 관한 청원(남인순 의원 외 6인의 소개로 제출)(청원번호 2200251)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item70">69. 시민참여 개헌절차법 개정에 관한 청원(이주희 의원의 소개로 제출)(청원번호 2200268)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item71">70. 6.3 개헌 국민투표 반대에 관한 청원(이유진 외 51,449인 국민동의로 제출)(청원번호 2200291)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="한병도 위원장 (전북 익산시을 )"> 
+							한병도 위원장 (전북 익산시을 )
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정점식 위원 (경남 통영시고성군)"> 
+							정점식 위원 (경남 통영시고성군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="천준호 위원 (서울 강북구갑)"> 
+							천준호 위원 (서울 강북구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김승수 위원 (대구 북구을)"> 
+							김승수 위원 (대구 북구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김미애 위원 (부산 해운대구을)"> 
+							김미애 위원 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="전용기 위원 (경기 화성시정)"> 
+							전용기 위원 (경기 화성시정)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김기웅 위원 (대구 중구남구)"> 
+							김기웅 위원 (대구 중구남구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김성회 위원 (경기 고양시갑)"> 
+							김성회 위원 (경기 고양시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김민전 위원 (비례대표)"> 
+							김민전 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김윤 위원 (비례대표)"> 
+							김윤 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="문금주 위원 (전남 고흥군보성군장흥군강진군)"> 
+							문금주 위원 (전남 고흥군보성군장흥군강진군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박충권 위원 (비례대표)"> 
+							박충권 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤용근 위원 (충남 공주시부여군청양군)"> 
+							윤용근 위원 (충남 공주시부여군청양군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최수진 위원 (비례대표)"> 
+							최수진 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박정현 위원 (대전 대덕구)"> 
+							박정현 위원 (대전 대덕구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최은석 위원 (대구 동구군위군갑)"> 
+							최은석 위원 (대구 동구군위군갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김준형 위원 (비례대표)"> 
+							김준형 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="안도걸 위원 (광주 동구남구을)"> 
+							안도걸 위원 (광주 동구남구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤종오 위원 (울산 북구)"> 
+							윤종오 위원 (울산 북구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이정헌 위원 (서울 광진구갑)"> 
+							이정헌 위원 (서울 광진구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이주희 위원 (비례대표)"> 
+							이주희 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="임미애 위원 (비례대표)"> 
+							임미애 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김한규 위원 (제주 제주시을)"> 
+							김한규 위원 (제주 제주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박균택 위원 (광주 광산구갑)"> 
+							박균택 위원 (광주 광산구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김태규 위원 (울산 남구갑)"> 
+							김태규 위원 (울산 남구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김종민 위원 (세종특별자치시갑)"> 
+							김종민 위원 (세종특별자치시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김준혁 위원 (경기 수원시정)"> 
+							김준혁 위원 (경기 수원시정)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(27명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6617" data-name="한병도" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">한병도</span>
+												<span class="position">위원장</span>
+												<span class="area">(전북 익산시을 )</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6635" data-name="정점식" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">정점식</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 통영시고성군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6622" data-name="천준호" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">천준호</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강북구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6597" data-name="김승수" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">김승수</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 북구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6589" data-name="김미애" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">김미애</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6640" data-name="전용기" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">전용기</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 화성시정)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6840" data-name="김기웅" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">김기웅</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 중구남구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6830" data-name="김성회" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">김성회</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 고양시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6762" data-name="김민전" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">김민전</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6818" data-name="김윤" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">김윤</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem10" data-mem_id="6565" data-name="문금주" data-pos="위원"> 
+											<label for="spk_mem10">												
+												<span class="name">문금주</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 고흥군보성군장흥군강진군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem11" data-mem_id="6747" data-name="박충권" data-pos="위원"> 
+											<label for="spk_mem11">												
+												<span class="name">박충권</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem12" data-mem_id="7220" data-name="윤용근" data-pos="위원"> 
+											<label for="spk_mem12">												
+												<span class="name">윤용근</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 공주시부여군청양군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem13" data-mem_id="6780" data-name="최수진" data-pos="위원"> 
+											<label for="spk_mem13">												
+												<span class="name">최수진</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem14" data-mem_id="6808" data-name="박정현" data-pos="위원"> 
+											<label for="spk_mem14">												
+												<span class="name">박정현</span>
+												<span class="position">위원</span>
+												<span class="area">(대전 대덕구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem15" data-mem_id="6816" data-name="최은석" data-pos="위원"> 
+											<label for="spk_mem15">												
+												<span class="name">최은석</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 동구군위군갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem16" data-mem_id="6754" data-name="김준형" data-pos="위원"> 
+											<label for="spk_mem16">												
+												<span class="name">김준형</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem17" data-mem_id="6572" data-name="안도걸" data-pos="위원"> 
+											<label for="spk_mem17">												
+												<span class="name">안도걸</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 동구남구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem18" data-mem_id="6744" data-name="윤종오" data-pos="위원"> 
+											<label for="spk_mem18">												
+												<span class="name">윤종오</span>
+												<span class="position">위원</span>
+												<span class="area">(울산 북구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem19" data-mem_id="6774" data-name="이정헌" data-pos="위원"> 
+											<label for="spk_mem19">												
+												<span class="name">이정헌</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 광진구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem20" data-mem_id="6876" data-name="이주희" data-pos="위원"> 
+											<label for="spk_mem20">												
+												<span class="name">이주희</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem21" data-mem_id="6781" data-name="임미애" data-pos="위원"> 
+											<label for="spk_mem21">												
+												<span class="name">임미애</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem22" data-mem_id="6659" data-name="김한규" data-pos="위원"> 
+											<label for="spk_mem22">												
+												<span class="name">김한규</span>
+												<span class="position">위원</span>
+												<span class="area">(제주 제주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem23" data-mem_id="6797" data-name="박균택" data-pos="위원"> 
+											<label for="spk_mem23">												
+												<span class="name">박균택</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 광산구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem24" data-mem_id="7216" data-name="김태규" data-pos="위원"> 
+											<label for="spk_mem24">												
+												<span class="name">김태규</span>
+												<span class="position">위원</span>
+												<span class="area">(울산 남구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem25" data-mem_id="6608" data-name="김종민" data-pos="의원"> 
+											<label for="spk_mem25">												
+												<span class="name">김종민</span>
+												<span class="position">위원</span>
+												<span class="area">(세종특별자치시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem26" data-mem_id="6833" data-name="김준혁" data-pos="의원"> 
+											<label for="spk_mem26">												
+												<span class="name">김준혁</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 수원시정)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57019&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제437회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>국회운영위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 7월 27일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">국회운영위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 간사 선임의 건</li><li><span class="num">2.</span> 소위원회 구성의 건</li><li><span class="num">3.</span> 청원 심사기간 연장 요구의 건</li><li><span class="num">4.</span> 국회상임위원회 위원 정수에 관한 규칙 일부개정규칙안(위원회안)</li><li><span class="num">5.</span> 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213908)</li><li><span class="num">6.</span> 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213964)</li><li><span class="num">7.</span> 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2214069)</li><li><span class="num">8.</span> 국가안전보장회의법 일부개정법률안(임종득 의원 대표발의)(의안번호 2214200)</li><li><span class="num">9.</span> 인사청문회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2214400)</li><li><span class="num">10.</span> 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2214488)</li><li><span class="num">11.</span> 국회법 일부개정법률안(이해민 의원·이주희 의원 대표발의)(의안번호 2214534)</li><li><span class="num">12.</span> 국회과학기술처법안(이해민 의원·이주희 의원 대표발의)(의안번호 2214535)</li><li><span class="num">13.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(유상범 의원 대표발의)(의안번호 2214869)</li><li><span class="num">14.</span> 인사청문회법 일부개정법률안(문금주 의원 대표발의)(의안번호 2214961)</li><li><span class="num">15.</span> 국회법 일부개정법률안(김준형 의원 대표발의)(의안번호 2214994)</li><li><span class="num">16.</span> 국회도서관법 일부개정법률안(임오경 의원 대표발의)(의안번호 2215070)</li><li><span class="num">17.</span> 국회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215160)</li><li><span class="num">18.</span> 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215162)</li><li><span class="num">19.</span> 국가미래전략기본법안(위성곤 의원 대표발의)(의안번호 2215198)</li><li><span class="num">20.</span> 국회법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215199)</li><li><span class="num">21.</span> 국회법 일부개정법률안(한민수 의원 대표발의)(의안번호 2215210)</li><li><span class="num">22.</span> 국회법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215220)</li><li><span class="num">23.</span> 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2215221)</li><li><span class="num">24.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(전용기 의원 대표발의)(의안번호 2215269)</li><li><span class="num">25.</span> 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215318)</li><li><span class="num">26.</span> 국회법 일부개정법률안(김소희 의원 대표발의)(의안번호 2215354)</li><li><span class="num">27.</span> 국회법 일부개정법률안(서지영 의원 대표발의)(의안번호 2215429)</li><li><span class="num">28.</span> 국회법 일부개정법률안(김예지 의원 대표발의)(의안번호 2215540)</li><li><span class="num">29.</span> 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2215546)</li><li><span class="num">30.</span> 국회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215549)</li><li><span class="num">31.</span> 인사청문회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215550)</li><li><span class="num">32.</span> 출신 국가를 이유로 한 혐오표현 규제 법률안(윤후덕 의원 대표발의)(의안번호 2215627)</li><li><span class="num">33.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2215730)</li><li><span class="num">34.</span> 국회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2215755)</li><li><span class="num">35.</span> 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2215842)</li><li><span class="num">36.</span> 국가인권위원회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2215995)</li><li><span class="num">37.</span> 국회예산정책처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216042)</li><li><span class="num">38.</span> 국회입법조사처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216043)</li><li><span class="num">39.</span> 국가인권위원회법 일부개정법률안(이기헌 의원 대표발의)(의안번호 2216090)</li><li><span class="num">40.</span> 인사청문회법 일부개정법률안(유상범 의원 대표발의)(의안번호 2216115)</li><li><span class="num">41.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(정을호 의원 대표발의)(의안번호 2216120)</li><li><span class="num">42.</span> 국가인권위원회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2216144)</li><li><span class="num">43.</span> 인사청문회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2216250)</li><li><span class="num">44.</span> 국회법 일부개정법률안(김승원 의원 대표발의)(의안번호 2216265)</li><li><span class="num">45.</span> 국가인권위원회법 일부개정법률안(서미화 의원 대표발의)(의안번호 2216417)</li><li><span class="num">46.</span> 국회법 일부개정법률안(이수진 의원 대표발의)(의안번호 2216493)</li><li><span class="num">47.</span> 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216503)</li><li><span class="num">48.</span> 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2216873)</li><li><span class="num">49.</span> 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216886)</li><li><span class="num">50.</span> 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216999)</li><li><span class="num">51.</span> 국가인권위원회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2217042)</li><li><span class="num">52.</span> 국회법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217102)</li><li><span class="num">53.</span> 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2217111)</li><li><span class="num">54.</span> 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2217245)</li><li><span class="num">55.</span> 국회법 일부개정법률안(김영진 의원 대표발의)(의안번호 2217248)</li><li><span class="num">56.</span> 국회법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2217301)</li><li><span class="num">57.</span> 국회도서관법 일부개정법률안(전용기 의원 대표발의)(의안번호 2217449)</li><li><span class="num">58.</span> 국회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2217711)</li><li><span class="num">59.</span> 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2218097)</li><li><span class="num">60.</span> 국회법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218166)</li><li><span class="num">61.</span> 국회입법조사처법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218167)</li><li><span class="num">62.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2218338)</li><li><span class="num">63.</span> 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2218814)</li><li><span class="num">64.</span> 국회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218888)</li><li><span class="num">65.</span> 인사청문회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218890)</li><li><span class="num">66.</span> 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219005)</li><li><span class="num">67.</span> 국정감사 및 조사에 관한 법률 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219006)</li><li><span class="num">68.</span> 대한민국 헌법 개정(안)에 관한 청원(남인순 의원 외 6인의 소개로 제출)(청원번호 2200251)</li><li><span class="num">69.</span> 시민참여 개헌절차법 개정에 관한 청원(이주희 의원의 소개로 제출)(청원번호 2200268)</li><li><span class="num">70.</span> 6.3 개헌 국민투표 반대에 관한 청원(이유진 외 51,449인 국민동의로 제출)(청원번호 2200291)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 간사 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 소위원회 구성의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3">o 간사(천준호·김승수) 및 소위원장(천준호·김승수·윤종오) 인사</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">3.</span> 청원 심사기간 연장 요구의 건</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">4.</span> 국회상임위원회 위원 정수에 관한 규칙 일부개정규칙안(위원회안)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">5.</span> 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213908)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">6.</span> 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213964)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">7.</span> 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2214069)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">8.</span> 국가안전보장회의법 일부개정법률안(임종득 의원 대표발의)(의안번호 2214200)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">9.</span> 인사청문회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2214400)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">10.</span> 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2214488)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">11.</span> 국회법 일부개정법률안(이해민 의원·이주희 의원 대표발의)(의안번호 2214534)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">12.</span> 국회과학기술처법안(이해민 의원·이주희 의원 대표발의)(의안번호 2214535)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">13.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(유상범 의원 대표발의)(의안번호 2214869)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">14.</span> 인사청문회법 일부개정법률안(문금주 의원 대표발의)(의안번호 2214961)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">15.</span> 국회법 일부개정법률안(김준형 의원 대표발의)(의안번호 2214994)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">16.</span> 국회도서관법 일부개정법률안(임오경 의원 대표발의)(의안번호 2215070)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">17.</span> 국회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215160)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">18.</span> 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215162)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">19.</span> 국가미래전략기본법안(위성곤 의원 대표발의)(의안번호 2215198)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">20.</span> 국회법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215199)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">21.</span> 국회법 일부개정법률안(한민수 의원 대표발의)(의안번호 2215210)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">22.</span> 국회법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215220)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">23.</span> 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2215221)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">24.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(전용기 의원 대표발의)(의안번호 2215269)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">25.</span> 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215318)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">26.</span> 국회법 일부개정법률안(김소희 의원 대표발의)(의안번호 2215354)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">27.</span> 국회법 일부개정법률안(서지영 의원 대표발의)(의안번호 2215429)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">28.</span> 국회법 일부개정법률안(김예지 의원 대표발의)(의안번호 2215540)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">29.</span> 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2215546)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">30.</span> 국회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215549)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">31.</span> 인사청문회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215550)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">32.</span> 출신 국가를 이유로 한 혐오표현 규제 법률안(윤후덕 의원 대표발의)(의안번호 2215627)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">33.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2215730)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">34.</span> 국회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2215755)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">35.</span> 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2215842)</a></li><li id="head_item37"><a href="#" class="move" data-target="#item37"><span class="num">36.</span> 국가인권위원회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2215995)</a></li><li id="head_item38"><a href="#" class="move" data-target="#item38"><span class="num">37.</span> 국회예산정책처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216042)</a></li><li id="head_item39"><a href="#" class="move" data-target="#item39"><span class="num">38.</span> 국회입법조사처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216043)</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">39.</span> 국가인권위원회법 일부개정법률안(이기헌 의원 대표발의)(의안번호 2216090)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">40.</span> 인사청문회법 일부개정법률안(유상범 의원 대표발의)(의안번호 2216115)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">41.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(정을호 의원 대표발의)(의안번호 2216120)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">42.</span> 국가인권위원회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2216144)</a></li><li id="head_item44"><a href="#" class="move" data-target="#item44"><span class="num">43.</span> 인사청문회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2216250)</a></li><li id="head_item45"><a href="#" class="move" data-target="#item45"><span class="num">44.</span> 국회법 일부개정법률안(김승원 의원 대표발의)(의안번호 2216265)</a></li><li id="head_item46"><a href="#" class="move" data-target="#item46"><span class="num">45.</span> 국가인권위원회법 일부개정법률안(서미화 의원 대표발의)(의안번호 2216417)</a></li><li id="head_item47"><a href="#" class="move" data-target="#item47"><span class="num">46.</span> 국회법 일부개정법률안(이수진 의원 대표발의)(의안번호 2216493)</a></li><li id="head_item48"><a href="#" class="move" data-target="#item48"><span class="num">47.</span> 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216503)</a></li><li id="head_item49"><a href="#" class="move" data-target="#item49"><span class="num">48.</span> 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2216873)</a></li><li id="head_item50"><a href="#" class="move" data-target="#item50"><span class="num">49.</span> 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216886)</a></li><li id="head_item51"><a href="#" class="move" data-target="#item51"><span class="num">50.</span> 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216999)</a></li><li id="head_item52"><a href="#" class="move" data-target="#item52"><span class="num">51.</span> 국가인권위원회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2217042)</a></li><li id="head_item53"><a href="#" class="move" data-target="#item53"><span class="num">52.</span> 국회법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217102)</a></li><li id="head_item54"><a href="#" class="move" data-target="#item54"><span class="num">53.</span> 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2217111)</a></li><li id="head_item55"><a href="#" class="move" data-target="#item55"><span class="num">54.</span> 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2217245)</a></li><li id="head_item56"><a href="#" class="move" data-target="#item56"><span class="num">55.</span> 국회법 일부개정법률안(김영진 의원 대표발의)(의안번호 2217248)</a></li><li id="head_item57"><a href="#" class="move" data-target="#item57"><span class="num">56.</span> 국회법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2217301)</a></li><li id="head_item58"><a href="#" class="move" data-target="#item58"><span class="num">57.</span> 국회도서관법 일부개정법률안(전용기 의원 대표발의)(의안번호 2217449)</a></li><li id="head_item59"><a href="#" class="move" data-target="#item59"><span class="num">58.</span> 국회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2217711)</a></li><li id="head_item60"><a href="#" class="move" data-target="#item60"><span class="num">59.</span> 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2218097)</a></li><li id="head_item61"><a href="#" class="move" data-target="#item61"><span class="num">60.</span> 국회법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218166)</a></li><li id="head_item62"><a href="#" class="move" data-target="#item62"><span class="num">61.</span> 국회입법조사처법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218167)</a></li><li id="head_item63"><a href="#" class="move" data-target="#item63"><span class="num">62.</span> 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2218338)</a></li><li id="head_item64"><a href="#" class="move" data-target="#item64"><span class="num">63.</span> 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2218814)</a></li><li id="head_item65"><a href="#" class="move" data-target="#item65"><span class="num">64.</span> 국회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218888)</a></li><li id="head_item66"><a href="#" class="move" data-target="#item66"><span class="num">65.</span> 인사청문회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218890)</a></li><li id="head_item67"><a href="#" class="move" data-target="#item67"><span class="num">66.</span> 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219005)</a></li><li id="head_item68"><a href="#" class="move" data-target="#item68"><span class="num">67.</span> 국정감사 및 조사에 관한 법률 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219006)</a></li><li id="head_item69"><a href="#" class="move" data-target="#item69"><span class="num">68.</span> 대한민국 헌법 개정(안)에 관한 청원(남인순 의원 외 6인의 소개로 제출)(청원번호 2200251)</a></li><li id="head_item70"><a href="#" class="move" data-target="#item70"><span class="num">69.</span> 시민참여 개헌절차법 개정에 관한 청원(이주희 의원의 소개로 제출)(청원번호 2200268)</a></li><li id="head_item71"><a href="#" class="move" data-target="#item71"><span class="num">70.</span> 6.3 개헌 국민투표 반대에 관한 청원(이유진 외 51,449인 국민동의로 제출)(청원번호 2200291)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시12분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제437회 국회(임시회) 제2차 국회운영위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;존경하는 국회운영위원회 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;멈춰 섰던 국회의 시계가 다시 돌기 시작했습니다. 후반기 국회운영위원회 전체회의를 오늘에서야 여야가 함께 열게 되었습니다. 함께해 주신 여야 위원님들 진심으로 환영합니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;국회가 장기간 공전하면서 민생법안들이 잠들어 있습니다. 중동발 리스크 재점화로 유가와 환율이 출렁이고 그 불똥이 국민의 밥상과 기업의 생산 현장으로 튈 수 있습니다. 늦은 출발인 만큼 더 부지런히 달려야 합니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;운영위원회는 국회법 소관 상임위입니다. 국회의 시계가 멈춰 서는 일이 없도록 제도를 정비해야 합니다. 일하는 국회를 제도로 완성해야 합니다. 위원장으로서 약속드립니다. 운영위원회가 일하는 국회의 견인차가 될 수 있도록 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;그러면 오늘은 여야가 모두 참석하는 첫 회의이므로 참석하신 위원님들의 인사를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;먼저 국민의힘 정점식 원내대표님께서 인사하시고 이어서 더불어민주당 천준호 수석부대표님부터 시작을 해서 그다음에 국민의힘 김승수 수석부대표님순으로 번갈아가면서 인사를 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-9">&nbsp;먼저 정점식 원내대표님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6635" data-name="정점식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">정점식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JEONGJEOMSIG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a50392c4f73b4699bed10d70dccf5ae2.jpg" alt="정점식"></span><span class="txt"><strong class="name">정점식</strong><span class="position">위원</span><span class="area">(경남 통영시고성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;한병도 운영위원장님과 여러 운영위원 여러분 반갑습니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;경남 통영시고성군 출신의 정점식 국회의원입니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;운영위원회가 헌법과 국회법에 따라 국회의 권위를 바로 세우고 국민들로부터 신뢰받는 위원회가 될 수 있도록 최선을 다하겠습니다. 그리고 원내대표로서 운영위에 참여하는 만큼 원칙과 책임을 바탕으로 국정을 면밀히 점검하고 국민의 목소리를 충분히 대변해 나가도록 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;함께할 수 있어서 영광이고 감사합니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;다음으로 천준호 수석부대표님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item0 speaker spk_mem" data-mem_id="6622" data-name="천준호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">천준호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1ecd18672c604ef5a6c90dd06133006e.jpg" alt="천준호"></span><span class="txt"><strong class="name">천준호</strong><span class="position">위원</span><span class="area">(서울 강북구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;서울 강북구갑 출신의 더불어민주당 원내수석부대표를 맡고 있는 천준호 위원입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;오늘 국민의힘 위원들과 함께 운영위원회 개최를 하게 되어서 기쁘게 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;하지만 국회의 상황은 여러 가지로 많은 숙제와 과제가 밀려 있는 것 같습니다. 세계적으로 AI 혁명 시대에 국회가 좀 더 적극적으로 대응을 하면서 여러 가지 법제들을 개선할 필요성이 있는데요. 특히 일하는 국회를 만들기 위해서 여러 가지 제도 정비가 시급하게 필요한 상황입니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;이런 부분들이 더 속도를 낼 수 있도록 해 나가도록 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;다음은 김승수 수석부대표님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_7" class="item0 speaker spk_mem" data-mem_id="6597" data-name="김승수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">김승수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSEUNGSU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ed6fa85a063842c59f5cfc4cca90eafb.jpg" alt="김승수"></span><span class="txt"><strong class="name">김승수</strong><span class="position">위원</span><span class="area">(대구 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;운영위 국민의힘 간사를 맡게 된 대구 북구을 출신 김승수입니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;늦었습니다마는 우리 운영위가 한병도 위원장님 이하 여야 위원님들이 모인 자리에서 회의를 갖게 된 것을 반갑게 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;운영위는 국회운영 전반을 책임지고 있는 그런 상임위입니다. 그런만큼 법과 원칙 또 관례에 맞게 운영될 수 있도록 해야 한다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;야당 간사로서 여야 간의 가교 역할은 물론이고 국회가 견제와 균형 또 협치의 정신이 살아날 수 있도록 운영되는 데 최선을 다하겠다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_8" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;다음은 김한규 위원님이 안 오셔서 김미애 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_9" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;안녕하십니까? 국민의힘 원내정책수석부대표를 맡고 있고 부산 해운대구을 국회의원 김미애입니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;정치는 국민의 신뢰를 얻는 과정이라고 생각합니다. 운영위가 정쟁의 장이 아니라 국민께 희망을 드릴 수 있도록 애쓰겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;한병도 위원장님을 비롯한 우리 모두가 진심으로 국민께 희망과 신뢰를 드리는 그런 운영위가 되도록 애쓰기를 진심으로 바랍니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_10" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;다음은 전용기 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item0 speaker spk_mem" data-mem_id="6640" data-name="전용기" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">전용기 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7ebec69fa93042139121370390887458.png" alt="전용기"></span><span class="txt"><strong class="name">전용기</strong><span class="position">위원</span><span class="area">(경기 화성시정)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;반갑습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;더불어민주당 원내소통수석부대표 맡고 있고 화성정 전용기 위원입니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;저도 우리 국회운영위원회가 잘 운영될 수 있게끔 여야 위원님들 모시고 함께 잘 활동할 수 있도록 하겠다는 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_12" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;다음은 김기웅 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item0 speaker spk_mem" data-mem_id="6840" data-name="김기웅" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">김기웅 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMKIWOONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e032a885456487ebe70f143ef373f92.png" alt="김기웅"></span><span class="txt"><strong class="name">김기웅</strong><span class="position">위원</span><span class="area">(대구 중구남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;국민의힘 원내부대표 맡고 있는 대구 중구남구 출신 김기웅입니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;한병도 위원장님하고 위원님들 봬서 반갑고요. 잘 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_14" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;다음은 김성회 위원님.</span><br/></div></div></div><div id="spk_15" class="item0 speaker spk_mem" data-mem_id="6830" data-name="김성회" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">김성회 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b263e390ed2a4a4ea6e789d7447c6093.jpg" alt="김성회"></span><span class="txt"><strong class="name">김성회</strong><span class="position">위원</span><span class="area">(경기 고양시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;원내부대표 김성회입니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;열심히 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_16" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;다음 김민전 위원님.</span><br/></div></div></div><div id="spk_17" class="item0 speaker spk_mem" data-mem_id="6762" data-name="김민전" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">김민전 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMEENGEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d856bf1d1b14476f84af3c07c1ea864e.jpg" alt="김민전"></span><span class="txt"><strong class="name">김민전</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;안녕하세요.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;김민전 위원입니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;30년간 국회에 대해서 글을 써 왔습니다. 그리고 오늘 이 자리에 있게 되어서 한편에 있어서는 감개무량하고요 또 다른 한편에 있어서는 굉장히 슬픕니다.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;역대 한국 국회는 민주화 이후에 협치가 기본원칙이었다 이렇게 얘기할 수 있는데요. 이제 협치가 다 무너진 이 상황의 국회, 앞으로 어떻게 해 나가야 될 것인지 너무나 걱정이 많습니다.</span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;정말 협치를 다시 세울 수 있는 그런 운영위원회가 되기를 바라겠습니다.</span><br/><span class="spk_sub" id="spk_sub17-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_18" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;다음은 김윤 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_19" class="item0 speaker spk_mem" data-mem_id="6818" data-name="김윤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">김윤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e7f6c2e0d06240658849cb82b2e5960e.jpg" alt="김윤"></span><span class="txt"><strong class="name">김윤</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;더불어민주당 원내부대표를 맡고 있는 김윤입니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;저는 국회에 무너지는 지역필수의료 문제를 해결하기 위해서 들어왔는데요.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;얼마 전 전북대병원 신생아 중환자실을 지키던 교수가 수년 동안 주 90시간씩 근무하고 당직을 서는 일을 더 이상 할 수 없어서 사직을 한다고 결정을 내렸습니다. 그래서 전북대병원 중환자실이 현재 제대로 운영이 되지 못하고 있고 전북지역의 고위험 분만이 위기에 빠져 있는 상황입니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;이뿐만이 아닐 것입니다. 우리 의료 분야뿐만이 아니라 대한민국이 거대한 전환의 시기에 놓여 있고 국회가 해야 될 일이 너무 많습니다.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;일하는 국회를 만드는 데 운영위원회가 앞장섰으면 하는 바람입니다.</span><br/><span class="spk_sub" id="spk_sub19-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_20" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;김태규 위원님이 안 오셔서 그다음 문금주 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item0 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;반갑습니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;전남 고흥·보성·장흥·강진군 국회의원 문금주입니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;존경하는 한병도 위원장님을 비롯한 위원님들과 전반기에 이어서 운영위에서 다시 활동하게 되어 무척 영광으로 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;먼저 두 달이 넘도록 원구성이 지연되며 국민 여러분께 심려를 끼쳐 드린 점 매우 송구스럽고 안타깝다는 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;하지만 늦게나마 여야가 합의를 이루고 후반기 운영위원회가 정상 가동을 시작하게 된 것은 참으로 다행스러운 일이다 생각합니다.</span><br/><span class="spk_sub" id="spk_sub21-6">&nbsp;앞으로 우리 운영위원회가 국회운영의 중심축으로서 제 역할을 다하고 원활하게 운영되기를 진심으로 바랍니다.</span><br/><span class="spk_sub" id="spk_sub21-7">&nbsp;오랜만에 여야가 한자리에 모인 만큼 한말씀만 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-8">&nbsp;최근 국힘당 주진우 의원님께서 제기하는 국회의장님의 외교활동에 대한 폄훼와 비방은 참으로 안타깝고 유감스럽습니다. 의원외교에 대한 최소한의 이해도 없이 무분별하게 폄훼하는 행태를 보면서 그저 참 검사스럽다라는 말밖에 생각나지 않습니다.</span><br/><span class="spk_sub" id="spk_sub21-9">&nbsp;지금은 정부외교와 더불어 국회 차원의 전방위적 의원외교까지 지혜를 모아서 국익을 극대화해야 할 중차대한 시점입니다. 이러한 정당한 국외활동마저 정쟁의 도구로 삼아 흠집 내기에 몰두하는 주진우 의원의 발언은 제 궤도를 벗어나 달리는 탈선한 기관차와 다를 바 없습니다.</span><br/><span class="spk_sub" id="spk_sub21-10">&nbsp;이제는 달라져야 합니다. 더 이상 국익과 민생을 저버리는 소모적인 정쟁에서 벗어나 국회가 본연의 소임을 다해 가기를 바랍니다. 어렵게 문을 연 후반기 국회인 만큼 우리 운영위원회가 솔선수범해서 국회를 바로잡는 일하는 국회의 중심이 되길 바라마지 않습니다.</span><br/><span class="spk_sub" id="spk_sub21-11">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_22" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;위원장님, 의사진행발언하겠습니다.</span><br/></div></div></div><div id="spk_23" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;예, 하십시오.</span><br/></div></div></div><div id="spk_24" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;제가 존경하는 문금주 위원님의 인사말씀을 잘 듣고 있다가 갑자기 인사말씀에서 벗어나는 말씀을 하셨기 때문에 그에 대한 말씀을 좀 드리고자 합니다.</span><br/></div></div></div><div id="spk_25" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;그러실 것 같아서 말씀드리는 겁니다.</span><br/></div></div></div><div id="spk_26" class="item0 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;우리가 주진우 의원께서, 국회의원이 국민을 대신해서 얼마든지 비판을 할 수 있지요. 그리고 저도 의원외교활동을 하지만 항상 국민의 혈세라는 생각을 합니다. 그리고 그 범위가 합리적인 범위를 벗어난 데 대해서는 제대로 설명할 의무가 있습니다. 그리고 국회의장의 외교활동을 폄훼하지는 않지요. 다만 금액 같은 부분이 국민들이 보시기에 과다하다고 여기기 때문일 겁니다.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;그리고 의원외교의 지혜를 모으고 국익을 극대화하는 건 바람직합니다. 그러나 그것이 그 역시도 국민의 입장에서 눈높이에 맞아야 한다고 봅니다. 그런 부분을 폄훼하는 것에 유감입니다.</span><br/></div></div></div><div id="spk_27" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;잘 알겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;다음 인사말씀 이어 가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;다음은 박충권 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_28" class="item0 speaker spk_mem" data-mem_id="6747" data-name="박충권" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">박충권 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKCHOONGKWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b51683ab9a42410bbf52570a33ca2c48.jpg" alt="박충권"></span><span class="txt"><strong class="name">박충권</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;안녕하십니까? 국민의힘 박충권 위원입니다.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;제가 이번으로 국회운영위원으로 활동하는 것이 두 번째입니다. 한병도 위원장님을 비롯한 존경하는 선배·동료 위원님들 모시고 일하게 돼서 영광입니다.</span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;정말 우리 운영위가 일 잘하는 국회의 모범 상임위가 되기를 바라마지 않습니다. 그런 차원에서 저부터 열심히 하겠다는 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub28-4">&nbsp;제가 생각하는 일 잘하는 국회의 모습은 어떤 한쪽 방향으로 품질 미달의 법안들을 양적으로 밀어내는 그런 국회가 아니라 여야의 협치가 살아 있어서 그래서 정말 고품질의 성과물들을 창출해 내는 그런 국회가 일 잘하는 국회라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub28-5">&nbsp;그런 차원에서 협치가 살아 있는 정말 건설적인 일들을 하는 그런 상임위가 됐으면 좋겠다라는 말씀을 드리는데, 그 앞서서 여당 위원님께서 전 국회의장님 말씀을 하신 부분에 대해서 조금은 아쉽게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub28-6">&nbsp;그보다는 훨씬 더 시급한 사안들이 많습니다. 우리 해군 장병이 실종됐을 당시 이재명 대통령의 골프 논란도 있었고 그리고 분당 아파트 근저당 매매 논란도 있고 선관위 사태로 인해서 국민들의 분노가 정말 상당한 수준입니다. 이런 많은 부분들을 해결해야 되는 자리에서 첫날 인사말씀으로 그런 말씀을 하신 부분에 대해서 좀 아쉽게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub28-7">&nbsp;앞으로 열심히 협치가 살아 있는 정말 제대로 된 성과물을 창출해 내는 그런 상임위가 됐으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub28-8">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_29" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;다음은 윤용근 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_30" class="item0 speaker spk_mem" data-mem_id="7220" data-name="윤용근" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">윤용근 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUNYONGKEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/W0154979.jpg" alt="윤용근"></span><span class="txt"><strong class="name">윤용근</strong><span class="position">위원</span><span class="area">(충남 공주시부여군청양군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;인사 올리겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;이번 6월 3일 보궐선거에서 당선된 충남 공주·부여·청양 국회의원 윤용근입니다.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;제가 사실 선거를 얼마 치르지 않았기 때문에 지역에서 가장 많은 이야기를 들은 것이 국회 가면 제발 싸우지 마라라는 말씀이었는데 와서 이렇게 제가 접한 첫 국회의 모습은 역시나 일방적 독주였습니다.</span><br/><span class="spk_sub" id="spk_sub30-4">&nbsp;저도 필리버스터를 해 봤지만 과연 우리 국민들에게 우리가 보여 줄 것이 이것밖에 없나, 저는 우리 국회운영위원회만큼은 양당 원내대표님들께서도 계시고 또 가장 존경받는 위원님들이 계시기 때문에 운영위원회에서는 적어도 여야 간에 협치와 설득과 운영에 있어서 일방적 국회 운영이 아니라 국민적 눈높이에 맞는 그런 운영위원회가 될 것으로 믿고 기대하고 저 역시 열심히 배우고 함께하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-5">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_31" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub31-2">&nbsp;다음은 최수진 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_32" class="item0 speaker spk_mem" data-mem_id="6780" data-name="최수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">최수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOISOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/748a08387b2f4395b76fc870d2184cbf.png" alt="최수진"></span><span class="txt"><strong class="name">최수진</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;안녕하십니까? 원내수석대변인을 맡고 있는 최수진입니다.</span><br/><span class="spk_sub" id="spk_sub32-2">&nbsp;서로 다른 입장 차이로 여야가 정쟁 속에 있지만, 운영위에서도 어떤 견제와 균형 당연히 필요합니다. 그럼에도 불구하고 항상 국민의 입장에서 국민을 위한 마음으로 만들어지는 그런 운영위원회가 이번에 꼭 되기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub32-3">&nbsp;잘 부탁드립니다.</span><br/></div></div></div><div id="spk_33" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;다음 박정현 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_34" class="item0 speaker spk_mem" data-mem_id="6808" data-name="박정현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">박정현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEONGHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b04cd2781caa4dfab09e5cd6442c7774.jpg" alt="박정현"></span><span class="txt"><strong class="name">박정현</strong><span class="position">위원</span><span class="area">(대전 대덕구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;반갑습니다. 충청권 메가시티의 중심 대전 대덕구 국회의원 박정현입니다.</span><br/><span class="spk_sub" id="spk_sub34-2">&nbsp;일하는 국회를 만들기 위해서, 함께할 수 있는 운영위원회에 참여할 수 있게 되어서 굉장히 어깨가 무겁고 또 한편으로는 여러 선배·동료 위원님들과 함께 일하게 되어서 기쁘다는 말씀 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub34-3">&nbsp;지금 국민의힘에서 여러 위원님들께서 국민의 눈높이라는 말씀을 굉장히 강조하셨는데 국민의 눈높이에 맞는 의정활동을 하자라는 것은 여야가 따로 없고 그것에 대한 이견이 있을 수는 없다고 보여집니다.</span><br/><span class="spk_sub" id="spk_sub34-4">&nbsp;다만 저희가 아쉬운 것은 국민의 눈높이를 강조하는 국민의힘이 실제로 두 달 동안 원 구성이 제대로 되지 않도록 한 것에 대해서는 국민들에게 좀 사죄하셔야 되는 것 아닌가 이런 말씀을 드리고 싶고요. 정말 국민의 눈높이에 잘 맞춰서 이제 소모적인 정쟁은 그만두고 국민의 삶을 바라보면서 국회 의정활동을 했으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub34-5">&nbsp;민생이 굉장히 어렵고 국제관계도 굉장히 급격하게 변하고 있기 때문에 국회가 해야 될 역할이 그 어느 때보다 많은 것 같습니다. 그래서 이번 운영위원회에서는 여야가 한마음으로 정말 국민을 바라보고 국민의 눈높이에 맞게 의정활동, 운영위원회 활동을 했으면 좋겠다는 바람을 말씀드리고요. 저도 열심히 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub34-6">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_35" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;다음은 최은석 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_36" class="item0 speaker spk_mem" data-mem_id="6816" data-name="최은석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">최은석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIEUNSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9434f70d32fa4f5d9fdf1765e541b175.png" alt="최은석"></span><span class="txt"><strong class="name">최은석</strong><span class="position">위원</span><span class="area">(대구 동구군위군갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;존경하는 한병도 위원장님과 여야 여러 선배·동료 위원님들, 같이 일하게 돼서 반갑습니다.</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;운영위원회 전반기의 그런 일방적인 독주나 일방적인 운영위원회를 지양하고 후반기에는 여야 협치가 복원되고 진짜 민생을 최우선으로 일하는 그런 운영위원회가 되기를 간절히 바라겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-3">&nbsp;여야 선배·동료 위원님들, 잘 부탁드리고 저도 열심히 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_37" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;다음은 김준형 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_38" class="item0 speaker spk_mem" data-mem_id="6754" data-name="김준형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">김준형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJOONHYUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7e2d7f243fdf4eaba8fb034549668444.jpg" alt="김준형"></span><span class="txt"><strong class="name">김준형</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;안녕하십니까? 조국혁신당 원내대표 김준형입니다.</span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;여러분께서 여야 협치를 말씀하실 때 과연 우리 당이 들어 있는지 잘 모르겠습니다. 국회 교섭단체의 턱없이 높은 턱 이 자체가 벌써 형용모순이지요. 그 때문에 저희가 없는데요. 민주주의는 다수로 결정하지만 소수의 의견을 존중한다고 배웠습니다. 존경하는 위원장님과 위원들의 제도적 한계가 있더라도 배려를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub38-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_39" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub39-2">&nbsp;다음은 안도걸 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_40" class="item0 speaker spk_mem" data-mem_id="6572" data-name="안도걸" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">안도걸 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/56e742cc39304aad9ff06ad5490cc084.png" alt="안도걸"></span><span class="txt"><strong class="name">안도걸</strong><span class="position">위원</span><span class="area">(광주 동구남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;민주화의 성지 그리고 미래 첨단도시로 도약하고 있는 광주 동구남구을 국회의원 안도걸입니다.</span><br/><span class="spk_sub" id="spk_sub40-2">&nbsp;먼저 존경하는 한병도 운영위원장님, 양당 간사님 그리고 선배·동료 여러분들과 함께 운영위원회에 참여하게 되어서 대단한 영광으로 생각됩니다.</span><br/><span class="spk_sub" id="spk_sub40-3">&nbsp;우리 국회가 이번에 뒤늦게 출발을 한 만큼 이제는 오직 일하는 유능한 국회의 모습으로 국민의 기대에 부응해야 한다고 생각합니다. 대한민국 경제의 대도약을 이루고 또 우리 민생을 살리는 입법 성과를 만들어 내는 데 저의 모든 노력을 기울이겠습니다.</span><br/><span class="spk_sub" id="spk_sub40-4">&nbsp;또한 생산적인 입법활동이 될 수 있도록 외려 입법 지연법으로 변질된 패스트트랙 제도를 과감히 개선하는 등 국회 운영 혁신에도 미력을 보태고자 합니다.</span><br/><span class="spk_sub" id="spk_sub40-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_41" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub41-2">&nbsp;다음은 윤종오 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_42" class="item0 speaker spk_mem" data-mem_id="6744" data-name="윤종오" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">윤종오 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4cc7cc8814354a4b85dde1c745f33b1c.png" alt="윤종오"></span><span class="txt"><strong class="name">윤종오</strong><span class="position">위원</span><span class="area">(울산 북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;진보당 원내대표를 맡고 있는 울산 북구의 윤종오 위원입니다.</span><br/><span class="spk_sub" id="spk_sub42-2">&nbsp;국민의 다양한 뜻이 국회 운영에 온전히 반영되는 새로운 출발을 기대합니다. 조금 전에 김준형 대표님께서 말씀하셨는데 그동안 국회의 운영은 교섭단체 중심으로 이루어지면서 소수 정당의 참여가 충분하게 보장되지 못했습니다. 앞으로는 비교섭단체와의 협의도 좀 정례화하고 법안 상정의 기준과 절차도 더욱 투명하고 공정하게 운영되도록 함께했으면 좋겠습니다. 하여튼 국민들로부터 존중받는 국회를 만드는 데 책임 있게 함께하겠습니다.</span><br/><span class="spk_sub" id="spk_sub42-3">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_43" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub43-2">&nbsp;다음은 이정헌 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_44" class="item0 speaker spk_mem" data-mem_id="6774" data-name="이정헌" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">이정헌 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7c68150569c741f79fd55986f59991b1.png" alt="이정헌"></span><span class="txt"><strong class="name">이정헌</strong><span class="position">위원</span><span class="area">(서울 광진구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;서울 광진구갑 국회의원 이정헌입니다.</span><br/><span class="spk_sub" id="spk_sub44-2">&nbsp;어렵고 힘든 과정을 거쳐 운영위원회가 마침내 후반기 구성을 마무리했습니다. 그 과정이 길었던 만큼 국민께서 국회에 거는 기대와 요구도 더욱 커졌습니다. 국민께서 기다리신 시간만큼 국회가 짊어져야 할 책임의 무게는 더욱 무겁습니다.</span><br/><span class="spk_sub" id="spk_sub44-3">&nbsp;민생과 국익 앞에는 여야가 따로 있을 수 없습니다. 이제는 대립과 정쟁을 넘어서 국민의 삶을 위한 성과로 답해야 할 때라고 저는 생각합니다.</span><br/><span class="spk_sub" id="spk_sub44-4">&nbsp;지금 대한민국은 미래 도약의 중대한 갈림길에 서 있습니다. 이재명 정부는 반도체와 피지컬AI, AI데이터센터 구축을 중심으로 한 3대 메가프로젝트와 전례 없는 규모의 국민성장펀드를 추진하고 있습니다. 이는 대한민국의 지속가능한 성장과 미래 경쟁력을 확보하기 위한 과감한 국가전략입니다.</span><br/><span class="spk_sub" id="spk_sub44-5">&nbsp;우리 운영위원회가 소관하는 대통령비서실과 국가안보실은 부처 간의 칸막이를 허물고 국가전략을 총괄 조정하는 국정의 핵심 컨트롤타워입니다. 운영위원회 역시 국정의 전략적 파트너로서 정부의 기획과 조정이 원활하게 이루어질 수 있도록 책임 있게 뒷받침해야 합니다.</span><br/><span class="spk_sub" id="spk_sub44-6">&nbsp;민생과 개혁을 위해서 일하는 국회를 만드는 데 우리 운영위원회가 최선을 다하는 것도 필요합니다. 정쟁을 넘어서 복합 글로벌 위기와 또 민생 회복 극복하고 실현하는 국회를 반드시 만들어야 되겠습니다.</span><br/><span class="spk_sub" id="spk_sub44-7">&nbsp;우리 운영위원회가 소관하는 국회사무처, 국회입법조사처, 국회예산정책처 등 국회 지원 기관들의 전문성과 선진적인 입법 지원 역량을 극대화하여서 오직 일하는 국회를 만들기 위해 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub44-8">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_45" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;다음 이주희 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_46" class="item0 speaker spk_mem" data-mem_id="6876" data-name="이주희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">이주희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LeeJuhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/RBM5454A.jpg" alt="이주희"></span><span class="txt"><strong class="name">이주희</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;안녕하십니까? 더불어민주당 비례대표 이주희 위원입니다.</span><br/><span class="spk_sub" id="spk_sub46-2">&nbsp;국회운영위원회의 위원으로 여야 위원님들과 함께 일하게 되어 영광입니다.</span><br/><span class="spk_sub" id="spk_sub46-3">&nbsp;국회 운영 전반과 대통령실, 국가인권위원회를 소관하는 위원회인 만큼 그 책임 또한 매우 무겁습니다.</span><br/><span class="spk_sub" id="spk_sub46-4">&nbsp;운영위는 국회사무처와 국회도서관, 예산정책처, 입법조사처까지 국회가 일하는 방식과 내용 그 자체를 다루는 곳입니다. 의사일정이 예측 가능하게 운영되고 예산과 조직이 투명하게 공개되며 국민께서 청원으로 내신 목소리가 형식에 그치지 않도록 잘 챙기겠습니다. 또한 정부의 개혁과제가 국회에서 흔들림 없이 뒷받침되도록 하는 동시에 국정 운영의 내용뿐만 아니라 그 과정과 이유가 국회와 국민께 충실히 설명되고 있는지도 꼼꼼히 살피겠습니다.</span><br/><span class="spk_sub" id="spk_sub46-5">&nbsp;특히 국가인권위원회는 독립성이 곧 존재 이유인 기관입니다. 지난 정권에서 크게 흔들린 인권위의 신뢰를 회복하고 그 권고가 실제 제도개선으로 이어지도록 챙기겠습니다. 더불어 청년과 미래세대, 빠르게 변화하는 산업과 노동 현장의 목소리도 세심히 들여다보겠습니다.</span><br/><span class="spk_sub" id="spk_sub46-6">&nbsp;운영위에서 여야가 마주 앉아 국회의 시간표를 함께 만드는 만큼 야당 위원님들께도 마음을 활짝 열고 선배·동료 위원님들과 함께 배우며 맡은 책임을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub46-7">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_47" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub47-2">&nbsp;다음 임미애 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_48" class="item0 speaker spk_mem" data-mem_id="6781" data-name="임미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">임미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7181892839544a728a62343111231bf7.png" alt="임미애"></span><span class="txt"><strong class="name">임미애</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;비례대표 국회의원 임미애입니다.</span><br/><span class="spk_sub" id="spk_sub48-2">&nbsp;중요한 상임위에서 함께 일할 수 있게 되어서 큰 책임감을 느낍니다.</span><br/><span class="spk_sub" id="spk_sub48-3">&nbsp;운영위의 당면한 제일 과제는 인권위의 정상화라고 생각합니다. 운영위가 조속히 인권위의 정상화를 위한 논의를 시작하길 바랍니다. 운영위의 일원으로서 논의에 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub48-4">&nbsp;그리고 존경하는 선배·동료 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub48-5">&nbsp;이 회의장에서 좀 자주 봅시다. 일하는 국회 함께 만들었으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub48-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_49" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub49-2">&nbsp;다음 김한규 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_50" class="item0 speaker spk_mem" data-mem_id="6659" data-name="김한규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">김한규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c5607570161f4879b98311c104e21485.jpg" alt="김한규"></span><span class="txt"><strong class="name">김한규</strong><span class="position">위원</span><span class="area">(제주 제주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;운영위원회에서 뵙게 돼서 여야 위원님들 모두 반갑습니다.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;오늘 법사위도 지금 첫 회의를 하고 있는데요, 보궐선거로 들어오신 위원님들께서 오늘 첫 상임위를 한다라고 말씀을 하시는데 이게 매년 반복되는 것 같습니다. 하반기·전반기 항상 원구성 협상으로 국회가 공전되고 그로 인해서 위원들이 의정활동을 제대로 못 하는 경우들이 많은데요. 국회법대로 잘 진행되고 있지 않은 부분도 많고 이렇게 국회법 개정안이 많은 것을 보면 위원님들이 국회가 효율적으로 일하기 위해서 개정해야 할 부분이 많다라는 생각들을 갖고 계신 것 같습니다. 이런 법들을 저희가 신속하게 논의해서 다음부터는 국회가 조금 더 효율적으로 국민들 눈높이에 맞게 일하는 모습을 보일 수 있었으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_51" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;다음, 박균택 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_52" class="item0 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;광주 광산갑 국회의원 박균택입니다.</span><br/><span class="spk_sub" id="spk_sub52-2">&nbsp;법사위에 다녀오느라고 출석이 좀 늦었습니다.</span><br/><span class="spk_sub" id="spk_sub52-3">&nbsp;국민을 위해서 일하는 국회 그리고 또 성과로 보답하는 국회가 되도록 그리고 또 이재명 정부의 성공을 돕는 우리 운영위원회가 되도록 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub52-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_53" class="item0 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub53-2">&nbsp;다음은 위원회 활동을 보좌할 수석전문위원과 직원들을 소개하겠습니다.</span><br/><span class="spk_sub" id="spk_sub53-3">&nbsp;일어나셔서 간단히 묵례해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub53-4">&nbsp;먼저 김경호 수석전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub53-5">&nbsp;다음은 이동훈 입법심의관입니다.</span><br/><span class="spk_sub" id="spk_sub53-6">&nbsp;그리고 정진욱 행정실장을 비롯한 입법조사관과 주무관들입니다.</span><br/><span class="spk_sub" id="spk_sub53-7">&nbsp;함께 인사해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub53-8">&nbsp;(인사)</span><br/><span class="spk_sub" id="spk_sub53-9">&nbsp;수석전문위원을 비롯한 직원분들은 위원회가 효율적이고 또 원만하게 운영될 수 있도록 지원해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub53-10">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 간사 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시36분)</p><br/><div id="spk_55" class="item1 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;의사일정 제1항 간사 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub55-2">&nbsp;더불어민주당 간사는 지난 회의에서 선임하였으므로 오늘은 국민의힘 간사만 선임하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub55-3">&nbsp;그러면 국민의힘에서 추천한 김승수 위원님을 우리 위원회 간사로 선임하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub55-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub55-5">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub55-6">&nbsp;김승수 간사님의 인사말씀은 소위원장 선출 이후에 함께 듣도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 소위원회 구성의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_56" class="item2 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;다음으로 의사일정 제2항입니다. 소위원회 구성의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub56-2">&nbsp;이 안건은 국회법 제57조제1항에 따라 우리 위원회가 국회운영개선소위원회, 예산결산심사소위원회 및 청원심사소위원회를 각각 구성하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub56-3">&nbsp;소위원회 구성(안)은 간사님들과의 사전 협의를 거쳐서 마련하였으며 주요 내용을 말씀드리면, 각 소위원회의 위원 정수는 각각 9인으로 하고 국회운영개선소위원장은 더불어민주당 천준호 위원이, 예산결산심사소위원장은 국민의힘 김승수 위원이, 청원심사소위원장은 진보당 윤종오 위원이 각각 맡기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub56-4">&nbsp;보다 자세한 내용은 배부해 드린 유인물을 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub56-5">&nbsp;그러면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub56-6">&nbsp;배부해 드린 유인물과 같이 3개의 소위원회를 구성하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub56-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub56-8">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub56-9"><div class="taR">(소위원회 구성 명단은 끝에 실음)</div></span></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">o 간사(천준호·김승수) 및 소위원장(천준호·김승수·윤종오) 인사</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시37분)</p><br/><div id="spk_58" class="item3 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;그러면 간사 및 소위원장으로 선출되신 세 분의 인사말씀을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub58-2">&nbsp;먼저 더불어민주당 간사 및 국회운영개선소위원장이신 천준호 위원님께서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_59" class="item3 speaker spk_mem" data-mem_id="6622" data-name="천준호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">천준호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1ecd18672c604ef5a6c90dd06133006e.jpg" alt="천준호"></span><span class="txt"><strong class="name">천준호</strong><span class="position">위원</span><span class="area">(서울 강북구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;운영개선소위 위원장을 맡게 된 더불어민주당 천준호 위원입니다.</span><br/><span class="spk_sub" id="spk_sub59-2">&nbsp;올해 운영개선소위가 제때 제대로 잘 열리지 못했습니다. 앞으로는 좀 신속하게 처리해야 될 과제들이 그래서 많이 지금 남겨져 있습니다.</span><br/><span class="spk_sub" id="spk_sub59-3">&nbsp;일하는 국회를 만들기 위한 국회법 개정부터 시작해서 인권위원회 정상을 위한 여러 가지 제도들 정비도 함께 필요한 상황입니다. 그래서 신속하게 운영개선소위가 운영될 수 있도록 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub59-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_60" class="item3 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub60-2">&nbsp;다음으로 국민의힘 간사 및 예산결산심사소위원장이신 김승수 위원님께서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_61" class="item3 speaker spk_mem" data-mem_id="6597" data-name="김승수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">김승수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSEUNGSU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ed6fa85a063842c59f5cfc4cca90eafb.jpg" alt="김승수"></span><span class="txt"><strong class="name">김승수</strong><span class="position">위원</span><span class="area">(대구 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;운영위원회 국민의힘 간사와 예산결산심사소위 위원장을 맡게 된 김승수입니다.</span><br/><span class="spk_sub" id="spk_sub61-2">&nbsp;앞서 인사말씀을 드렸기 때문에, 대화와 타협 또 의회 정치가 살아나는 운영위원회가 되도록 최선을 다하겠다는 말씀을 다시 한번 드립니다.</span><br/><span class="spk_sub" id="spk_sub61-3">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_62" class="item3 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;다음으로 청원심사소위원장이신 진보당 윤종오 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_63" class="item3 speaker spk_mem" data-mem_id="6744" data-name="윤종오" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">윤종오 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4cc7cc8814354a4b85dde1c745f33b1c.png" alt="윤종오"></span><span class="txt"><strong class="name">윤종오</strong><span class="position">위원</span><span class="area">(울산 북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;청원심사소위원장을 맡은 울산 북구 윤종오 위원입니다.</span><br/><span class="spk_sub" id="spk_sub63-2">&nbsp;먼저 부족한 저에게 중책을 맡겨 주신 위원 여러분께 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub63-3">&nbsp;국회의 청원은 국민께서 일상에서 겪는 어려움과 제도의 사각지대를 국회에 직접 알리고 해결을 요구하는 중요한 권리라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub63-4">&nbsp;청원 한 건 한 건에는 국민의 절박한 사정과 또 제도를 바꿔 달라는 간절한 목소리가 담겨 있는 만큼 막중한 책임감을 가지고 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub63-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_64" class="item3 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub64-2">&nbsp;우리 위원회가 원만하게 운영될 수 있도록 세 분 위원님들께서 노력해 주실 것을 당부드립니다.</span><br/><span class="spk_sub" id="spk_sub64-3">&nbsp;그리고 김태규 위원님 오셨습니다.</span><br/><span class="spk_sub" id="spk_sub64-4">&nbsp;인사말씀 짧게 부탁드립니다.</span><br/></div></div></div><div id="spk_65" class="item3 speaker spk_mem" data-mem_id="7216" data-name="김태규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">김태규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAEKYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/7ZS19508.jpg" alt="김태규"></span><span class="txt"><strong class="name">김태규</strong><span class="position">위원</span><span class="area">(울산 남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;반갑습니다. 울산 남구갑 국회의원 김태규입니다.</span><br/><span class="spk_sub" id="spk_sub65-2">&nbsp;이번 보궐선거를 통해서 국회에 들어오게 됐습니다.</span><br/><span class="spk_sub" id="spk_sub65-3">&nbsp;조금 전에 법사위, 제가 맡고 있는데 같이 열려서 거기에 가느라고 바로 참석을 못 했습니다.</span><br/><span class="spk_sub" id="spk_sub65-4">&nbsp;아직 국회 활동이 익숙지는 않아서, 다른 입장에서 정부 인사로서는 와 봤지만 의원의 입장에서는 일을 처음 시작하는 거라서 많이 배우고 또 열심히 활동을 따라갈 수 있도록 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub65-5">&nbsp;만나 봬서 반갑습니다.</span><br/></div></div></div><div id="spk_66" class="item3 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;환영합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" class="tit">3. 청원 심사기간 연장 요구의 건</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시40분)</p><br/><div id="spk_68" class="item4 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;다음으로 의사일정 제3항 청원 심사기간 연장 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub68-2">&nbsp;이 안건은 국회법 제125조제6항에 따라 장기간 심사를 요하는 청원에 대하여 위원회의 의결로 심사기간을 연장하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub68-3">&nbsp;보다 자세한 내용은 배부해 드린 유인물을 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub68-4">&nbsp;그러면 7건의 청원에 대해 심사기간을 2028년 5월 29일까지 연장하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub68-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub68-6">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2J6X0K7H2P4Y1C9V4V5N5M1P0E2H3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 국회상임위원회 위원 정수에 관한 규칙 일부개정규칙안(위원회안)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_69" class="item5 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;다음으로 의사일정 제4항 국회상임위원회 위원 정수에 관한 규칙 일부개정규칙안(위원회안)을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub69-2">&nbsp;이 안건은 천준호 의원님과 김승수 의원님의 서면동의로 제출된 것으로 재정경제기획위원회의 위원 정수를 26명에서 22명으로, 기후에너지환경노동위원회의 위원 정수를 22명에서 26명으로 각각 조정하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub69-3">&nbsp;제안설명과 보다 자세한 내용은 배부해 드린 자료를 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub69-4"><div class="taR">(제안설명서는 부록에 실음)</div></span><span class="spk_sub" id="spk_sub69-5">&nbsp;이 안건에 대해 의견 있으신 위원님 있으십니까?</span><br/><span class="spk_sub" id="spk_sub69-6">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub69-7">&nbsp;그러면 의사일정 제4항 국회상임위원회 위원 정수에 관한 규칙 일부개정규칙안을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub69-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub69-9">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Z5X1Y0G2H9F1F6E3C6D3Y4Z5Y1Y7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213908)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2X5V0V6U1V7C0D9B2C6A4Y8Z4V6W7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 국회법 일부개정법률안(김종민 의원 대표발의)(의안번호 2213964)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T5U0Q3O0O6M1N1M0M2U2U6T6R7S5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2214069)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Y5W1F1F1E1E0C9D0C0C2Y2Y2W9X1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 국가안전보장회의법 일부개정법률안(임종득 의원 대표발의)(의안번호 2214200)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V5V1T1U1T7A1B1Z1A6Y4Z0X7Y5F5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 인사청문회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2214400)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2E5L0K8J2K2I1F7D4B6C3B7J1K1I3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2214488)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2W5U1V1T0U4Q1Q4O5P1O5M5M1U2U6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 국회법 일부개정법률안(이해민 의원·이주희 의원 대표발의)(의안번호 2214534)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2H5I1H1H0P4P1O4O5M1L0M6T1U7T7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 국회과학기술처법안(이해민 의원·이주희 의원 대표발의)(의안번호 2214535)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Z5H1I2G0H3F1D5E2M2M5L5L4K2K5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(유상범 의원 대표발의)(의안번호 2214869)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2L5J1K2I0I3H1P3P3O1O2N7N2M1M0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 인사청문회법 일부개정법률안(문금주 의원 대표발의)(의안번호 2214961)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I5G1G2F0N2N1M6M5K9L0K5K8G3G1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 국회법 일부개정법률안(김준형 의원 대표발의)(의안번호 2214994)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2U5C1C1A2B8A1Y0Z4G8H1F4G7E6F0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 국회도서관법 일부개정법률안(임오경 의원 대표발의)(의안번호 2215070)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2P5N1O2W1U0V2T0T0S8T3O7P2N5M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 국회법 일부개정법률안(민형배 의원 대표발의)(의안번호 2215160)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2D5B1A2B1I0J1H3H5G8H0F1F2N2M8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215162)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J5H1H1D1D1C1D4B0B9A3A3I2H4I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 국가미래전략기본법안(위성곤 의원 대표발의)(의안번호 2215198)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J5H1H1F1G1F1F4N1O0M0M9L4J8K1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 국회법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215199)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V5W1E2E1D2B0C9A5A2W4X2V7W7U1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 국회법 일부개정법률안(한민수 의원 대표발의)(의안번호 2215210)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2T5S1Q2R1P2Q1Y1Y3W5V1W0U7U7D8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 국회법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215220)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z5A1Z2G1H1F1G1E0F2D3E8L6K2L5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 국회법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2215221)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2W5U1C2D1B5B1A1B4Z4Z5H4G5G0E4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(전용기 의원 대표발의)(의안번호 2215269)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Z5G1F2F1E0E1C3D5L6M0K2K0J7H8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 국회법 일부개정법률안(강선영 의원 대표발의)(의안번호 2215318)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2E5F1D2E1C7D0B9B3K2I4I9G0H1F4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 국회법 일부개정법률안(김소희 의원 대표발의)(의안번호 2215354)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2Q5P1N2O0W2V1T0U0S7O1P1O8M3N3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 국회법 일부개정법률안(서지영 의원 대표발의)(의안번호 2215429)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2C5C1A2B2Z3A1Y0Z0H7H2F3E9F5D3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 국회법 일부개정법률안(김예지 의원 대표발의)(의안번호 2215540)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2V5T1U2S1S5R1N7N3L1M3K3L9J9K0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2215546)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2N5M1M2L2L2T1T5S3T6R4R7Q8Q4M1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 국회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215549)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2O5V1W2U2V2T1U5S3A6B2Z9Z2X3Z5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 인사청문회법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2215550)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2H5F1F2E2F4D0D9Z1A4Y5Y9X6V1W1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 출신 국가를 이유로 한 혐오표현 규제 법률안(윤후덕 의원 대표발의)(의안번호 2215627)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2R5P1O2P2W4X1V3W5V8T1T3P7Q2O7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2215730)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2J5J1Y2Z2X6Y0W9V3V7D0D5B2D3B4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 국회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2215755)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2S5T1R2S2Z2Y1Z7X1X1W2X9E6F4D4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2215842)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item37" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2O6M0V1V0T8U1T7T2R7S4A6Y2Z6X6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 국가인권위원회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2215995)</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item38" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B6C0K1K0I2J1I1I4G9H0D8B9C7A8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">37. 국회예산정책처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216042)</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item39" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2E6C0D1B0B2J1K1I4J8H1I9O7N8N1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">38. 국회입법조사처법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216043)</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T6U0S1S1Q3Z1Z5X5Y9W1X5V0W6E8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">39. 국가인권위원회법 일부개정법률안(이기헌 의원 대표발의)(의안번호 2216090)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Q6R0Z1Z1Y5Y1X7V3W5R4S4Q7Q9P1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">40. 인사청문회법 일부개정법률안(유상범 의원 대표발의)(의안번호 2216115)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I6J0F1F1E2E1D3D3B1C4K4I1J4H3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">41. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(정을호 의원 대표발의)(의안번호 2216120)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2M6L0L1K1K3I1J3R1S4Q2Q4P7N0O2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">42. 국가인권위원회법 일부개정법률안(전용기 의원 대표발의)(의안번호 2216144)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item44" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V6V0U1C2C2B1B0Z3A0Y5Z7H4H7G4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">43. 인사청문회법 일부개정법률안(문진석 의원 대표발의)(의안번호 2216250)</a><a class="btn_move move" data-target="#head_item44" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item45" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H5H1F2G2O4P1N7N5M5M2K2L2T4R6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">44. 국회법 일부개정법률안(김승원 의원 대표발의)(의안번호 2216265)</a><a class="btn_move move" data-target="#head_item45" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item46" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T6J0J1H1I3G1H7F1G3N0O7M9L2L6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">45. 국가인권위원회법 일부개정법률안(서미화 의원 대표발의)(의안번호 2216417)</a><a class="btn_move move" data-target="#head_item46" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item47" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2R5P0P7O3O1M1N3V0W4U2U6T9T7R9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">46. 국회법 일부개정법률안(이수진 의원 대표발의)(의안번호 2216493)</a><a class="btn_move move" data-target="#head_item47" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item48" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2P6Q0O2O0X2V0V9U5U1T0T0P7P4O0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">47. 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216503)</a><a class="btn_move move" data-target="#head_item48" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item49" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2C6J0I2J1H2H1F5G4O2P3N8N2M5K5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">48. 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2216873)</a><a class="btn_move move" data-target="#head_item49" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item50" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2P6P0N2O0N9L1L5T1U8S1S2R2S0Q6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">49. 국가인권위원회법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216886)</a><a class="btn_move move" data-target="#head_item50" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item51" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2H6H0F2G2E0F1D0E0M6M0K2L7J2K0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">50. 국가인권위원회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2216999)</a><a class="btn_move move" data-target="#head_item51" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item52" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2L6M0K2J1J3H1I7Q1Q1P5P6O8M2N1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">51. 국가인권위원회법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2217042)</a><a class="btn_move move" data-target="#head_item52" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item53" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2M5N0L6L1T3U1S3T3R8S3Q6Q2Z5X1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">52. 국회법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217102)</a><a class="btn_move move" data-target="#head_item53" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item54" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2D6B0B2X1Y9W1X7V1V2U0C2C5B5C1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">53. 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2217111)</a><a class="btn_move move" data-target="#head_item54" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item55" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2X6V0W1E2C7D1B7C3A3B1J2J6H5I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">54. 국회법 일부개정법률안(김준혁 의원 대표발의)(의안번호 2217245)</a><a class="btn_move move" data-target="#head_item55" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item56" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Z6Z0Y2Y2W7V1W0D4E3C3D2B5C3A7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">55. 국회법 일부개정법률안(김영진 의원 대표발의)(의안번호 2217248)</a><a class="btn_move move" data-target="#head_item56" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item57" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B6C0A2B1X0X1V7W0U7T1T5B1B3A2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">56. 국회법 일부개정법률안(전진숙 의원 대표발의)(의안번호 2217301)</a><a class="btn_move move" data-target="#head_item57" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item58" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2L6J0K3S1T2R1R0Q2O3P4X7Y0W7W7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">57. 국회도서관법 일부개정법률안(전용기 의원 대표발의)(의안번호 2217449)</a><a class="btn_move move" data-target="#head_item58" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item59" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2O6W0A3Z2A3W1U0T4S8T3B0Z8Y1W7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">58. 국회법 일부개정법률안(김남근 의원 대표발의)(의안번호 2217711)</a><a class="btn_move move" data-target="#head_item59" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item60" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2W6J0K3I3H0G1O8M3L3M5L5T6S4Q8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">59. 국회법 일부개정법률안(김태년 의원 대표발의)(의안번호 2218097)</a><a class="btn_move move" data-target="#head_item60" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item61" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2W6X0F2F0D4C1D6B0B9X3Y0W2W8V6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">60. 국회법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218166)</a><a class="btn_move move" data-target="#head_item61" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item62" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K6L0J2R0S4Q1Q6P1P0O2O2W3X2V6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">61. 국회입법조사처법 일부개정법률안(이주영 의원 대표발의)(의안번호 2218167)</a><a class="btn_move move" data-target="#head_item62" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item63" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2I6G0P3N3O0N1L7H2G3F3E0E6M8L4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">62. 국회에서의 증언·감정 등에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2218338)</a><a class="btn_move move" data-target="#head_item63" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item64" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2R6P0Q4O3O0N1J5J3H3I4G4H7F7G8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">63. 국회법 일부개정법률안(김미애 의원 대표발의)(의안번호 2218814)</a><a class="btn_move move" data-target="#head_item64" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item65" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2R6S0A5A0Z6X1X4W3X9S4R6R6P6Q8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">64. 국회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218888)</a><a class="btn_move move" data-target="#head_item65" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item66" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F6G0N5O0N6N1L4M4L0G1H0F0G4E9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">65. 인사청문회법 일부개정법률안(김건 의원 대표발의)(의안번호 2218890)</a><a class="btn_move move" data-target="#head_item66" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item67" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2Y6W0W4U1R4R1P1Q0O8P2N7O7V1U5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">66. 국회법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219005)</a><a class="btn_move move" data-target="#head_item67" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item68" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2H6F0G4F1F4E1L1M0L9L1J4I5I9Q0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">67. 국정감사 및 조사에 관한 법률 일부개정법률안(권향엽 의원 대표발의)(의안번호 2219006)</a><a class="btn_move move" data-target="#head_item68" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item69" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2G5Q1M1K2D7J1O5U4L4U1M5K4D1X8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">68. 대한민국 헌법 개정(안)에 관한 청원(남인순 의원 외 6인의 소개로 제출)(청원번호 2200251)</a><a class="btn_move move" data-target="#head_item69" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item70" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2Q6U0F1V1W4H1J3F4Y5O3S3Z4P4Y3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">69. 시민참여 개헌절차법 개정에 관한 청원(이주희 의원의 소개로 제출)(청원번호 2200268)</a><a class="btn_move move" data-target="#head_item70" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item71" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2Q6S0C4R2Y9F1F0U5L8A0L6X3K1H6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">70. 6.3 개헌 국민투표 반대에 관한 청원(이유진 외 51,449인 국민동의로 제출)(청원번호 2200291)</a><a class="btn_move move" data-target="#head_item71" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시41분)</p><br/><div id="spk_71" class="item71 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;다음으로 의사일정 제5항부터 제70항까지의 법률안 및 청원을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub71-2">&nbsp;구체적인 안건명은 배부해 드린 의사일정을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub71-3">&nbsp;제안설명 순서입니다.</span><br/><span class="spk_sub" id="spk_sub71-4">&nbsp;오늘 상정한 안건 중 의사일정 제5항 및 제54항에 대한 구두 제안설명 요청이 있어 제안설명을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub71-5">&nbsp;그러면 의사일정 제5항 국회법 일부개정법률안에 대하여 김종민 의원님 나오셔서 제안설명해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_72" class="item71 speaker spk_mem" data-mem_id="6608" data-name="김종민" data-pos="의원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">김종민 의원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/33a7a75a274846b7981941b4c5ea6971.png" alt="김종민"></span><span class="txt"><strong class="name">김종민</strong><span class="position">의원</span><span class="area">(세종특별자치시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;존경하는 한병도 국회운영위원장님, 선배·동료 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub72-2">&nbsp;세종시갑 김종민 의원입니다.</span><br/><span class="spk_sub" id="spk_sub72-3">&nbsp;제가 대표발의한 국회법 개정안 제안설명을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub72-4">&nbsp;행정수도 건설은 수도권 과밀 해소와 국가균형발전이라는 헌법적 가치를 실현할 핵심 수단이자 상징입니다. 2005년 세종특별자치시가 행정중심복합도시로 출범한 이후 다수의 중앙행정기관이 세종시로 이전했으나 국회의사당을 비롯한 주요 헌법기관은 여전히 서울시에 남아 있습니다. 진정한 행정수도가 완성되려면 정부청사뿐 아니라 입법부인 국회 역시 세종시에 자리해서 입법·행정·사법 삼부의 효율적인 국가운영체제를 갖춰야 합니다.</span><br/><span class="spk_sub" id="spk_sub72-5">&nbsp;현행 국회법은 세종시에 국회 분원을 두도록 하고 있습니다. 그러나 각 상임위와 중앙행정기관 업무 소통, 국정감사 및 예산 심사 등 실질적인 국회 운영을 고려하면 국회 분원만으로는 비효율의 한계를 근본적으로 해소할 수는 없습니다. 특히 11개 상임위만 세종으로 옮기고 나머지는 서울에 남겨 두는 방식으로는 안정적인 국회 운영도 어렵습니다. 행정부의 두 집 살림을 끝내자고 행정수도를 추진하는데 입법부가 도로 두 집 살림 하겠다고 분가할 수는 없는 노릇입니다.</span><br/><span class="spk_sub" id="spk_sub72-6">&nbsp;제가 대표발의한 이 법안은 국회를 분원이 아닌 행정수도 세종으로 전부 이전하는 국회법 개정안입니다. 행정수도 완성을 실질적으로 앞당기고 세종시가 명실상부한 행정수도로 자리매김하는 데 필수적 입법입니다.</span><br/><span class="spk_sub" id="spk_sub72-7">&nbsp;지난 5월에 발표된 세종국회의사당 마스터플랜은 국회 전부 이전을 염두에 두고 건립 계획을 세웠습니다만 위헌 시비를 감안해서 본회의장을 설계도에 넣지 못했습니다. 위헌 논란과 관련해서 지난 5월 7일 진행됐던 국토교통위 행정수도특별법 공청회에 참석한 전문가들은 한결같이 헌재 결정의 변경 가능성은 높다, 국회가 먼저 재입법해야 한다고 의견을 제시했습니다.</span><br/><span class="spk_sub" id="spk_sub72-8">&nbsp;2003년 이후 세종시에 이미 투입된 국가예산이 5조입니다. 앞으로 투입될 예산만 9조에 육박합니다. 대한민국의 유례없는 규모의 프로젝트입니다. 이 프로젝트가 본회의장 없는 반쪽짜리 프로젝트로 끝나지 않도록 해 주십시오.</span><br/><span class="spk_sub" id="spk_sub72-9">&nbsp;선배·동료 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub72-10">&nbsp;의사당은 민주주의의 상징입니다. 국회전부이전법은 행정수도, 국가균형발전의 출발점이고 전국 동시 발전으로 나아가는 상징적 깃발이 될 것입니다. 국회전부이전법이 행정수도특별법과 함께 조속히 국회를 통과할 수 있도록 뜻을 모아 주시기를 간곡히 호소드립니다.</span><br/><span class="spk_sub" id="spk_sub72-11">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_73" class="item71 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;김종민 의원님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub73-2">&nbsp;다음은 의사일정 제54항 국회법 일부개정법률안에 대하여 김준혁 의원님 나오셔서 제안설명해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_74" class="item71 speaker spk_mem" data-mem_id="6833" data-name="김준혁" data-pos="의원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">김준혁 의원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d2a9aad5f1d849aa91699672ace4586f.JPG" alt="김준혁"></span><span class="txt"><strong class="name">김준혁</strong><span class="position">의원</span><span class="area">(경기 수원시정)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;존경하는 한병도 위원장님 그리고 선배·동료 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub74-2">&nbsp;더불어민주당 수원정 지역 국회의원 김준혁입니다.</span><br/><span class="spk_sub" id="spk_sub74-3">&nbsp;지금부터 제가 대표발의한 국회법 일부개정법률안에 대해 제안설명드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub74-4">&nbsp;먼저 제안 이유입니다.</span><br/><span class="spk_sub" id="spk_sub74-5">&nbsp;수능 출제와 국가교육과정 연구, 교육평가를 담당하는 한국교육과정평가원은 소관 상임위원회가 교육위원회일 것이라고 생각하기 쉽지만 현재는 정무위원회 소관으로 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub74-6">&nbsp;또한 범죄 실태 분석과 형사·법무 정책을 전문적으로 연구하는 한국형사·법무정책연구원 역시 법제사법위원회가 아닌 정무위원회 소관으로 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub74-7">&nbsp;이처럼 현행 국회법에는 국무조정실 소관 정부출연연구기관을 모두 정무위원회 소관으로 하고 있어 국회가 각 연구기관의 기능과 업무 특성에 맞게 전문적으로 심사하는 데 한계가 있습니다.</span><br/><span class="spk_sub" id="spk_sub74-8">&nbsp;이에 본 개정안은 국무조정실 소관 정부출연연구기관에 대해서는 국회의장이 국회운영위원회와 협의하여 해당 연구기관의 업무와 가장 밀접한 상임위원회를 소관 위원회로 정할 수 있도록 하려는 것입니다. 이를 통해 상임위원회의 전문적인 안건 심사와 국정감사를 도모하고 국회의 국정통제 기능을 제고할 수 있을 것입니다.</span><br/><span class="spk_sub" id="spk_sub74-9">&nbsp;존경하는 위원장님 그리고 선배·동료 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub74-10">&nbsp;부디 이러한 입법 취지를 깊이 헤아려 주시어 본 개정안을 원안대로 심의·의결하여 주실 것을 깊이 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub74-11">&nbsp;이상으로 국회법 일부개정안에 대해 제안설명을 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub74-12">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub74-13">&nbsp;꼭 부탁드립니다.</span><br/></div></div></div><div id="spk_75" class="item71 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;김준혁 의원님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub75-2">&nbsp;나머지 안건에 대한 제안설명 및 검토보고서는 서면으로 대체하겠습니다.</span><br/><span class="spk_sub" id="spk_sub75-3"><div class="taR">(제안설명서 및 취지설명서는 부록에 실음)</div></span><span class="spk_sub" id="spk_sub75-4"><div class="taR">(검토보고서는 부록으로 보존함)</div></span><span class="spk_sub" id="spk_sub75-5">&nbsp;그리고 그동안의 관례에 따라 대체토론을 생략하되 오늘 상정된 안건에 대하여 의견이 있으신 경우 위원장에게 서면으로 제출해 주시면 향후 심사에 반영될 수 있도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub75-6">&nbsp;그러면 의사일정 제5항부터 제67항까지는 국회운영개선소위원회, 제68항부터 제70항까지는 청원심사소위원회에 각각 회부하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub75-7">&nbsp;이상으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub75-8">&nbsp;위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub75-9">&nbsp;보좌직원, 수석전문위원을 비롯한 위원회 직원, 경위, 속기사 및 언론인 여러분도 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub75-10">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시48분 산회)</p><br/></div><div class="minutes_footer"><p class="tit"><strong>소위원회 구성 명단</strong></p><div class="table_wrap2"><table class="normal"><caption>소위원회 구성 명단</caption><colgroup><col width="33.33333333333333%"><col width="33.33333333333333%"><col width="33.33333333333333%"></colgroup><thead><tr><th scope="col">소위원회</th><th scope="col">위원명</th><th scope="col">교섭단체</th></tr></thead><tr><td rowspan=3>국회운영개선(9인)<br/></td><td>김한규<br/>문금주<br/>박균택<br/>이주희<br/>◎천준호<br/></td><td>더불어민주당(5)<br/></td></tr><tr><td>김미애<br/>김승수<br/>김태규<br/></td><td>국민의힘(3)<br/></td></tr><tr><td>김준형<br/></td><td>어느 교섭단체에도 속하지 아니하는 의원(1)<br/></td></tr><tr><td rowspan=3>예산결산심사(9인)<br/></td><td>김성회<br/>김윤<br/>박정현<br/>이정헌<br/>천준호<br/></td><td>더불어민주당(5)<br/></td></tr><tr><td>◎김승수<br/>윤용근<br/>최은석<br/></td><td>국민의힘(3)<br/></td></tr><tr><td>천하람<br/></td><td>어느 교섭단체에도 속하지 아니하는 의원(1)<br/></td></tr><tr><td rowspan=3>청원심사(9인)<br/></td><td>박선원<br/>서미화<br/>안도걸<br/>임미애<br/>전용기<br/></td><td>더불어민주당(5)<br/></td></tr><tr><td>김기웅<br/>김민전<br/>최수진<br/></td><td>국민의힘(3)<br/></td></tr><tr><td>◎윤종오<br/></td><td>어느 교섭단체에도 속하지 아니하는 의원(1)<br/></td></tr></table></div><br/>◎표시는 소위원장임<div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(25인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMKIWOONG" target="_blank"><span class="name lts3 ">김기웅</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMEENGEON" target="_blank"><span class="name lts3 ">김민전</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSEUNGSU" target="_blank"><span class="name lts3 ">김승수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJOONHYUNG" target="_blank"><span class="name lts3 ">김준형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAEKYU" target="_blank"><span class="name lts3 ">김태규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank"><span class="name lts3 ">박균택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEONGHYEON" target="_blank"><span class="name lts3 ">박정현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKCHOONGKWON" target="_blank"><span class="name lts3 ">박충권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUNYONGKEUN" target="_blank"><span class="name lts3 ">윤용근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank"><span class="name lts3 ">윤종오</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank"><span class="name lts3 ">이정헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LeeJuhee" target="_blank"><span class="name lts3 ">이주희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank"><span class="name lts3 ">전용기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGJEOMSIG" target="_blank"><span class="name lts3 ">정점식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank"><span class="name lts3 ">천준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOISOOJIN" target="_blank"><span class="name lts3 ">최수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIEUNSEOK" target="_blank"><span class="name lts3 ">최은석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNHARAM" target="_blank"><span class="name lts3 ">천하람</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯위원 아닌 출석 의원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJONGMIN" target="_blank"><span class="name lts3 ">김종민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNHYUK" target="_blank"><span class="name lts3 ">김준혁</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 김경호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 이동훈</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="25.0%"><col width="25.0%"><col width="25.0%"><col width="25.0%"></colgroup><thead><tr><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>강선영<br/></td><td>김기웅<br/></td><td rowspan=6>국민의힘<br/></td><td rowspan=6>2026. 7. 23.<br/></td></tr><tr><td>곽규택<br/></td><td>김미애<br/></td></tr><tr><td>김은혜<br/></td><td>김민전<br/></td></tr><tr><td>박수민<br/></td><td>김태규<br/></td></tr><tr><td>서지영<br/></td><td>윤용근<br/></td></tr><tr><td>조지연<br/></td><td>최은석<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>인사청문회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 15. 신동욱 의원 대표발의)(의안번호 2219957)</div></div><div class="con"><p class="tit_sm"><strong>국가인권위원회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 15. 서미화 의원 대표발의)(의안번호 2219991)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 7월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 16. 정희용 의원 대표발의)(의안번호 2220010)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 20. 남인순 의원 대표발의)(의안번호 2220044)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 21일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가인권위원회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 23. 전용기 의원 대표발의)(의안번호 2220131)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 24일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯요청서 회부</strong></p><div class="con"><p class="tit_sm"><strong>제437회국회(임시회) 회기 전체 의사일정 협의요청</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 22. 의장 제의)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 22일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57019;
+			const class_id = 2;
+			const confer_num = "N054332";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640581925" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640581925"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640581925"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640581925"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

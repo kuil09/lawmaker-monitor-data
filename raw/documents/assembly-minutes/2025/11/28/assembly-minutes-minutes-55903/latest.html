@@ -1,0 +1,668 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=55903" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제429회 (정기회) 제5차 기획재정위원회(예산결산기금심사소위원회)</strong><span class="date">(2025.11.28.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2212667)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2026년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2212668)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 2025년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2209544)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 2026년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2212669)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="정일영 소위원장 (인천 연수구을)"> 
+							정일영 소위원장 (인천 연수구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박성훈 위원 (부산 북구을)"> 
+							박성훈 위원 (부산 북구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김태년 위원 (경기 성남시수정구)"> 
+							김태년 위원 (경기 성남시수정구)
+						</option>
+					
+					
+						<option value="최병권 수석전문위원">최병권 수석전문위원</option>
+					
+						<option value="이형일 기획재정부제1차관">이형일 기획재정부제1차관</option>
+					
+						<option value="손웅기 기획재정부경제공급망기획관">손웅기 기획재정부경제공급망기획관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(3명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6636" data-name="정일영" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">정일영</span>
+												<span class="position">소위원장</span>
+												<span class="area">(인천 연수구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6852" data-name="박성훈" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">박성훈</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 북구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6654" data-name="김태년" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김태년</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 성남시수정구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="최병권" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">최병권</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="이형일" data-pos="기획재정부제1차관"> 
+											<label for="spk_attend1">
+												<span class="name">이형일</span>
+												<span class="position">기획재정부제1차관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"> 
+											<label for="spk_attend2">
+												<span class="name">손웅기</span>
+												<span class="position">기획재정부경제공급망기획관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=55903&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제429회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>기획재정위원회회의록</h1><p class="tit_sm">(예산결산기금심사소위원회)</p></div></div><p class="num">제5호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 11월 28일(금)</p></li><li><div class="sbj lts2">장소</div><p class="con">기획재정위원회소회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2212667)</li><li><span class="num">2.</span> 2026년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2212668)</li><li><span class="num">3.</span> 2025년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2209544)</li><li><span class="num">4.</span> 2026년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2212669)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2212667)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2026년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2212668)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 2025년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2209544)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 2026년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2212669)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(11시12분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제429회 국회(정기회) 기획재정위원회 제5차 예산결산기금심사소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘 회의에서는 한국장학재단채권 등에 대한 국가보증동의안 4건을 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;참고로 위원님들의 질의에 답변하기 위하여 교육부, 금융위원회 등 관련 기관 담당자가 배석하고 있음을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;회의록 작성을 위해서 위원님들 발언 시에는 마이크를 사용해 주시고 배석자가 발언할 경우에는 직위와 성함을 먼저 말씀해 주시기 바랍니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2N5L0P9G0C3D1Q6P1R0O3I6B4V3I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2212667)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2N5R0C9J0Z3J1U6M1S1D0D5N9P6B9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 2026년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2212668)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2T5C0A4Y0H2A1E1C2P9F2X1S4J0Y2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 2025년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2209544)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2C5R0Z9V0C3E1S6Q1N1V3N3C9J5R0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 2026년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2212669)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;그러면 의사일정 제1항 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안부터 의사일정 제4항 2026년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안까지 4건의 국가보증동의안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;그러면 심사에 들어가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;최병권 수석전문위원께서는 심사자료에 대하여 설명하여 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item4 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;소위 심사자료 1페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;먼저 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안에 대해서 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;동 동의안의 발행 요청액은 2.9조 원입니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;검토의견 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;2페이지 보시면 당해 국가보증동의 요청액은 신규 학자금대출 공급을 위한 3조 303억 원 그다음에 채권 차환을 위한 1조 6600억 등 사업비에서 기존 학자금대출분의 회수로 조달할 수 있는 1조 7875억 원을 감안하여 2.9조 원의 채권발행액이 예상되므로 별다른 문제가 없는 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;2페이지 중단입니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;또한 최근 연도별 보증한도 대비 발행실적은 70～100% 수준으로 별다른 문제가 없어 보입니다.</span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_5" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;정부 측 의견 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_6" class="item4 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="기획재정부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">기획재정부제1차관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">기획재정부제1차관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;정부 측은 현재 지금 2.9조로 예상한 게 저희가 최대한 잘 계산해서 맞춰 온 내용이고요. 전문위원께서도 특별한 의견이 없으신 사항으로 원안을 제안드리는 바입니다.</span><br/></div></div></div><div id="spk_7" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;의견 있으신 위원님들 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;(「의견 없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;그러면 우선 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;의사일정 제1항 2026년도에 발행하는 한국장학재단채권에 대한 국가보증동의안은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;다음.</span><br/></div></div></div><div id="spk_8" class="item4 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;다음은 8페이지입니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;2026년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안입니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;채무자는 한국수출입은행이고 보증동의 요청액은 원화 기준으로 10조 원입니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;9페이지입니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;정부가 요청하는 2026년도의 보증한도액 10조 원은 26년 신규 자금소요 9.2조 원에 채권 차환을 위한 3.9조 원 등 사업비에서 원리금 회수로 조달할 수 있는 3.6조 원을 차감한 금액에 유동성 대응자금 5000억 원을 더하여 산출한 것입니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;10페이지, 첫째 부분입니다.</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;공급망안정화기금은 중간 표에 있다시피 4개 부문으로 이루어져 있습니다. 첨단전략산업, 자원안보, 국민경제 필수재, 물류 인프라 등 4대 부문을 중점적으로 지원하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;표 밑의 하단부입니다.</span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;한편 정부는 25년 12월부터 한국산업은행에 첨단전략산업기금을 설치하여 운용할 예정임에 따라서 공급망안정화기금의 첨단전략산업 부문과 지원 대상이 중복될 우려가 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-10">&nbsp;특히 공급망안정화기금 전체 지원 금액 중 첨단전략산업 부문이 차지하는 비중이 24년도 62.5%, 25년도 1～10월까지 33.2% 등 상당 수준으로 주로 반도체, 이차전지 등 첨단전략산업 분야 대기업의 소재·부품 구매비용 등으로 대출 지원되고 있으나 이와 같은 첨단전략산업 분야 대기업의 제품 생산을 위한 소재·부품 구매비용 등의 대출은 공급망안정화기금의 취지 및 용도에 직접적으로 부합되지 않는 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub8-11">&nbsp;11페이지입니다.</span><br/><span class="spk_sub" id="spk_sub8-12">&nbsp;따라서 첨단전략산업기금을 신설하는 상황에서 공급망안정화기금에서 첨단전략산업 부문 소재·부품 구매자금 대출이 공급망안정화기금의 취지 및 목적에 직접적으로 부합하지 않는 측면이 있으므로 이를 감안해서 발행규모를 일정 부분 조정하거나 결정할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub8-13">&nbsp;둘째 부분은 생략하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-14">&nbsp;12페이지 하단부의 셋째 부분입니다.</span><br/><span class="spk_sub" id="spk_sub8-15">&nbsp;13페이지 보시면 특히 최근 국고채 시장금리는 높은 원달러환율, 기준금리 인하 기대감 후퇴, 내년 국고채 발행규모 증가 등에 따라서 11월 25일 종가 기준으로 10년물과 5년물은 3%를 넘어서고 있으며 3년물도 2.9%로 가파르게 상승하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-16">&nbsp;이러한 상황에서 국가보증 기금채가 상당 규모로 국회에서 확정될 경우 채권시장에 공급 증대 시그널을 보내 국고채 금리 상승에 기여하여 정부의 조달 비용도 상승할 우려가 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-17">&nbsp;또한 공급망안정화기금은 24년도의 경우 5조 원에 대한 보증동의가 필요하다고 산출하였으나 실제 발행실적은 4000억 원에 그쳤으며 25년도의 경우에도 10조 원에 대한 보증동의를 하였으나 25년 10월 말 기준 공급망안정화기금채권 발행규모는 3조 7500만 원으로 그 실적이 저조한 상황입니다.</span><br/><span class="spk_sub" id="spk_sub8-18">&nbsp;따라서 이와 같은 저조한 실적을 감안하여 채권발행 한도를 실제 집행실적 수준에 부합하는 규모로 축소함으로써 동 기금 발행한도가 채권시장에 미치는 영향을 최소화하는 방안을 검토할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub8-19">&nbsp;14페이지 넷째 부분은 생략하고 마지막 15페이지 결론입니다.</span><br/><span class="spk_sub" id="spk_sub8-20">&nbsp;따라서 동 기금채권에 대한 국가보증동의안 10조 원에 대해서는 기금의 주목적에 해당하지 않는 것으로 보이는 첨단전략산업 부문의 단순 소재·부품 구매자금 대출에 상당 부분 지원하는 것은 기금 취지에 부합되지 않는 측면이 있고 신설되는 첨단전략산업기금과 지원 대상이 중복될 우려가 있으며 채권시장에 공급 증대 시그널을 보내 금리를 상승시키는 등 채권시장에 영향을 미칠 우려를 고려할 필요가 있고 24～25년 채권발행 승인 대비 실제 발행실적이 발행한도의 24년은 8%, 25년 10월 말 기준 37.5%로 크게 저조한 편임을 감안하여 국가가 제출한 동 기금의 국가보증 채권발행한도 10조 원 규모를 적정 규모로 조정할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub8-21">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_9" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;정부 측 말씀하기 전에, 이것을 어떻게 할까요? 뒤의 첨단전략산업기금채권까지 같이 언급을 하셨는데 같이 설명을 듣고서……</span><br/></div></div></div><div id="spk_10" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;같이 설명하고……</span><br/></div></div></div><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;같이 하시는 게 낫겠지요?</span><br/></div></div></div><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;예, 어차피 연결되어……</span><br/></div></div></div><div id="spk_13" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;연결되어 있으니까. 같이……</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;수석전문위원님.</span><br/></div></div></div><div id="spk_14" class="item4 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;24페이지입니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;첫 번째, 25년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안은 보증동의 요청액이 25년도 채권발행액 10조 원에 대한 원리금으로 10조 원입니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;그다음에 26년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안 개요를 말씀드리면 보증동의 요청액은 26년도 채권발행액 15조 원에 대한 원리금입니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;24페이지 하단입니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;한국산업은행에 첨단전략산업기금을 설치하여 5년 동안 첨단전략산업·국가전략기술 영위기업 및 관련 인프라 등에 대해서 지원하며 정부가 첨단전략산업기금채권의 원리금 상환에 대하여 보증할 수 있도록 하는 내용으로 한국산업은행법이 개정되어 2025년 12월 10일부터 첨단전략산업기금이 시행될 예정입니다.</span><br/><span class="spk_sub" id="spk_sub14-6">&nbsp;25페이지 중단에 보시면 정부는 25년 4월 2025년도 첨단전략산업기금채권 국가보증동의안 10조 원을 제출하였으며 해당 보증동의안이 처리되기 전인 9월 예산안 제출과 함께 26년도 보증동의안 15조 원을 제출하였습니다.</span><br/><span class="spk_sub" id="spk_sub14-7">&nbsp;25페이지, 검토의견을 말씀드리면 2025년도 국가보증동의안은 4월에 제출되었는데, 그 당시 10조 원으로 산출해서 제출되었는데 한국산업은행법 개정이 지연되면서 8월 말에야 개정이 이루어지고 12월부터 시행하도록 되어 있는데 그때 예산안 편성할 때 25년 필요자금 및 그에 따른 채권한도를 수정해서 25년도에는 1.5조 원, 26년도에는 15조 원으로 다시 산출하였습니다.</span><br/><span class="spk_sub" id="spk_sub14-8">&nbsp;27페이지입니다.</span><br/><span class="spk_sub" id="spk_sub14-9">&nbsp;첫 번째 사항에 대해서 말씀드리면 첨단전략산업기금 신설이 지연되면서 25년 하반기 채권발행 규모를 1.5조 원으로 수정하고 있으나 첨단전략산업기금은 2025년도 12월 10일부터 출범할 예정이어서 1개월도 안 되는 기간 동안 현실적으로 충분한 준비 기간을 갖고 채권을 발행해서 관련 사업을 지원하는 것이 가능할지에 대한 우려가 되므로 물리적으로 연내 채권발행이 불가할 것으로 보일 경우에 25년도 발행 예정 채권에 대한 국가의 지급보증은 불필요한 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-10">&nbsp;그다음 28페이지입니다.</span><br/><span class="spk_sub" id="spk_sub14-11">&nbsp;정부는 시장 상황에 대한 면밀한 분석 및 객관적인 외부 전문기관을 통한 연구용역 등을 통해 적정 금융지원 규모를 산출해서 실제 보증 규모가 너무 과다하게 되지 않도록 각별한 주의를 기울일 필요가 있으나 26년도 15조 원에 대한 구체적인 집행계획이 없어서 국가 보증 필요성에 대한 근거가 부족해 보이므로 집행계획 및 용처를 사전에 보다 구체화할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-12">&nbsp;29페이지, 셋째 부분입니다.</span><br/><span class="spk_sub" id="spk_sub14-13">&nbsp;26년도 공급망안정화기금채권 10조 원 이외에 15조 원 규모의 기금채가 시장에 추가로 발행될 경우 공급량 증대로 채권 금리 상승의 우려가 있다는 점을 지적하였고, 따라서 정부는 채권발행 규모의 적정성에 대해서 검토하고 국고채 및 회사채의 시장 상황 등을 고려함으로써 기금채 발행이 채권시장에 미치는 영향을 최소화하도록 할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-14">&nbsp;그다음에 31페이지, 결론 부분입니다.</span><br/><span class="spk_sub" id="spk_sub14-15">&nbsp;따라서 동 기금 채권에 대한 국가보증동의안 2025년도 10조 원, 26년도 15조 원에 대해서는 물리적으로 연내 채권발행이 불가할 것으로 판단되므로 25년 발행 예정 채권에 대해서 불필요한 것으로 보이고, 26년도 15조 원 발행규모에 대해서는 구체적인 집행계획이 미비하여 국가 보증 규모의 필요성에 대해서 근거가 부족한 측면이 있고 채권시장에 공급 증대 시그널을 보내 금리를 상승시키는 등 채권시장에 영향을 미칠 우려가 있다는 점을 고려해서 25년, 26년 각각의 적정한 발행한도를 결정할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-16">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_15" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;정부 측 말씀해 주시지요.</span><br/></div></div></div><div id="spk_16" class="item4 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="기획재정부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">기획재정부제1차관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">기획재정부제1차관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;두 가지 기금에 대해서 한 번에 같이 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;첫 번째로 말씀 주신 것은 공급망안정화기금의 역할이 이번에 새로 들어오는 첨단전략산업기금하고 업무가 중복 가능성이 있지 않느냐 이런 부분의 포인트인 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;정부가 생각할 때는 공급망기금하고 첨단기금은 설립 취지하고 지원 목적이 다릅니다. 공급망기금은 공급망안정화사업을 지원하여 공급망 생태계 조성과 위기 대응 역량을 강화하자는 것이고요. 첨단전략기금은 국내 첨단전략산업의 혁신 생태계 조성과 기술 역량 강화를 위한 목적입니다. 그래서 공급망기금의 경우에는 국내 공급망 안정화를 위해서 원재료를 구매한다든지 해외에 시설투자를 한다든지 이런 부분에 지원되고요. 첨단기금의 경우에는 국내 첨단산업을 육성하기 위해서 대규모 시설투자 중심으로 운영될 계획입니다.</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;그래서 현재로서는 분야가 첨단전략인 부분은 비슷한 게 있다는 것을 인정하지만 그 안에서도 보면 목적에 따른 투자처가, 실제로 용처가 다르다. 그러므로 저희가 이게 중복되지는 않으려고 하고요. 앞으로 나올 때 이것을 실제 운영하는 기관인 수은하고 산은이 서로 업무 협조, 조율 협의체를 해서 혹시라도 중복되지 않도록 하고 오히려 어떤 의미에서 보면 시너지가 나도록 더 노력을 열심히 해 나가겠다는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-5">&nbsp;두 번째로 지금 채권시장에 대한 우려를 표명하셨는데요. 그림처럼 지금 국고채시장이 많이 올라간 것은 저희도 그 사실을 정확하게 알고 있습니다. 이렇게 된 원인은 현재 기준금리에 대해서 금리인하 기조가, 스탠스가 변하는 것과 관련돼서 기조가 바뀔 때 시장이 이렇게 갑자기 그것에 대해서 적응하는 과정이 생기는 마찰적인 현상입니다. 그래서 어제도 한국은행 총재가 여러 가지 이야기를 했듯이 그 기조라는 게 한 번에 바뀌나 지켜본다라고 이야기를 했고요. 그런 의미에서 보면 이러한 단기적인 국고채 금리 상승의 흐름은 조만간 안정이 된다, 저희는 시장안정을 위해서 계속 노력을 하고 있습니다. 이게 내년 내내 이렇게 될 리가 없습니다. 그리고 이런 일시적인 전환기에 나타나는 것이지 앞으로 금리 기조가, 스탠스가 잡히고 나면 그에 따른 시장은 맞춰 가고 적응이 될 거다라는 게 첫 번째고요.</span><br/><span class="spk_sub" id="spk_sub16-6">&nbsp;현재 저희가 두 기금의 물량을 보면 10조, 15조 해서, 물론 25년도 첨단전략산업기금에 대한 보증동의는 필요 없다고 저희는 인정합니다. 그래서 그 10조를 빼고 나면 공급망 10조랑 첨단전략 15조, 25조인데요. 이 물량은 전체 채권시장을 감안하면 굉장히 크지 않은 상황입니다. 그래서 한 2%, 3% 이런 수준이기 때문에 이것 때문에 채권시장이 흔들릴 거라고 생각하는 것은, 저희들이 시장 대응 잘하겠습니다. 그것 때문에 이것을 줄이는 것은…… 원래 써야 할 목적이 있는데 그것은 스프레드 하고 저희가 충분히 시킬 수 있다라고 말씀을 드릴 수 있겠고요.</span><br/><span class="spk_sub" id="spk_sub16-7">&nbsp;세 번째로 공급망안정기금이 올해 실적이 저조한 것 아니냐 이것에 대해서 지적을 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub16-8">&nbsp;저희가 볼 때는 이번에는 올해가 미국과의 여러 가지 관세율 조정 협상, 이런 대외적 불확실성 때문에 기업이 투자 의사결정에 좀 주저한 면이 있다고 생각하고요. 내년에는 그렇지 않을 거라 생각합니다. 그리고 공급망기금 이게 처음 생겨서 1년 차니까 아직 홍보 부분에서 좀 약하다고 생각해서 저희들이 그런 홍보 쪽도 더 강화하려고 하고요.</span><br/><span class="spk_sub" id="spk_sub16-9">&nbsp;그리고 실제로 승인액과 집행액이 다르다는 부분은 저희가 승인해 줘도 기업이 자기가 필요한 시점에 인출하는 게 있기 때문에 여러 가지 경영상의 판단도 같이 녹아 있기 때문에 이것은 시간이 지나면 결국 일치할 것이라고 저희는 생각합니다.</span><br/><span class="spk_sub" id="spk_sub16-10">&nbsp;그래서 기본적으로 저희가 내년에 이 10조를 받아서 홍보도 강화하고 또 바꿔진 경제환경에 따라 경제안보와 관련돼 그것을 쓸 용처가 굉장히 많이 있습니다. 그러니까 원안대로 통과시켜 주시면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-11">&nbsp;그리고 첨단전략기금 관련해서는 전문위원 말씀처럼 25년 치는 저희는 필요 없다고 생각합니다. 26년 치에 대해서는 저희는 기본적으로 여러 가지 업종별 협회에서 이와 관련해서 수요가 얼마나 되냐를 다 받아 봐서 이 정도는 필요하다고 한 것이기 때문에 저희에게 맡겨 주셔서 첫해니까 15조로 열심히 집행하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-12">&nbsp;채권시장은 아까 말씀에 함께 말씀을 드렸다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub16-13">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_17" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;위원님들 말씀.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;박성훈 위원님.</span><br/></div></div></div><div id="spk_18" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;저는 기본적으로 정부가 가져온 이 국가보증동의안이 정말로 대한민국의 미래를 고민하고 준비한 보증동의안인지 의문을 표하지 않을 수가 없고요. 국민의힘 입장에서 국가보증동의안의 규모나 범위 그리고 투자 대상에 대한 재검토가 이루어져야 된다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;공급망안정화기금채권과 그리고 첨단전략산업기금채권, 이 2개가 하나는 수출입은행이고 또 하나는 산업은행에서 거의 유사한 기능을 수행한다고 저희는 생각을 합니다. 물론 정부에서 설명한 것처럼 구분해서 이루어지는 측면도 저희가 모르는 바는 아닙니다. 하지만 중복되는 성격을 가지고 있다는 점을 지적하지 않을 수가 없고요.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;먼저 공급망안정화기금채권에 대해서 말씀을 드리면 지금 이 공급망안정화기금채권이 수석전문위원님께서도 잘 설명하신 바와 같이 첨단전략산업기금과 지원 대상이 중복되는 부분이 상당히 많습니다. 그러면 상식적으로 결국 국민의 세금으로써 보증이 이루어지는 이 부분에 있어서 일정 부분 삭감이 필요하다는 점을 우선적으로 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;두 번째로, 현재 공급망안정화기금채권이 경제안보를 위한 당초의 그런 용도로 활용되는 것이 아니라 실질적으로 어떻게 운용되는지를 들여다보면 대기업의 이런 첨단전략산업에 해당하는 소재나 부품 그리고 구매자금 대출 용도로 활용이 되고 있습니다. 이건 정부가 당초에 구상했던 경제안보 품목의 도입·확보하고 그리고 관리하는 이런 차원하고는 동떨어진 방향으로 대기업 위주의 어떤 지원책으로 악용되고 있다는 점을 지적하지 않을 수가 없고요.</span><br/><span class="spk_sub" id="spk_sub18-5">&nbsp;그리고 R&amp;D와 관련되는 부분에 대부분 소홀히 대응하고 있다는 점도 저희는 문제로 지적을 할 수밖에 없습니다.</span><br/><span class="spk_sub" id="spk_sub18-6">&nbsp;결국 지금 형태로 계속 운용이 될 경우에는 정책자금 공급이 중소기업이 아니라 대기업 위주의 자금 지원으로 이어질 가능성이 높다는 점을 두 번째로 지적을 하고요.</span><br/><span class="spk_sub" id="spk_sub18-7">&nbsp;세 번째로, 이 부분은 나중에 뒷부분하고 다 같이 연결이 되겠습니다마는 현재의 국고채·회사채 시장을 보면 정부가 이 한도를 이렇게 늘려서 가져오는 것만으로도 시장의 심리에 부정적인 영향을 미칠 거라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub18-8">&nbsp;올해만 하더라도 한전채가 18조 만기가 돌아옴으로 인해서 회사채시장이 얼어붙고 있는데 특히나 최근에 들어서는 한전채가 입찰에 사실상 실패한 이런 경우도 많이 발생했고요. 최근에 제가 자료를 찾아보니까 한전채가 발행 스프레드를 단번에 3년물·5년물 다 두 자릿수로 올림으로 인해 가지고 발행금리도 3%대를 돌파했습니다. 결국 이러한 효과로 인해서 우리나라의 가장 우량기업인 한전이 발행하는 한전채조차도 고금리를 통해서 조달할 수밖에 없는 상황이라고 하면 나머지 채권에 대해서는 말할 필요가 없겠지요.</span><br/><span class="spk_sub" id="spk_sub18-9">&nbsp;결국 회사채시장에 교란을 일으키고 있는 부분 그리고 매년 10조 원이 넘는 한전의 채권이 만기로 돌아오고 있는 상황에서 정부가 이런 두 가지 채권을 통해서―2개를 합치면 25조 원이 되겠지요―25조 원 규모의 새로운 채권을 시장에 공급하겠다는 것은 그 시그널만으로도 현재의 자금시장을 일정 부분 왜곡시키고 혼란시킬 우려가 크다는 점을 지적할 수밖에 없을 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub18-10">&nbsp;마지막으로 실적을 보더라도요, 앞에서 수석전문위원께서 설명하신 것처럼 2024년도에 5조를 발행하겠다라고 말씀을 하셨지만 실제 집행된 것은 4000억입니다. 8%에 불과하고요. 두 번째로 올해만 하더라도 10월 기준으로 10조 발행을 연도별 목표로 삼았는데 발행 실적은 그 부분에 훨씬 못 미칩니다. 약 3조 7500억입니다. 결국 비율로 따지면 37.5%입니다. 50%에도 달하지 못하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub18-11">&nbsp;그렇기 때문에 대상의 중복 그리고 투자 대상이 제대로 구체화되지도 않고 계획도 확정되지 않은 상황에서 국민의 부담을 급격하게 늘리고 회사채와 국고채시장에 부정적 파급효과를 줄 대규모의 보증한도는 국민의힘 입장에서는 수용하기 힘들다는 점을 먼저 말씀드립니다.</span><br/></div></div></div><div id="spk_19" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;정부 측 차관님.</span><br/></div></div></div><div id="spk_20" class="item4 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="기획재정부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">기획재정부제1차관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">기획재정부제1차관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;먼저 대기업·중소기업 말씀을 주셨는데요. 기본적으로 저희가 주로 구매자금에 일부 나가는 게 있지 않느냐 이런 말씀을 주셨는데 사실 이 구매자금도 결국에는 대기업을 통해서 지원이 되지만 이 구매자금의 구매처가 결국에는 중견·중소기업에 혜택이 갑니다. 저희가 7건의 구매자금을 줬는데 그중 5건이 결국은 우리나라에 있는 중소·중견으로부터 구입하는 겁니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;결국에 이건, 공급망이라는 건 서플라이체인을 관리하는 겁니다. 이렇게 체인이 잘 유지가 되어야 되는 거지 일단 첫 번째 자금이 대기업으로 나갔다고 해서 이 자체가 다 대기업에 가는 게 아니다, 결국에는 중소·중견이 다 같이 살아야지만 이 경제안보 생태계가 산다는 말씀을 드리고 싶고요.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;두 번째로 채권시장을 또 말씀 주셨는데 기본적으로 한 해에, 24년 같은 경우에 우리나라가 원화채권 발행이 한 860조입니다. 여기에 25조가 더 들어가는 겁니다. 이 부분은 기본적으로 저희는 소화 가능하다고 생각하고요.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;현재의 한전채가 어려움을 갖는 건 지난 한 달간의 금리 스탠스의 변화에 따른 일시적인 효과지 내년에도 계속 이렇게…… 물론 기준금리가 상황에 따라서 금리는 조정이 되겠습니다마는 생각했던 걸 기대하지 못하는 시장 상황 때문에 시장에 나가지 말아야 되겠다는 현상은 앞으로는 줄어들 거고 결국에 내년 되면 시장이 자리를 잡고 나면 안정이 됩니다. 전체 870조 중 여기에 저희가 하겠다는 25조는 연간으로 스프레드 될 거고 그 규모는 우리나라 채권시장에서 충분히 소화 가능하다는 말씀 드리고요.</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;그리고 현재 진행 실적도 말씀 주셨는데 한 달 지난 11월 통계를 보면 실제로 4조 4000까지 채권이 더 발행됐습니다. 그래서 연말까지 저희가 7조 원까지 최대한 노력할 계획에 있다는 말씀을 드리겠고요.</span><br/><span class="spk_sub" id="spk_sub20-6">&nbsp;혹시 추가로 더 설명이 필요하면 저희 담당하는 국장으로 하여금 설명을 허락해 주시면 말씀을……</span><br/></div></div></div><div id="spk_21" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;중복 문제를 명쾌하게 설명을 하세요.</span><br/></div></div></div><div id="spk_22" class="item4 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="기획재정부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">기획재정부제1차관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">기획재정부제1차관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;기본적으로 분야가 같다는 걸 저는 인정하고요.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;그런데 이 분야가 같더라도 하나는 국내 산업의 시설투자, 인프라를 위한 거고 하나는 공급망을 위해서 해외 시설에 투자한다든지 자원을 구입하는 데 쓰기 때문에 분야는 같다는 걸 인정합니다만 용처가 다르다라는 걸 말씀드립니다.</span><br/></div></div></div><div id="spk_23" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;차관님……</span><br/></div></div></div><div id="spk_24" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;위원님, 담당 국장 설명 듣고 하실래요, 아니면 바로……</span><br/></div></div></div><div id="spk_25" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;그러면 먼저 하시고……</span><br/></div></div></div><div id="spk_26" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;담당 국장이 이름하고 직위 얘기하시고.</span><br/></div></div></div><div id="spk_27" class="item4 speaker spk_mem" data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">기획재정부경제공급망기획관 손웅기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="손웅기"></span><span class="txt"><span class="position">기획재정부경제공급망기획관</span><strong class="name">손웅기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;손웅기 경제공급망기획관입니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;지금 저희들이 첨단전략산업기금과 공급망안정화기금이 중복되지 않는다고 보는 이유는, 어떤 첨단전략제품의 밸류체인이 있습니다. 그러면 앞단의 업스트림 쪽이 있고 또 뒷단, 완성품 단계가 있는데 공급망안정화기금은 앞의 소재·부품 쪽을 지원한다고 보시면 될 것 같고 첨단전략산업기금은 완성품 제조 단계를 커다란, 대규모 국내 시설투자를 통해서 지원한다고 보시면 될 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;그래서 지금 저희들이 주로 대기업의 구매 쪽으로 많이 대출할 수 있다고 말씀하셨는데 아까 차관님 말씀하신 것처럼 저희들이 대기업에 지원했던 그 구매자금 대출이 거의 다가 우리나라의 중소·중견기업으로부터의 소재·부품 조달로 쓰였습니다. 따라서 저희 기금의 대출이 지금 대중소기업 생태계 유지에 큰 기여를 했다고 저희들은 생각하고 있고요.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;지금 저희들이 기업을 만나 보면 대기업이나 중소기업이나 다 매우 힘든 상황입니다. 또 공급망 안정에 대한 위협은 증가하고 있는 상태고요. 그래서 수요는 지금 매우 충분합니다. 저희 자금에 대한 수요는 매우 충분하고 좀 더 규모를 늘렸으면 좋겠다, 지금 만족도도 높고 좀 더 좋은 조건으로 줄 수는 없느냐라는 기업들의 목소리는 지금 매우 큰 상황이라……</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;이게 지금 보증한도일 뿐인데, 어떤 버퍼일 뿐인데 이 버퍼까지 줄이는 경우에는 기업 입장에서는 심리적으로 상당히 안 좋은 시그널을 받을 수 있고 또 공급망 위기가 닥쳤을 때 이 버퍼를 활용해서 저희들이 긴급대출을 한다든지 지원할 수 있는 부분까지도 상실하게 되는 결과를 낳게 됩니다.</span><br/><span class="spk_sub" id="spk_sub27-6">&nbsp;따라서 저희들은 산업은행과 수은 또 저희 기재부와 금융위, 지금 금융위에서 추천한 인사가 저희 기금운용심의회 위원으로 들어와 있기도 합니다. 그래서 같이 협력을 해 가지고 혹시 중복 가능성이 있다면 사전에 그 중복 가능성을 방지하고 오히려 더 시너지효과를 낼 수 있는, 우리 기업 우리 산업을 위해서 같이 힘을 합쳐서 좀 더 시너지효과를 내서 공급망을 유지하고 또 첨단산업을 육성해 나갈 수 있는 그런 쪽이 우리 국익에 좀 더 보탬이 될 수 있다고 저희들은 생각하고 있습니다.</span><br/></div></div></div><div id="spk_28" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;차관님하고 국장님 설명을 들으니까 많은 부분이 이해가 되고 좀 명확해지는 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;박성훈 위원님.</span><br/></div></div></div><div id="spk_29" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;일단 구체적인 집행계획도 검토가 이루어지지 않은 상황에서 저희가 이 규모에 대해서 논의하는 것 자체는 저는 굉장히 부적절하다고 생각을 하고요.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;그리고 지금 운용하고 있는 공급망안정화기금만 하더라도 정부의 설명과 다른 부분이 굉장히 많습니다. 그렇기 때문에 저희는 이 중복되는 부분을 걸러 내지 않고서는 정부가 제안한 그리고 제출한 이 내용에 대해서 동의하기 어렵다는 점을 다시 한번 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub29-3">&nbsp;특히나 이제 1400조 원을 넘어서는 국가부채를 떠안고 그리고 매년 적자국채 발행으로 인한 이자 규모가 기하급수적으로 늘어나고 있는 상황에서 새로운 이런 채권에 대한 정부 국가보증동의안을 원안대로 통과시키기는 어려울 것 같습니다. 이 부분에 대해서 정부가 중복되는 부분을 발라내고 구체적인 집행계획을 기반으로 한 보증 규모를 재산정해서 논의하는 것이 타당하지 않을까 그렇게 생각을 하고요.</span><br/><span class="spk_sub" id="spk_sub29-4">&nbsp;보증한도 대비 발행 실적을, 값어치만 보더라도 이번에 정부가 들고 온 이 수치가 얼마나 과다하게 편성이 되어 있는지 의구심을 지우지 않을 수가 없습니다. 그런 측면에서 볼 때 이 10조와 15조 원 양쪽의 보증동의안 규모는 상당히 과다하게 책정되어 있다는 점을 지적드립니다.</span><br/><span class="spk_sub" id="spk_sub29-5">&nbsp;저희가 생각할 때 구체적인 수치를 저희 내부적으로 추산해 보면 약 2조～3조 원 규모의 삭감은 불가피하다라고 생각을 합니다.</span><br/></div></div></div><div id="spk_30" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;2개 합해서?</span><br/></div></div></div><div id="spk_31" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;각자요.</span><br/></div></div></div><div id="spk_32" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;각각?</span><br/></div></div></div><div id="spk_33" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;예.</span><br/></div></div></div><div id="spk_34" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;한 가지, 그 구체적인 집행계획이 지금 나올 수가 있나요? 내년도의 채권 이런 것 소요가 나와야 될 텐데……</span><br/></div></div></div><div id="spk_35" class="item4 speaker spk_mem" data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">기획재정부경제공급망기획관 손웅기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="손웅기"></span><span class="txt"><span class="position">기획재정부경제공급망기획관</span><strong class="name">손웅기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;공급망안정화기금은 수요를 받아서 저희들은 지금 대출 수요는 리스트를 충분히 갖고 있습니다.</span><br/></div></div></div><div id="spk_36" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;아, 갖고 있어요?</span><br/></div></div></div><div id="spk_37" class="item4 speaker spk_mem" data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">기획재정부경제공급망기획관 손웅기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="손웅기"></span><span class="txt"><span class="position">기획재정부경제공급망기획관</span><strong class="name">손웅기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;예. 그런데 첨단은 아직 승인을 안 했기 때문에 아마 지금 말씀하시는 건 첨단전략산업기금 쪽 집행계획을 말씀하시는 것 같습니다.</span><br/></div></div></div><div id="spk_38" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;어디어디?</span><br/></div></div></div><div id="spk_39" class="item4 speaker spk_mem" data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">기획재정부경제공급망기획관 손웅기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="손웅기"></span><span class="txt"><span class="position">기획재정부경제공급망기획관</span><strong class="name">손웅기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;금융위에서 지금 오셨습니다.</span><br/></div></div></div><div id="spk_40" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;금융위하고 또 어디가 와 있어요?</span><br/></div></div></div><div id="spk_41" class="item4 speaker spk_mem" data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">기획재정부경제공급망기획관 손웅기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="손웅기"></span><span class="txt"><span class="position">기획재정부경제공급망기획관</span><strong class="name">손웅기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;금융위가 첨단전략산업기금……</span><br/></div></div></div><div id="spk_42" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;공급망은 거기서 하시는 거고, 국장님이?</span><br/></div></div></div><div id="spk_43" class="item4 speaker spk_mem" data-mem_id="0" data-name="손웅기" data-pos="기획재정부경제공급망기획관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">기획재정부경제공급망기획관 손웅기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="손웅기"></span><span class="txt"><span class="position">기획재정부경제공급망기획관</span><strong class="name">손웅기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;예.</span><br/></div></div></div><div id="spk_44" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;김태년 위원님, 저 설명 듣고 하실래요, 지금 하실래요?</span><br/></div></div></div><div id="spk_45" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;지금 그냥 이야기할게요.</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;첨단전략산업기금과 관련해서는 저번에 우리가 산은법 개정해 가지고 15조 증자해서, 이걸 기반으로 해서 조성하는 것 아니에요? 그때도 제가 법정 자본 10조 증자 법을 냈는데 국민의힘에서 20조 증자 법안을 냈었던 거거든요. 그러니까 국민의힘에서도 이게 지금 부족하다는 인식을 갖고 있어요.</span><br/><span class="spk_sub" id="spk_sub45-3">&nbsp;실제로 15조 이것 부족합니다. 지금 현재의 첨단전략산업에 대한 투자 규모는 점점점 커지거든요. 예를 들면 반도체 팹 하나 만드는 데도 아주 과거에 20조였다면, 이게 얼마 전까지만 해도 30조였는데 최근에 보니까 40조까지 늘어나 있더라고요. 또 인프라 구축과 관련해서도 우리 국가 지원이 다른 나라에 비해서 워낙 약하기 때문에 지금 투자 기업들이 지는 부담들이 엄청 커요.</span><br/><span class="spk_sub" id="spk_sub45-4">&nbsp;이번에도 예산심사하는 것 보니까 용인 반도체 클러스터에 1100억인가 해 달라고 하는데 기재부에서 반대해서 지금 못 하고 있다면서요. 그렇다면서. 그러니까 기업들이 지고 있는 부담이 크기 때문에 이걸 기반으로 한 첨단전략산업기금을 줄이는 것, 이건 오히려 더 늘려야 된다고 저는 그렇게 주장을 해요. 이것도 부족하다, 이게 여러 분야에서 투자 규모가 과거에 비해서 엄청나게 커졌고.</span><br/><span class="spk_sub" id="spk_sub45-5">&nbsp;또 지금 우리가 국가 대항전을 치르고 있는데 이게 지금 다 시기의 문제가 있거든요. 제때, 적시에, 지금 투자하지 않으면 국제경쟁력에서 확 뒤처져 버릴 가능성이 있기 때문에 저는 이 첨단전략산업 이건 더 늘리면 늘렸지 줄일 수 없다.</span><br/><span class="spk_sub" id="spk_sub45-6">&nbsp;그리고 공급망기금 이건 성격적으로 놓고 보면 사실은 이게 다 소진될 수도 있고 소진 안 될 수도 있거든요. 그런데 이건 지금 일종의 예비비 성격도 갖고 있는 거거든요. 공급망이라고 하는 이 특징 자체가 뭔 일이 벌어질지 모른다는 말이지요. 예를 들어 예기치 않은 전쟁이 일어나 가지고 우리 공급망이 교란돼 버릴 수 있는 이런 가능성도 있기 때문에 난 이건 충분히……</span><br/><span class="spk_sub" id="spk_sub45-7">&nbsp;그리고 이게 한꺼번에 다 채권발행해 가지고 통장에다가 집어넣어 놓고 쓰는 게 아니잖아요. 필요할 때 조달하는 것 아닙니까? 그러니까 이건 채권시장을 교란시키거나 이럴 염려는 크게 염려하지 않아도 될 것이고, 만일의 사태에 대비하는 그런 성격도 있기 때문에 이건 이 정도는 담아 줘도 크게 문제가 안 될 것 같고요.</span><br/><span class="spk_sub" id="spk_sub45-8">&nbsp;말씀하시는 것 다 이해는 하는데, 원래 이 공급망기금과 관련해서는 오히려 국민의힘 의원님들이 강력하게 주장했고 드라이브 걸었던 종목 아닌가요, 이것?</span><br/></div></div></div><div id="spk_46" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;맞습니다.</span><br/></div></div></div><div id="spk_47" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;그래서 제가 보기에는 이것 그냥 해 줘도 될 것 같은데. 좀 늘리자고 주장을 해 볼까?</span><br/><span class="spk_sub" id="spk_sub47-2">&nbsp;(웃음소리)</span><br/></div></div></div><div id="spk_48" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;박성훈 위원님.</span><br/></div></div></div><div id="spk_49" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;김태년 위원님 좋은 말씀 잘 들었고요.</span><br/><span class="spk_sub" id="spk_sub49-2">&nbsp;그래서 저희가 이런 생각을 합니다. 공급망안정화기금 같은 경우는 올해만 하더라도 아직 40%를 넘지 못하고 있는 상황이고요. 또 저희가 보기에는 유사한 성격을 가진 기금이 새롭게 만들어지는 상황에서 올해의 실적 또는 전년도 실적을 봤을 때 아마 내년에도 50%를 넘기 어려울 겁니다.</span><br/><span class="spk_sub" id="spk_sub49-3">&nbsp;그래서 이 부분에 대해서 삭감이 이루어지면 저희가 그 재원 규모를 적절히 배분해서 지금 위원장님과 그리고 김 위원님이 말씀하신 것처럼 첨단전략산업기금채권의 투자 대상 그리고 계획이 구체화되는 것을 전제로 해서 그 부분을 좀 조정할 수 있는 여지는 있지 않을까 하는 그런 생각은 가지고 있습니다.</span><br/></div></div></div><div id="spk_50" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;아니, 저는 일단 이게 성격이 같다는 점에 있어서는 동의가 안 돼요. 관련 법 그러니까 산업은행 증자 법까지 제출을, 내서 통과시켰던 사람의 입장에서 보면 이건 아까 설명 잘하시던데 국내의 시설투자를 포함한, 시설과 인프라 투자를 포함한 이런 부분에 지원하기 위해서 이건 만들어진 거거든요. 공급망기금은 그야말로 뭐 사 오기 위해서 만드는 거 아니에요, 지금? 바깥에서 뭘 사 오려고 만든 기금이기 때문에 성격이 완전히 다른 거다. 그래서 이거 2개 뒤섞어서 하면 안 될 것 같다 이 말씀 드리고요.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;그다음에 또 하나는 저는 말씀 충분히 이해하고 저도 주장할 만하다 싶은 건 아까 대기업 편중과 관련해서인데요. 충분히 주장하실 수 있는 건데 지금 산업구조의 흐름 또 실제로 여러 가지 실행되고 있는 과정들을 보면 지금은 대기업, 중견·중소기업 이걸 구분하는 게 크게 의미가 없어요, 이게 큰 어떤 서플라이체인으로 딱 구축이 되어 있어서. 그러니까 예를 들어서 첨단전략산업과 관련해서 대기업에 투자가 이루어진다라고 하면 이게 대기업만 딱 혜택을 보는 게 아니에요. 이게 생태계로 딱 구축이 되어 있기 때문에 또 쫌매져 있기 때문에.</span><br/><span class="spk_sub" id="spk_sub50-3">&nbsp;그래서 이게 지금 우리가 숫자상으로 보면 대기업 편중이 좀 보이기는 하나 실제로 실행되는 걸 보면 꼭 그렇게 숫자로만 볼 일은 아니다 이 말씀을 하나 드리고 싶어요.</span><br/></div></div></div><div id="spk_51" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;마지막으로 한말씀만.</span><br/><span class="spk_sub" id="spk_sub51-2">&nbsp;김태년 위원님 말씀과 관련해서 저희 국민의힘이 매주 중소·중견기업들을 찾아가서 목소리를 듣고 있는데요.</span><br/></div></div></div><div id="spk_52" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;우리가 주장하던 거 아닌가, 그거?</span><br/></div></div></div><div id="spk_53" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;특히 공급망안정기금과 관련해서 불만들이 꽤 있었습니다. 결국 대기업을 위한 혜택으로 제도가 운영이 되고 있는 거 아니냐라는 그런 지적들을 중소·중견기업에서 많이들 말씀을 하셨고요.</span><br/></div></div></div><div id="spk_54" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;보증을 잘 안 해 줘서 그런 건가요, 중견·중소기업에는?</span><br/></div></div></div><div id="spk_55" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;용도 자체가 대기업을 위한 자재나 부품 구매로, 이 용도로 활용이 되고 있다는 거지요. 그러다 보니까 실질적으로 공급망 안정화라는 게 우리가 과거에 경험했던 것처럼 경제안보 품목에 대해서 우리가 자급자족할 수 있는 서플라이체인을 만들겠다는 건데 그 용도하고는 상관없이 대기업이 공급망안정기금의 대상이라고 하는 제품을 생산하기 위한 본인들의 자금 활용원으로써 이용을 하고 있다는 겁니다.</span><br/><span class="spk_sub" id="spk_sub55-2">&nbsp;그래서 그런 측면에 대한 지적들이 많아서 저희가…… 제도 자체가 나쁜 건 아니에요. 저희 당도 이 제도가 필요하다고 가장 먼저 목소리를 냈던 측면이 있고 다만 운영이 그렇게 되고 있지 못하기 때문에 저희가 그 부분에 대해서는 일정 부분 제도개선이 필요하고 또 보증한도도 삭감할 필요가 있다. 그대로 가져가게 되면……</span><br/></div></div></div><div id="spk_56" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;제가 하나만 할게요.</span><br/></div></div></div><div id="spk_57" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;마지막 제 말만……</span><br/></div></div></div><div id="spk_58" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;아, 아직 안 끝나셨어요?</span><br/></div></div></div><div id="spk_59" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;그래서 이게 예비비 성격이니까 많이 담아 가도 아무 문제가 없냐? 저는 그러면 우리나라 보증동의안이 필요가 없다고 생각합니다. 한도를 충분히 늘려서 외부의 예상할 수 없는 충격에 대응하는 게 좋지요. 다만……</span><br/></div></div></div><div id="spk_60" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;아까 채권시장 교란시킨다고 해서 하는 얘기예요.</span><br/></div></div></div><div id="spk_61" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;그래서 이런 부분에 대해서 저희가 결국은 일정 부분 회사채시장의 교란이 일어날 수밖에 없는 구조 그리고 앞에서 말씀드린 것처럼 한전채조차도 사실상 발행에 실패하고 있는 현재의 회사채시장, 국고채시장의 어려움을 고려했을 때 무한정 이렇게 한도를 늘려서 가져오는 것은 적절치 않다는 점을 마지막으로 말씀드립니다.</span><br/></div></div></div><div id="spk_62" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;저도 마지막으로 한말씀드릴게요.</span><br/><span class="spk_sub" id="spk_sub62-2">&nbsp;첨단전략산업과 경제안보 말씀을 하셨는데 공급망은 경제안보 맞아요. 맞는데, 그 목적으로 한 거 맞아요. 그런데 첨단전략산업과 관련해서 소재·부품은 현재 우리 산업 상황으로 놓고 보면 다 이게 경제안보하고 관련되어 있는 것들이거든요. 이건 다 경제안보로 해석해야 되는 것들입니다, 지금은.</span><br/></div></div></div><div id="spk_63" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;정부 측이 설명을 잘하고 저도 이해가 다 됐습니다. 또 김태년 위원님 생각이나 제 생각이나 같은데 어쨌든 국힘의 박성훈 위원님 말씀도 있고 또 국힘의 여러 가지 또 지도부 생각도 있는 것 같아서 회의를 한 5분간만 잠깐……</span><br/></div></div></div><div id="spk_64" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;저 가야 돼요.</span><br/></div></div></div><div id="spk_65" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;어디를 가요? 아니, 5분만 있다가 가요. 5분간만 정회하고 딱 5분 뒤에……</span><br/></div></div></div><div id="spk_66" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;저는 회의를 5분 할 줄 알고 왔더니……</span><br/></div></div></div><div id="spk_67" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_67"><label for="spk_cnt_chk_67">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub67-1">&nbsp;아니, 나도 그래요. 그런데 어쨌든 5분 정회하고 다시 정확히 55분에 속개해서 12시까지 끝내도록……</span><br/><span class="spk_sub" id="spk_sub67-2">&nbsp;정회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(11시49분 회의중지)</p><br/><p class="tit_sm taR">(11시57분 계속개의)</p><br/><div id="spk_68" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;의석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub68-2">&nbsp;성원이 되었으므로 회의를 속개하겠습니다.</span><br/><span class="spk_sub" id="spk_sub68-3">&nbsp;잠시 정회를 했었는데요. 혹시 박성훈 위원님 말씀하신 내용과 관련해서 변동이 있으시거나 좀 수정사항 있으면 말씀 주시고요. 그리고 정부 측 의견 듣고 오늘 의결하거나 아니면 좀 미뤄야 될 것 같은 생각이 듭니다.</span><br/><span class="spk_sub" id="spk_sub68-4">&nbsp;박성훈 위원님 먼저 말씀 주시지요.</span><br/></div></div></div><div id="spk_69" class="item4 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;저는 회의 내내 두 기금상의 실질적인 어떻게 보면 중복성 그리고 투자 대상의 어떤 비효율성 이런 부분들을 말씀을 드렸고요. 그리고 첨단전략산업기금채권 같은 경우에는 집행계획의 구체화가 되어 있지 않은 부분에 대해서 말씀을 드렸습니다. 그리고 우리 국고채시장에 미치는 부정적 영향도 언급을 했고요.</span><br/><span class="spk_sub" id="spk_sub69-2">&nbsp;넓게 보면 국가채무에 대한 부분들, 이런 부분들을 종합적으로 고려해서 국민의힘의 입장을 말씀드렸습니다. 일정 부분 재원 삭감이 필요하다고 보이고요. 결국 이게 보증동의안이라고 하더라도 시장에 던지는 그런 시그널이 있기 때문에 정부가 이 부분에 대해서 일정 부분 수용이 불가피하다면 오늘 입장 정리는 어렵지 않을까 저희는 생각을 합니다.</span><br/></div></div></div><div id="spk_70" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_70"><label for="spk_cnt_chk_70">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub70-1">&nbsp;김태년 위원님 말씀하시지요.</span><br/></div></div></div><div id="spk_71" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;정부 측에서 아까 쭉 설명은 다 하셨지만 구체적으로 지금 공급망과 관련해서 신청하는 곳이 수요가 막 넘친다는 거 아니에요? 그런 부분들도 가지고 국민의힘 위원님들 설득도 하고 그다음에 첨단전략산업과 관련해서도 지금 투자 규모의 어떤 확대 그다음에 수요가 넘치는 이런 상황들도 잘 설명을 해서 이해를 좀 구하는 과정들을 거쳤으면 좋겠어요. 시간을 조금 갖고 하시지요.</span><br/></div></div></div><div id="spk_72" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;그러면 제 생각에 정부 측에 한 가지 물어보고 싶은데 오늘 이걸 처리 의결 안 해도 12월 중에, 가능한 12월 중에 빨리하면 좋겠지. 그렇게 해도 정부 측에서 뭐 문제는 없지요?</span><br/></div></div></div><div id="spk_73" class="item4 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="기획재정부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">기획재정부제1차관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">기획재정부제1차관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;최대한 조속히 처리해 주시는 게 저희한테 제일 좋고요. 또 이 첨단산업기금은 제가 알기로는 12월 10일 또 출범이 준비되어 있습니다. 그래서 저희로서는 굉장히 빠듯한데 오늘 어렵다면 잠깐 시간을 두시는 거는, 가급적 12월 중에 빨리 논의가 되기를 희망합니다.</span><br/></div></div></div><div id="spk_74" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;그래요. 오늘 조금 견해가 다르기 때문에……</span><br/></div></div></div><div id="spk_75" class="item4 speaker spk_mem" data-mem_id="6654" data-name="김태년" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">김태년 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f8d696606fc742ec87659bd32ff95ae6.jpg" alt="김태년"></span><span class="txt"><strong class="name">김태년</strong><span class="position">위원</span><span class="area">(경기 성남시수정구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;그러니까 10일 전에 상임위 처리까지 하는 걸로 목표를 잡고 뭐 조금……</span><br/></div></div></div><div id="spk_76" class="item4 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_76"><label for="spk_cnt_chk_76">소위원장 정일영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정일영</strong><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub76-1">&nbsp;예, 그러지요. 12월 10일 전에 우리가 소위를 다시 열고 상임위 전체회의까지 통과시키는 걸 목표로 하고 그 전에 정부 측에서는 박성훈 위원님이 지적한 그 문제점, 그게 그렇지 않다는 거 아니에요? 그러니까 그렇지 않다는 자료, 특히 구체적인 집행계획 이런 걸 말씀하셨으니까 우리 소위 위원님들, 특히 박성훈 위원님께 찾아가서 구체적으로 설명을 좀 드리도록 그렇게 하십시다. 그렇게 부탁드리고요.</span><br/><span class="spk_sub" id="spk_sub76-2">&nbsp;위원님들 간 이견이 있으므로 공급망안정화기금 및 첨단전략산업기금채권에 대한 국가보증동의안은 12월 중에, 가능한 한 12월 10일 이전에 다시 소위를 열어 심사를 계속하는 것으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub76-3">&nbsp;이상으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub76-4">&nbsp;위원님들과 관계 공무원 여러분 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub76-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(12시00분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(4인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank"><span class="name lts3 ">김태년</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank"><span class="name lts3 ">박성훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGKEUN" target="_blank"><span class="name lts3 ">박홍근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank"><span class="name lts3 ">이인선</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 최병권</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>기획재정부</p><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 이형일</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 황순관</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">경제공급망기획관</span></span><span class="name lts3"> 손웅기</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 55903;
+			const class_id = 2;
+			const confer_num = "N053815";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640797270" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640797270"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640797270"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640797270"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

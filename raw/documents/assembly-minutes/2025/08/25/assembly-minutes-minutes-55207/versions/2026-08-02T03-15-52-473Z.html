@@ -1,0 +1,605 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=55207" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제428회 (임시회) 제3차 산업통상자원중소벤처기업위원회</strong><span class="date">(2025.08.25.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2024회계연도 결산(의안번호 2210635)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">  가. 산업통상자원부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">  나. 중소벤처기업부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">  다. 특허청 소관</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이철규 위원장 (강원 동해시태백시삼척시정선군)"> 
+							이철규 위원장 (강원 동해시태백시삼척시정선군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="장철민 위원 (대전 동구)"> 
+							장철민 위원 (대전 동구)
+						</option>
+					
+					
+						<option value="이호현 산업통상자원부제2차관">이호현 산업통상자원부제2차관</option>
+					
+						<option value="한성숙 중소벤처기업부장관">한성숙 중소벤처기업부장관</option>
+					
+						<option value="김완기 특허청장">김완기 특허청장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(2명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6650" data-name="이철규" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">이철규</span>
+												<span class="position">위원장</span>
+												<span class="area">(강원 동해시태백시삼척시정선군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6641" data-name="장철민" data-pos="소위원장"> 
+											<label for="spk_mem1">												
+												<span class="name">장철민</span>
+												<span class="position">위원</span>
+												<span class="area">(대전 동구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="이호현" data-pos="산업통상자원부제2차관"> 
+											<label for="spk_attend0">
+												<span class="name">이호현</span>
+												<span class="position">산업통상자원부제2차관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="한성숙" data-pos="중소벤처기업부장관"> 
+											<label for="spk_attend1">
+												<span class="name">한성숙</span>
+												<span class="position">중소벤처기업부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="김완기" data-pos="특허청장"> 
+											<label for="spk_attend2">
+												<span class="name">김완기</span>
+												<span class="position">특허청장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=55207&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제428회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>산업통상자원중소벤처기업위원회회의록</h1></div></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 8월 25일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">산업통상자원중소벤처기업위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2024회계연도 결산(의안번호 2210635)</li><li class="pl20">  가. 산업통상자원부 소관</li><li class="pl20">  나. 중소벤처기업부 소관</li><li class="pl20">  다. 특허청 소관</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2024회계연도 결산(의안번호 2210635)</a></li><li id="head_item2" class="pl20"><a href="#" class="move" data-target="#item2">  가. 산업통상자원부 소관</a></li><li id="head_item3" class="pl20"><a href="#" class="move" data-target="#item3">  나. 중소벤처기업부 소관</a></li><li id="head_item4" class="pl20"><a href="#" class="move" data-target="#item4">  다. 특허청 소관</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(15시03분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6650" data-name="이철규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 이철규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/605672fb126e40f5af71254fa546f3cd.jpg" alt="이철규"></span><span class="txt"><span class="position">위원장</span><strong class="name">이철규</strong><span class="area">(강원 동해시태백시삼척시정선군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제428회 국회(임시회) 제3차 산업통상자원중소벤처기업위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘은 지난 21일에 예산결산소위원회에서 심사한 2024회계연도 결산을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;참고로 위원장이 양당 간사 위원님과 협의하여 한미 정상회담 수행 중인 김정관 산업통상자원부장관, 여한구 통상교섭본부장, 예결위 회의에 참석 중인 문신학 산업통상자원부제1차관, 노용석 중소벤처기업부차관의 불출석을 양해하였다는 점을 알려 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;또한 해외 출장 중인 김동철 한국전력 사장을 대신하여 오흥복 부사장이, 황주호 한국수력원자력 사장을 대신하여 박인식 수출본부장이, 민병주 한국산업기술진흥원 원장을 대신하여 이찬영 부원장이 대리 출석하도록 양해했다는 점을 말씀드립니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P5S0I5D3B0P1O4W2C3J2A4G7U2Y0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 2024회계연도 결산(의안번호 2210635)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item2" class="tit">  가. 산업통상자원부 소관</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item3" class="tit">  나. 중소벤처기업부 소관</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item4" class="tit">  다. 특허청 소관</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시04분)</p><br/><div id="spk_4" class="item4 speaker spk_mem" data-mem_id="6650" data-name="이철규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 이철규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/605672fb126e40f5af71254fa546f3cd.jpg" alt="이철규"></span><span class="txt"><span class="position">위원장</span><strong class="name">이철규</strong><span class="area">(강원 동해시태백시삼척시정선군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항 산업통상자원부, 중소벤처기업부 및 특허청 소관 2024회계연도 결산을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;먼저 소위원장 심사결과 보고 순서입니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;장철민 예산결산소위원장 나오셔서 소위원회 심사결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item4 speaker spk_mem" data-mem_id="6641" data-name="장철민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 장철민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e37f006d030a4d14b04f17a0de512540.jpg" alt="장철민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">장철민</strong><span class="area">(대전 동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;예산결산소위원장 장철민 위원입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;2024회계연도 산업통상자원부·중소벤처기업부·특허청 소관 결산에 대한 심사결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;우리 소위원회는 대체토론에서 위원님들께서 구두 및 서면으로 질의하신 사항을 기초로 하여 심도 있는 심사를 하였고 그 결과 2024회계연도 결산을 정부 원안대로 의결하되 3건의 시정, 22건의 주의, 104건의 제도개선 등 총 129건의 시정요구사항과 9건의 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;먼저 산업통상자원부 소관에 대하여는 3건의 시정, 13건의 주의, 59건의 제도개선 등 총 75건의 시정요구사항을 채택하는 한편 3건의 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;주요 시정요구사항을 말씀드리면 일반회계의 국제부담금 관련 사업은 미납액 발생을 방지하기 위해 기획재정부와 협의하여 예비비 사용 방안 등을 마련하도록 제도개선을 요구하였고, 국가통합바이오빅데이터구축 사업은 기관 등 모집전략을 재검토하여 사업을 정상 추진할 수 있도록 하는 한편 운영비 집행잔액에 대해서는 국고 반납하도록 주의를 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;에너지 및 자원사업 특별회계의 유전개발사업출자 사업은 국회 예산심의의 취지에 부합하지 않는 내역사업 변경을 지양하고 한국석유공사에 대한 관리 감독 강화 방안과 유망성 평가 제도개선 방안을 마련하여 국회에 보고하도록 시정을 요구하는 한편, 대왕고래 프로젝트 추진 과정을 국회가 검토할 수 있도록 자료를 공개하고 재발 방지 대책을 마련하도록 주의를 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;지역균형발전특별회계의 산업단지환경조성 사업은 사업시행법인 설립 지연에 따른 산업단지환경개선펀드 조성 부진에 대한 사업 관리 강화 방안을 마련하도록 제도개선을 요구하였고, 소재부품장비경쟁력강화특별회계의 소재부품기술개발(R&amp;D) 사업은 집행 잔여 예산을 임의 활용하여 신규 과제를 선정하지 않도록 주의를 요구하고 매몰비용이 발생하지 않게 과제기관 선정 및 성과 관리 방안을 마련하도록 시정을 요구하는 한편 신규과제 편성 시 상·하반기 협약과제를 적절하게 배분하도록 제도개선을 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;전력산업기반기금의 전력효율향상 사업은 취약계층 대상 고효율 가전제품 구입 지원 사업의 경우 사업수행체계 다변화 등 개선 방안을 마련하도록 하고, 집행이 부진한 식품매장 냉장고 문달기 사업은 사업설계 단계에서 면밀하게 사업 계획을 수립하되 지속 추진 여부도 검토하도록 요구하였고, 방사성폐기물관리기금의 사용후핵연료관리기반조성 사업은 성과관리체계를 마련하고 교육 방식을 개선하는 등 인력양성체계를 내실화하도록 제도개선을 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;다음으로 중소벤처기업부 소관에 대하여는 8건의 주의, 33건의 제도개선 등 총 41건의 시정요구사항을 채택하는 한편 6건의 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;주요 시정요구사항을 말씀드리면 일반회계의 ICT융합 스마트공장 보급·확산 사업은 사업출연금을 당초 편성목적에 맞게 집행하도록 하고 부득이한 경우 법령에서 정한 예산과목 변경 절차를 거치도록 주의를 요구하였고, 민관협력창업자육성 사업은 상위 팁스(TIPS)와의 연계 강화 등 프리팁스(Pre-TIPS)가 초기창업기업의 스케일업을 실질적으로 지원할 수 있는 방안을 마련하도록 제도개선을 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;지역균형발전특별회계의 창업인프라지원 사업은 창업보육센터 자격의 자진 반납 원인을 분석하고 수요자에 대한 실태조사 등을 실시하여 효과적인 정책을 수립하도록 제도개선을 요구하였고, 중소벤처기업창업 및 진흥기금의 비은행권 소상공인·자영업자 금융비용 지원 사업은 취약차주 지원이라는 국회 증액사업 취지에 어긋나는 소극적인 예산집행이 반복되지 않도록 하는 내용으로 제도개선을 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;기술보증기금의 기술보증대위변제 사업은 향후 예상되는 사고율 급증에 대비하는 한편 중장기적인 관점에서 기금의 재정건전성을 유지하기 위한 체계적인 리스크 관리를 병행하도록 제도개선을 요구하였고, 소상공인진흥기금의 소상공인 전기요금 특별지원 사업은 향후 유사한 에너지비용 지원사업 추진 시 정확한 통계에 기반하여 체계적인 사업 계획을 수립하도록 하는 내용의 제도개선을 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;끝으로 특허청 소관에 대하여는 1건의 주의, 12건의 제도개선 등 총 13건의 시정요구사항을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;주요 시정요구사항을 말씀드리면 책임운영기관특별회계의 기타재산이자수입은 보조금 정산 기한과 절차를 명확히 설정하고 집행잔액 및 이자가 적기에 수입 조치될 수 있도록 주의를 요구하였고, 지식재산 창출지원은 지역지식재산센터의 지방비 매칭 여건을 보강하는 등 센터별 지원 공백을 최소화하도록 제도개선을 요구하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-15">&nbsp;보다 자세한 소위원회 심사결과는 배부해 드린 유인물을 참고해 주시고 소위원회가 심사보고한 대로 의결하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-16">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item4 speaker spk_mem" data-mem_id="6650" data-name="이철규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 이철규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/605672fb126e40f5af71254fa546f3cd.jpg" alt="이철규"></span><span class="txt"><span class="position">위원장</span><strong class="name">이철규</strong><span class="area">(강원 동해시태백시삼척시정선군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;장철민 소위원장님과 소위 위원님 여러분, 심도 있는 결산심사를 위해 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;오늘 소위원회 심사결과에 대해서 꼭 발언하실 위원님들 계신가요? 안 계신가요?</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;의견 개진하실 분이 안 계시면 의결토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;그러면 의사일정 제1항 산업통상자원부, 중소벤처기업부 및 특허청 소관 2024회계연도 결산은 각각 정부 원안대로 의결하되 소위원회에서 심사보고한 시정요구사항과 부대의견을 우리 위원회의 결산심사 결과로 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub6-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-9">&nbsp;이의가 없으시므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub6-10">&nbsp;다음은 결산 의결에 따른 정부 측 인사가 있겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-11">&nbsp;먼저 이호현 산업통상자원부제2차관 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_7" class="item4 speaker spk_mem" data-mem_id="0" data-name="이호현" data-pos="산업통상자원부제2차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">산업통상자원부제2차관 이호현 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이호현"></span><span class="txt"><span class="position">산업통상자원부제2차관</span><strong class="name">이호현</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;존경하는 이철규 산업통상자원중소벤처기업위원회 위원장님 그리고 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;2024회계연도 산업통상자원부 소관 결산의 건을 심의 의결하여 주신 데 대해 깊은 감사의 말씀을 드립니다. 특히 심도 있는 토의를 거쳐 심사해 주신 장철민 예산결산소위원회 위원장님을 비롯한 소위 위원님들께도 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;심사 과정에서 여러 위원님들께서 말씀하여 주신 소중한 의견을 유념해서 향후 예산편성과 집행 과정에서 적극 반영해 나가도록 하겠습니다. 앞으로도 산업통상자원부에 대한 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_8" class="item4 speaker spk_mem" data-mem_id="6650" data-name="이철규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 이철규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/605672fb126e40f5af71254fa546f3cd.jpg" alt="이철규"></span><span class="txt"><span class="position">위원장</span><strong class="name">이철규</strong><span class="area">(강원 동해시태백시삼척시정선군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;다음은 한성숙 중소벤처기업부장관 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_9" class="item4 speaker spk_mem" data-mem_id="0" data-name="한성숙" data-pos="중소벤처기업부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">중소벤처기업부장관 한성숙 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="한성숙"></span><span class="txt"><span class="position">중소벤처기업부장관</span><strong class="name">한성숙</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;존경하는 이철규 산업통상자원중소벤처기업위원회 위원장님 그리고 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;2024회계연도 중소벤처기업부 소관 결산 및 예비비지출 승인의 건을 의결해 주신 것에 대해 깊은 감사의 말씀을 드립니다. 특히 심도 있는 토의와 심사를 진행해 주신 장철민 예산결산소위원회 위원장님을 비롯한 소위 위원 여러분들께도 진심으로 감사의 말씀 드립니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;결산심의 과정에서 여러 위원님들께서 지적해 주신 사항들은 하나하나 점검해서 앞으로 예산을 편성하고 집행하는 과정에서 반영하고 개선해 나가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;감사드립니다.</span><br/></div></div></div><div id="spk_10" class="item4 speaker spk_mem" data-mem_id="6650" data-name="이철규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 이철규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/605672fb126e40f5af71254fa546f3cd.jpg" alt="이철규"></span><span class="txt"><span class="position">위원장</span><strong class="name">이철규</strong><span class="area">(강원 동해시태백시삼척시정선군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;마지막으로 김완기 특허청장 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item4 speaker spk_mem" data-mem_id="0" data-name="김완기" data-pos="특허청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">특허청장 김완기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김완기"></span><span class="txt"><span class="position">특허청장</span><strong class="name">김완기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;존경하는 이철규 산업통상자원중소벤처기업위원회 위원장님 그리고 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;2024회계연도 특허청 소관 결산을 심의 의결해 주신 것에 대해 깊이 감사드립니다. 특히 심도 있는 토의를 거쳐 심사해 주신 장철민 예산결산소위원회 위원장님을 비롯한 소위 위원 여러분들께도 다시 한번 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;결산심의 과정에서 여러 위원님들께서 말씀해 주신 소중한 의견은 향후 예산 편성과 집행 과정에 적극 반영하도록 하겠습니다. 앞으로도 특허청에 대한 각별한 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_12" class="item4 speaker spk_mem" data-mem_id="6650" data-name="이철규" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 이철규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/605672fb126e40f5af71254fa546f3cd.jpg" alt="이철규"></span><span class="txt"><span class="position">위원장</span><strong class="name">이철규</strong><span class="area">(강원 동해시태백시삼척시정선군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;수고하셨습니다. 자리로 들어가십시오.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;오늘 의결된 2024회계연도 결산에 대한 체계와 자구 정리 등에 대해서는 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;이상으로 오늘 회의는 모두 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;그리고 이호현 산업통상자원부2차관, 한성숙 중소벤처기업부장관 및 김완기 특허청장을 비롯한 정부 및 공공기관 관계자 여러분, 그리고 박희석 수석전문위원 및 보좌진 그리고 국회 직원 여러분 모두 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(15시15분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(24인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKSANGEON" target="_blank"><span class="name lts3 ">곽상언</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KUJAKEUN" target="_blank"><span class="name lts3 ">구자근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWONI" target="_blank"><span class="name lts3 ">김원이</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJONGMIN" target="_blank"><span class="name lts3 ">김종민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank"><span class="name lts3 ">나경원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSEONGMIN" target="_blank"><span class="name lts3 ">박성민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOWANGJIN" target="_blank"><span class="name lts3 ">서왕진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOILJUN" target="_blank"><span class="name lts3 ">서일준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGJAEBONG" target="_blank"><span class="name lts3 ">송재봉</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHSAEHEE" target="_blank"><span class="name lts3 ">오세희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEUNJU" target="_blank"><span class="name lts3 ">이언주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEKWAN" target="_blank"><span class="name lts3 ">이재관</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJONGBAE" target="_blank"><span class="name lts3 ">이종배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank"><span class="name lts3 ">이철규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank"><span class="name lts3 ">장철민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGDONGMAN" target="_blank"><span class="name lts3 ">정동만</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHINOOK" target="_blank"><span class="name lts3 ">정진욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHSUNGMOO" target="_blank"><span class="name lts3 ">허성무</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HEOJONGSIK" target="_blank"><span class="name lts3 ">허종식</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(4인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWHAN" target="_blank"><span class="name lts3 ">김성환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNGHO" target="_blank"><span class="name lts3 ">김정호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGWOONG" target="_blank"><span class="name lts3 ">박상웅</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJAESOO" target="_blank"><span class="name lts3 ">전재수</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 박희석</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 성소미</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>산업통상자원부</p><li><a class="in_nm"><span class="pos"><span class="lts4">제2차관</span></span><span class="name lts3"> 이호현</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 이용필</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">산업기반실장</span></span><span class="name lts3"> 오승철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">통상정책국장</span></span><span class="name lts3"> 장성길</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">산업정책관</span></span><span class="name lts3"> 강감찬</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">산업기술융합정책관</span></span><span class="name lts3"> 제경희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">지역경제정책관</span></span><span class="name lts3"> 김호철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">재생에너지정책관</span></span><span class="name lts3"> 심진수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">수소경제정책관</span></span><span class="name lts3"> 최우혁</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">다자통상법무관</span></span><span class="name lts3"> 오충종</span></a></li><p>중소벤처기업부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 한성숙</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">창업벤처혁신실장</span></span><span class="name lts3"> 임정욱</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">소상공인정책실장</span></span><span class="name lts3"> 최원영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">기획조정실장직무대리</span></span><span class="name lts3"> 김우중</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">중소기업정책실장직무대리</span></span><span class="name lts3"> 김정주</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">글로벌성장정책관</span></span><span class="name lts3"> 이순배</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">기술혁신정책관</span></span><span class="name lts3"> 박용순</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">창업정책관</span></span><span class="name lts3"> 조경원</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">벤처정책관</span></span><span class="name lts3"> 김봉덕</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">특구혁신기획단장</span></span><span class="name lts3"> 이귀현</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">소상공인정책관</span></span><span class="name lts3"> 이대건</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">상생협력정책관</span></span><span class="name lts3"> 김우순</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">소상공인경영안정지원단장</span></span><span class="name lts3"> 황영호</span></a></li><p>특허청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 김완기</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 구영민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">산업재산정책국장</span></span><span class="name lts3"> 김정균</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">특허심사기획국장</span></span><span class="name lts3"> 정연우</span></a></li><p>한국전력공사</p><li><a class="in_nm"><span class="pos"><span class="lts5">기획부사장</span></span><span class="name lts3"> 오흥복</span></a></li><p>한국수력원자력주식회사</p><li><a class="in_nm"><span class="pos"><span class="lts7">수출사업본부장</span></span><span class="name lts3"> 박인식</span></a></li><p>한국무역보험공사</p><li><a class="in_nm"><span class="pos"><span class="lts2">사장</span></span><span class="name lts3"> 장영진</span></a></li><p>한국산업기술진흥원</p><li><a class="in_nm"><span class="pos"><span class="lts11">부원장겸경영기획본부장</span></span><span class="name lts3"> 이찬영</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 55207;
+			const class_id = 2;
+			const confer_num = "N053243";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640974825" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640974825"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640974825"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640974825"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

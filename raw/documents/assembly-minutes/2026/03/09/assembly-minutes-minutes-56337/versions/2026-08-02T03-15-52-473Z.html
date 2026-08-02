@@ -1,0 +1,804 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56337" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제433회 (임시회) 제3차 대미투자특별법처리를위한특별위원회(법안심사소위원회)</strong><span class="date">(2026.03.09.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+			<div class="list list3">
+				<a href="#pop_appendix" class="tit btn_pop" id="btn_apdinx" >부록</a>
+			</div>
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="정태호 소위원장 (서울 관악구을)"> 
+							정태호 소위원장 (서울 관악구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="강승규 위원 (충남 홍성군예산군)"> 
+							강승규 위원 (충남 홍성군예산군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박수영 위원 (부산 남구)"> 
+							박수영 위원 (부산 남구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="허영 위원 (강원 춘천시철원군화천군양구군갑)"> 
+							허영 위원 (강원 춘천시철원군화천군양구군갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="차규근 위원 (비례대표)"> 
+							차규근 위원 (비례대표)
+						</option>
+					
+					
+						<option value="최병권 수석전문위원">최병권 수석전문위원</option>
+					
+						<option value="이형일 재정경제부제1차관">이형일 재정경제부제1차관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(5명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6633" data-name="정태호" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">정태호</span>
+												<span class="position">소위원장</span>
+												<span class="area">(서울 관악구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6739" data-name="강승규" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">강승규</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 홍성군예산군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6686" data-name="박수영" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">박수영</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 남구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6612" data-name="허영" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">허영</span>
+												<span class="position">위원</span>
+												<span class="area">(강원 춘천시철원군화천군양구군갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6832" data-name="차규근" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">차규근</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="최병권" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">최병권</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="이형일" data-pos="재정경제부제1차관"> 
+											<label for="spk_attend1">
+												<span class="name">이형일</span>
+												<span class="position">재정경제부제1차관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56337&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제433회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>대미투자특별법처리를위한특별위원회회의록</h1><p class="tit_sm">(법안심사소위원회)</p></div></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 3월 9일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">재정경제기획위원회소회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</li><li><span class="num">2.</span> 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</li><li><span class="num">3.</span> 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</li><li><span class="num">4.</span> 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</li><li><span class="num">5.</span> 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</li><li><span class="num">6.</span> 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</li><li><span class="num">7.</span> 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</li><li><span class="num">8.</span> 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</li><li><span class="num">9.</span> 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(11시01분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제433회 국회(임시회) 대미투자특별법 처리를 위한 특별위원회 제3차 법안심사소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;원활한 회의 진행을 위해서 위원님들 발언 시에는 마이크를 사용해 주시기 바라며 배석자는 위원장 허가를 받은 후에 발언해 주시고 발언 전에 소속·직위와 성명을 먼저 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2M5N1V1W2U5U1S5T4S7Z4A9Y3Z1X3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Z5X1W2W0E4E1C4D2C9C0A0B9J2J7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S5Q1R2P0P8O1W6W5U3V5T6U9S3T5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K5K1T2T1R7S1Q5R5P4X0Y6W7X3V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K5K1S2T1R8R1Q6O3P5W0X1W6W5U6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I6J0R1R2P7Q0P9P1N7O5W5U5V1T8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T6T0B2C0A4A1Z4X2Y5G0H0F8F9D9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2W6W0U2V0U4U1S7T5B3Z1A5Y3Z5X6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2L6J0J2R0S9Q0R9P1Q6O5K8K8J5K3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정 제1항부터 9항까지 이상 9건의 한미 전략적 투자 관리를 위한 특별법안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;잘 아시다시피 오늘 아침 9시에 공식적으로, 그전에는 또 비공식적으로 양당 간사 간에 법안 처리를 위한 협의를 쭉 진행해 왔습니다. 최병권 수석전문위원께서 간사 간 협의 결과를 먼저 설명해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;수석전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;저희가 만든 자료, 대안 10페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;10페이지, 제4조에서 원래 조 제목이 ‘상업적 합리성의 원칙’이었는데요 1항만 상업적 합리성의 원칙이고 2항부터는 대미투자 원칙이기 때문에 ‘대미투자 등의 원칙’으로 조 제명을 바꿨고요.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;다음으로 11페이지 보시면 3항에서 정부는 상업적 합리성의 원칙에도 불구하고 국가안보나 공급망 안정 등 불가피한 사유가 있을 경우 대미투자를 추진할 수 있는데 이 경우 미국과의 협의 개시 전에 국회의 소관 상임위원회에 보고하고 사업의 제안·추진에 대한 동의를 받아야 된다고 규정을 하고 있고요.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;4항을 새로 만들었습니다. 4항의 경우에 ‘보고 또는 동의를 위한 위원회 개회 시 국가 안전 보장을 사유로 정부가 회의의 비공개를 요청하는 경우 국회법 71조와 75조에 따라 회의를 공개하지 아니할 수 있다’ 이렇게 규정했는데요. 비공개의 원칙을 규정하는 것은 헌법 50조에서 ‘국회의 회의는 공개한다’라고 하고 있고 그다음에, ‘다만 국가 안전 보장을 위해 필요한 경우 공개하지 아니할 수 있다’는 것을 준용해서 규정했다는 점을 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;그다음에 5항에 보시면 ‘비공개로 하는 경우, 국회 소관 상임위원회 위원·관계 공무원은 보고로부터 알게 된 직무상 비밀을 공개하거나 누설할 수 없다’라고 비밀누설 의무를 규정하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;다음으로 17페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;11조(사업관리단) 파트에서 3항을 보시면 사업관리단은 7조 1항에 따른 사업관리위원회의 검토 업무를 전문적으로 수행함에 있어 필요한 경우 조사·연구 및 계약 등 대통령령으로 정하는 사항을 전담하여 관리하는 기관을 지정할 수 있도록 근거 규정을 소소위에서 신설하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-9">&nbsp;다음으로 18페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-10">&nbsp;제13조 보시면 ‘중대한 변경 시 대미협의 등’입니다. 1항에 보시면 통상정책 변화 등 중대한 변경이 발생하거나 상업적 합리성이 실질적으로 변경된 경우에는 정부는 대미투자 금액의 조달 여부를 미국과 협의할 수 있도록 어구를 ‘대미투자의 조달 여부’로 했습니다. 처음에 소위 때는 ‘중단’이라는 표현을 썼었는데요 MOU와 맞추기 위해서 ‘조달 여부 등’으로 바꿨고요.</span><br/><span class="spk_sub" id="spk_sub4-11">&nbsp;2항에서는 국회 소관 상임위가 미국의 통상정책 변화 등 중대한 변경이 발생하였다고 판단하는 경우에 대미투자 추진 방향에 대해서 정부에 의견을 제시할 수 있도록 되어 있고 이 경우 신속히 그 의견에 대한 검토 결과를 소관 상임위에 보고하도록 규정하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-12">&nbsp;다음으로 28페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-13">&nbsp;41조(기금의 재원) 7호에 보시면 ‘그 밖에 대통령령으로 정하는 재원’, 일단 룸은 두되 원래 소위에서 법인·조합·단체 등의 출연금은 삭제하기로 소소위에서 결정을 하는 대신에 대령에 위임할 수 있도록 룸은 열어 두되 부대의견을 달아서 시행령을 만들 경우 입법예고 전에 국회에 보고하도록 규정을 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-14">&nbsp;다음으로 30페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-15">&nbsp;기금 운용에 대해서 보시면 기금 운용 용도에 있어서 그 밖에 대령으로 정하는 방법은 삭제를 하였습니다. 기금 용도는 외환보유고 등을 운영하는 거기 때문에 대령으로 포괄적 위임은 안 하는 것이 좋겠다라는 판단하에 대령으로 정하는 방법은 삭제하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-16">&nbsp;그다음에 31페이지 하단 44조 보시면 자료의 공개에 관해서는 1호·2호를 신설해 가지고 저희가 공공기관 정보공개법을 준용해서 명확하게 규정했습니다. 1호에서는 ‘국가안전보장·외교관계 등에 관한 사항으로 공개될 경우 국가의 중대한 이익을 현저히 해칠 우려가 있다고 인정되는 경우’를 비공개로 할 수 있도록 했고요. 2호에서는 ‘법인에 대해서 경영상·영업상 비밀에 관한 사항으로서 공개될 경우 법인의 정당한 이익을 현저히 해칠 우려가 있다고 판단되는 경우’를 비공개로 지정할 수 있도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-17">&nbsp;다음 페이지 보시면 3항에서 비공개에도 불구하고 국회 소관 상임위원회가 그 의결로 자료를 요구하는 때에는 비공개를 전제로 열람하도록 하거나 보고할 수 있도록 규정하는 대신에 4항을 신설해서 ‘3항에 따라 자료를 열람하거나 보고를 받은 사람은 그로 인해 알게 된 직무상 비밀을 공개 또는 누설하여서는 아니 된다’라고 규정을 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-18">&nbsp;이어서 33페이지 제2항을 보시면, 2항도 마찬가지로 회의록 중에서 비공개로 할 수 있는 부분은 1호·2호를 앞의 경우랑 똑같이 맞췄고요. 3항에서는 상임위의 의결이 있는 경우 비공개를 전제로 열람할 수 있도록 근거 규정을 두었고, 4항에서는 이러한 보고를 받은 경우에는 알게 된 직무상 비밀을 공개 또는 누설하지 못하도록 비밀누설 방지 규정을 두었습니다.</span><br/><span class="spk_sub" id="spk_sub4-19">&nbsp;다음으로 35페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-20">&nbsp;국회에 대한 사전 보고입니다.</span><br/><span class="spk_sub" id="spk_sub4-21">&nbsp;운영위가 대미투자 후보사업에 대해 사업추진 의사를 심의·의결한 경우 미국과 협의 개시 전에 국회 소관 상임위에 사전 보고를 하도록 규정이 되어 있고요. 2항의 경우에도 비공개를 하지 않을 수 있도록 근거를 두었고, 3항에서 비공개하는 경우 비밀누설을 못 하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-22">&nbsp;그리고 밑의 52조 3호를 보면 사업관리단에서뿐만 아니라 전담기관을 지정하도록 돼 있으니까 지정된 기관의 관련 임직원에 대해서도 벌칙 적용에서의 공무원 의제를 규정하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-23">&nbsp;이상 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_5" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;정부 측 의견 말씀해 주십시오.</span><br/></div></div></div><div id="spk_6" class="item9 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="재정경제부제1차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">재정경제부제1차관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">재정경제부제1차관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;소소위에서 논의된 대로 저희는 수용입니다.</span><br/></div></div></div><div id="spk_7" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;고맙습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;지난번 소위에서도 이 내용에 대해서 저희들끼리 충분히 토론을 했고 또 그 토론을 기반으로 국민의힘 박수영 간사님과 제가 충분히 협의해서 내린 결론입니다. 그래서 오늘 보고를 드린 거고요.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;혹시 이 결과에 대해서 위원님들 의견이 계시면 말씀해 주시면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;강승규 위원님.</span><br/></div></div></div><div id="spk_8" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;그러니까 여러 조항인데요. 국회 사전보고 조항이라든지 경영상 또는 국가안보상 비밀을 유지하게 되는 조항에 대해서 국회가 상임위에서 의결할 경우 열람할 수 있도록 했고 그 열람한 것은 비밀누설금지로 해서 처벌조항이 있잖아요.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;그런데 지난번에 우리 논의에서도 그랬지만 국정원법이나 이런 데에서도 비밀을 열람할 수 있고 그거에 대해서 보고를 받을 수는 있는데 그게 심대한, 그러니까 이게 지나치게 국가 안보라든지 여러 이유 등으로 비밀 규정으로 해 놓고 그걸 또 열람했을 때 문제가 있었을 때 그것을 양당 간사나, 협의를 해서 그거에 대해서 일단 열람한 내용을 대표적으로 누군가가, 간사 등이나 이런 데에서 외부에 의견을 얘기할 수도 있어야 되지 않습니까?</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;비밀로 지정하고 그거를 열람은 할 수 있는데 말 한마디 못 하게 해 놓고 그냥 가면 나중에 그런 것이 남발돼서 분명히 이 규정이 잘못 적용되고 있다고 할 때 아무도 문제 제기를 할 수가 없잖아요. 그런 부분은 어떻게 되나요? 지난번에도 국정원법 등을 감안해서 이 부분을 정리를 한다 그러는데 그런 부분이 국정원법에서도 감안이 돼 있는지, 우리는 그럴 경우 어떻게 되는지 좀……</span><br/></div></div></div><div id="spk_9" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;전문위원님 설명해 주시지요.</span><br/></div></div></div><div id="spk_10" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;그 몇 개 조항에 해당이 다 되는 거지요.</span><br/></div></div></div><div id="spk_11" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;그러니까 ‘회의를 비공개로 하는 경우에 상임위원회 위원 및 관계 공무원은 보고로부터 알게 된 직무상 비밀을 공개하거나 누설하여서는 아니 된다’ 이렇게 돼 있고요. 국회법에서도 ‘국가기밀을 누설하여서는 아니 된다’ 이렇게 정보위원회에 규정이 돼 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;그래서 원래 정부안은 ‘직무상 비밀을 공개하거나 누설하여서는 아니 된다’가 아니라 ‘알게 된 내용을 공개하거나 누설하여서는 아니 된다’ 이런 부분을 저희가 비밀이 아닐 경우에는 공포할 수 있도록 일단 직무상 비밀로 바꾸었고요.</span><br/></div></div></div><div id="spk_12" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;직무상 비밀로……</span><br/></div></div></div><div id="spk_13" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;비밀, 그러니까 그 내용 자체를 공개하거나 누설해서는 아니 된다가 아니라, 원래 정부안은 ‘내용을 공개하거나 누설하여서는 아니 된다’ 이렇게 규정을 했었는데 저희는 이게 비밀 사항이 아닌 경우에는 브리핑을 한다거나 이런 부분이 가능하기 때문에 직무상 비밀로 수정했다는 점을 말씀드리겠습니다.</span><br/></div></div></div><div id="spk_14" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;아침에 전문위원실에서 헌법과 국회법 그리고 판례까지 다 검토해서 저희들이 결론을 내렸습니다.</span><br/></div></div></div><div id="spk_15" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;그러면 제가 우려하는 부분을 전문위원께서는 반영된 거다 이렇게 보시는 거지요?</span><br/></div></div></div><div id="spk_16" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 일부 반영이 됐습니다.</span><br/></div></div></div><div id="spk_17" class="item9 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;그러니까 내용을 전부 공개 못 하는 게 아니고, 정부 원안은 일단 비공개로 정한 보고받은 걸 모두 공개를 못 하도록 돼 있었는데 그중에서 국가기밀이라고 볼 수 있는 부분 이거는 직무상 비밀에 해당한다고 보고 그거는 공개하면 안 되잖아요. 그래서 그 부분만 지금 법률에 들어 있는 것이고 보고받은 내용 중에서 기밀에 해당하지 않는 부분은 공개를 해도 되는 것입니다.</span><br/></div></div></div><div id="spk_18" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;비슷한 얘기일 수도 있는데 하여튼 그렇게 비밀로 규정한 것 등이 너무 광범위하고 또 그냥 뭔가 숨기고 그럴 수 있는 내용 등을 보고도 우리가 아무런 얘기도 못 하도록 했다면 그건 규정이 너무 과하다 그런 측면에서 제가 문제 제기를 한 거거든요. 그런데 그런 부분들이 직무상으로 제한했을 때……</span><br/></div></div></div><div id="spk_19" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;비밀로 한정을……</span><br/></div></div></div><div id="spk_20" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;그러니까 큰 틀에서는 국회의 모든 활동은 헌법상으로 공개해야 된다고 돼 있습니다. 그 큰 원칙에서 들어가서 해당 상임위원회에서 이거는 국가적 이익 또는 군사상, 외교적으로 비밀 유지가 필요하다 이렇게 결정했을 경우에 그 부분에 대해서 일정한 제한을 두는, 취지가 그렇게 정리가 돼 있습니다.</span><br/></div></div></div><div id="spk_21" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;수석이 설명하시는 거에 우리가 동의를 하면 저도 그 정도는 안전장치가 된다고 보고 있습니다. 기록이 다 남을 거 아니겠습니까, 이런 취지?</span><br/></div></div></div><div id="spk_22" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;그렇습니다.</span><br/></div></div></div><div id="spk_23" class="item9 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;지금 발언하신 게 전부 기록에 다 남지요.</span><br/></div></div></div><div id="spk_24" class="item9 speaker spk_mem" data-mem_id="6612" data-name="허영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">허영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/52e5baf2188242e8b7688e9ca3748bab.png" alt="허영"></span><span class="txt"><strong class="name">허영</strong><span class="position">위원</span><span class="area">(강원 춘천시철원군화천군양구군갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;여하튼 정부가 국회에 보고할 때에는 비밀과 비밀이 아닌 것을 구분해서 보고를 할 수밖에 없습니다. 그렇기 때문에 모든 조항에 직무상 비밀을 누설해서는 안 된다라고 하는 조항이기 때문에 기타 사항은 정보위원회 사례처럼 간사 간 합의에 의해서 비밀이 아닌 사안에 대해서는 얼마든지 공개할 수 있는 원칙이 적용돼 있다 이렇게 판단됩니다.</span><br/></div></div></div><div id="spk_25" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;차규근 위원님.</span><br/></div></div></div><div id="spk_26" class="item9 speaker spk_mem" data-mem_id="6832" data-name="차규근" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">차규근 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9cec88d426d9441b8826ca4c3b69838d.jpg" alt="차규근"></span><span class="txt"><strong class="name">차규근</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;31페이지 44조 1호·2호 이게 국가안전보장이나 외교관계 등에 관한 사항으로 공개될 경우에 국가의 중대한 이익을 현저히 해칠 우려 그리고 2호에 법인의 정당한 이익을 현저히 해칠 우려 이런 경우에는 공개해서는 안 되는 거지요. 여기에 해당되지 않으면 공개를 해도 공개 원칙에 큰 문제가 안 되는, 그렇게 이해를 하면 되는 것이겠지요?</span><br/></div></div></div><div id="spk_27" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;아니, 이거에 대해 제가 좀 사족을 달면 이런 목적으로 비공개로 지정을 했겠지요. 그런데 저희가 상임위 의결로 열람을 해 보니 법인의 경영상·영업상 비밀이라고 하는 것이 너무 광범위하게 지정돼서 국회가 다른 의견을 가질 수도 있잖아요. 그러면 양당 간사들이 그런 부분에서 이거는 너무 과하다, 이런 부분은 공개돼야지, 그런 내용들이 저는 포함이 돼야 된다고 보는 거지요. 무조건 정부가 경영상·영업상 비밀이다라고 판단한 것을 우리 국회가 모두 다 그냥 인정해야 된다라고 보면 굉장히 어려운 이야기 아니냐 이거지요. 그러면 열람해 봤자 소용이 없는 거지요.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;이미 경영상·영업상 비밀이다 그리고 열람권만 있다 그랬을 때…… 아니, 그런데 이게 좀 다른 의견이다, 양당 간사들이 보더라도 이거는 그렇게 보기는 어렵다, 이거는 공개를 했어야 되거나 우리가 어떤 의견을 내도 되겠다라고 할 수도 있어야 되지 그렇지 않으면 이게 어떻게 견제가 되겠냐 이거지요. 그런 측면을 저는 우려합니다.</span><br/></div></div></div><div id="spk_28" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;수석전문위원님.</span><br/></div></div></div><div id="spk_29" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;그런 측면에 대해서는 직무상 비밀로 한정한다고 저희가 규정하고 소위에서 그 취지를 말씀하셨고요. 만약에 그게 정말 필요하다라고 하면 단서는 둘 수 있습니다. 다만 여야 교섭단체 간 합의를 한 경우에는 그러하지 아니한다라는 식으로 단서는 둘 수 있는데, 그런 사례가 별로 없기 때문에 여기 소위에서 입법자의 의도를 충분히 얘기한 경우에는 그게 허용되지 않을까 이렇게 생각이 됩니다.</span><br/></div></div></div><div id="spk_30" class="item9 speaker spk_mem" data-mem_id="6612" data-name="허영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">허영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/52e5baf2188242e8b7688e9ca3748bab.png" alt="허영"></span><span class="txt"><strong class="name">허영</strong><span class="position">위원</span><span class="area">(강원 춘천시철원군화천군양구군갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;명확하게 주체가 있기 때문에 양당 합의뿐만 아니라 그런 공개 사안의 경우에 있어서는 정부 측도 합의를 해야, 삼자가 합의하면 얼마든지 공개할 수 있는 부분들이니까요.</span><br/></div></div></div><div id="spk_31" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;이렇게 문제 제기를 합니다.</span><br/><span class="spk_sub" id="spk_sub31-2">&nbsp;(「예」 하는 위원 있음)</span><br/></div></div></div><div id="spk_32" class="item9 speaker spk_mem" data-mem_id="6832" data-name="차규근" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">차규근 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9cec88d426d9441b8826ca4c3b69838d.jpg" alt="차규근"></span><span class="txt"><strong class="name">차규근</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;한 가지 좀 의문이 하나 들어서……</span><br/></div></div></div><div id="spk_33" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;차규근 위원님.</span><br/></div></div></div><div id="spk_34" class="item9 speaker spk_mem" data-mem_id="6832" data-name="차규근" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">차규근 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9cec88d426d9441b8826ca4c3b69838d.jpg" alt="차규근"></span><span class="txt"><strong class="name">차규근</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;11페이지 4조 3항에서 ‘국회 소관 상임위원회(재정경제기획위원회 및 산업통상자원중소벤처기업위원회를 말한다. 이하 같다.)’ 이렇게 하면서 그 이후에 계속 소관 상임위가 언급이 되는데, 소관 상임위에서 보고해야 되는 것도 있고 소관 상임위가 의결해 가지고 공개로 의결하는 경우도 있는데 그럴 경우에 예컨대 재경위하고 산자위에 한 군데만 보고하면 끝나는 것인지 아니면 두 군데 다 해야 되는 것인지, 공개 의결도 한 군데만 하면 되는 것인지 아니면 두 군데 다 해야 되는 것인지 아니면 지금처럼 대미특위를 별도로 해 가지고 이런 걸 구성해야 되는지 아니면 재경위하고 산자위가 연석으로 회의를 해야 되는 것인지 제가 초선이라서 그런지 이런 부분이 약간 혼란이 있지 않을까라는 의문이 들어서 이 부분을 한번 답변을 부탁드립니다.</span><br/></div></div></div><div id="spk_35" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;기본적으로 대미투자특별법의 양 정부 주체가 재경부장관하고 산업부장관입니다. 그것에 맞춰서 소관 상임위 보고나 동의 이런 것도 재경위랑 산중위 둘 다 같이 해야 된다고 보고요. 저희가 한번 스크린해서 그게 아닐 경우는 다시 조문 정리를 하겠습니다. 그런데 기본적으로 지금 ‘소관 상임위’ 하면 재경위랑 산중위 둘 다 얘기하는 겁니다. 정부에 재경부랑 산업부랑 그 주체에 맞게 둘 다 각각 보고하고 각각 동의를 받도록 그렇게 규정하고 있습니다.</span><br/></div></div></div><div id="spk_36" class="item9 speaker spk_mem" data-mem_id="6832" data-name="차규근" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">차규근 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9cec88d426d9441b8826ca4c3b69838d.jpg" alt="차규근"></span><span class="txt"><strong class="name">차규근</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;그런데 각각 보고한다고 이렇게 말씀을 하시는데 그러면 똑같은 사안에 대해서 재경부장관하고 산자부장관이 재경위에도 나와서 같이 질의해서 답변하고 산자위에도 또 출석해 가지고 질의 답변하고 이것은 뭔가……</span><br/></div></div></div><div id="spk_37" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;이 법에 사업관리위원회와 운영위원회가 구분돼 있으니까 그것은 좀 조정이 될 것 같은데요. 그렇지요?</span><br/></div></div></div><div id="spk_38" class="item9 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;그렇게 엄격하게 구분이 돼서 한 상임위에만 보고되는 부분에 대해서는 저희가 지금 급하게 만드느라고 다시 정리를 하고요. 그런데 두 상임위 둘 다 거치는 부분은 어차피 각각 보고할 수밖에 없고 재경위에 산업부장관이 나올지 말지는 그 위원회를 열 때 위원회의 위원장하고 간사 협의해 가지고 하는 것이지 재경위 회의할 때 산업부장관이 무조건 들어가야 한다 그런 부분은 규정이 돼 있지 않기 때문에 그것은 운영을 통해서 누구를 부를지에 대해서는 소관 상임위원회에서 건별로 결정하면 될 걸로 보이고 여기 법에다가 규정할 필요는 없을 걸로 보입니다.</span><br/></div></div></div><div id="spk_39" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;위원님들 다른 의견이 계신가요?</span><br/></div></div></div><div id="spk_40" class="item9 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;제가 한말씀……</span><br/></div></div></div><div id="spk_41" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;이 문제에 대해서?</span><br/></div></div></div><div id="spk_42" class="item9 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;이 문제는 아니고요.</span><br/></div></div></div><div id="spk_43" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;또 다른 의견은 없으시고요?</span><br/><span class="spk_sub" id="spk_sub43-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub43-3">&nbsp;그러면 수석전문위원님 해석대로 그렇게 정리를 할까요?</span><br/><span class="spk_sub" id="spk_sub43-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub43-5">&nbsp;그렇게 하지요.</span><br/><span class="spk_sub" id="spk_sub43-6">&nbsp;박수영 간사님.</span><br/></div></div></div><div id="spk_44" class="item9 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;저희가 마지막까지 논의했던 사항 하나를 속기록을 위해서 좀 말씀을 드려야 될 것 같습니다. 소소위에서 합의된 내용을 속기록에 남기기 위해서 말씀을 올립니다.</span><br/><span class="spk_sub" id="spk_sub44-2">&nbsp;오늘 오전 9시 특별법 주요 쟁점 사항과 관련한 소소위가 있었습니다. 쟁점 부분 중 하나가 한미전략투자기금의 재원을 어떻게 마련할 것인가 하는 부분에 대한 논의였습니다. 정부와 한국은행이 그동안 일관되게 그리고 수차례 대미투자기금의 재원은 외환보유액 운용 수익으로 연간 150억～200억 달러 충분히 조달이 가능하고 만약에 부족할 경우에 외평기금을 발행하거나 또 더 부족할 경우에 정부와 금융기관으로부터 일시차입금으로 재원조달이 가능하다고 설명을 해 왔습니다.</span><br/><span class="spk_sub" id="spk_sub44-3">&nbsp;그런데 제출된 법안에는 그 이외에도 법인 즉 우리 기업이 출연하는 출연금을 재원으로 마련할 수 있도록 되어 있었습니다. 이것은 소위 기업의 발목 비틀기에 해당할 수 있기 때문에 기업 측으로부터 많은 반대 의견이 있었습니다.</span><br/><span class="spk_sub" id="spk_sub44-4">&nbsp;이러한 기업의 부담을 늘릴 염려가 있는 부분은 법률에서 삭제하는 것이 맞다고 합의되었고 최종안에서 이를 삭제하였습니다.</span><br/><span class="spk_sub" id="spk_sub44-5">&nbsp;다만 기금 마련 도중에 법안 논의 과정에서 예상하지 못한 경우의 수가 있을 수 있다는 정부의 요청이 있어서 대통령령으로 재원을 추가할 수 있는 경우는 살려 두기로 했습니다. 그리고 이 경우에는 아까 수석전문위원 보고드린 대로 국회에 사전 보고하게끔 부대의견을 달았습니다.</span><br/><span class="spk_sub" id="spk_sub44-6">&nbsp;만일 정부가 법안 심의 당시 명확히 제외시킨 법인·조합·단체의 출연금을 시행령으로 되살리려고 한다면 그것은 입법부의 입법 취지에 정면으로 반하는 사항이 될 것임을 분명히 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub44-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_45" class="item9 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;또 다른 의견 계십니까?</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub45-3">&nbsp;그러면 조금 전에 박수영 간사님 말씀하신 취지는 기금을 쓰는 용도는 엄격하게 제한하되 그래도 재원을 조달하는 것은 좀 여지는 남겨 놔야 되지 않겠느냐라는 종합적인 판단이 있어 가지고 박수영 간사님이 그런 부대의견을 명확하게 하고 정리를 하는 걸로 합의가 됐었습니다. 그런 취지를 좀 부가해서 설명드리고 싶고요.</span><br/><span class="spk_sub" id="spk_sub45-4">&nbsp;의결해도 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub45-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub45-6">&nbsp;그러면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub45-7">&nbsp;의사일정 제1항부터 제9항까지 총 9건의 법률안은 각각 본회의에 부의하지 아니하고 이를 통합 조정한 대안을 제안하기로 의결하면서 부대의견을 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub45-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub45-9">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub45-10">&nbsp;오늘 위원님들께서 의결한 내용에 대한 자구 정리 등은 소위원장에게 위임해 주시면 고맙겠습니다.</span><br/><span class="spk_sub" id="spk_sub45-11">&nbsp;위원님 여러분 정말정말 감사드립니다. 너무 수고하셨고요.</span><br/><span class="spk_sub" id="spk_sub45-12">&nbsp;이형일 재정경제부제1차관, 문신학 산업통상부차관을 비롯한 정부 관계자와 최병권 수석전문위원 등 위원회 직원 그리고 보좌진 여러분도 너무너무 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub45-13">&nbsp;산회를 선포하겠습니다.</span><br/></div></div></div><p class="tit_sm taR">(11시25분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(21인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KUJAKEUN" target="_blank"><span class="name lts3 ">구자근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWON" target="_blank"><span class="name lts3 ">김성원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWONI" target="_blank"><span class="name lts3 ">김원이</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJONGMIN" target="_blank"><span class="name lts3 ">김종민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGWOONG" target="_blank"><span class="name lts3 ">박상웅</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSEONGMIN" target="_blank"><span class="name lts3 ">박성민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOILJUN" target="_blank"><span class="name lts3 ">서일준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGJAEBONG" target="_blank"><span class="name lts3 ">송재봉</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHSAEHEE" target="_blank"><span class="name lts3 ">오세희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEUNJU" target="_blank"><span class="name lts3 ">이언주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHULGYU" target="_blank"><span class="name lts3 ">이철규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank"><span class="name lts3 ">장철민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGDONGMAN" target="_blank"><span class="name lts3 ">정동만</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHINOOK" target="_blank"><span class="name lts3 ">정진욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHSUNGMOO" target="_blank"><span class="name lts3 ">허성무</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWHAN" target="_blank"><span class="name lts3 ">김성환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJAESOO" target="_blank"><span class="name lts3 ">전재수</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 박희석</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 성소미</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>산업통상부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 김정관</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 문신학</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">통상교섭본부장</span></span><span class="name lts3"> 여한구</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">통상차관보</span></span><span class="name lts3"> 박정성</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 오승철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">산업정책실장</span></span><span class="name lts3"> 박동일</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">산업성장실장</span></span><span class="name lts3"> 김성열</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">산업자원안보실장</span></span><span class="name lts3"> 양기욱</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">통상교섭실장</span></span><span class="name lts3"> 권혜진</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">무역투자실장</span></span><span class="name lts3"> 강감찬</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 정상용</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">산업정책관</span></span><span class="name lts3"> 이민우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">지역경제정책관</span></span><span class="name lts3"> 김규성</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">제조산업정책관</span></span><span class="name lts3"> 김의중</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">중견기업정책관</span></span><span class="name lts3"> 이규봉</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">산업기술융합정책관</span></span><span class="name lts3"> 최연우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">첨단산업정책관</span></span><span class="name lts3"> 최우혁</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">산업공급망정책관</span></span><span class="name lts3"> 송현주</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">무역안보정책관</span></span><span class="name lts3"> 김태우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">통상협정정책관</span></span><span class="name lts3"> 박근오</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">무역정책관</span></span><span class="name lts3"> 나성화</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">투자정책관</span></span><span class="name lts3"> 남명우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">원전전략기획관</span></span><span class="name lts3"> 김창희</span></a></li><p>국가기술표준원</p><li><a class="in_nm"><span class="pos"><span class="lts6">표준정책국장</span></span><span class="name lts3"> 박종섭</span></a></li><p>중소벤처기업부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 한성숙</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 노용석</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제2차관</span></span><span class="name lts3"> 이병권</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김우중</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">중소기업정책실장</span></span><span class="name lts3"> 박용순</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">소상공인정책실장</span></span><span class="name lts3"> 최원영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">정책기획관직무대리</span></span><span class="name lts3"> 이하녕</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">중소기업전략기획관</span></span><span class="name lts3"> 김대희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">글로벌성장정책관</span></span><span class="name lts3"> 이순배</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">기술혁신정책관</span></span><span class="name lts3"> 황영호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">지역기업정책관</span></span><span class="name lts3"> 권순재</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">창업정책관</span></span><span class="name lts3"> 조경원</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">벤처정책관</span></span><span class="name lts3"> 김봉덕</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">특구혁신기획단장직무대리</span></span><span class="name lts3"> 이희완</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">소상공인정책관</span></span><span class="name lts3"> 김정주</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts11">소상공인경영안정지원관</span></span><span class="name lts3"> 박상용</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">상생협력정책국장</span></span><span class="name lts3"> 이은청</span></a></li><p>지식재산처</p><li><a class="in_nm"><span class="pos"><span class="lts2">처장</span></span><span class="name lts3"> 김용선</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차장</span></span><span class="name lts3"> 정연우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 구영민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">지식재산정책국장</span></span><span class="name lts3"> 김일규</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">지식재산보호협력국장</span></span><span class="name lts3"> 김용훈</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">지식재산분쟁대응국장</span></span><span class="name lts3"> 박진환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">지식재산정보국장</span></span><span class="name lts3"> 정재환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">상표디자인심사국장</span></span><span class="name lts3"> 이춘무</span></a></li><p>특허심판원</p><li><a class="in_nm"><span class="pos"><span class="lts2">원장</span></span><span class="name lts3"> 김기범</span></a></li><p>대한무역투자진흥공사</p><li><a class="in_nm"><span class="pos"><span class="lts2">사장</span></span><span class="name lts3"> 강경성</span></a></li><p>한국무역보험공사</p><li><a class="in_nm"><span class="pos"><span class="lts2">사장</span></span><span class="name lts3"> 장영진</span></a></li><p>중소벤처기업진흥공단</p><li><a class="in_nm"><span class="pos"><span class="lts3">이사장</span></span><span class="name lts3"> 강석진</span></a></li><p>소상공인시장진흥공단</p><li><a class="in_nm"><span class="pos"><span class="lts3">이사장</span></span><span class="name lts3"> 인태연</span></a></li><p>한국지식재산보호원</p><li><a class="in_nm"><span class="pos"><span class="lts6">원장직무대리</span></span><span class="name lts3"> 손창호</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56337;
+			const class_id = 3;
+			const confer_num = "N054017";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640713911" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640713911"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640713911"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640713911"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

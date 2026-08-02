@@ -1,0 +1,2084 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56641" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제434회 (임시회·폐회중) 제7차 재정경제기획위원회</strong><span class="date">(2026.04.30.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 외국환거래법 일부개정법률안(최은석 의원 대표발의)(의안번호 2206816)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2213766)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 외국환거래법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209171)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 외국환거래법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 국가재정법 일부개정법률안(김영환 의원 대표발의)(의안번호 2213768)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 보조금 관리에 관한 법률 일부개정법률안(김영진 의원 대표발의)(의안번호 2215017)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 조달사업에 관한 법률 일부개정법률안(정태호 의원 대표발의)(의안번호 2213715)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 사회기반시설에 대한 민간투자법 일부개정법률안(모경종 의원 대표발의)(의안번호 2213377)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 사회기반시설에 대한 민간투자법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215478)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 사회기반시설에 대한 민간투자법 일부개정법률안(염태영 의원 대표발의)(의안번호 2216580)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 사회기반시설에 대한 민간투자법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 2025년도 국정감사 결과보고서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 청원 심사기간 연장 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 공공기관의 공정채용에 관한 법률안(고민정 의원 대표발의)(의안번호 2216855)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 공공기관의 운영에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216581)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 공공차관의 도입 및 관리에 관한 법률 일부개정법률안(이소영 의원 대표발의)(의안번호 2217007)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216579)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(최혁진 의원·박성준 의원 대표발의)(의안번호 2216673)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(이주희 의원 대표발의)(의안번호 2216846)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 국가재정법 일부개정법률안(박상혁 의원 대표발의)(의안번호 2216462)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216479)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216919)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 국가재정법 일부개정법률안(김선민 의원 대표발의)(의안번호 2217001)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 국가재정법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217014)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 국가회계법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216920)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 국고금 관리법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217109)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">27. 국세외수입 체납액의 징수 및 관리에 관한 법률안(정태호 의원 대표발의)(의안번호 2217125)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">28. 국유재산특례제한법 일부개정법률안(박선원 의원 대표발의)(의안번호 2216573)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">29. 국유재산특례제한법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216837)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">30. 국유재산특례제한법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217088)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">31. 부담금관리 기본법 일부개정법률안(김선민 의원 대표발의)(의안번호 2216868)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">32. 사회기반시설에 대한 민간투자법 일부개정법률안(전현희 의원 대표발의)(의안번호 2216997)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">33. 사회기반시설에 대한 민간투자법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217086)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">34. 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2217025)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">35. 지방자치분권 및 지역균형발전에 관한 특별법 일부개정법률안(안호영 의원 대표발의)(의안번호 2216554)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">36. 통계법 일부개정법률안(김정호 의원 대표발의)(의안번호 2216995)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">37. 한국조폐공사법 일부개정법률안(조지연 의원 대표발의)(의안번호 2217036)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">38. 한국투자공사법 일부개정법률안(허영 의원 대표발의)(의안번호 2216661)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">39. 관세법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216973)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">40. 관세법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217089)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">41. 관세법 일부개정법률안(박민규 의원 대표발의)(의안번호 2217093)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">42. 국세기본법 일부개정법률안(조승래 의원 대표발의)(의안번호 2217075)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">43. 국세징수법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216977)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">44. 법인세법 일부개정법률안(허성무 의원 대표발의)(의안번호 2217002)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">45. 상속세 및 증여세법 일부개정법률안(정태호 의원·박수영 의원 대표발의)(의안번호 2217432)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">46. 소득세법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216909)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">47. 수출용 원재료에 대한 관세 등 환급에 관한 특례법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2216950)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">48. 인지세법 일부개정법률안(송언석 의원 대표발의)(의안번호 2216859)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">49. 인지세법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216940)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">50. 자유무역협정의 이행을 위한 관세법의 특례에 관한 법률 일부개정법률안(정일영 의원 대표발의)(의안번호 2216998)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">51. 조세범 처벌법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216941)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">52. 조세특례제한법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216431)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">53. 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216486)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">54. 조세특례제한법 일부개정법률안(김태년 의원 대표발의)(의안번호 2216638)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">55. 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216690)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">56. 조세특례제한법 일부개정법률안(서천호 의원 대표발의)(의안번호 2216695)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">57. 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216730)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">58. 조세특례제한법 일부개정법률안(박정하 의원 대표발의)(의안번호 2216870)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">59. 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216882)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">60. 조세특례제한법 일부개정법률안(김승수 의원 대표발의)(의안번호 2216883)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">61. 조세특례제한법 일부개정법률안(허성무 의원·구자근 의원 대표발의)(의안번호 2217004)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">62. 조세특례제한법 일부개정법률안(문금주 의원 대표발의)(의안번호 2217015)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">63. 조세특례제한법 일부개정법률안(김병주 의원 대표발의)(의안번호 2217058)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">64. 조세특례제한법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217069)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서영교 위원장 (서울 중랑구갑)"> 
+							서영교 위원장 (서울 중랑구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김용민 위원 (경기 남양주시병)"> 
+							김용민 위원 (경기 남양주시병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박균택 위원 (광주 광산구갑)"> 
+							박균택 위원 (광주 광산구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박지원 위원 (전남 해남군완도군진도군)"> 
+							박지원 위원 (전남 해남군완도군진도군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤상현 위원 (인천 동구미추홀구을)"> 
+							윤상현 위원 (인천 동구미추홀구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="전현희 위원 (서울 중구성동구갑)"> 
+							전현희 위원 (서울 중구성동구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="나경원 위원 (서울 동작구을)"> 
+							나경원 위원 (서울 동작구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박은정 위원 (비례대표)"> 
+							박은정 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="곽규택 위원 (부산 서구동구)"> 
+							곽규택 위원 (부산 서구동구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김동아 위원 (서울 서대문구갑)"> 
+							김동아 위원 (서울 서대문구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김동아 위원 (서울 서대문구갑)"> 
+							김동아 위원 (서울 서대문구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서영교 위원장 (서울 중랑구갑)"> 
+							서영교 위원장 (서울 중랑구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최혁진 위원 (비례대표)"> 
+							최혁진 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조배숙 위원 (비례대표)"> 
+							조배숙 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이성윤 위원 (전북 전주시을)"> 
+							이성윤 위원 (전북 전주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김기표 위원 (경기 부천시을)"> 
+							김기표 위원 (경기 부천시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="곽규택 위원 (부산 서구동구)"> 
+							곽규택 위원 (부산 서구동구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="임이자 위원장 (경북 상주시문경시 )"> 
+							임이자 위원장 (경북 상주시문경시 )
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정태호 위원 (서울 관악구을)"> 
+							정태호 위원 (서울 관악구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정일영 위원 (인천 연수구을)"> 
+							정일영 위원 (인천 연수구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박수영 위원 (부산 남구)"> 
+							박수영 위원 (부산 남구)
+						</option>
+					
+					
+						<option value="최기도 전문위원">최기도 전문위원</option>
+					
+						<option value="기우종 법원행정처장권한대행">기우종 법원행정처장권한대행</option>
+					
+						<option value="심정희 수석전문위원">심정희 수석전문위원</option>
+					
+						<option value="박혜진 전문위원">박혜진 전문위원</option>
+					
+						<option value="이세진 전문위원">이세진 전문위원</option>
+					
+						<option value="정성호 법무부장관">정성호 법무부장관</option>
+					
+						<option value="이응철 법무부검찰국장">이응철 법무부검찰국장</option>
+					
+						<option value="최병권 수석전문위원">최병권 수석전문위원</option>
+					
+						<option value="임명현 전문위원">임명현 전문위원</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(21명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6711" data-name="서영교" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">서영교</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 중랑구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6603" data-name="김용민" data-pos="소위원장"> 
+											<label for="spk_mem1">												
+												<span class="name">김용민</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 남양주시병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6797" data-name="박균택" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">박균택</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 광산구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6735" data-name="박지원" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">박지원</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 해남군완도군진도군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6685" data-name="윤상현" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">윤상현</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 동구미추홀구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6740" data-name="전현희" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">전현희</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 중구성동구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6730" data-name="나경원" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">나경원</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 동작구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6779" data-name="박은정" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">박은정</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6836" data-name="곽규택" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">곽규택</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 서구동구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6748" data-name="김동아" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">김동아</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 서대문구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem10" data-mem_id="6748" data-name="김동아" data-pos="위원"> 
+											<label for="spk_mem10">												
+												<span class="name">김동아</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 서대문구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem11" data-mem_id="6711" data-name="서영교" data-pos="위원장"> 
+											<label for="spk_mem11">												
+												<span class="name">서영교</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 중랑구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem12" data-mem_id="6875" data-name="최혁진" data-pos="위원"> 
+											<label for="spk_mem12">												
+												<span class="name">최혁진</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem13" data-mem_id="6731" data-name="조배숙" data-pos="위원"> 
+											<label for="spk_mem13">												
+												<span class="name">조배숙</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem14" data-mem_id="6788" data-name="이성윤" data-pos="위원"> 
+											<label for="spk_mem14">												
+												<span class="name">이성윤</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 전주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem15" data-mem_id="6562" data-name="김기표" data-pos="위원"> 
+											<label for="spk_mem15">												
+												<span class="name">김기표</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem16" data-mem_id="6836" data-name="곽규택" data-pos="위원"> 
+											<label for="spk_mem16">												
+												<span class="name">곽규택</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 서구동구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem17" data-mem_id="6645" data-name="임이자" data-pos="위원장"> 
+											<label for="spk_mem17">												
+												<span class="name">임이자</span>
+												<span class="position">위원장</span>
+												<span class="area">(경북 상주시문경시 )</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem18" data-mem_id="6633" data-name="정태호" data-pos="위원"> 
+											<label for="spk_mem18">												
+												<span class="name">정태호</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 관악구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem19" data-mem_id="6636" data-name="정일영" data-pos="의원"> 
+											<label for="spk_mem19">												
+												<span class="name">정일영</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 연수구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem20" data-mem_id="6686" data-name="박수영" data-pos="위원"> 
+											<label for="spk_mem20">												
+												<span class="name">박수영</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 남구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(9명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="최기도" data-pos="전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">최기도</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="기우종" data-pos="법원행정처장권한대행"> 
+											<label for="spk_attend1">
+												<span class="name">기우종</span>
+												<span class="position">법원행정처장권한대행</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="심정희" data-pos="수석전문위원"> 
+											<label for="spk_attend2">
+												<span class="name">심정희</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend3"  data-mem_id="0" data-name="박혜진" data-pos="전문위원"> 
+											<label for="spk_attend3">
+												<span class="name">박혜진</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend4"  data-mem_id="0" data-name="이세진" data-pos="전문위원"> 
+											<label for="spk_attend4">
+												<span class="name">이세진</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend5"  data-mem_id="0" data-name="정성호" data-pos="법무부장관"> 
+											<label for="spk_attend5">
+												<span class="name">정성호</span>
+												<span class="position">법무부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend6"  data-mem_id="0" data-name="이응철" data-pos="법무부검찰국장"> 
+											<label for="spk_attend6">
+												<span class="name">이응철</span>
+												<span class="position">법무부검찰국장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend7"  data-mem_id="0" data-name="최병권" data-pos="수석전문위원"> 
+											<label for="spk_attend7">
+												<span class="name">최병권</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend8"  data-mem_id="0" data-name="임명현" data-pos="전문위원"> 
+											<label for="spk_attend8">
+												<span class="name">임명현</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56641&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제434회 국회<br/>(임시회·폐회중)</p><div class="tit_in"><div class="tit"><h1>재정경제기획위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제7호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 4월 30일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">재정경제기획위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 외국환거래법 일부개정법률안(최은석 의원 대표발의)(의안번호 2206816)</li><li><span class="num">2.</span> 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2213766)</li><li><span class="num">3.</span> 외국환거래법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209171)</li><li><span class="num">4.</span> 외국환거래법 일부개정법률안(대안)</li><li><span class="num">5.</span> 국가재정법 일부개정법률안(김영환 의원 대표발의)(의안번호 2213768)</li><li><span class="num">6.</span> 보조금 관리에 관한 법률 일부개정법률안(김영진 의원 대표발의)(의안번호 2215017)</li><li><span class="num">7.</span> 조달사업에 관한 법률 일부개정법률안(정태호 의원 대표발의)(의안번호 2213715)</li><li><span class="num">8.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(모경종 의원 대표발의)(의안번호 2213377)</li><li><span class="num">9.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215478)</li><li><span class="num">10.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(염태영 의원 대표발의)(의안번호 2216580)</li><li><span class="num">11.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(대안)</li><li><span class="num">12.</span> 2025년도 국정감사 결과보고서 채택의 건</li><li><span class="num">13.</span> 청원 심사기간 연장 요구의 건</li><li><span class="num">14.</span> 공공기관의 공정채용에 관한 법률안(고민정 의원 대표발의)(의안번호 2216855)</li><li><span class="num">15.</span> 공공기관의 운영에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216581)</li><li><span class="num">16.</span> 공공차관의 도입 및 관리에 관한 법률 일부개정법률안(이소영 의원 대표발의)(의안번호 2217007)</li><li><span class="num">17.</span> 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216579)</li><li><span class="num">18.</span> 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(최혁진 의원·박성준 의원 대표발의)(의안번호 2216673)</li><li><span class="num">19.</span> 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(이주희 의원 대표발의)(의안번호 2216846)</li><li><span class="num">20.</span> 국가재정법 일부개정법률안(박상혁 의원 대표발의)(의안번호 2216462)</li><li><span class="num">21.</span> 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216479)</li><li><span class="num">22.</span> 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216919)</li><li><span class="num">23.</span> 국가재정법 일부개정법률안(김선민 의원 대표발의)(의안번호 2217001)</li><li><span class="num">24.</span> 국가재정법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217014)</li><li><span class="num">25.</span> 국가회계법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216920)</li><li><span class="num">26.</span> 국고금 관리법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217109)</li><li><span class="num">27.</span> 국세외수입 체납액의 징수 및 관리에 관한 법률안(정태호 의원 대표발의)(의안번호 2217125)</li><li><span class="num">28.</span> 국유재산특례제한법 일부개정법률안(박선원 의원 대표발의)(의안번호 2216573)</li><li><span class="num">29.</span> 국유재산특례제한법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216837)</li><li><span class="num">30.</span> 국유재산특례제한법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217088)</li><li><span class="num">31.</span> 부담금관리 기본법 일부개정법률안(김선민 의원 대표발의)(의안번호 2216868)</li><li><span class="num">32.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(전현희 의원 대표발의)(의안번호 2216997)</li><li><span class="num">33.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217086)</li><li><span class="num">34.</span> 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2217025)</li><li><span class="num">35.</span> 지방자치분권 및 지역균형발전에 관한 특별법 일부개정법률안(안호영 의원 대표발의)(의안번호 2216554)</li><li><span class="num">36.</span> 통계법 일부개정법률안(김정호 의원 대표발의)(의안번호 2216995)</li><li><span class="num">37.</span> 한국조폐공사법 일부개정법률안(조지연 의원 대표발의)(의안번호 2217036)</li><li><span class="num">38.</span> 한국투자공사법 일부개정법률안(허영 의원 대표발의)(의안번호 2216661)</li><li><span class="num">39.</span> 관세법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216973)</li><li><span class="num">40.</span> 관세법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217089)</li><li><span class="num">41.</span> 관세법 일부개정법률안(박민규 의원 대표발의)(의안번호 2217093)</li><li><span class="num">42.</span> 국세기본법 일부개정법률안(조승래 의원 대표발의)(의안번호 2217075)</li><li><span class="num">43.</span> 국세징수법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216977)</li><li><span class="num">44.</span> 법인세법 일부개정법률안(허성무 의원 대표발의)(의안번호 2217002)</li><li><span class="num">45.</span> 상속세 및 증여세법 일부개정법률안(정태호 의원·박수영 의원 대표발의)(의안번호 2217432)</li><li><span class="num">46.</span> 소득세법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216909)</li><li><span class="num">47.</span> 수출용 원재료에 대한 관세 등 환급에 관한 특례법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2216950)</li><li><span class="num">48.</span> 인지세법 일부개정법률안(송언석 의원 대표발의)(의안번호 2216859)</li><li><span class="num">49.</span> 인지세법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216940)</li><li><span class="num">50.</span> 자유무역협정의 이행을 위한 관세법의 특례에 관한 법률 일부개정법률안(정일영 의원 대표발의)(의안번호 2216998)</li><li><span class="num">51.</span> 조세범 처벌법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216941)</li><li><span class="num">52.</span> 조세특례제한법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216431)</li><li><span class="num">53.</span> 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216486)</li><li><span class="num">54.</span> 조세특례제한법 일부개정법률안(김태년 의원 대표발의)(의안번호 2216638)</li><li><span class="num">55.</span> 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216690)</li><li><span class="num">56.</span> 조세특례제한법 일부개정법률안(서천호 의원 대표발의)(의안번호 2216695)</li><li><span class="num">57.</span> 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216730)</li><li><span class="num">58.</span> 조세특례제한법 일부개정법률안(박정하 의원 대표발의)(의안번호 2216870)</li><li><span class="num">59.</span> 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216882)</li><li><span class="num">60.</span> 조세특례제한법 일부개정법률안(김승수 의원 대표발의)(의안번호 2216883)</li><li><span class="num">61.</span> 조세특례제한법 일부개정법률안(허성무 의원·구자근 의원 대표발의)(의안번호 2217004)</li><li><span class="num">62.</span> 조세특례제한법 일부개정법률안(문금주 의원 대표발의)(의안번호 2217015)</li><li><span class="num">63.</span> 조세특례제한법 일부개정법률안(김병주 의원 대표발의)(의안번호 2217058)</li><li><span class="num">64.</span> 조세특례제한법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217069)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 외국환거래법 일부개정법률안(최은석 의원 대표발의)(의안번호 2206816)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2213766)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 외국환거래법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209171)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 외국환거래법 일부개정법률안(대안)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 국가재정법 일부개정법률안(김영환 의원 대표발의)(의안번호 2213768)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 보조금 관리에 관한 법률 일부개정법률안(김영진 의원 대표발의)(의안번호 2215017)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 조달사업에 관한 법률 일부개정법률안(정태호 의원 대표발의)(의안번호 2213715)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(모경종 의원 대표발의)(의안번호 2213377)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215478)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(염태영 의원 대표발의)(의안번호 2216580)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(대안)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 2025년도 국정감사 결과보고서 채택의 건</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 청원 심사기간 연장 요구의 건</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 공공기관의 공정채용에 관한 법률안(고민정 의원 대표발의)(의안번호 2216855)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 공공기관의 운영에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216581)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 공공차관의 도입 및 관리에 관한 법률 일부개정법률안(이소영 의원 대표발의)(의안번호 2217007)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216579)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(최혁진 의원·박성준 의원 대표발의)(의안번호 2216673)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(이주희 의원 대표발의)(의안번호 2216846)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 국가재정법 일부개정법률안(박상혁 의원 대표발의)(의안번호 2216462)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216479)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216919)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 국가재정법 일부개정법률안(김선민 의원 대표발의)(의안번호 2217001)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 국가재정법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217014)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">25.</span> 국가회계법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216920)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">26.</span> 국고금 관리법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217109)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">27.</span> 국세외수입 체납액의 징수 및 관리에 관한 법률안(정태호 의원 대표발의)(의안번호 2217125)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">28.</span> 국유재산특례제한법 일부개정법률안(박선원 의원 대표발의)(의안번호 2216573)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">29.</span> 국유재산특례제한법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216837)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">30.</span> 국유재산특례제한법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217088)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">31.</span> 부담금관리 기본법 일부개정법률안(김선민 의원 대표발의)(의안번호 2216868)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">32.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(전현희 의원 대표발의)(의안번호 2216997)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">33.</span> 사회기반시설에 대한 민간투자법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217086)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">34.</span> 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2217025)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">35.</span> 지방자치분권 및 지역균형발전에 관한 특별법 일부개정법률안(안호영 의원 대표발의)(의안번호 2216554)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">36.</span> 통계법 일부개정법률안(김정호 의원 대표발의)(의안번호 2216995)</a></li><li id="head_item37"><a href="#" class="move" data-target="#item37"><span class="num">37.</span> 한국조폐공사법 일부개정법률안(조지연 의원 대표발의)(의안번호 2217036)</a></li><li id="head_item38"><a href="#" class="move" data-target="#item38"><span class="num">38.</span> 한국투자공사법 일부개정법률안(허영 의원 대표발의)(의안번호 2216661)</a></li><li id="head_item39"><a href="#" class="move" data-target="#item39"><span class="num">39.</span> 관세법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216973)</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">40.</span> 관세법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217089)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">41.</span> 관세법 일부개정법률안(박민규 의원 대표발의)(의안번호 2217093)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">42.</span> 국세기본법 일부개정법률안(조승래 의원 대표발의)(의안번호 2217075)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">43.</span> 국세징수법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216977)</a></li><li id="head_item44"><a href="#" class="move" data-target="#item44"><span class="num">44.</span> 법인세법 일부개정법률안(허성무 의원 대표발의)(의안번호 2217002)</a></li><li id="head_item45"><a href="#" class="move" data-target="#item45"><span class="num">45.</span> 상속세 및 증여세법 일부개정법률안(정태호 의원·박수영 의원 대표발의)(의안번호 2217432)</a></li><li id="head_item46"><a href="#" class="move" data-target="#item46"><span class="num">46.</span> 소득세법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216909)</a></li><li id="head_item47"><a href="#" class="move" data-target="#item47"><span class="num">47.</span> 수출용 원재료에 대한 관세 등 환급에 관한 특례법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2216950)</a></li><li id="head_item48"><a href="#" class="move" data-target="#item48"><span class="num">48.</span> 인지세법 일부개정법률안(송언석 의원 대표발의)(의안번호 2216859)</a></li><li id="head_item49"><a href="#" class="move" data-target="#item49"><span class="num">49.</span> 인지세법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216940)</a></li><li id="head_item50"><a href="#" class="move" data-target="#item50"><span class="num">50.</span> 자유무역협정의 이행을 위한 관세법의 특례에 관한 법률 일부개정법률안(정일영 의원 대표발의)(의안번호 2216998)</a></li><li id="head_item51"><a href="#" class="move" data-target="#item51"><span class="num">51.</span> 조세범 처벌법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216941)</a></li><li id="head_item52"><a href="#" class="move" data-target="#item52"><span class="num">52.</span> 조세특례제한법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216431)</a></li><li id="head_item53"><a href="#" class="move" data-target="#item53"><span class="num">53.</span> 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216486)</a></li><li id="head_item54"><a href="#" class="move" data-target="#item54"><span class="num">54.</span> 조세특례제한법 일부개정법률안(김태년 의원 대표발의)(의안번호 2216638)</a></li><li id="head_item55"><a href="#" class="move" data-target="#item55"><span class="num">55.</span> 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216690)</a></li><li id="head_item56"><a href="#" class="move" data-target="#item56"><span class="num">56.</span> 조세특례제한법 일부개정법률안(서천호 의원 대표발의)(의안번호 2216695)</a></li><li id="head_item57"><a href="#" class="move" data-target="#item57"><span class="num">57.</span> 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216730)</a></li><li id="head_item58"><a href="#" class="move" data-target="#item58"><span class="num">58.</span> 조세특례제한법 일부개정법률안(박정하 의원 대표발의)(의안번호 2216870)</a></li><li id="head_item59"><a href="#" class="move" data-target="#item59"><span class="num">59.</span> 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216882)</a></li><li id="head_item60"><a href="#" class="move" data-target="#item60"><span class="num">60.</span> 조세특례제한법 일부개정법률안(김승수 의원 대표발의)(의안번호 2216883)</a></li><li id="head_item61"><a href="#" class="move" data-target="#item61"><span class="num">61.</span> 조세특례제한법 일부개정법률안(허성무 의원·구자근 의원 대표발의)(의안번호 2217004)</a></li><li id="head_item62"><a href="#" class="move" data-target="#item62"><span class="num">62.</span> 조세특례제한법 일부개정법률안(문금주 의원 대표발의)(의안번호 2217015)</a></li><li id="head_item63"><a href="#" class="move" data-target="#item63"><span class="num">63.</span> 조세특례제한법 일부개정법률안(김병주 의원 대표발의)(의안번호 2217058)</a></li><li id="head_item64"><a href="#" class="move" data-target="#item64"><span class="num">64.</span> 조세특례제한법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217069)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시06분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제434회 국회(임시회·폐회중) 제7차 재정경제기획위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 회의록에 게재토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 회의에서는 경제재정소위원회에서 심사한 법안과 2025년도 국감 결과보고서를 의결한 후 우리 위원회에 새로 회부된 법률안을 상정하여 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;참고로 오늘 회의는 국회방송에서 생중계할 예정입니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z4Z1X2Y2X0E0F9D5E7C2D8B8X5X5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 외국환거래법 일부개정법률안(최은석 의원 대표발의)(의안번호 2206816)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2X5W1U0U2C7D1B4C3A6A2Z8V2V7T0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2213766)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2E5D0M3J1H7D1C7C2B3J0I4H1G7M0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 외국환거래법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209171)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2D6G0F4Y2T9V2X0U1K8B1P0N3B6A3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 외국환거래법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2M5M0K9M0K1K0I9R5R6P3Q2O5P3O9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 국가재정법 일부개정법률안(김영환 의원 대표발의)(의안번호 2213768)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2F5G1E2E0D8B0C6X4Y3W1X3V2W7U2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 보조금 관리에 관한 법률 일부개정법률안(김영진 의원 대표발의)(의안번호 2215017)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2D5C1A0B2Z4A1H3I5H2H2F1G5E5M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 조달사업에 관한 법률 일부개정법률안(정태호 의원 대표발의)(의안번호 2213715)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2P5X0W9X1W2U1C7B3Z9A1Z9V4J3H9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 사회기반시설에 대한 민간투자법 일부개정법률안(모경종 의원 대표발의)(의안번호 2213377)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U5U1Q1Q0P5Q0O9O3N7N0V6U8U0S0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 사회기반시설에 대한 민간투자법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2215478)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y6W0W1E0E5D1D2C1D5B5B6Q1P8P8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 사회기반시설에 대한 민간투자법 일부개정법률안(염태영 의원 대표발의)(의안번호 2216580)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2W6E0E4I2O9Y2C0O1M9K3W4U6Z4K0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 사회기반시설에 대한 민간투자법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item11 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;먼저 의사일정 제1항 외국환거래법 일부개정법률안부터 의사일정 제11항 사회기반시설에 대한 민간투자법 일부개정법률안(대안)까지 이상 11건의 안건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;먼저 경제재정소위원회 정태호 소위원장님 나오셔서 소위원회 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item11 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;경제재정소위원회 정태호 소위원장입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;우리 소위원회는 각 법안에 대해 심도 있게 심사한 결과 1건의 법률안은 원안으로, 2건의 법률안은 수정안으로, 6건의 법률안은 대안으로 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;먼저 외국환거래법 일부개정법률안(대안)은 최은석·김태선·최기상 의원이 각각 대표발의한 3건의 법안을 통합·조정한 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;대안의 주요 내용은 가상자산이전업무를 영위하려는 경우 재정경제부장관에게 등록을 의무화하도록 하고 전문외국환업무 범위 개편, 전문외국환업무취급업자 등록취소 근거 마련, 외화건전성부담금 이의신청 규정 정비 등에 관한 사항을 규정하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;참고로 우리 소위원회에서는 가상자산 이용자 보호 등에 관한 법률의 체계에 따르면 ‘이전’이라는 용어가 매매·교환·이전·보관·중개 등 모든 가상자산 거래를 포괄하는 광의의 의미와 가상자산 전송에 한정된 협의의 의미로 혼재되어 사용하고 있으므로 정부는 향후 관련 법률 용어를 명확히 정비하도록 한다는 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;다음으로 사회기반시설에 대한 민간투자법 일부개정법률안(대안)은 모경종·위성곤·염태영 의원이 각각 대표발의한 3건의 법안을 통합·조정한 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;대안의 주요 내용은 민간투자사업의 사업시행자가 사회기반시설을 타인에게 임대하려는 경우 해당 시설의 귀속 여부 및 시기, 소유·수익 기간 등의 정보를 임차인에게 사전에 고지하도록 명문화하고 임대차계약 관련 사항을 주무관청에 신고하도록 함으로써 관리감독을 강화하는 한편 이러한 고지 및 신고 의무를 위반하거나 거짓으로 행한 자에 대하여 과태료를 부과하도록 규정하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;다음으로 김영진 의원이 대표발의한 보조금 관리에 관한 법률 일부개정법률안은 기획예산처장관이 한국재정정보원에 위탁하는 업무 범위에 보조금 부정수급 모니터링 결과에 대한 현장조사 업무를 명시적으로 규정하려는 것으로 부정수급 의심사업의 실제 해당 여부를 검사하는 점검업무도 위탁업무에 포함하는 것으로 수정하여 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-9">&nbsp;다음으로 정태호 의원이 대표발의한 조달사업에 관한 법률 일부개정법률안은 사용기한 등이 정해진 비축물자의 효율적인 이용을 위하여 공익적 목적에 한해 비축물자를 무상으로 공급할 수 있도록 하려는 것으로 인도적 지원, 재난 및 경제상 위기에의 대응 등 공익적 목적을 명시적으로 규정하는 것으로 수정 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-10">&nbsp;다음으로 김영환 의원이 대표발의한 국가재정법 일부개정법률안은 지방교부세법 개정에 따라 관련된 인용조문을 현행 법체계에 맞게 정비하려는 것입니다. 현행법은 세계잉여금 사용 근거로 지방교부세법 제5조제2항을 인용하고 있으나 지방교부세법 개정으로 해당 규정이 제5조제3항으로 이동함에 따라 인용조문을 정정하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-11">&nbsp;보다 자세한 내용은 단말기에 입력된 자료를 참고해 주시기 바라며 우리 소위원회에서 심사보고한 대로 의결하여 주시기를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub4-12">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_5" class="item11 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;바쁘신 일정에도 불구하고 법안 심사에 애써 주신 소위 위원님들 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;방금 보고받으신 소위 심사 결과에 대하여 질의하실 위원님들 계십니까?</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;있습니까?</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;더 이상 질의하실 위원님이 없으므로 토론을 종결하고 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;안건 의결에 앞서 축조심사와 비용추계서 첨부를 생략하는 의결을 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;오늘 의결할 안건들은 국회법 제58조제5항과 제66조제3항 및 제79조의2제3항에 따라 축조심사와 비용추계서 첨부를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;그러면 안건을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;제1항부터 제3항까지 이상 3건의 법률안은 각각 본회의에 부의하지 아니하고 이를 통합·조정한 의사일정 제4항 외국환거래법 일부개정법률안(대안)을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-15">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-16">&nbsp;다음, 의사일정 제5항 국가재정법 일부개정법률안은 소위원회 심사보고와 같이 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-17">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-18">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-19">&nbsp;다음, 의사일정 제6항 보조금 관리에 관한 법률 일부개정법률안은 소위원회 심사보고와 같이 수정한 부분은 수정한 대로, 그 밖의 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-20">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-21">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-22">&nbsp;다음, 의사일정 제7항 조달사업에 관한 법률 일부개정법률안은 소위원회 심사보고와 같이 수정한 부분은 수정한 대로, 그 밖의 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-23">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-24">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub5-25">&nbsp;다음, 제8항부터 제10항까지 이상 3건의 법률안은 각각 본회의에 부의하지 아니하고 이를 통합·조정한 의사일정 제11항 사회기반시설에 대한 민간투자법 일부개정법률안(대안)을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub5-26">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-27">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2W6G0Q4F2J9A1N6G5O5O1V2T2P1R1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 2025년도 국정감사 결과보고서 채택의 건</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시12분)</p><br/><div id="spk_7" class="item12 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;다음으로 의사일정 제12항 2025년도 국정감사 결과보고서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;국정감사 및 조사에 관한 법률 제15조에 따르면 국정감사를 마친 위원회는 결과보고서를 작성하여 의장에게 제출하여야 합니다. 단말기에 입력된 국정감사 결과보고서는 2025년도 국정감사에서 지적한 사항을 토대로 전문위원실에서 초안을 작성하여 위원님들께 배부해 수정·보완한 후 위원장과 간사 간 협의를 통해 마련한 것입니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;자세한 사항은 단말기 자료를 참고하여 주시고 다른 의견이 없으시면 의사일정 제12항 2025년도 국정감사 결과보고서 채택의 건을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;법률안 등에 대한 의결을 마쳤습니다. 오늘 의결한 안건의 체계 및 자구 정리에 대한 사항은 위원장에게 위임하여 주시기 바랍니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item13" class="tit">13. 청원 심사기간 연장 요구의 건</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시13분)</p><br/><div id="spk_9" class="item13 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;다음으로 의사일정 제13항 청원 심사기간 연장 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;국회법 제125조제5항 및 제6항에 따라 청원은 위원회에 회부된 날로부터 150일 이내에 심사를 마치지 못하는 경우 위원회의 의결로 심사기간 추가연장을 의장에게 요구할 수가 있습니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;단말기에 입력해 드린 자료와 같이 우리 위원회에 계류 중인 1건의 청원에 대한 심사기간을 관례에 따라 제22대 국회 임기 만료일까지 연장할 수 있도록 요구하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;그러면 법률안을 상정하여 심사하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2C6D0B2B0Z9Y0Z9G5H3F4G2E8F3E5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 공공기관의 공정채용에 관한 법률안(고민정 의원 대표발의)(의안번호 2216855)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2E6E0M1N2L3M1K0I3J0R3R4Q6Q1P2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 공공기관의 운영에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216581)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2U6V0T2U2S3T1R0S4Z0Y0Z6X3X1V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 공공차관의 도입 및 관리에 관한 법률 일부개정법률안(이소영 의원 대표발의)(의안번호 2217007)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2R6P0Q1O2P3N1N0V2U9U4T1T8R0S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(박용갑 의원 대표발의)(의안번호 2216579)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Z6X0Y1W2X3S1T1S1Q4Q1P5P6X3Y8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(최혁진 의원·박성준 의원 대표발의)(의안번호 2216673)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2K6I0J2H1F0G1O5O0M1N2M4M5K7L5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 국가를 당사자로 하는 계약에 관한 법률 일부개정법률안(이주희 의원 대표발의)(의안번호 2216846)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Z6X0Y1U2S9T1R1S0Q5Q0Z2Z7X9Y6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 국가재정법 일부개정법률안(박상혁 의원 대표발의)(의안번호 2216462)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T6T0P1P2O6M1N0L0L8U4U4S0R1S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216479)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2Y6W0X1V2W6U1U0C0D9B4C7A9B3Z5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216919)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2U6S0T2R1R9Z1A0Y2Z4X1Y7W8S2S2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 국가재정법 일부개정법률안(김선민 의원 대표발의)(의안번호 2217001)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2W6U0V2T0B9C1A0B0Z6Z1Y7Z4G2H9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 국가재정법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217014)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2L6N0L1L2J6K1I0Q1R0P4Q9O7P7N4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 국가회계법 일부개정법률안(박수영 의원 대표발의)(의안번호 2216920)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2F6E0F2M2N0M1M0K4L7J0R8S4Q2R7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 국고금 관리법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217109)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P6O0P2K2L6J1K4I1I1H4P7P7N8O5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 국세외수입 체납액의 징수 및 관리에 관한 법률안(정태호 의원 대표발의)(의안번호 2217125)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2D6B0C1Y3Y0X0X9V5W1V1C3D3B5C4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 국유재산특례제한법 일부개정법률안(박선원 의원 대표발의)(의안번호 2216573)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2I6J0H2H1F1G1F5M3N5L3M9K8L6J8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 국유재산특례제한법 일부개정법률안(황운하 의원 대표발의)(의안번호 2216837)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2D5F1D2D0B2C0K9I1J3H5I9G6H2P9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 국유재산특례제한법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217088)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2K6G0H2F1G1E1E4D1L5L0K4K1I7J7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 부담금관리 기본법 일부개정법률안(김선민 의원 대표발의)(의안번호 2216868)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Y6V0V2T0U5S1R3R2Z6Z1Y0Z6X5X6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 사회기반시설에 대한 민간투자법 일부개정법률안(전현희 의원 대표발의)(의안번호 2216997)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z5Y1Z1X2X7F1G0E1F0D4D1C3Y6Y3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 사회기반시설에 대한 민간투자법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217086)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2F6G0O2O1M2N1M6K2K7S0T9R8S9Q0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 외국환거래법 일부개정법률안(최기상 의원 대표발의)(의안번호 2217025)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2V6U0U1T2R6S1Z6A4Y4Z3X2Y0W1E4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 지방자치분권 및 지역균형발전에 관한 특별법 일부개정법률안(안호영 의원 대표발의)(의안번호 2216554)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J6H0H2D2E3C1D1B0B0A4I5I9H5H2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 통계법 일부개정법률안(김정호 의원 대표발의)(의안번호 2216995)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item37" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2G6N0L2M2K2L1S7T0S1Q1Q4P9P5X3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">37. 한국조폐공사법 일부개정법률안(조지연 의원 대표발의)(의안번호 2217036)</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item38" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B6C0B1Z2Z2H1I0G2H8F5G7E4E6N1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">38. 한국투자공사법 일부개정법률안(허영 의원 대표발의)(의안번호 2216661)</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item39" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2A6I0I2H1F2G1E7E1M0N4L4M1K2K1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">39. 관세법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216973)</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2L5K1I1J2Q7R1P0Q1O1P3N4O5K6I8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">40. 관세법 일부개정법률안(이인선 의원 대표발의)(의안번호 2217089)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q6O0P2N1O1M1N1J4H2H1G5H2F7F8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">41. 관세법 일부개정법률안(박민규 의원 대표발의)(의안번호 2217093)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2A6B0Z2X2Y4G0G9F5F5D1E4D3D7L6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">42. 국세기본법 일부개정법률안(조승래 의원 대표발의)(의안번호 2217075)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2J6J0I2I1H2F1G7N1O1M3N3L9M4K2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">43. 국세징수법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216977)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item44" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2J6J0I2G1H3W0W9U3V6U1U7S0T0B2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">44. 법인세법 일부개정법률안(허성무 의원 대표발의)(의안번호 2217002)</a><a class="btn_move move" data-target="#head_item44" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item45" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Z6A0Z2X0X9W0X7M5N4L4M3K3I9J9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">45. 상속세 및 증여세법 일부개정법률안(정태호 의원·박수영 의원 대표발의)(의안번호 2217432)</a><a class="btn_move move" data-target="#head_item45" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item46" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2L6K0K2I1J3F0F9E4E8D0B8B0J4K9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">46. 소득세법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216909)</a><a class="btn_move move" data-target="#head_item46" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item47" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2U6S0T2S1Q1Q1M2M0K7L0K2K3I1J4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">47. 수출용 원재료에 대한 관세 등 환급에 관한 특례법 일부개정법률안(안도걸 의원 대표발의)(의안번호 2216950)</a><a class="btn_move move" data-target="#head_item47" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item48" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2K6L0J2K1I0J1H3I2P7O1P7N4N4L1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">48. 인지세법 일부개정법률안(송언석 의원 대표발의)(의안번호 2216859)</a><a class="btn_move move" data-target="#head_item48" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item49" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2M6L0G2H1F9G1E2F0D6E0L8M8L5J5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">49. 인지세법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216940)</a><a class="btn_move move" data-target="#head_item49" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item50" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2C6B0J2J2H0I1H4H5F7G4B8A5B7Z7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">50. 자유무역협정의 이행을 위한 관세법의 특례에 관한 법률 일부개정법률안(정일영 의원 대표발의)(의안번호 2216998)</a><a class="btn_move move" data-target="#head_item50" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item51" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2U6C0C2B1Z9A1Y2Y0L5L3K5L5J3J9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">51. 조세범 처벌법 일부개정법률안(김영환 의원 대표발의)(의안번호 2216941)</a><a class="btn_move move" data-target="#head_item51" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item52" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2M6K0K1J2J2I1I0Q4R0P1O2O6M9N5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">52. 조세특례제한법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216431)</a><a class="btn_move move" data-target="#head_item52" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item53" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Q6O0P1X2X6W0W9V0V7T1C9C6A1B9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">53. 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216486)</a><a class="btn_move move" data-target="#head_item53" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item54" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q6O0P2X0X4W1W4U5T7U1P5Q5O3N0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">54. 조세특례제한법 일부개정법률안(김태년 의원 대표발의)(의안번호 2216638)</a><a class="btn_move move" data-target="#head_item54" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item55" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2A6A0I2J0H2F1G1E0F9A1B5Z8A8Y5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">55. 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216690)</a><a class="btn_move move" data-target="#head_item55" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item56" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2E6C0K2L0J5J0I9J1H4H2P8Q5O0M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">56. 조세특례제한법 일부개정법률안(서천호 의원 대표발의)(의안번호 2216695)</a><a class="btn_move move" data-target="#head_item56" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item57" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2G6O0P2N0O2M1N1L0L9T5S8S0R9R0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">57. 조세특례제한법 일부개정법률안(안태준 의원 대표발의)(의안번호 2216730)</a><a class="btn_move move" data-target="#head_item57" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item58" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Z6U0V2T1S3S0Q9R1Z4A3Y6Y6X5X6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">58. 조세특례제한법 일부개정법률안(박정하 의원 대표발의)(의안번호 2216870)</a><a class="btn_move move" data-target="#head_item58" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item59" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2O6P0N2O0M2N1U1T1U6S1S4R7S7N2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">59. 조세특례제한법 일부개정법률안(임종득 의원 대표발의)(의안번호 2216882)</a><a class="btn_move move" data-target="#head_item59" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item60" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V6R0S2Q1Q1O1P9O1O4W3X7V0V8U3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">60. 조세특례제한법 일부개정법률안(김승수 의원 대표발의)(의안번호 2216883)</a><a class="btn_move move" data-target="#head_item60" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item61" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Y6G0F1F2D2E1C3D3L6M5K8K5J8H2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">61. 조세특례제한법 일부개정법률안(허성무 의원·구자근 의원 대표발의)(의안번호 2217004)</a><a class="btn_move move" data-target="#head_item61" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item62" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2T6U0S2T2R3R1Q7R2Y6Z0X5X4W5U8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">62. 조세특례제한법 일부개정법률안(문금주 의원 대표발의)(의안번호 2217015)</a><a class="btn_move move" data-target="#head_item62" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item63" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2J6K0I2J2R2P1Q3O0O5N4O3J6K1I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">63. 조세특례제한법 일부개정법률안(김병주 의원 대표발의)(의안번호 2217058)</a><a class="btn_move move" data-target="#head_item63" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item64" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2I6H0H1G1O9O1M0N4L0M0K2L8T3T9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">64. 조세특례제한법 일부개정법률안(조승환 의원 대표발의)(의안번호 2217069)</a><a class="btn_move move" data-target="#head_item64" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시14분)</p><br/><div id="spk_11" class="item64 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;의사일정 제14항 공공기관의 공정채용에 관한 법률안부터 의사일정 제64항 조례특례제한법 일부개정법률안까지 이상 51건의 안건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;구체적인 안건 목록은 단말기에 입력해 드린 의사일정을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;이어서 법률안에 대한 제안설명을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;먼저 존경하는 정일영 의원님 나오셔서 의사일정 제50항 자유무역협정의 이행을 위한 관세법의 특례에 관한 법률 일부개정법률안에 대한 제안설명 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_12" class="item64 speaker spk_mem" data-mem_id="6636" data-name="정일영" data-pos="의원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">정일영 의원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1dca300e9d74ec0a5dfaca85efdfe61.jpg" alt="정일영"></span><span class="txt"><strong class="name">정일영</strong><span class="position">의원</span><span class="area">(인천 연수구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;존경하는 임이자 재정경제기획위원회 위원장님, 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;자유무역협정의 이행을 위한 관세법의 특례에 관한 법률 일부개정법률안을 제안한 더불어민주당의 정일영 의원입니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;자유무역협정(FTA)이 확대되면서 원산지 증빙이나 용도세율 적용 제도를 활용하는 기업이 늘어나고 있습니다. 그런데 현행법은 단순한 실수나 경미한 행정의무 위반에도 형사처벌을 부과하고 있어 제재가 과도하다는 지적이 있습니다. 특히 국민의 생명·안전과 직접적 관련이 없는 사안까지 형벌로 다루는 것은 기업활동에 부담을 주고 제도의 합리성을 떨어뜨릴 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;이에 본 개정안은 고의성이 낮거나 경미한 위반행위에 대해서는 형사처벌 대신 과태료 등 행정질서벌로 전환하여 제재체계를 합리적으로 개편하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;구체적으로 기존의 형사처벌 규정을 정비·삭제하고 과실에 의한 용도 외 사용이나 원산지증빙서류의 부정확한 발급 등에 대해서는 벌금형 대신 과태료를 부과하도록 하였습니다. 또한 경미한 의무 위반행위에 대한 과태료 상한을 합리적으로 조정하여 기업 부담을 완화하고 제도의 실효성을 높이고자 하였습니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;이 법률안이 통과되면 기업의 불필요한 부담은 줄이면서도 제도의 실효성을 높여 자유무역협정의 안정적인 운영과 경제활동 활성화에 도움이 될 것으로 기대합니다. 존경하는 재정경제기획위원회 위원님들의 깊은 관심과 지지를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub12-7">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_13" class="item64 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;나머지 안건에 대한 제안설명은 단말기 자료로 대체하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-3"><div class="taR">(제안설명서는 부록에 실음)</div></span><span class="spk_sub" id="spk_sub13-4">&nbsp;다음으로 검토보고를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;먼저 최병권 수석전문위원 나오셔서 검토보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_14" class="item64 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;수석전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;조세 분야 법률안 26건에 대한 검토사항을 간략히 보고드리겠습니다. 단말기에 입력되어 있는 조세 분야 법률안 검토보고 요약자료를 참조하여 주십시오.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;자료 1페이지입니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;먼저 정태호 의원, 박수영 의원이 대표발의한 상속세 및 증여세법 일부개정법률안은 유산의 10%를 초과하여 공익법인에 기부하는 경우 세액의 10%를 공제함으로써 유산 기부의 활성화를 도모하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;부의 양극화 심화로 자산, 교육, 의료 등 다양한 분야에서 취약계층에 대한 공익수요가 증가하고 있는 가운데 우리나라의 민간 기부는 미약한 수준으로 정부가 이들 공익사업을 직접 수행하기에는 한계가 있다는 점을 고려할 때 민간의 공익활동이 보다 활성화되도록 공익법인에 대한 기부를 정책적으로 장려할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-6">&nbsp;특히 개정안의 세액공제는 상속세 산출세액이 높은 부유층에게 기부유인을 제공함으로써 부의 사회환원을 촉진하고 기부문화의 확산에 크게 기여할 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-7">&nbsp;다만 일부 공익법인이 출연재산을 특수관계인의 사적이익을 위해 사용하거나 공익목적 외로 유용한 사실이 적발되는 등 공익법인 운영의 투명성에 대한 우려가 있고, 사후 재산기부에 대한 상속세 감면 혜택은 사전 기부유인을 감소시킬 우려가 있으며, 상속세 과세가액의 10%만 초과하면 10% 세액공제되어 특정 금액 이상으로 기부할 유인이 없어지는 문턱효과 발생 가능성 등을 함께 고려할 사항으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-8">&nbsp;입법정책적으로 동 제도를 도입하려는 경우에는 종교, 학술, 보건의료, 문화예술, 체육 등 공익법인의 다양한 분야 중 자선·장학, 사회복지 등 공익성이 높은 분야로 기부 대상을 한정하는 방안, 기부받은 재산을 공익목적 외로 사용하는 등 법령상 의무를 위반한 이력이 있는 공익법인은 제외하는 방안, 상속인과 특수관계에 있는 공익법인에 대한 주식 기부는 그 적용을 배제하는 방안, 문턱효과 우려를 해소하기 위해 기부금액 비율이 클수록 공제율 또한 커지는 세액공제 구조로 설계하는 방안 등에 대하여 추가적으로 논의하여 결정할 필요가 있을 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-9">&nbsp;다음으로 조은희 의원이 대표발의한 소득세법 일부개정법률안은 인적공제 기본공제금액을 연 150만 원에서 250만 원으로 상향하려는 것입니다. 인적공제 기본공제금액은 2009년도에 150만 원으로 개정된 이후 현재까지 동일하게 유지되고 있으나 그간 누적 물가상승률이 40%임을 감안할 때 근로자의 실질 조세부담률이 상당 부분 높아지는 결과가 초래되고 있습니다.</span><br/><span class="spk_sub" id="spk_sub14-10">&nbsp;특히 소비자물가지수가 높아지면서 부동산이나 주식 등의 실물자산을 보유하고 있는 경우 자산가치가 증대되어 인플레이션 효과가 헤지되는 점을 감안할 때 임금생활자의 상대적으로 높은 실질 조세부담률을 완화하기 위하여 개정안과 같이 기본공제 금액을 상향 조정하는 것은 바람직한 입법 방향으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-11">&nbsp;다만 개정안이 입법화될 경우 세수감소 효과가 크게 나타날 수 있다는 점을 고려하여 개정안과 같이 기본공제금액을 일시에 100만 원 인상하는 것 외에 공제금액을 단계적으로 인상하는 방안도 검토할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-12">&nbsp;마지막으로 7페이지입니다.</span><br/><span class="spk_sub" id="spk_sub14-13">&nbsp;박민규 의원이 대표발의한 관세법 일부개정법률안은 신고 등 증거서류 보관 의무, 관세감면물품의 용도 외 사용금지 의무 등을 과실로 위반할 경우 현행 300만 원 이하의 벌금에서 1000만 원 이하의 과태료 제재로 전환하는 것으로 증거서류 보관 의무를 과실로 위반하는 것은 국민의 생명·안전과 관련성이 낮은 단순 행정의무 위반에 해당하므로 제재 수준을 합리화한다는 측면에서 그 취지가 타당하다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-14">&nbsp;다만 관세감면물품의 용도 외 사용금지 의무 위반은 관세감면 제도의 목적 자체를 침해하는 행위로서 과태료 전환이 적절한지 고려할 필요가 있고 동일한 의무위반 행위에 대하여 벌금에서 과태료로 전환하는 과정에서 상한액이 증가하는 점에 대해서는 침해법익과 제재의 균형성 측면에서 살펴볼 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub14-15">&nbsp;이상으로 검토보고를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-16">&nbsp;보다 자세한 내용은 단말기에 입력되어 있는 검토보고서를 참조하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub14-17">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub14-18"><div class="taR">(검토보고서는 부록으로 보존함)</div></span></div></div></div><div id="spk_15" class="item64 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;다음, 임명현 전문위원 나오셔서 검토보고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;이쪽으로 오시지요. 좌우 균형을 맞춰야 됩니다.</span><br/></div></div></div><div id="spk_16" class="item64 speaker spk_mem" data-mem_id="0" data-name="임명현" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">전문위원 임명현 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="임명현"></span><span class="txt"><span class="position">전문위원</span><strong class="name">임명현</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;전문위원 검토사항을 간략히 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;박수영 의원이 대표발의한 국가재정법 일부개정법률안은 8대 사회보험에 대한 장기재정추계를 2년마다 40회계연도 이상의 기간을 대상으로 실시하도록 하려는 것입니다. 저출산·고령화에 따른 재원고갈 위험에 선제적으로 대응하고 사회보장제도의 지속가능성을 통합 관리해서 국가 건전재정에 이바지한다는 측면에서 그 취지가 타당하다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;다만 국가재정법, 사회보장기본법 등 개별법에 따라서 실시하고 있는 기존 재정전망 체계와의 중복성 문제를 해소하기 위해서는 관련 법령을 일괄하여 정비할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;다음으로 박용갑 의원이 대표발의한 공공기관의 운영에 관한 법률 일부개정법률안은 상습적인 납품 지연 업체 및 선급금 목적 외 사용 업체를 부정당업자로 지정할 수 있는 근거를 명확히 하고 부정당업자 지정 시 공기업 및 준정부기관의 모든 입찰참가를 제한하려는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub16-5">&nbsp;현재 국가를 당사자로 하는 계약에 관한 법률에 따라 입찰참가자격을 제한하는 제도가 운영되고 있다는 점을 고려하여 관련 사항을 동 법률에 일원화하여 반영할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-6">&nbsp;다음으로 허영 의원이 대표발의한 한국투자공사법 일부개정법률안은 한국투자공사가 정부 등 타 기관으로부터 위탁받은 자산의 운용수익을 지급하는 경우 공사 운영위원회의 심의·의결, 운용수익 지급내역의 정부 제출 및 국회 보고, 지급내역의 대외 공시 등을 규정하려는 것입니다. 위탁자산의 중장기 자산으로서의 성격과 국부펀드로서의 독립성을 감안할 때 법안과 같이 제도적 장치를 마련할 필요성이 인정된다고 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-7">&nbsp;다만 법안의 취지를 보다 실효적으로 달성하기 위해서는 매번 공사 운영위원회의 의결을 요구하기보다는 해외 주요 국부펀드의 사례와 같이 운용수익 회수의 장기적인 원칙을 제도화하는 방안을 마련할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-8">&nbsp;다음으로 고민정 의원이 대표발의한 공공기관의 공정채용에 관한 법률안은 공공기관 채용과정에서 출신학교 등으로 인한 차별금지 의무를 법률에 명시하려는 것으로 학력 등에 따른 차별을 완화하고 직무능력 중심의 인사체계 정착에 기여할 수 있다는 점에서 의의가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-9">&nbsp;다만 현재 기후에너지환경노동위원회에서 공공기관을 포함한 모든 기업을 대상으로 한 채용절차의 공정화에 관한 법률 일부개정법률안을 심사하고 있음을 고려할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-10">&nbsp;끝으로 정태호 의원이 대표발의한 국세외수입 체납액의 징수 및 관리에 관한 법률안은 국세외수입 체납액의 징수 및 관리 주체를 국세청장으로 일원화하고 체납자 재산에 대한 압류 등 체납처분 절차를 마련하며 체납자에 대한 출국금지, 명단공개와 같은 간접강제 수단을 도입하려는 것으로 국세외수입의 효율적인 체납관리를 도모하고 체납액 회수기간 단축과 회수율 제고에 기여할 수 있을 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-11">&nbsp;다만 국세외수입 중에는 그 성격에 따라 통합징수가 적절하지 않은 경우도 있으므로 제정안의 적용 범위에 대한 면밀한 논의가 필요하다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub16-12">&nbsp;이상으로 검토보고를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-13">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub16-14"><div class="taR">(검토보고서는 부록으로 보존함)</div></span></div></div></div><div id="spk_17" class="item64 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;다음은 대체토론 순서입니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;오늘 상정된 법률안에 대하여 질의하실 위원님 있으십니까?</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/></div></div></div><div id="spk_18" class="item64 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">정태호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><strong class="name">정태호</strong><span class="position">위원</span><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;소위에서 논의해 주십시오.</span><br/></div></div></div><div id="spk_19" class="item64 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;소위에서 논의하겠습니다.</span><br/></div></div></div><div id="spk_20" class="item64 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;소위에서 논의하시겠습니까?</span><br/></div></div></div><div id="spk_21" class="item64 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">정태호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><strong class="name">정태호</strong><span class="position">위원</span><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;예.</span><br/></div></div></div><div id="spk_22" class="item64 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;예.</span><br/></div></div></div><div id="spk_23" class="item64 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 임이자 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><span class="position">위원장</span><strong class="name">임이자</strong><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;더 이상 질의하실 위원님이 안 계시면 이상으로 대체토론을 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;그러면 의사일정 제14항 공공기관 공정채용에 관한 법률안부터 의사일정 제64항 조세특례제한법 일부개정법률안까지 이상 51건의 안건은 경제재정소위원회 및 조세소위원회에 회부하여 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;오늘 서면질의 없지요?</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub23-6">&nbsp;오늘이 제22대 국회 전반기 마지막 재정경제기획위원회 회의가 될지도 모르겠습니다. 회의를 종료하기에 앞서 위원장으로서 한말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-7">&nbsp;내일은 노동자 여러분의 헌신과 노고를 기리는 제136주년 노동절입니다. 먼저 대한민국 경제의 핵심 동력인 산업 현장에서 묵묵히 땀 흘리며 일해 주시는 모든 노동자 여러분께 깊은 감사와 존경의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub23-8">&nbsp;그러나 오늘 이 기쁜 날 우리 경제의 중추인 삼성전자의 노사관계를 보며 저는 무거운 마음을 감출 수 없습니다. 노동자 권익 향상을 위한 노동조합의 활동은 민주사회에서 당연히 존중받아야 할 권리입니다. 근로조건 개선과 공정한 보상 요구 역시 노동자의 정당한 목소리입니다. 저 역시 노조위원장 출신으로서 노동현장의 현실과 조합원 여러분의 절박함 그리고 합당한 보상을 요구하는 목소리를 누구보다도 잘 알고 있습니다. 노조 구성원이 단합을 통해 성과를 만들어 내고 그에 합당한 보상을 요구하는 것은 마땅히 존중받아야 할 권리임을 한시도 잊은 적이 없습니다.</span><br/><span class="spk_sub" id="spk_sub23-9">&nbsp;다만 오늘 이 자리에서 우리 경제의 무게중심이라 할 수 있는 삼성전자의 노사 상황에 대해 한 가지 우려말씀을 드리지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub23-10">&nbsp;현재 삼성전자 노조는 영업이익의 15% 금액으로 약 40조 원에 이르는 성과급을 요구하며 다음 달 21일부터 6월 7일까지 18일간의 총파업을 예고하고 있습니다. 파업이 현실화될 경우 노조 측 추산만으로도 최대 30조 원 규모의 손실이 예상되며 파운드리 생산은 최대 58% 급감할 수 있다는 분석도 나오고 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-11">&nbsp;문제는 그 파장이 한 기업에만 머무르지 않는다는 점입니다. 삼성전자는 글로벌 메모리 반도체 공급망의 핵심 축이며 AI 시대 대한민국 수출의 든든한 버팀목입니다. 생산 차질은 곧 고객사 이탈, 시장점유율 하락 그리고 국가경제 전반에 충격으로 이어질 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-12">&nbsp;지금 글로벌 반도체 시장은 그 어느 때보다 치열한 생존경쟁을 벌이고 있습니다. 인공지능 기술의 급격한 발전과 미중 패권 경쟁으로 인한 공급망 재편 속에서 우리 기업들은 일분일초를 다투는 속도전을 치르고 있습니다. 이러한 상황에서 기업의 본질적인 경쟁력을 흔들 수 있는 과도한 요구와 집단행동은 노사 모두에게 공멸의 길로 이어질 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-13">&nbsp;기업이 있어야 노동자도 있다는 평범한 진리를 다시 한번 되새겨야 합니다. 회사의 성과를 넘어서는 과도한 요구와 파업으로 인한 생산 차질은 결국 우리 경제의 근간을 흔들게 됩니다. 이는 당장은 노동자 개개인의 실익으로 가져오는 듯 보일지 모르겠으나 장기적으로는 기업의 투자인력을 고갈시키고 결국 노동자 본인의 일자리를 위협하며 종국에는 대한민국 국가경제 전체의 발전 동력을 저해하는 결과로 이어질 것입니다.</span><br/><span class="spk_sub" id="spk_sub23-14">&nbsp;저는 삼성전자 노사 양측에 간곡히 호소드립니다. 아니, 우리 위원회 전체가 간곡히 호소드립니다.</span><br/><span class="spk_sub" id="spk_sub23-15">&nbsp;먼저 노동조합 조합원 여러분께서는 책임 있는 대화의 장으로 나와 주십시오. 투쟁이 아닌 협력을 통해 합리적인 상생의 대안을 찾아야 합니다. 성과급 문제는 감정적인 대응이 아니라 기업의 미래 지속가능성과 글로벌 경쟁력을 최우선에 두고 합리적이고 생산적인 대화로 풀어 가야 합니다. 조합원 여러분의 기여에 대한 정당한 보상 요구를 충분히 이해합니다. 다만 그 규모의 현실성, 산정 근거의 객관성 그리고 기업의 지속가능한 투자 여력까지 함께 고려하실 필요가 있습니다. 성과 배분은 중요한 문제이지만 그 방식과 수준이 산업경쟁력과 미래 투자 기반을 훼손하지 않는 방향이어야 한다는 점 또한 함께 고려되어야 합니다.</span><br/><span class="spk_sub" id="spk_sub23-16">&nbsp;그리고 사측도 노조의 목소리를 더욱 경청하시고 소통의 격을 높여 주십시오. 공정한 보상체계에 대한 노조의 정당한 의구심을 해소하고 노사가 한 팀이라는 인식을 공유할 수 있도록 기업경영의 투명성을 강화해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub23-17">&nbsp;지금은 노사 여러분이 대립의 악순환을 끊고 대한민국 경제의 도약을 위해 하나로 뭉쳐야 할 때입니다. 저뿐만 아니고 우리 위원회는 국회에서 노사 갈등을 조정하고 기업 하기 좋은 환경, 일하기 좋은 일터를 만드는 데 모든 정책적 역량을 집중하겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-18">&nbsp;지난해 재정경제위원장에 취임하면서 국민 여러분께 민생경제 회복을 최우선 과제로 약속드린 바 있습니다. 오늘 그 약속을 다시 한번 되새기며 우리 경제의 한 축을 이루는 삼성전자 노조 여러분 또한 산업의 지속가능성과 국가경제에 미치는 영향까지 함께 고민해 주시기를 정중히 부탁드립니다. 노조 여러분의 자율적 판단을 존중합니다. 다만 우리 산업의 미래와 조합원 여러분의 삶의 안전까지 함께 고려하는 보다 신중하고 책임 있는 결정을 내려 주시기를 기대합니다.</span><br/><span class="spk_sub" id="spk_sub23-19">&nbsp;정태호·박수영 간사님 그리고 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub23-20">&nbsp;제22대 전반기 재정경제기획위원회에서 수고 많으셨습니다. 위원장으로서 특별한 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub23-21">&nbsp;구윤철 부총리겸재정경제부장관과 박홍근 기획예산처장관을 비롯한 정부 관계자와 수석전문위원을 비롯한 위원회 직원, 보좌진 여러분도 모두 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub23-22">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시31분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(23인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONYOUNGSE" target="_blank"><span class="name lts3 ">권영세</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGWHAN" target="_blank"><span class="name lts3 ">김영환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank"><span class="name lts3 ">김태년</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKDAECHUL" target="_blank"><span class="name lts3 ">박대출</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank"><span class="name lts3 ">박민규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank"><span class="name lts3 ">박성훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank"><span class="name lts3 ">박수영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank"><span class="name lts3 ">오기형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOSANGBUM" target="_blank"><span class="name lts3 ">유상범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank"><span class="name lts3 ">윤영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank"><span class="name lts3 ">이소영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank"><span class="name lts3 ">이인선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank"><span class="name lts3 ">임이자</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank"><span class="name lts3 ">정태호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank"><span class="name lts3 ">조승래</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOINCHEUL" target="_blank"><span class="name lts3 ">조인철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank"><span class="name lts3 ">차규근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIKISANG" target="_blank"><span class="name lts3 ">최기상</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIEUNSEOK" target="_blank"><span class="name lts3 ">최은석</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(3인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNGYUBACK" target="_blank"><span class="name lts3 ">안규백</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGSUNGHO" target="_blank"><span class="name lts3 ">정성호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNHARAM" target="_blank"><span class="name lts3 ">천하람</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 최병권</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 임명현</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>재정경제부</p><li><a class="in_nm"><span class="pos"><span class="lts6">부총리겸장관</span></span><span class="name lts3"> 구윤철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 이형일</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제2차관</span></span><span class="name lts2"> 허장</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">세제실장</span></span><span class="name lts3"> 조만희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">국고실장</span></span><span class="name lts3"> 황순관</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">국제금융국장</span></span><span class="name lts3"> 이형렬</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">전략경제정책관</span></span><span class="name lts3"> 고광희</span></a></li><p>기획예산처</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 박홍근</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 임기근</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김명중</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">재정성과국장</span></span><span class="name lts3"> 정창길</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 박봉용</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">기획재정담당관</span></span><span class="name lts3"> 류승수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">재정투자심의관</span></span><span class="name lts3"> 고재신</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts13">국고보조금부정수급관리단장</span></span><span class="name lts3"> 강대현</span></a></li><p>국가데이터처</p><li><a class="in_nm"><span class="pos"><span class="lts2">처장</span></span><span class="name lts3"> 안형준</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 양순필</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국유재산특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 28. 김기현 의원 대표발의)(의안번호 2218655)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 28. 조인철 의원 대표발의)(의안번호 2218657)</div></div><div class="con"><p class="tit_sm"><strong>소득세법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 28. 김미애 의원 대표발의)(의안번호 2218679)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 4월 29일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56641;
+			const class_id = 2;
+			const confer_num = "N054248";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640612633" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640612633"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640612633"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640612633"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

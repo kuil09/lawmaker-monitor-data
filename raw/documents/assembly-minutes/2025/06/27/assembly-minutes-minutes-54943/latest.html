@@ -1,0 +1,870 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=54943" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제426회 (임시회) 제3차 국회본회의</strong><span class="date">(2025.06.27.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">o 의원(최혁진·손솔) 선서 및 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">1. 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건(의장 제의)(의안번호 2211128)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">2. 국회운영위원장(박찬대) 사임의 건(의안번호 2211125)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">3. 법제사법위원장(정청래) 사임의 건(의안번호 2211126)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">4. 문화체육관광위원장(전재수) 사임의 건(의안번호 2211127)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">5. 국회운영위원장 보궐선거</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">6. 법제사법위원장 보궐선거</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">7. 문화체육관광위원장 보궐선거</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">8. 예산결산특별위원장 선거</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">o 상임위원장(국회운영 김병기·법제사법 이춘석·문화체육관광 김교흥)·예산결산특별위원장(한병도) 인사</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="우원식 의장 (서울 노원구갑)"> 
+							우원식 의장 (서울 노원구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="최혁진 의원 (비례대표)"> 
+							최혁진 의원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="손솔 의원 (비례대표)"> 
+							손솔 의원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="김병기 의원 (서울 동작구갑)"> 
+							김병기 의원 (서울 동작구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="이춘석 의원 (전북 익산시갑)"> 
+							이춘석 의원 (전북 익산시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="김교흥 의원 (인천 서구갑)"> 
+							김교흥 의원 (인천 서구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+									
+								
+								
+								
+								
+								
+								
+								
+							
+							<option value="한병도 의원 (전북 익산시을 )"> 
+							한병도 의원 (전북 익산시을 )
+						</option>
+					
+					
+						<option value="김승묵 의사국장">김승묵 의사국장</option>
+					
+						<option value="김민기 사무총장">김민기 사무총장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6696" data-name="우원식" data-pos="의장"> 
+											<label for="spk_mem0">												
+												<span class="name">우원식</span>
+												<span class="position">의장</span>
+												<span class="area">(서울 노원구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6875" data-name="최혁진" data-pos="의원"> 
+											<label for="spk_mem1">												
+												<span class="name">최혁진</span>
+												<span class="position">의원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6874" data-name="손솔" data-pos="의원"> 
+											<label for="spk_mem2">												
+												<span class="name">손솔</span>
+												<span class="position">의원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6591" data-name="김병기" data-pos="국회운영위원장"> 
+											<label for="spk_mem3">												
+												<span class="name">김병기</span>
+												<span class="position">의원</span>
+												<span class="area">(서울 동작구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6742" data-name="이춘석" data-pos="법제사법위원장"> 
+											<label for="spk_mem4">												
+												<span class="name">이춘석</span>
+												<span class="position">의원</span>
+												<span class="area">(전북 익산시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6586" data-name="김교흥" data-pos="문화체육관광위원장"> 
+											<label for="spk_mem5">												
+												<span class="name">김교흥</span>
+												<span class="position">의원</span>
+												<span class="area">(인천 서구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+											
+										
+										
+										
+										
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6617" data-name="한병도" data-pos="예산결산특별위원장"> 
+											<label for="spk_mem6">												
+												<span class="name">한병도</span>
+												<span class="position">의원</span>
+												<span class="area">(전북 익산시을 )</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="김승묵" data-pos="의사국장"> 
+											<label for="spk_attend0">
+												<span class="name">김승묵</span>
+												<span class="position">의사국장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="김민기" data-pos="사무총장"> 
+											<label for="spk_attend1">
+												<span class="name">김민기</span>
+												<span class="position">사무총장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=54943&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제426회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>국회본회의회의록</h1></div></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년6월27일(금) 오후 2시</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건(의장 제의)(의안번호 2211128)</li><li><span class="num">2.</span> 국회운영위원장(박찬대) 사임의 건(의안번호 2211125)</li><li><span class="num">3.</span> 법제사법위원장(정청래) 사임의 건(의안번호 2211126)</li><li><span class="num">4.</span> 문화체육관광위원장(전재수) 사임의 건(의안번호 2211127)</li><li><span class="num">5.</span> 국회운영위원장 보궐선거</li><li><span class="num">6.</span> 법제사법위원장 보궐선거</li><li><span class="num">7.</span> 문화체육관광위원장 보궐선거</li><li><span class="num">8.</span> 예산결산특별위원장 선거</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1">o 의원(최혁진·손솔) 선서 및 인사</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">1.</span> 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건(의장 제의)(의안번호 2211128)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">2.</span> 국회운영위원장(박찬대) 사임의 건(의안번호 2211125)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">3.</span> 법제사법위원장(정청래) 사임의 건(의안번호 2211126)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">4.</span> 문화체육관광위원장(전재수) 사임의 건(의안번호 2211127)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">5.</span> 국회운영위원장 보궐선거</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">6.</span> 법제사법위원장 보궐선거</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">7.</span> 문화체육관광위원장 보궐선거</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">8.</span> 예산결산특별위원장 선거</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10">o 상임위원장(국회운영 김병기·법제사법 이춘석·문화체육관광 김교흥)·예산결산특별위원장(한병도) 인사</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시40분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제3차 본회의를 개의하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 회의록에 게재하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">o 의원(최혁진·손솔) 선서 및 인사</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정에 들어가기에 앞서 6월 9일 자로 비례대표 국회의원을 승계하신 두 분 의원이 선서를 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;최혁진 의원, 손솔 의원 발언대로 나와 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;의석에 계신 의원님들께서는 모두 자리에서 일어나 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;(일동 기립)</span><br/></div></div></div><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6875" data-name="최혁진" data-pos="의원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">최혁진 의원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1d9a03dadae24c80b84c737608798be6.jpg" alt="최혁진"></span><span class="txt"><strong class="name">최혁진</strong><span class="position">의원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;“선서, 나는 헌법을 준수하고 국민의 자유와 복리의 증진 및 조국의 평화적 통일을 위하여 노력하며, 국가이익을 우선으로 하여 국회의원의 직무를 양심에 따라 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다.”</span><br/><span class="spk_sub" id="spk_sub4-2"><div class="taR">2025년 6월 27일</div></span><span class="spk_sub" id="spk_sub4-3">&nbsp;국회의원  최혁진</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;국회의원  손솔</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;의원님 여러분께서는 자리에 앉아 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;(일동 착석)</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;다음은 방금 선서하신 두 분 의원의 인사가 있겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;먼저 최혁진 의원 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6875" data-name="최혁진" data-pos="의원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">최혁진 의원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1d9a03dadae24c80b84c737608798be6.jpg" alt="최혁진"></span><span class="txt"><strong class="name">최혁진</strong><span class="position">의원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;저에게 힘껏 일할 수 있는 기회를 주신 사랑하는 국민 여러분!</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;또한 헌정질서를 수호하고 대한민국의 새로운 미래를 창조하기 위하여 불철주야 노력하고 계신 선배·동료 의원 여러분께도 존경의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;반갑습니다. 국회의원 최혁진입니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;저는 오늘 국민 여러분께서 제게 부여하신 시대적 책무를 마음 깊이 새기고 있습니다. 국민주권 정부가 신성장동력을 발굴하여 모두가 고르게 잘사는 진짜 대한민국의 초석을 다질 수 있도록 제가 할 수 있는 모든 역할을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;존경하는 선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;우리는 여전히 내란 세력의 그림자와 싸우고 있습니다. 내란 세력을 완전히 척결해야 우리는 더 강한 민주주의, 더 따뜻한 사회 통합으로 국민들이 안심하고 국제사회가 신뢰하는 경쟁력 있는 대한민국을 만들어 낼 수 있습니다. 빙산 아래 숨은 윤석열·김건희 내란 세력의 배후까지 철저히 파헤쳐 다시는 이 땅에 민주 헌정질서가 흔들리지 않도록 바로잡겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-8">&nbsp;민생 회복 역시 더 이상 늦출 수 없습니다. 저 최혁진, 민생경제의 전문가로서 윤석열 정부의 실정으로 벼랑 끝에 몰린 소상공인과 중소기업, 사회적 경제와 지역경제에 숨통을 틔우는 민생정치를 앞장서 실현하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-9">&nbsp;국민주권 정부의 신성장동력을 뒷받침하는 데에도 최선을 다할 것입니다. 이재명 정부가 약속한 개혁은 속도가 생명입니다. 관련된 입법 및 예산 기반을 국회에서 조속히 다지겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-10">&nbsp;모두의 인권이 존중받는 기본 사회와 국민주권이 제대로 실현되는 진짜 대한민국을 반드시 실현하기 위하여 혼신의 힘을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-11">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;최혁진 의원 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;다음은 손솔 의원 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6874" data-name="손솔" data-pos="의원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">손솔 의원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SONSOL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/2KM3589W.jpg" alt="손솔"></span><span class="txt"><strong class="name">손솔</strong><span class="position">의원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;사랑하고 존경하는 국민 여러분!</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;그리고 존경하는 우원식 의장님, 선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;안녕하십니까? 진보당 국회의원 손솔입니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;이재명 정부의 탄생과 함께 저도 비례의원으로 승계되어 선배·동료 의원님들과 함께 일하게 됐습니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;지난 6개월 민주주의를 지켜 주신 국민께 그리고 국회에서 굳건하게 역할을 해 주신 의원 여러분께 이 자리를 빌려 존경과 감사의 인사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;저는 22대 최연소 국회의원이라는 타이틀을 달았습니다. 막내인 데다 전학생이 된 기분입니다. 300명의 의원 여러분 앞에 말씀드릴 수 있는 영광스러운 시간을 얻어 인사를 드리고 있지만 저는 한 분 한 분 뵐 시간이 아직은 부족했습니다. 혹시 제가 그냥 지나가더라도 오해하지 마시고 같이 인사 나눌 수 있었으면 합니다.</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;열심히 배우고 많이 일하고 싶습니다. 하지만 아직 4석의 소수정당이라 법안 발의를 하는 데도 어려움이 많습니다. 많이 가르쳐 주시고 많이 도와주십시오. 함께 토론하고 국민을 위한 의정활동에 저도 역할을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;그런 의미에서 이 자리에서 말씀드리고 싶은 건이 하나 있습니다. 첫인사 자리에서 이 말씀을 드려도 되나 많이 고민했습니다. 하지만 지금도 진행 중인 사안이고 우리 국회가 함께 해결해야 하는 일이기에 용기를 냅니다.</span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;이준석 의원을 징계해 주십시오.</span><br/><span class="spk_sub" id="spk_sub8-10">&nbsp;저는 지난 대선 기간 청년들과 함께 모여 대선후보 토론회를 봤습니다. 2차 토론회 시청을 할 때까지만 해도 토론회를 본 소감을 나누고 남은 선거 기간까지 함께 힘내 보자는 격려가 넘쳤습니다. 하지만 3차 토론회 후에는 우리는 한자리에 있으면서도 서로에 대한 응원조차 나눌 여유가 없었습니다. 다들 오늘 토론회는 너무 힘들다, 어서 집에 가서 쉬어야겠다며 돌아갔습니다. 저 역시 한 방 때려 맞은 것처럼 어안이 벙벙했습니다. 다음 날 선거운동에 나가면서도 힘이 축 빠져 기운이 돌아오지 않아 괴로웠습니다. 내가 왜 이렇게 힘들까, 추위 속에도 광장을 지키러 온 힘을 내 나온 내 친구들은 왜 어제 토론회를 보고 맥이 빠진 채 돌아갔을까 곱씹어 봤습니다.</span><br/><span class="spk_sub" id="spk_sub8-11">&nbsp;답은 하나였습니다. 이준석 후보가 TV토론 생중계에서 내뱉은 충격적인 발언에 모두가 동시에 한 방 얻어맞았기 때문이었습니다. 수년간 어려운 틈을 비집고 진보정치를 꾸려 오던 저조차 이렇게 힘든데 평범한 청년들은 오죽했겠습니까. 그 고통스러운 마음과 참담함이 모여 이준석 의원 제명을 요구하는 국민청원 59만이라는 결과로 표현됐다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub8-12">&nbsp;국민의 요청에 국회가 답해야 합니다. 물이 위에서 아래로 흐르듯 혐오도 그러합니다. 아니, 더 멀리 퍼집니다. 정치인의 말에 책임이 따른다는 것을 단호히 보여 줘야 혐오와 차별을 멈출 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub8-13">&nbsp;선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub8-14">&nbsp;국회에 윤리특별위원회가 하루빨리 구성되어 징계안이 논의될 수 있도록 해 주십시오.</span><br/><span class="spk_sub" id="spk_sub8-15">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;손솔 의원 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;두 분 의원님께 축하말씀 드립니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;축하합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2E5H0K6O2W7L1J1M5R7H2I8B2E1M0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건(의장 제의)(의안번호 2211128)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시49분)</p><br/><div id="spk_11" class="item2 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;의사일정 제1항 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;이 안건은 의장이 각 교섭단체 대표의원과 협의하여 제의하는 것으로 2025년 6월 30일로 종료되는 특별위원회 활동기간을 2025년 12월 31일까지 연장하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;자세한 내용은 단말기의 회의자료를 참고해 주시면 되겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;그러면 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;투표해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;(전자투표)</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;투표를 다 하셨습니까?</span><br/><span class="spk_sub" id="spk_sub11-8">&nbsp;그러면 투표를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-9">&nbsp;투표 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-10">&nbsp;재석 170인 중 찬성 170인으로서 12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건은 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub11-11"><div class="taR">(찬반 의원 성명은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub11-12">&nbsp;다음 안건 들어가기 전에 국회의장이 한말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-13">&nbsp;국민의힘 의원들이 모두 나가셔서 보는 마음이 편치 않습니다.</span><br/><span class="spk_sub" id="spk_sub11-14">&nbsp;나라 안팎 사정이 모두 어렵습니다. 위기극복에 힘을 모으라는 것이 한결같은 국민들의 말씀이십니다.</span><br/><span class="spk_sub" id="spk_sub11-15">&nbsp;지난 6개월 국민이 감내한 희생과 고통을 생각하면 일할 준비에 해당하는 상임위 구성은 하루라도 빨리 매듭지어야 합니다.</span><br/><span class="spk_sub" id="spk_sub11-16">&nbsp;추경이 시급합니다. 24일 한국은행이 발표한 소비심리지수에서도 확인됐듯이 이번 2차 추경이 경기회복의 마중물이 될 것이라는 기대가 매우 높습니다. 고통과 불황의 터널에서 가까스로 생기기 시작한 시장과 가계의 기대심리에 찬물을 끼얹어서는 안 됩니다.</span><br/><span class="spk_sub" id="spk_sub11-17">&nbsp;추경안 상임위 예비심사가 진행 중인데 예결특위가 구성되지 않아 예산안 처리가 지연되는 것은 국민들이 이해하지 못할 것입니다. 다만 오늘 예결위 구성에 대해 진전이 있는 점에 대해서 매우 다행스럽게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-18">&nbsp;상임위원회 운영 정상화도 마찬가지입니다. 상임위원장을 비워 두면 상임위 정상 운영이 어려워집니다. 경제, 민생에 시급한 법안이 한둘이 아닌데 역시 국민들 보시기에 납득할 수 없을 것입니다.</span><br/><span class="spk_sub" id="spk_sub11-19">&nbsp;의장은 고심 끝에 오늘 본회의에 3건의 상임위원장 보궐선거와 예결위원장 선거 안건을 상정하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub11-20">&nbsp;되도록 여야 협의를 통해 사안을 매듭짓기 위해 그간 협의를 독려하고 재촉해 왔습니다만 현재로서는 며칠의 말미를 더 둔다 해도 협상이 진척될 가능성은 사실상 없어 보입니다. 의장으로서도 유감스럽습니다만 지금으로서는 시간을 더 지체하기보다는 의장이 나서서 상황을 정리하는 것이 불가피하다고 판단했습니다.</span><br/><span class="spk_sub" id="spk_sub11-21">&nbsp;두 가지 기준을 따랐습니다. 첫째는 국민께 이로운 방향이 무엇인가. 둘째는 의장이 취임하면서 말씀드린 대로 의견이 달라도 합의된 기준을 따르자, 즉 새로운 합의에 이르지 못하면 이미 정해진 기준, 기존 합의를 따라야 한다는 것입니다. 상임위원장 재배분에 대한 여야의 입장 차가 해소되지 않은 상황에서 22대 국회 초 원 구성 당시 정해진 기준을 적용하는 것이 합당하다고 생각했습니다.</span><br/><span class="spk_sub" id="spk_sub11-22">&nbsp;나라 안팎의 위기를 극복해 나가는 데도 하루가 아까운 시기입니다. 일하는 정부, 일하는 국회로 국민께 위로와 희망을 드려야 합니다. 의원님들의 협조를 당부드립니다.</span><br/><span class="spk_sub" id="spk_sub11-23">&nbsp;국민의힘 의원님들도 들어와서 함께 표결에 참여해 주시면 감사하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T5Q0E6F2N7M1W1U5G2B4H0D9A9K6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 국회운영위원장(박찬대) 사임의 건(의안번호 2211125)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2L5I0G6E2A7O1B1B5B3V1L9R7A2Y2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 법제사법위원장(정청래) 사임의 건(의안번호 2211126)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2T5X0F6U2D7O1M1W5C4A1I2R2Y5S0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 문화체육관광위원장(전재수) 사임의 건(의안번호 2211127)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시53분)</p><br/><div id="spk_13" class="item5 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;의사일정 제2항 국회운영위원장(박찬대) 사임의 건, 의사일정 제3항 법제사법위원장(정청래) 사임의 건, 의사일정 제4항 문화체육관광위원장(전재수) 사임의 건, 이상 3건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;이들 안건은 국회법 제112조제5항 단서에 따라 이의 유무를 물어 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;먼저 국회운영위원장(박찬대) 사임의 건을 의결하고자 하는데 이의 있습니까?</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;(「없습니다」 하는 의원 있음)</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;이의가 없으면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;다음은 법제사법위원장(정청래) 사임의 건을 의결하고자 하는데 이의 있습니까?</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;(「없습니다」 하는 의원 있음)</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;다음은 문화체육관광위원장(전재수) 사임의 건을 의결하고자 하는데 이의 있습니까?</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;(「없습니다」 하는 의원 있음)</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item6" class="tit">5. 국회운영위원장 보궐선거</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" class="tit">6. 법제사법위원장 보궐선거</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" class="tit">7. 문화체육관광위원장 보궐선거</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" class="tit">8. 예산결산특별위원장 선거</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시54분)</p><br/><div id="spk_15" class="item9 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;의사일정 제5항 국회운영위원장 보궐선거, 의사일정 제6항 법제사법위원장 보궐선거, 의사일정 제7항 문화체육관광위원장 보궐선거, 의사일정 제8항 예산결산특별위원회 위원장 선거, 이상 4건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;이들 안건은 국회법 제112조제6항에 따라 무기명투표 방식으로 표결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;그러면 국회법 제114조제2항에 따라 감표위원을 지명하겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;김윤 의원, 이상식 의원, 이연희 의원, 이훈기 의원, 강경숙 의원, 신장식 의원, 손솔 의원, 최혁진 의원, 이상 여덟 분이 수고해 주시겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-5">&nbsp;감표위원께서는 감표위원석으로 나와 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub15-6">&nbsp;의사국장으로부터 투표 방법에 관한 설명이 있은 다음 바로 투표를 시작하겠습니다.</span><br/></div></div></div><div id="spk_16" class="item9 speaker spk_mem" data-mem_id="0" data-name="김승묵" data-pos="의사국장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">의사국장 김승묵 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김승묵"></span><span class="txt"><span class="position">의사국장</span><strong class="name">김승묵</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;투표 방법에 대하여 설명드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;먼저 명패와 투표용지를 받은 후 투표용지의 기명란에 각각의 위원회 위원 중에서 위원장으로 선출할 위원의 성명을 한글이나 한자로 기재하면 되겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;만약 해당 위원회 위원이 아닌 의원의 성명을 기재하거나 의원의 성명을 잘못 기재한 투표는 무효로 처리되며, 투표용지에 어떠한 표시도 하지 않을 경우 기권으로 처리됨을 유념해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;이상으로 설명을 마치고 투표를 시작하겠습니다.</span><br/></div></div></div><p class="tit_sm taR">(14시56분 투표개시)</p><br/><div id="spk_17" class="item9 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;투표를 다 하셨습니까?</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;누가 아직 안 했어요?</span><br/></div></div></div><div id="spk_18" class="item9 speaker spk_mem" data-mem_id="0" data-name="김민기" data-pos="사무총장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">사무총장 김민기 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김민기"></span><span class="txt"><span class="position">사무총장</span><strong class="name">김민기</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;감표위원들 투표요.</span><br/></div></div></div><div id="spk_19" class="item9 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;아, 감표위원들.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;투표를 다 하셨습니까?</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;그러면 투표를 마치겠습니다.</span><br/></div></div></div><p class="tit_sm taR">(15시23분 투표종료)</p><br/><div id="spk_19" class="item9 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-4">&nbsp;개표를 시작하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;(명패함 및 투표함 폐함)</span><br/><span class="spk_sub" id="spk_sub19-6">&nbsp;먼저 명패함을 열겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-7">&nbsp;(명패함 개함)</span><br/><span class="spk_sub" id="spk_sub19-8">&nbsp;(명패수 점검)</span><br/><span class="spk_sub" id="spk_sub19-9">&nbsp;명패수는 171매입니다.</span><br/><span class="spk_sub" id="spk_sub19-10">&nbsp;다음은 투표함을 열겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-11">&nbsp;(투표함 개함)</span><br/><span class="spk_sub" id="spk_sub19-12">&nbsp;(투표수 점검)</span><br/><span class="spk_sub" id="spk_sub19-13">&nbsp;투표수도 각 171매로서 명패수와 같습니다.</span><br/><span class="spk_sub" id="spk_sub19-14">&nbsp;투표 결과는 잠시 후에 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-15">&nbsp;(계표)</span><br/><span class="spk_sub" id="spk_sub19-16">&nbsp;투표 결과는 그동안 관례에 따라 당선된 의원의 득표수만 발표하고 다른 의원들의 득표수는 회의록에 게재하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-17">&nbsp;당선 인사는 투표 결과 발표가 모두 끝난 다음 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-18">&nbsp;그러면 먼저 국회운영위원장 보궐선거에 대한 투표 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-19">&nbsp;총 투표수 171표 중 164표를 얻은 김병기 의원이 국회운영위원장에 당선되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub19-20">&nbsp;다음은 법제사법위원장 보궐선거에 대한 투표 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-21">&nbsp;총 투표수 171표 중 166표를 얻은 이춘석 의원이 법제사법위원장에 당선되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub19-22">&nbsp;다음은 문화체육관광위원장 보궐선거에 대한 투표 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-23">&nbsp;총 투표수 171표 중 166표를 얻은 김교흥 의원이 문화체육관광위원장에 당선되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub19-24">&nbsp;다음은 예산결산특별위원회 위원장 선거에 대한 투표 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-25">&nbsp;총 투표수 171표 중 166표를 얻은 한병도 의원이 예산결산특별위원회 위원장에 당선되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub19-26"><div class="taR">(투표 결과는 끝에 실음)</div></span><span class="spk_sub" id="spk_sub19-27">&nbsp;네 분 축하합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item10" class="tit">o 상임위원장(국회운영 김병기·법제사법 이춘석·문화체육관광 김교흥)·예산결산특별위원장(한병도) 인사</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시44분)</p><br/><div id="spk_21" class="item10 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;그러면 당선 인사를 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;먼저 국회운영위원장으로 선출되신 김병기 의원 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_22" class="item10 speaker spk_mem" data-mem_id="6591" data-name="김병기" data-pos="국회운영위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">국회운영위원장 김병기 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d7c2ddfa44bd49e384f91f4ea0f080e9.png" alt="김병기"></span><span class="txt"><span class="position">국회운영위원장</span><strong class="name">김병기</strong><span class="area">(서울 동작구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;오붓합니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;존경하는 우원식 국회의장님 그리고 선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;더불어민주당 김병기 의원입니다.</span><br/><span class="spk_sub" id="spk_sub22-4">&nbsp;여러모로 부족한데 저를 운영위원장으로 선출해 주신 데 대해서 먼저 깊이 감사드립니다. 운영위원장으로서 주권자인 국민을 받드는 국회, 더 나은 국민의 삶을 만드는 국회를 만들어 가겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-5">&nbsp;국민의 먹고사는 문제를 해결하는 것이 정치의 본질입니다. 우리 경제가 절박한 상황에 처해 있고 국민의 삶은 위협을 받고 있습니다. 이런 엄중한 시기에 국회는 일하는 국회로서 민생경제 회복, 내란 종식, 국민 통합을 위해 한마음, 한뜻으로 협력해야 합니다.</span><br/><span class="spk_sub" id="spk_sub22-6">&nbsp;하루속히 국회를 정상 가동하는 것이 국민에 대한 예의이자 우리의 책무입니다. 흔들림 없이 맡은 바 소임을 충직하게 수행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-7">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_23" class="item10 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;김병기 위원장 축하합니다. 열심히 하십시오.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;다음은 법제사법위원장으로 선출되신 이춘석 의원 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_24" class="item10 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="법제사법위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">법제사법위원장 이춘석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><span class="position">법제사법위원장</span><strong class="name">이춘석</strong><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;존경하는 우원식 국회의장님 그리고 선배·동료 여러분!</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;여러 가지로 부족함이 많은 저를 법제사법위원장으로 선출해 주신 것에 대해서 깊은 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;첫 소감으로는 어깨가 참 무겁다 하는 생각이 듭니다. 방금 제가 밖에 잠깐 나갔는데 국민의힘 의원들께서 규탄 집회를 하시더라고요. 그 소리가 마치 우리 법사위에서 들리는 소리인 것이 아닌가 하는 환청이 들렸습니다.</span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;지금 대한민국국회 법제사법위원회는 여야 정쟁의 최전선에 서 있습니다. 저는 법사위가 싸우는 게 맞다고 생각합니다. 그런데 이제는 정쟁을 위해서 싸우는 것이 아니라 어렵고 힘든 국민들의 민생을, 삶을 위해서 정책적 대안으로 싸우는 그런 정쟁의 장이 되었으면 좋겠다는 생각이 듭니다.</span><br/><span class="spk_sub" id="spk_sub24-5">&nbsp;국회 말고 대법원에 가면 정의의 여신상이 서 있습니다. 서구의 정의의 여신상은 다 눈에 안대로 가리고 있습니다. 그런데 우리 대법원에 서 있는 여신상은 앞을 똑바로 쳐다보고 있습니다. 이것은 아마 형식적 정의가 아니라 사안 사안마다 구체적 정의를 실현해 달라는 뜻이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub24-6">&nbsp;우리 법제사법위원회에 국가기관, 특히 권력기관이 많습니다. 그들이 다루는 정의가 모든 국민에게 공평하게 정의되고, 어렵고 힘든 사람에게도 동일한 잣대로 규제되는 그런 법제사법위가 됐으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-7">&nbsp;현명하신 법제사법위원님들이 많이 계시니까 그분들과 힘을 합해서 중지를 모아서 우리 법제사법위원회가 어렵고 힘든 국민의 삶을 보장하고 보호하는 법을 만들고 정책을 펴는 상임위로 변화할 수 있도록 최선을 다하겠다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub24-8">&nbsp;많이 도와주실 것을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub24-9">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_25" class="item10 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;이춘석 위원장 축하합니다. 국민의 기대가 큽니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;다음은 문화체육관광위원장으로 선출되신 김교흥 의원 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_26" class="item10 speaker spk_mem" data-mem_id="6586" data-name="김교흥" data-pos="문화체육관광위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">문화체육관광위원장 김교흥 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMKYOHEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c2640d735bdc4520ad3838183f97ad54.jpg" alt="김교흥"></span><span class="txt"><span class="position">문화체육관광위원장</span><strong class="name">김교흥</strong><span class="area">(인천 서구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;존경하는 우원식 의장님 그리고 선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;인천 서구갑의 김교흥 의원입니다.</span><br/><span class="spk_sub" id="spk_sub26-3">&nbsp;부족한 저를 문화체육관광위원회 위원장으로 선출해 주셔서 이 자리를 빌려서 진심으로 감사의 인사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub26-4">&nbsp;우리 대한민국은 국방과 경제성장으로 이미 선진국 반열에 올라섰습니다. 여기에 쟁쟁한 선진국들 사이에서 경쟁력을 갖추기 위한 힘은 문화에 있다고 생각합니다. 케이팝으로 시작한 한류가 K-드라마, K-푸드, K-관광 등 사회 전 분야로 확산되고 있습니다. 이제는 국악, 문화재 등 우리의 전통문화에도 전 세계인들이 관심을 갖기 시작했습니다.</span><br/><span class="spk_sub" id="spk_sub26-5">&nbsp;어제는 우리 민족의 큰 지도자이신 백범 김구 선생 서거 76주기가 있었습니다. 오직 한없이 가지고 싶은 것은 높은 문화의 힘이라던 김구 선생의 말씀을 마음으로 새기며 문화 강국 대한민국을 만드는 데 최선의 노력을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub26-6">&nbsp;의장님과 그리고 선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub26-7">&nbsp;많은 관심과 지도 편달을 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub26-8">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_27" class="item10 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;김교흥 위원장 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;우리나라를 문화·체육·관광의 강국으로 꼭 만들어 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;다음은 예산결산특별위원회 위원장으로 선출되신 한병도 의원 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_28" class="item10 speaker spk_mem" data-mem_id="6617" data-name="한병도" data-pos="예산결산특별위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">예산결산특별위원장 한병도 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/a7695c6d5955474aa1962ffcaabcf804.jpg" alt="한병도"></span><span class="txt"><span class="position">예산결산특별위원장</span><strong class="name">한병도</strong><span class="area">(전북 익산시을 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;존경하는 우원식 국회의장님과 선배·동료 의원 여러분!</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;전북 익산시을 한병도 의원입니다.</span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;먼저 여러모로 부족한 저에게 국회 예산결산위원장이라는 중책을 맡겨 주신 선배·동료 의원님들께 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub28-4">&nbsp;0%대 저성장 고착화, 양극화 심화, 산업경쟁력 약화, 관세 불확실성 등 우리가 처한 대내외 경제 여건이 매우 혹독합니다.</span><br/><span class="spk_sub" id="spk_sub28-5">&nbsp;내수 위축 장기화로 연간 100여만 명의 자영업자가 폐업을 하고 건설경기는 IMF 이후 최악의 한파를 겪는 등 민생 현장에서는 희망이 보이지 않는다는 절규가 나오고 있습니다.</span><br/><span class="spk_sub" id="spk_sub28-6">&nbsp;이 복합위기를 극복하기 위해서는 국가예산의 효율적 집행이 그 어느 때보다 중요하고 정부예산안을 심의하는 예산결산특별위원회의 임무 또한 막중합니다. 당장 정부가 제출한 추가경정예산안을 신속하게 심의하고 확정해서 민생 안정과 경기 진작의 마중물을 마련하는 데 힘을 모아야 합니다.</span><br/><span class="spk_sub" id="spk_sub28-7">&nbsp;우리 위원회가 민생 회복과 경제 도약의 출발점이 되어 국가경제 위기를 극복하고 국민 모두에게 희망을 드리는 데 기여할 수 있도록 선배·동료 의원님들의 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub28-8">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_29" class="item10 speaker spk_mem" data-mem_id="6696" data-name="우원식" data-pos="의장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">의장 우원식 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3fd6bfb1196144ea9282aac6e4eaf5ef.png" alt="우원식"></span><span class="txt"><span class="position">의장</span><strong class="name">우원식</strong><span class="area">(서울 노원구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;한병도 위원장, 축하드리고 수고해 주십시오.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;새 정부 첫해 예산결산을 잘하셔서 국민의 삶으로 입증되는 새로운 민주주의를 잘 만들어 주시기 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub29-3">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub29-4">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(15시53분 산회)</p><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><strong>상임위원장 및 특별위원장 투표 결과</strong></p><div class="table_wrap_2"><table border="1px"><tr><td>위원회</td><td>투표 결과</td></tr><tr><td>국회운영</td><td>김병기 164<br/>박찬대 1<br/>윤건영 1<br/>추미애 1<br/>기권 1<br/>무효 3<br/></td></tr><tr><td>법제사법</td><td>이춘석 166<br/>박은정 1<br/>이성윤 1<br/>기권 2<br/>무효 1<br/></td></tr><tr><td>문화체육관광</td><td>김교흥 166<br/>민형배 2<br/>기권 1<br/>무효 2<br/></td></tr><tr><td>예산결산특별</td><td>한병도 166<br/>서왕진 1<br/>임미애 1<br/>무효 3<br/></td></tr></table></div></div><p class="tit"><span class="num"></span><strong>【전자투표 찬반 의원 성명】<br/>◯12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건</strong></p><div class="con"><p class="tit_sm">투표 의원(170인)</p><p class="tit_sm">찬성 의원(170인)</p><ul class="list_nm col8"><li><a class="in_nm"><span class="name lts3">강경숙</span></a></li><li><a class="in_nm"><span class="name lts3">강득구</span></a></li><li><a class="in_nm"><span class="name lts3">강선우</span></a></li><li><a class="in_nm"><span class="name lts3">강준현</span></a></li><li><a class="in_nm"><span class="name lts3">고민정</span></a></li><li><a class="in_nm"><span class="name lts3">곽상언</span></a></li><li><a class="in_nm"><span class="name lts3">권칠승</span></a></li><li><a class="in_nm"><span class="name lts3">권향엽</span></a></li><li><a class="in_nm"><span class="name lts3">김교흥</span></a></li><li><a class="in_nm"><span class="name lts3">김기표</span></a></li><li><a class="in_nm"><span class="name lts3">김남근</span></a></li><li><a class="in_nm"><span class="name lts3">김남희</span></a></li><li><a class="in_nm"><span class="name lts3">김동아</span></a></li><li><a class="in_nm"><span class="name lts3">김문수</span></a></li><li><a class="in_nm"><span class="name lts3">김민석</span></a></li><li><a class="in_nm"><span class="name lts3">김병기</span></a></li><li><a class="in_nm"><span class="name lts3">김병주</span></a></li><li><a class="in_nm"><span class="name lts3">김상욱</span></a></li><li><a class="in_nm"><span class="name lts3">김성환</span></a></li><li><a class="in_nm"><span class="name lts3">김성회</span></a></li><li><a class="in_nm"><span class="name lts3">김승원</span></a></li><li><a class="in_nm"><span class="name lts3">김영배</span></a></li><li><a class="in_nm"><span class="name lts3">김영진</span></a></li><li><a class="in_nm"><span class="name lts3">김영호</span></a></li><li><a class="in_nm"><span class="name lts3">김영환</span></a></li><li><a class="in_nm"><span class="name lts3">김용민</span></a></li><li><a class="in_nm"><span class="name lts3">김우영</span></a></li><li><a class="in_nm"><span class="name lts3">김원이</span></a></li><li><a class="in_nm"><span class="name lts2">김윤</span></a></li><li><a class="in_nm"><span class="name lts3">김윤덕</span></a></li><li><a class="in_nm"><span class="name lts3">김재원</span></a></li><li><a class="in_nm"><span class="name lts3">김정호</span></a></li><li><a class="in_nm"><span class="name lts3">김준혁</span></a></li><li><a class="in_nm"><span class="name lts3">김준형</span></a></li><li><a class="in_nm"><span class="name lts3">김태년</span></a></li><li><a class="in_nm"><span class="name lts3">김태선</span></a></li><li><a class="in_nm"><span class="name lts3">김한규</span></a></li><li><a class="in_nm"><span class="name lts2">김현</span></a></li><li><a class="in_nm"><span class="name lts3">김현정</span></a></li><li><a class="in_nm"><span class="name lts3">남인순</span></a></li><li><a class="in_nm"><span class="name lts3">노종면</span></a></li><li><a class="in_nm"><span class="name lts3">맹성규</span></a></li><li><a class="in_nm"><span class="name lts3">모경종</span></a></li><li><a class="in_nm"><span class="name lts3">문금주</span></a></li><li><a class="in_nm"><span class="name lts3">문대림</span></a></li><li><a class="in_nm"><span class="name lts3">문정복</span></a></li><li><a class="in_nm"><span class="name lts3">문진석</span></a></li><li><a class="in_nm"><span class="name lts3">민병덕</span></a></li><li><a class="in_nm"><span class="name lts3">민형배</span></a></li><li><a class="in_nm"><span class="name lts3">민홍철</span></a></li><li><a class="in_nm"><span class="name lts3">박균택</span></a></li><li><a class="in_nm"><span class="name lts3">박민규</span></a></li><li><a class="in_nm"><span class="name lts3">박범계</span></a></li><li><a class="in_nm"><span class="name lts3">박상혁</span></a></li><li><a class="in_nm"><span class="name lts3">박선원</span></a></li><li><a class="in_nm"><span class="name lts3">박성준</span></a></li><li><a class="in_nm"><span class="name lts3">박수현</span></a></li><li><a class="in_nm"><span class="name lts3">박용갑</span></a></li><li><a class="in_nm"><span class="name lts3">박은정</span></a></li><li><a class="in_nm"><span class="name lts3">박주민</span></a></li><li><a class="in_nm"><span class="name lts3">박지원</span></a></li><li><a class="in_nm"><span class="name lts3">박지혜</span></a></li><li><a class="in_nm"><span class="name lts3">박찬대</span></a></li><li><a class="in_nm"><span class="name lts3">박해철</span></a></li><li><a class="in_nm"><span class="name lts3">박홍근</span></a></li><li><a class="in_nm"><span class="name lts3">박홍배</span></a></li><li><a class="in_nm"><span class="name lts3">백선희</span></a></li><li><a class="in_nm"><span class="name lts3">백승아</span></a></li><li><a class="in_nm"><span class="name lts3">백혜련</span></a></li><li><a class="in_nm"><span class="name lts3">부승찬</span></a></li><li><a class="in_nm"><span class="name lts3">서삼석</span></a></li><li><a class="in_nm"><span class="name lts3">서영교</span></a></li><li><a class="in_nm"><span class="name lts3">서왕진</span></a></li><li><a class="in_nm"><span class="name lts3">소병훈</span></a></li><li><a class="in_nm"><span class="name lts3">손명수</span></a></li><li><a class="in_nm"><span class="name lts2">손솔</span></a></li><li><a class="in_nm"><span class="name lts3">송기헌</span></a></li><li><a class="in_nm"><span class="name lts3">송옥주</span></a></li><li><a class="in_nm"><span class="name lts3">송재봉</span></a></li><li><a class="in_nm"><span class="name lts3">신영대</span></a></li><li><a class="in_nm"><span class="name lts3">신장식</span></a></li><li><a class="in_nm"><span class="name lts3">신정훈</span></a></li><li><a class="in_nm"><span class="name lts3">안규백</span></a></li><li><a class="in_nm"><span class="name lts3">안도걸</span></a></li><li><a class="in_nm"><span class="name lts3">안태준</span></a></li><li><a class="in_nm"><span class="name lts3">안호영</span></a></li><li><a class="in_nm"><span class="name lts3">양문석</span></a></li><li><a class="in_nm"><span class="name lts3">양부남</span></a></li><li><a class="in_nm"><span class="name lts3">어기구</span></a></li><li><a class="in_nm"><span class="name lts3">오기형</span></a></li><li><a class="in_nm"><span class="name lts3">오세희</span></a></li><li><a class="in_nm"><span class="name lts3">용혜인</span></a></li><li><a class="in_nm"><span class="name lts3">우원식</span></a></li><li><a class="in_nm"><span class="name lts3">위성곤</span></a></li><li><a class="in_nm"><span class="name lts3">유동수</span></a></li><li><a class="in_nm"><span class="name lts3">윤건영</span></a></li><li><a class="in_nm"><span class="name lts3">윤준병</span></a></li><li><a class="in_nm"><span class="name lts3">윤호중</span></a></li><li><a class="in_nm"><span class="name lts3">윤후덕</span></a></li><li><a class="in_nm"><span class="name lts3">이강일</span></a></li><li><a class="in_nm"><span class="name lts3">이개호</span></a></li><li><a class="in_nm"><span class="name lts3">이건태</span></a></li><li><a class="in_nm"><span class="name lts3">이광희</span></a></li><li><a class="in_nm"><span class="name lts3">이기헌</span></a></li><li><a class="in_nm"><span class="name lts3">이병진</span></a></li><li><a class="in_nm"><span class="name lts3">이상식</span></a></li><li><a class="in_nm"><span class="name lts3">이성윤</span></a></li><li><a class="in_nm"><span class="name lts3">이소영</span></a></li><li><a class="in_nm"><span class="name lts3">이수진</span></a></li><li><a class="in_nm"><span class="name lts3">이언주</span></a></li><li><a class="in_nm"><span class="name lts3">이연희</span></a></li><li><a class="in_nm"><span class="name lts3">이용우</span></a></li><li><a class="in_nm"><span class="name lts3">이원택</span></a></li><li><a class="in_nm"><span class="name lts3">이인영</span></a></li><li><a class="in_nm"><span class="name lts3">이재강</span></a></li><li><a class="in_nm"><span class="name lts3">이재관</span></a></li><li><a class="in_nm"><span class="name lts3">이재정</span></a></li><li><a class="in_nm"><span class="name lts3">이정문</span></a></li><li><a class="in_nm"><span class="name lts3">이정헌</span></a></li><li><a class="in_nm"><span class="name lts3">이주영</span></a></li><li><a class="in_nm"><span class="name lts3">이준석</span></a></li><li><a class="in_nm"><span class="name lts3">이춘석</span></a></li><li><a class="in_nm"><span class="name lts3">이학영</span></a></li><li><a class="in_nm"><span class="name lts3">이해민</span></a></li><li><a class="in_nm"><span class="name lts3">이해식</span></a></li><li><a class="in_nm"><span class="name lts3">이훈기</span></a></li><li><a class="in_nm"><span class="name lts3">임광현</span></a></li><li><a class="in_nm"><span class="name lts3">임미애</span></a></li><li><a class="in_nm"><span class="name lts3">임오경</span></a></li><li><a class="in_nm"><span class="name lts3">임호선</span></a></li><li><a class="in_nm"><span class="name lts3">장경태</span></a></li><li><a class="in_nm"><span class="name lts3">장종태</span></a></li><li><a class="in_nm"><span class="name lts3">전용기</span></a></li><li><a class="in_nm"><span class="name lts3">전재수</span></a></li><li><a class="in_nm"><span class="name lts3">전종덕</span></a></li><li><a class="in_nm"><span class="name lts3">전진숙</span></a></li><li><a class="in_nm"><span class="name lts3">전현희</span></a></li><li><a class="in_nm"><span class="name lts3">정동영</span></a></li><li><a class="in_nm"><span class="name lts3">정성호</span></a></li><li><a class="in_nm"><span class="name lts3">정일영</span></a></li><li><a class="in_nm"><span class="name lts3">정준호</span></a></li><li><a class="in_nm"><span class="name lts3">정진욱</span></a></li><li><a class="in_nm"><span class="name lts3">정청래</span></a></li><li><a class="in_nm"><span class="name lts3">정태호</span></a></li><li><a class="in_nm"><span class="name lts3">조계원</span></a></li><li><a class="in_nm"><span class="name lts3">조승래</span></a></li><li><a class="in_nm"><span class="name lts3">조인철</span></a></li><li><a class="in_nm"><span class="name lts3">조정식</span></a></li><li><a class="in_nm"><span class="name lts3">주철현</span></a></li><li><a class="in_nm"><span class="name lts3">진선미</span></a></li><li><a class="in_nm"><span class="name lts3">진성준</span></a></li><li><a class="in_nm"><span class="name lts3">차규근</span></a></li><li><a class="in_nm"><span class="name lts3">채현일</span></a></li><li><a class="in_nm"><span class="name lts3">천준호</span></a></li><li><a class="in_nm"><span class="name lts3">최기상</span></a></li><li><a class="in_nm"><span class="name lts3">최민희</span></a></li><li><a class="in_nm"><span class="name lts3">최혁진</span></a></li><li><a class="in_nm"><span class="name lts3">추미애</span></a></li><li><a class="in_nm"><span class="name lts3">한민수</span></a></li><li><a class="in_nm"><span class="name lts3">한병도</span></a></li><li><a class="in_nm"><span class="name lts3">한준호</span></a></li><li><a class="in_nm"><span class="name lts3">한창민</span></a></li><li><a class="in_nm"><span class="name lts3">허성무</span></a></li><li><a class="in_nm"><span class="name lts2">허영</span></a></li><li><a class="in_nm"><span class="name lts3">허종식</span></a></li><li><a class="in_nm"><span class="name lts3">홍기원</span></a></li><li><a class="in_nm"><span class="name lts3">황명선</span></a></li><li><a class="in_nm"><span class="name lts3">황운하</span></a></li><li><a class="in_nm"><span class="name lts3">황정아</span></a></li><li><a class="in_nm"><span class="name lts2">황희</span></a></li></ul></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 의원(172인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGKYUNGSOOK" target="_blank"><span class="name lts3 ">강경숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGDEUKGU" target="_blank"><span class="name lts3 ">강득구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGJUNHYEON" target="_blank"><span class="name lts3 ">강준현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KOMINJUNG" target="_blank"><span class="name lts3 ">고민정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKSANGEON" target="_blank"><span class="name lts3 ">곽상언</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONCHILSEUNG" target="_blank"><span class="name lts3 ">권칠승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMKYOHEUNG" target="_blank"><span class="name lts3 ">김교흥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank"><span class="name lts3 ">김기표</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank"><span class="name lts3 ">김남근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMOONSOO" target="_blank"><span class="name lts3 ">김문수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMINSEOK" target="_blank"><span class="name lts3 ">김민석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank"><span class="name lts3 ">김병기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGJOO" target="_blank"><span class="name lts3 ">김병주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGWOOK" target="_blank"><span class="name lts3 ">김상욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWHAN" target="_blank"><span class="name lts3 ">김성환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSEUNGWON" target="_blank"><span class="name lts3 ">김승원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGBAE" target="_blank"><span class="name lts3 ">김영배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank"><span class="name lts3 ">김영호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGWHAN" target="_blank"><span class="name lts3 ">김영환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMAN" target="_blank"><span class="name lts3 ">김용만</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank"><span class="name lts3 ">김용민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWOOYOUNG" target="_blank"><span class="name lts3 ">김우영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWONI" target="_blank"><span class="name lts3 ">김원이</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYUNDUCK" target="_blank"><span class="name lts3 ">김윤덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JAEWONK" target="_blank"><span class="name lts3 ">김재원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNGHO" target="_blank"><span class="name lts3 ">김정호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNHYUK" target="_blank"><span class="name lts3 ">김준혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJOONHYUNG" target="_blank"><span class="name lts3 ">김준형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank"><span class="name lts3 ">김태년</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAESEON" target="_blank"><span class="name lts3 ">김태선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank"><span class="name lts2 ">김현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHYUNJUNG" target="_blank"><span class="name lts3 ">김현정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NOHJONGMYUN" target="_blank"><span class="name lts3 ">노종면</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank"><span class="name lts3 ">맹성규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOGYEONGJONG" target="_blank"><span class="name lts3 ">모경종</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONDAELIM" target="_blank"><span class="name lts3 ">문대림</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank"><span class="name lts3 ">문정복</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank"><span class="name lts3 ">문진석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINBYOUNGDUG" target="_blank"><span class="name lts3 ">민병덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINHYUNGBAE" target="_blank"><span class="name lts3 ">민형배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINHONGCHUL" target="_blank"><span class="name lts3 ">민홍철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank"><span class="name lts3 ">박균택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank"><span class="name lts3 ">박민규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKBEOMKYE" target="_blank"><span class="name lts3 ">박범계</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank"><span class="name lts3 ">박상혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGJOON" target="_blank"><span class="name lts3 ">박성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSooHyun" target="_blank"><span class="name lts3 ">박수현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKYONGKAB" target="_blank"><span class="name lts3 ">박용갑</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank"><span class="name lts3 ">박은정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank"><span class="name lts3 ">박주민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank"><span class="name lts3 ">박지원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKCHANDAE" target="_blank"><span class="name lts3 ">박찬대</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHAECHEOL" target="_blank"><span class="name lts3 ">박해철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGKEUN" target="_blank"><span class="name lts3 ">박홍근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank"><span class="name lts3 ">박홍배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEKSUNHEE" target="_blank"><span class="name lts3 ">백선희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAKSEUNGA" target="_blank"><span class="name lts3 ">백승아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BOOSEUNGCHAN" target="_blank"><span class="name lts3 ">부승찬</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank"><span class="name lts3 ">서삼석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank"><span class="name lts3 ">서영교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOWANGJIN" target="_blank"><span class="name lts3 ">서왕진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONMYOUNGSOO" target="_blank"><span class="name lts3 ">손명수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONSOL" target="_blank"><span class="name lts2 ">손솔</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGKIHUN" target="_blank"><span class="name lts3 ">송기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGOKJOO" target="_blank"><span class="name lts3 ">송옥주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGJAEBONG" target="_blank"><span class="name lts3 ">송재봉</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINYEONGDAE" target="_blank"><span class="name lts3 ">신영대</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank"><span class="name lts3 ">신정훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNGYUBACK" target="_blank"><span class="name lts3 ">안규백</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANTAEJUN" target="_blank"><span class="name lts3 ">안태준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANHOYOUNG" target="_blank"><span class="name lts3 ">안호영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YANGMOONSEOK" target="_blank"><span class="name lts3 ">양문석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YANGBUNAM" target="_blank"><span class="name lts3 ">양부남</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/EOHKIYKU" target="_blank"><span class="name lts3 ">어기구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank"><span class="name lts3 ">오기형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHSAEHEE" target="_blank"><span class="name lts3 ">오세희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGHYEIN" target="_blank"><span class="name lts3 ">용혜인</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank"><span class="name lts3 ">우원식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank"><span class="name lts3 ">위성곤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOODONGSOO" target="_blank"><span class="name lts3 ">유동수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank"><span class="name lts3 ">윤건영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank"><span class="name lts3 ">윤호중</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONHUDUK" target="_blank"><span class="name lts3 ">윤후덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKANGILL" target="_blank"><span class="name lts3 ">이강일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGEONTAE" target="_blank"><span class="name lts3 ">이건태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank"><span class="name lts3 ">이광희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank"><span class="name lts3 ">이기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YIBYEONGJIN" target="_blank"><span class="name lts3 ">이병진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGSIK" target="_blank"><span class="name lts3 ">이상식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESUNGYOON" target="_blank"><span class="name lts3 ">이성윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank"><span class="name lts3 ">이소영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEUNJU" target="_blank"><span class="name lts3 ">이언주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYEONHEE" target="_blank"><span class="name lts3 ">이연희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGWOOLEE" target="_blank"><span class="name lts3 ">이용우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEWONTAEG" target="_blank"><span class="name lts3 ">이원택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINYOUNG" target="_blank"><span class="name lts3 ">이인영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEGANG" target="_blank"><span class="name lts3 ">이재강</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEKWAN" target="_blank"><span class="name lts3 ">이재관</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEJUNG" target="_blank"><span class="name lts3 ">이재정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNGMUN" target="_blank"><span class="name lts3 ">이정문</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank"><span class="name lts3 ">이정헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUYOUNGLEE" target="_blank"><span class="name lts3 ">이주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNSEOK" target="_blank"><span class="name lts3 ">이준석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank"><span class="name lts3 ">이춘석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHACKYOUNG" target="_blank"><span class="name lts3 ">이학영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAIMIN" target="_blank"><span class="name lts3 ">이해민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAESIK" target="_blank"><span class="name lts3 ">이해식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank"><span class="name lts3 ">이훈기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMKWANGHYUN" target="_blank"><span class="name lts3 ">임광현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMOKYEONG" target="_blank"><span class="name lts3 ">임오경</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMHOSEON" target="_blank"><span class="name lts3 ">임호선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JANGKYUNGTAE" target="_blank"><span class="name lts3 ">장경태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHANGJONGTAE" target="_blank"><span class="name lts3 ">장종태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank"><span class="name lts3 ">전용기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJAESOO" target="_blank"><span class="name lts3 ">전재수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJONGDUK" target="_blank"><span class="name lts3 ">전종덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONHYUNHEUI" target="_blank"><span class="name lts3 ">전현희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGDONGYOUNG" target="_blank"><span class="name lts3 ">정동영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGSUNGHO" target="_blank"><span class="name lts3 ">정성호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGJUNHO" target="_blank"><span class="name lts3 ">정준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHINOOK" target="_blank"><span class="name lts3 ">정진욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGCHUNGRAE" target="_blank"><span class="name lts3 ">정청래</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank"><span class="name lts3 ">정태호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOGYEWON" target="_blank"><span class="name lts3 ">조계원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank"><span class="name lts3 ">조승래</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOINCHEUL" target="_blank"><span class="name lts3 ">조인철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJEONGSIK" target="_blank"><span class="name lts3 ">조정식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank"><span class="name lts3 ">주철현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNMEE" target="_blank"><span class="name lts3 ">진선미</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank"><span class="name lts3 ">차규근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAIHYUNIL" target="_blank"><span class="name lts3 ">채현일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank"><span class="name lts3 ">천준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIKISANG" target="_blank"><span class="name lts3 ">최기상</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank"><span class="name lts3 ">최민희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank"><span class="name lts3 ">최혁진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOOMIAE" target="_blank"><span class="name lts3 ">추미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANMINSOO" target="_blank"><span class="name lts3 ">한민수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANJUNHO" target="_blank"><span class="name lts3 ">한준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANCHANGMIN" target="_blank"><span class="name lts3 ">한창민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHSUNGMOO" target="_blank"><span class="name lts3 ">허성무</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank"><span class="name lts2 ">허영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HEOJONGSIK" target="_blank"><span class="name lts3 ">허종식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HONGKEEWON" target="_blank"><span class="name lts3 ">홍기원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGMYEONGSEON" target="_blank"><span class="name lts3 ">황명선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGUNHA" target="_blank"><span class="name lts3 ">황운하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGJUNGA" target="_blank"><span class="name lts3 ">황정아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGHEE" target="_blank"><span class="name lts2 ">황희</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯개의 시 재석 의원(172인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGKYUNGSOOK" target="_blank"><span class="name lts3 ">강경숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGDEUKGU" target="_blank"><span class="name lts3 ">강득구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGJUNHYEON" target="_blank"><span class="name lts3 ">강준현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KOMINJUNG" target="_blank"><span class="name lts3 ">고민정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKSANGEON" target="_blank"><span class="name lts3 ">곽상언</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONCHILSEUNG" target="_blank"><span class="name lts3 ">권칠승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMKYOHEUNG" target="_blank"><span class="name lts3 ">김교흥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank"><span class="name lts3 ">김기표</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank"><span class="name lts3 ">김남근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMOONSOO" target="_blank"><span class="name lts3 ">김문수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMINSEOK" target="_blank"><span class="name lts3 ">김민석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank"><span class="name lts3 ">김병기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGJOO" target="_blank"><span class="name lts3 ">김병주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGWOOK" target="_blank"><span class="name lts3 ">김상욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWHAN" target="_blank"><span class="name lts3 ">김성환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSEUNGWON" target="_blank"><span class="name lts3 ">김승원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGBAE" target="_blank"><span class="name lts3 ">김영배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGHO" target="_blank"><span class="name lts3 ">김영호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGWHAN" target="_blank"><span class="name lts3 ">김영환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMAN" target="_blank"><span class="name lts3 ">김용만</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank"><span class="name lts3 ">김용민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWOOYOUNG" target="_blank"><span class="name lts3 ">김우영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWONI" target="_blank"><span class="name lts3 ">김원이</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYUNDUCK" target="_blank"><span class="name lts3 ">김윤덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JAEWONK" target="_blank"><span class="name lts3 ">김재원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNGHO" target="_blank"><span class="name lts3 ">김정호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNHYUK" target="_blank"><span class="name lts3 ">김준혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJOONHYUNG" target="_blank"><span class="name lts3 ">김준형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank"><span class="name lts3 ">김태년</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAESEON" target="_blank"><span class="name lts3 ">김태선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank"><span class="name lts2 ">김현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHYUNJUNG" target="_blank"><span class="name lts3 ">김현정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NOHJONGMYUN" target="_blank"><span class="name lts3 ">노종면</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MAENGSUNGKYU" target="_blank"><span class="name lts3 ">맹성규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOGYEONGJONG" target="_blank"><span class="name lts3 ">모경종</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONDAELIM" target="_blank"><span class="name lts3 ">문대림</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank"><span class="name lts3 ">문정복</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank"><span class="name lts3 ">문진석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINBYOUNGDUG" target="_blank"><span class="name lts3 ">민병덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINHYUNGBAE" target="_blank"><span class="name lts3 ">민형배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINHONGCHUL" target="_blank"><span class="name lts3 ">민홍철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank"><span class="name lts3 ">박균택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank"><span class="name lts3 ">박민규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKBEOMKYE" target="_blank"><span class="name lts3 ">박범계</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank"><span class="name lts3 ">박상혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGJOON" target="_blank"><span class="name lts3 ">박성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSooHyun" target="_blank"><span class="name lts3 ">박수현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKYONGKAB" target="_blank"><span class="name lts3 ">박용갑</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank"><span class="name lts3 ">박은정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank"><span class="name lts3 ">박주민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank"><span class="name lts3 ">박지원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKCHANDAE" target="_blank"><span class="name lts3 ">박찬대</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHAECHEOL" target="_blank"><span class="name lts3 ">박해철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGKEUN" target="_blank"><span class="name lts3 ">박홍근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank"><span class="name lts3 ">박홍배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEKSUNHEE" target="_blank"><span class="name lts3 ">백선희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAKSEUNGA" target="_blank"><span class="name lts3 ">백승아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BOOSEUNGCHAN" target="_blank"><span class="name lts3 ">부승찬</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank"><span class="name lts3 ">서삼석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank"><span class="name lts3 ">서영교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOWANGJIN" target="_blank"><span class="name lts3 ">서왕진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONMYOUNGSOO" target="_blank"><span class="name lts3 ">손명수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONSOL" target="_blank"><span class="name lts2 ">손솔</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGKIHUN" target="_blank"><span class="name lts3 ">송기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGOKJOO" target="_blank"><span class="name lts3 ">송옥주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGJAEBONG" target="_blank"><span class="name lts3 ">송재봉</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINYEONGDAE" target="_blank"><span class="name lts3 ">신영대</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINJEONGHOON" target="_blank"><span class="name lts3 ">신정훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNGYUBACK" target="_blank"><span class="name lts3 ">안규백</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANTAEJUN" target="_blank"><span class="name lts3 ">안태준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANHOYOUNG" target="_blank"><span class="name lts3 ">안호영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YANGMOONSEOK" target="_blank"><span class="name lts3 ">양문석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YANGBUNAM" target="_blank"><span class="name lts3 ">양부남</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/EOHKIYKU" target="_blank"><span class="name lts3 ">어기구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank"><span class="name lts3 ">오기형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHSAEHEE" target="_blank"><span class="name lts3 ">오세희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGHYEIN" target="_blank"><span class="name lts3 ">용혜인</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank"><span class="name lts3 ">우원식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank"><span class="name lts3 ">위성곤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOODONGSOO" target="_blank"><span class="name lts3 ">유동수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank"><span class="name lts3 ">윤건영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUNHOJUNG" target="_blank"><span class="name lts3 ">윤호중</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONHUDUK" target="_blank"><span class="name lts3 ">윤후덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKANGILL" target="_blank"><span class="name lts3 ">이강일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGEONTAE" target="_blank"><span class="name lts3 ">이건태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank"><span class="name lts3 ">이광희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank"><span class="name lts3 ">이기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YIBYEONGJIN" target="_blank"><span class="name lts3 ">이병진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGSIK" target="_blank"><span class="name lts3 ">이상식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESUNGYOON" target="_blank"><span class="name lts3 ">이성윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOYOUNG" target="_blank"><span class="name lts3 ">이소영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEUNJU" target="_blank"><span class="name lts3 ">이언주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYEONHEE" target="_blank"><span class="name lts3 ">이연희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGWOOLEE" target="_blank"><span class="name lts3 ">이용우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEWONTAEG" target="_blank"><span class="name lts3 ">이원택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINYOUNG" target="_blank"><span class="name lts3 ">이인영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEGANG" target="_blank"><span class="name lts3 ">이재강</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEKWAN" target="_blank"><span class="name lts3 ">이재관</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEJUNG" target="_blank"><span class="name lts3 ">이재정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNGMUN" target="_blank"><span class="name lts3 ">이정문</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank"><span class="name lts3 ">이정헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUYOUNGLEE" target="_blank"><span class="name lts3 ">이주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNSEOK" target="_blank"><span class="name lts3 ">이준석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank"><span class="name lts3 ">이춘석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHACKYOUNG" target="_blank"><span class="name lts3 ">이학영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAIMIN" target="_blank"><span class="name lts3 ">이해민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAESIK" target="_blank"><span class="name lts3 ">이해식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank"><span class="name lts3 ">이훈기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMKWANGHYUN" target="_blank"><span class="name lts3 ">임광현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMOKYEONG" target="_blank"><span class="name lts3 ">임오경</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMHOSEON" target="_blank"><span class="name lts3 ">임호선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JANGKYUNGTAE" target="_blank"><span class="name lts3 ">장경태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHANGJONGTAE" target="_blank"><span class="name lts3 ">장종태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONYONGGI" target="_blank"><span class="name lts3 ">전용기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJAESOO" target="_blank"><span class="name lts3 ">전재수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJONGDUK" target="_blank"><span class="name lts3 ">전종덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONHYUNHEUI" target="_blank"><span class="name lts3 ">전현희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGDONGYOUNG" target="_blank"><span class="name lts3 ">정동영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGSUNGHO" target="_blank"><span class="name lts3 ">정성호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONGJUNHO" target="_blank"><span class="name lts3 ">정준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHINOOK" target="_blank"><span class="name lts3 ">정진욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGCHUNGRAE" target="_blank"><span class="name lts3 ">정청래</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank"><span class="name lts3 ">정태호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOGYEWON" target="_blank"><span class="name lts3 ">조계원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank"><span class="name lts3 ">조승래</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOINCHEUL" target="_blank"><span class="name lts3 ">조인철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJEONGSIK" target="_blank"><span class="name lts3 ">조정식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank"><span class="name lts3 ">주철현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNMEE" target="_blank"><span class="name lts3 ">진선미</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank"><span class="name lts3 ">차규근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAIHYUNIL" target="_blank"><span class="name lts3 ">채현일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank"><span class="name lts3 ">천준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIKISANG" target="_blank"><span class="name lts3 ">최기상</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank"><span class="name lts3 ">최민희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank"><span class="name lts3 ">최혁진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOOMIAE" target="_blank"><span class="name lts3 ">추미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANMINSOO" target="_blank"><span class="name lts3 ">한민수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANJUNHO" target="_blank"><span class="name lts3 ">한준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANCHANGMIN" target="_blank"><span class="name lts3 ">한창민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHSUNGMOO" target="_blank"><span class="name lts3 ">허성무</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank"><span class="name lts2 ">허영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HEOJONGSIK" target="_blank"><span class="name lts3 ">허종식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HONGKEEWON" target="_blank"><span class="name lts3 ">홍기원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGMYEONGSEON" target="_blank"><span class="name lts3 ">황명선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGUNHA" target="_blank"><span class="name lts3 ">황운하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGJUNGA" target="_blank"><span class="name lts3 ">황정아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGHEE" target="_blank"><span class="name lts2 ">황희</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯산회 시 재석 의원(39인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGKYUNGSOOK" target="_blank"><span class="name lts3 ">강경숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONCHILSEUNG" target="_blank"><span class="name lts3 ">권칠승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMKYOHEUNG" target="_blank"><span class="name lts3 ">김교흥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank"><span class="name lts3 ">김병기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGWOOK" target="_blank"><span class="name lts3 ">김상욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNHYUK" target="_blank"><span class="name lts3 ">김준혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJEONGBOG" target="_blank"><span class="name lts3 ">문정복</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank"><span class="name lts3 ">문진석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank"><span class="name lts3 ">박상혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNWON" target="_blank"><span class="name lts3 ">박선원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKYONGKAB" target="_blank"><span class="name lts3 ">박용갑</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank"><span class="name lts3 ">박은정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHAECHEOL" target="_blank"><span class="name lts3 ">박해철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank"><span class="name lts3 ">박홍배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAKSEUNGA" target="_blank"><span class="name lts3 ">백승아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONSOL" target="_blank"><span class="name lts2 ">손솔</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ANTAEJUN" target="_blank"><span class="name lts3 ">안태준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHSAEHEE" target="_blank"><span class="name lts3 ">오세희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WOOWONSHIK" target="_blank"><span class="name lts3 ">우원식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGEONTAE" target="_blank"><span class="name lts3 ">이건태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKIHEON" target="_blank"><span class="name lts3 ">이기헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGSIK" target="_blank"><span class="name lts3 ">이상식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank"><span class="name lts3 ">이춘석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHACKYOUNG" target="_blank"><span class="name lts3 ">이학영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank"><span class="name lts3 ">이훈기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOGYEWON" target="_blank"><span class="name lts3 ">조계원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAIHYUNIL" target="_blank"><span class="name lts3 ">채현일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/ChoiHyuckJin" target="_blank"><span class="name lts3 ">최혁진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANBYUNGDO" target="_blank"><span class="name lts3 ">한병도</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANCHANGMIN" target="_blank"><span class="name lts3 ">한창민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank"><span class="name lts2 ">허영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 의원(12인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGDAESIK" target="_blank"><span class="name lts3 ">강대식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KUJAKEUN" target="_blank"><span class="name lts3 ">구자근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank"><span class="name lts2 ">박정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEONGHYEON" target="_blank"><span class="name lts3 ">박정현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHEESEONG" target="_blank"><span class="name lts3 ">박희승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/EOMTAEYOUNG" target="_blank"><span class="name lts3 ">엄태영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YEOMTAEYOUNG" target="_blank"><span class="name lts3 ">염태영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank"><span class="name lts3 ">장철민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank"><span class="name lts3 ">정춘생</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGHEEYONG" target="_blank"><span class="name lts3 ">정희용</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOOHOYOUNG" target="_blank"><span class="name lts3 ">주호영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNHARAM" target="_blank"><span class="name lts3 ">천하람</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 의원(20인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KOHDONGJIN" target="_blank"><span class="name lts3 ">고동진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank"><span class="name lts3 ">김선민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUYOUNG" target="_blank"><span class="name lts3 ">김주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEHYUNJIN" target="_blank"><span class="name lts3 ">배현진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BOKKIWANG" target="_blank"><span class="name lts3 ">복기왕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank"><span class="name lts3 ">서영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOILJUN" target="_blank"><span class="name lts3 ">서일준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHCHEONHO" target="_blank"><span class="name lts3 ">서천호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank"><span class="name lts3 ">신성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank"><span class="name lts3 ">유영하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGKUN" target="_blank"><span class="name lts3 ">윤종군</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank"><span class="name lts3 ">윤종오</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYONGSUN" target="_blank"><span class="name lts3 ">이용선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGYEONWOOK" target="_blank"><span class="name lts3 ">정연욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGEULHO" target="_blank"><span class="name lts3 ">정을호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGHYEKYUNG" target="_blank"><span class="name lts3 ">정혜경</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOKYOUNGTAE" target="_blank"><span class="name lts3 ">조경태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank"><span class="name lts3 ">조승환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANJEOUNGAE" target="_blank"><span class="name lts3 ">한정애</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯국회 참석자</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts4">사무총장</span></span><span class="name lts3"> 김민기</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">의사국장</span></span><span class="name lts3"> 김승묵</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯소위원장 선임</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯소위원장 선임</caption><colgroup><col width="17.224348421030125%"><col width="29.486220093647773%"><col width="16.09544375788416%"><col width="21.541125911355326%"><col width="15.652861816082616%"></colgroup><thead><tr><th scope="col">위원회</th><th scope="col">소위원회</th><th scope="col">소위원장</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td rowspan=2>국토교통<br/></td><td>교통법안심사<br/></td><td>복기왕<br/></td><td rowspan=2>더불어민주당<br/></td><td rowspan=2>2025. 6. 26.<br/></td></tr><tr><td>예산결산기금심사<br/></td><td>전용기<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 제출</strong></p><div class="con"><p class="tit_sm"><strong>화물자동차 운수사업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 전재수 의원 대표발의)(의안번호 2211085)</div></div><div class="con"><p class="tit_sm"><strong>감염병의 예방 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박정하 의원 대표발의)(의안번호 2211086)</div></div><div class="con"><p class="tit_sm"><strong>정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 김장겸 의원 대표발의)(의안번호 2211087)</div></div><div class="con"><p class="tit_sm"><strong>어린이놀이시설 안전관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박정현 의원 대표발의)(의안번호 2211088)</div></div><div class="con"><p class="tit_sm"><strong>장애인·노인·임산부 등의 편의증진 보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박정현 의원 대표발의)(의안번호 2211089)</div></div><div class="con"><p class="tit_sm"><strong>청년농어민기본소득에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 신장식 의원 대표발의)(의안번호 2211090)</div></div><div class="con"><p class="tit_sm"><strong>환경영향평가법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 정혜경 의원 대표발의)(의안번호 2211091)</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 김윤 의원 대표발의)(의안번호 2211092)</div></div><div class="con"><p class="tit_sm"><strong>국가재정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박정 의원 대표발의)(의안번호 2211093)</div></div><div class="con"><p class="tit_sm"><strong>대중문화예술산업발전법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 배현진 의원 대표발의)(의안번호 2211094)</div></div><div class="con"><p class="tit_sm"><strong>가사소송법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 배현진 의원 대표발의)(의안번호 2211095)</div></div><div class="con"><p class="tit_sm"><strong>학교폭력예방 및 대책에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 김미애 의원 대표발의)(의안번호 2211096)</div></div><div class="con"><p class="tit_sm"><strong>공유재산 및 물품 관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 위성곤 의원 대표발의)(의안번호 2211097)</div></div><div class="con"><p class="tit_sm"><strong>위험작전 참여 군인 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 윤한홍 의원 대표발의)(의안번호 2211098)</div></div><div class="con"><p class="tit_sm"><strong>자유무역지역의 지정 및 운영에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 허성무 의원 대표발의)(의안번호 2211099)</div></div><div class="con"><p class="tit_sm"><strong>지방세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 양부남 의원 대표발의)(의안번호 2211100)</div></div><div class="con"><p class="tit_sm"><strong>이스포츠(전자스포츠) 진흥에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 정연욱 의원 대표발의)(의안번호 2211101)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 이병진 의원 대표발의)(의안번호 2211102)</div></div><div class="con"><p class="tit_sm"><strong>공직선거법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 이달희 의원 대표발의)(의안번호 2211103)</div></div><div class="con"><p class="tit_sm"><strong>남녀고용평등과 일·가정 양립 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 백혜련 의원 대표발의)(의안번호 2211104)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 정연욱 의원 대표발의)(의안번호 2211105)</div></div><div class="con"><p class="tit_sm"><strong>학교보건법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 강경숙 의원 대표발의)(의안번호 2211106)</div></div><div class="con"><p class="tit_sm"><strong>농어업재해대책법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 박상웅 의원 대표발의)(의안번호 2211107)</div></div><div class="con"><p class="tit_sm"><strong>노동조합 및 노동관계조정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 이수진 의원 대표발의)(의안번호 2211108)</div></div><div class="con"><p class="tit_sm"><strong>국민체육진흥법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 강경숙 의원 대표발의)(의안번호 2211109)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 25건 소관위원회에 회부하겠음</div></div><div class="con"><p class="tit_sm"><strong>국회운영위원장(박찬대) 사임의 건</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 27. 박찬대 의원 제출)(의안번호 2211125)</div></div><div class="con"><p class="tit_sm"><strong>법제사법위원장(정청래) 사임의 건</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 27. 정청래 의원 제출)(의안번호 2211126)</div></div><div class="con"><p class="tit_sm"><strong>문화체육관광위원장(전재수) 사임의 건</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 27. 전재수 의원 제출)(의안번호 2211127)</div></div><div class="con"><p class="tit_sm"><strong>12.29 여객기 참사 진상규명과 피해자 및 유가족의 피해구제를 위한 특별위원회 활동기간 연장의 건</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 27. 의장 제의)(의안번호 2211128)</div></div><p class="tit"><span class="num"></span><strong>◯청원 제출</strong></p><div class="con"><p class="tit_sm"><strong>무면허 청소년의 렌터카 과속사고로 인한 사망사건 관련 법·제도 개선 촉구에 관한 청원</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 26. 이정아 외 50,006인 국민동의로 제출)(청원번호 2200198)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">소관위원회에 회부하겠음</div></div><p class="tit"><span class="num"></span><strong>◯보고서 제출</strong></p><div class="con"><p class="tit_sm"><strong>한국은행「금융안정보고서」(2025년 6월)</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 6. 25. 한국은행 제출)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">6월 26일 기획재정위원회에 송부</div></div></div><button type="button" class="btn_play" title="파일 다운로드" data-id="9c1102e3-7560-4c45-aad0-9db86f34b022" data-mnts_id="54943"><span>본회의장 의석표</span><img src="/assembly/images/view/ico_down.png" alt="파일 아이콘 이미지"></button></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 54943;
+			const class_id = 1;
+			const confer_num = "N053080";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641053077" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641053077"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641053077"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641053077"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

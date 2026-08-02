@@ -1,0 +1,2354 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56441" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제433회 (임시회) 제1차 국토교통위원회(국토법안심사소위원회)</strong><span class="date">(2026.03.30.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 공동주택관리법 일부개정법률안(권영진 의원 대표발의)(의안번호 2210409)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 산업입지 및 개발에 관한 법률 일부개정법률안(김종양 의원 대표발의)(의안번호 2200405)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 도심융합특구 조성 및 육성에 관한 특별법 일부개정법률안(장철민 의원·서범수 의원 대표발의)(의안번호 2211200)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 녹색건축물 조성 지원법 일부개정법률안(한준호 의원 대표발의)(의안번호 2212358)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 녹색건축물 조성 지원법 일부개정법률안(권영진 의원 대표발의)(의안번호 2209351)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 녹색건축물 조성 지원법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2215879)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 주거급여법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2204731)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 주거급여법 일부개정법률안(박용갑 의원 대표발의)(의안번호 2207600)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 주거급여법 일부개정법률안(문진석 의원 대표발의)(의안번호 2209844)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 공공주택 특별법 일부개정법률안(문진석 의원 대표발의)(의안번호 2213667)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 공공주택 특별법 일부개정법률안(한정애 의원 대표발의)(의안번호 2214432)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 공공주택 특별법 일부개정법률안(안태준 의원 대표발의)(의안번호 2213998)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 공공주택 특별법 일부개정법률안(윤재옥 의원 대표발의)(의안번호 2214724)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 공공주택 특별법 일부개정법률안(윤재옥 의원 대표발의)(의안번호 2214754)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 공공주택 특별법 일부개정법률안(이연희 의원 대표발의)(의안번호 2213874)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 공공주택 특별법 일부개정법률안(박용갑 의원 대표발의)(의안번호 2214283)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 부동산개발사업 관리 등에 관한 법률 일부개정법률안(염태영 의원 대표발의)(의안번호 2214945)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(염태영 의원 대표발의)(의안번호 2214484)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(복기왕 의원·엄태영 의원 대표발의)(의안번호 2217510)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(한창민 의원 대표발의)(의안번호 2213499)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(윤종오 의원 대표발의)(의안번호 2214122)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(염태영 의원 대표발의)(의안번호 2212512)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(이소영 의원 대표발의)(의안번호 2208942)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(이연희 의원 대표발의)(의안번호 2211734)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(김동아 의원 대표발의)(의안번호 2210853)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 전세사기피해자 지원 및 주거안정에 관한 특별법 일부개정법률안(정준호 의원 대표발의)(의안번호 2211419)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김용민 위원 (경기 남양주시병)"> 
+							김용민 위원 (경기 남양주시병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="송석준 위원 (경기 이천시)"> 
+							송석준 위원 (경기 이천시)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="곽규택 위원 (부산 서구동구)"> 
+							곽규택 위원 (부산 서구동구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="조배숙 위원 (비례대표)"> 
+							조배숙 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="조배숙 위원 (비례대표)"> 
+							조배숙 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김용민 소위원장 (경기 남양주시병)"> 
+							김용민 소위원장 (경기 남양주시병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박지원 위원 (전남 해남군완도군진도군)"> 
+							박지원 위원 (전남 해남군완도군진도군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박은정 위원 (비례대표)"> 
+							박은정 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김기표 위원 (경기 부천시을)"> 
+							김기표 위원 (경기 부천시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="곽규택 위원 (부산 서구동구)"> 
+							곽규택 위원 (부산 서구동구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="나경원 위원 (서울 동작구을)"> 
+							나경원 위원 (서울 동작구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박균택 위원 (광주 광산구갑)"> 
+							박균택 위원 (광주 광산구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="서영교 위원 (서울 중랑구갑)"> 
+							서영교 위원 (서울 중랑구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="이종욱 소위원장 (경남 창원시진해구)"> 
+							이종욱 소위원장 (경남 창원시진해구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="황운하 위원 (비례대표)"> 
+							황운하 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김정재 위원 (경북 포항시북구)"> 
+							김정재 위원 (경북 포항시북구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="문진석 위원 (충남 천안시갑)"> 
+							문진석 위원 (충남 천안시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김은혜 위원 (경기 성남시분당구을)"> 
+							김은혜 위원 (경기 성남시분당구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="권영진 위원 (대구 달서구병)"> 
+							권영진 위원 (대구 달서구병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김종양 위원 (경남 창원시의창구)"> 
+							김종양 위원 (경남 창원시의창구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="박용갑 위원 (대전 중구)"> 
+							박용갑 위원 (대전 중구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="민홍철 위원 (경남 김해시갑)"> 
+							민홍철 위원 (경남 김해시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="염태영 위원 (경기 수원시무)"> 
+							염태영 위원 (경기 수원시무)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="안태준 위원 (경기 광주시을)"> 
+							안태준 위원 (경기 광주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="이건태 위원 (경기 부천시병)"> 
+							이건태 위원 (경기 부천시병)
+						</option>
+					
+					
+						<option value="심정희 수석전문위원">심정희 수석전문위원</option>
+					
+						<option value="권오을 국가보훈부장관">권오을 국가보훈부장관</option>
+					
+						<option value="기우종 법원행정처차장">기우종 법원행정처차장</option>
+					
+						<option value="박혜진 전문위원">박혜진 전문위원</option>
+					
+						<option value="이진수 법무부차관">이진수 법무부차관</option>
+					
+						<option value="최기도 전문위원">최기도 전문위원</option>
+					
+						<option value="곽현준 수석전문위원">곽현준 수석전문위원</option>
+					
+						<option value="김이탁 국토교통부제1차관">김이탁 국토교통부제1차관</option>
+					
+						<option value="김영아 국토교통부주택건설운영과장">김영아 국토교통부주택건설운영과장</option>
+					
+						<option value="김민태 국토교통부산업입지정책과장">김민태 국토교통부산업입지정책과장</option>
+					
+						<option value="백승호 국토교통부성장거점정책과장">백승호 국토교통부성장거점정책과장</option>
+					
+						<option value="홍성준 국토교통부녹색건축과장">홍성준 국토교통부녹색건축과장</option>
+					
+						<option value="정의경 국토교통부국토도시실장">정의경 국토교통부국토도시실장</option>
+					
+						<option value="김도곤 국토교통부주거복지지원과장">김도곤 국토교통부주거복지지원과장</option>
+					
+						<option value="이기봉 국토교통부주거복지정책관">이기봉 국토교통부주거복지정책관</option>
+					
+						<option value="김영국 국토교통부주택공급추진본부장">김영국 국토교통부주택공급추진본부장</option>
+					
+						<option value="이경호 국토교통부도심주택정책과장">이경호 국토교통부도심주택정책과장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(25명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6603" data-name="김용민" data-pos="위원장직무대리"> 
+											<label for="spk_mem0">												
+												<span class="name">김용민</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 남양주시병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6721" data-name="송석준" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">송석준</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 이천시)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6836" data-name="곽규택" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">곽규택</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 서구동구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6731" data-name="조배숙" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">조배숙</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6731" data-name="조배숙" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">조배숙</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6603" data-name="김용민" data-pos="소위원장"> 
+											<label for="spk_mem5">												
+												<span class="name">김용민</span>
+												<span class="position">소위원장</span>
+												<span class="area">(경기 남양주시병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6735" data-name="박지원" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">박지원</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 해남군완도군진도군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6779" data-name="박은정" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">박은정</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6562" data-name="김기표" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">김기표</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6836" data-name="곽규택" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">곽규택</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 서구동구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem10" data-mem_id="6730" data-name="나경원" data-pos="위원"> 
+											<label for="spk_mem10">												
+												<span class="name">나경원</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 동작구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem11" data-mem_id="6797" data-name="박균택" data-pos="위원"> 
+											<label for="spk_mem11">												
+												<span class="name">박균택</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 광산구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem12" data-mem_id="6711" data-name="서영교" data-pos="위원"> 
+											<label for="spk_mem12">												
+												<span class="name">서영교</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 중랑구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem13" data-mem_id="6770" data-name="이종욱" data-pos="소위원장"> 
+											<label for="spk_mem13">												
+												<span class="name">이종욱</span>
+												<span class="position">소위원장</span>
+												<span class="area">(경남 창원시진해구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem14" data-mem_id="6614" data-name="황운하" data-pos="위원"> 
+											<label for="spk_mem14">												
+												<span class="name">황운하</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem15" data-mem_id="6606" data-name="김정재" data-pos="위원"> 
+											<label for="spk_mem15">												
+												<span class="name">김정재</span>
+												<span class="position">위원</span>
+												<span class="area">(경북 포항시북구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem16" data-mem_id="6666" data-name="문진석" data-pos="위원"> 
+											<label for="spk_mem16">												
+												<span class="name">문진석</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 천안시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem17" data-mem_id="6761" data-name="김은혜" data-pos="위원"> 
+											<label for="spk_mem17">												
+												<span class="name">김은혜</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 성남시분당구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem18" data-mem_id="6743" data-name="권영진" data-pos="위원"> 
+											<label for="spk_mem18">												
+												<span class="name">권영진</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 달서구병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem19" data-mem_id="6801" data-name="김종양" data-pos="위원"> 
+											<label for="spk_mem19">												
+												<span class="name">김종양</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 창원시의창구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem20" data-mem_id="6857" data-name="박용갑" data-pos="위원"> 
+											<label for="spk_mem20">												
+												<span class="name">박용갑</span>
+												<span class="position">위원</span>
+												<span class="area">(대전 중구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem21" data-mem_id="6669" data-name="민홍철" data-pos="위원"> 
+											<label for="spk_mem21">												
+												<span class="name">민홍철</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 김해시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem22" data-mem_id="6834" data-name="염태영" data-pos="위원"> 
+											<label for="spk_mem22">												
+												<span class="name">염태영</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 수원시무)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem23" data-mem_id="6842" data-name="안태준" data-pos="위원"> 
+											<label for="spk_mem23">												
+												<span class="name">안태준</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 광주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem24" data-mem_id="6814" data-name="이건태" data-pos="위원"> 
+											<label for="spk_mem24">												
+												<span class="name">이건태</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시병)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(17명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="심정희" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">심정희</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="권오을" data-pos="국가보훈부장관"> 
+											<label for="spk_attend1">
+												<span class="name">권오을</span>
+												<span class="position">국가보훈부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"> 
+											<label for="spk_attend2">
+												<span class="name">기우종</span>
+												<span class="position">법원행정처차장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend3"  data-mem_id="0" data-name="박혜진" data-pos="전문위원"> 
+											<label for="spk_attend3">
+												<span class="name">박혜진</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend4"  data-mem_id="0" data-name="이진수" data-pos="법무부차관"> 
+											<label for="spk_attend4">
+												<span class="name">이진수</span>
+												<span class="position">법무부차관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend5"  data-mem_id="0" data-name="최기도" data-pos="전문위원"> 
+											<label for="spk_attend5">
+												<span class="name">최기도</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend6"  data-mem_id="0" data-name="곽현준" data-pos="수석전문위원"> 
+											<label for="spk_attend6">
+												<span class="name">곽현준</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend7"  data-mem_id="0" data-name="김이탁" data-pos="국토교통부제1차관"> 
+											<label for="spk_attend7">
+												<span class="name">김이탁</span>
+												<span class="position">국토교통부제1차관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend8"  data-mem_id="0" data-name="김영아" data-pos="국토교통부주택건설운영과장"> 
+											<label for="spk_attend8">
+												<span class="name">김영아</span>
+												<span class="position">국토교통부주택건설운영과장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend9"  data-mem_id="0" data-name="김민태" data-pos="국토교통부산업입지정책과장"> 
+											<label for="spk_attend9">
+												<span class="name">김민태</span>
+												<span class="position">국토교통부산업입지정책과장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend10"  data-mem_id="0" data-name="백승호" data-pos="국토교통부성장거점정책과장"> 
+											<label for="spk_attend10">
+												<span class="name">백승호</span>
+												<span class="position">국토교통부성장거점정책과장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend11"  data-mem_id="0" data-name="홍성준" data-pos="국토교통부녹색건축과장"> 
+											<label for="spk_attend11">
+												<span class="name">홍성준</span>
+												<span class="position">국토교통부녹색건축과장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend12"  data-mem_id="0" data-name="정의경" data-pos="국토교통부국토도시실장"> 
+											<label for="spk_attend12">
+												<span class="name">정의경</span>
+												<span class="position">국토교통부국토도시실장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend13"  data-mem_id="0" data-name="김도곤" data-pos="국토교통부주거복지지원과장"> 
+											<label for="spk_attend13">
+												<span class="name">김도곤</span>
+												<span class="position">국토교통부주거복지지원과장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend14"  data-mem_id="0" data-name="이기봉" data-pos="국토교통부주거복지정책관"> 
+											<label for="spk_attend14">
+												<span class="name">이기봉</span>
+												<span class="position">국토교통부주거복지정책관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend15"  data-mem_id="0" data-name="김영국" data-pos="국토교통부주택공급추진본부장"> 
+											<label for="spk_attend15">
+												<span class="name">김영국</span>
+												<span class="position">국토교통부주택공급추진본부장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend16"  data-mem_id="0" data-name="이경호" data-pos="국토교통부도심주택정책과장"> 
+											<label for="spk_attend16">
+												<span class="name">이경호</span>
+												<span class="position">국토교통부도심주택정책과장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56441&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제433회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>법제사법위원회회의록</h1><p class="tit_sm">(법안심사제1소위원회)</p></div></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 3월 30일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">법제사법위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 국적법 일부개정법률안(서영교 의원 대표발의)(의안번호 2205121)</li><li><span class="num">2.</span> 행정소송법 일부개정법률안(송석준 의원 대표발의)(의안번호 2205762)</li><li><span class="num">3.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200652)</li><li><span class="num">4.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(김남희 의원 대표발의)(의안번호 2207632)</li><li><span class="num">5.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(남인순 의원 대표발의)(의안번호 2212616)</li><li><span class="num">6.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(용혜인 의원 대표발의)(의안번호 2212783)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">2.</span> 행정소송법 일부개정법률안(송석준 의원 대표발의)(의안번호 2205762)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">3.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200652)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">4.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(김남희 의원 대표발의)(의안번호 2207632)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">5.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(남인순 의원 대표발의)(의안번호 2212616)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">6.</span> 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(용혜인 의원 대표발의)(의안번호 2212783)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">1.</span> 국적법 일부개정법률안(서영교 의원 대표발의)(의안번호 2205121)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시03분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제433회 국회(임시회) 법제사법위원회 제3차 법안심사제1소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘 회의에서는 국적법 일부개정법률안 등 6건의 법률안을 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;언론의 취재는 여기까지만 허용하겠습니다. 언론인 여러분께서는 협조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;회의 진행과 관련하여 안내말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;의사일정 제1항 국적법 일부개정법률안을 심사할 순서입니다만 효율적인 법안심사를 위해 의사일정 제2항부터 먼저 심사하고 제1항 국적법 일부개정법률안은 마지막에 심사하도록 하겠습니다. 위원님들께서 양해해 주시기 바랍니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T4U1T1R2R1N1O0M2N5L4J3K5S8T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 행정소송법 일부개정법률안(송석준 의원 대표발의)(의안번호 2205762)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시04분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제2항 행정소송법 일부개정법률안을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;최기도 전문위원님 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="0" data-name="최기도" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">전문위원 최기도 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최기도"></span><span class="txt"><span class="position">전문위원</span><strong class="name">최기도</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;송석준 의원이 대표발의한 행정소송법 일부개정법률안 소위 법안심사자료입니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;2쪽을 보시겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;국가를 상대로 하는 당사자소송에서 가집행선고 제한 규정 삭제하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;주요 내용을 말씀드리면 국가를 상대로 하는 당사자소송의 경우 가집행선고를 할 수 없도록 규정한 현행법 제43조를 2022년 헌법재판소 위헌 선고에 따라 삭제하려는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;검토보고입니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;현행법 제43조는 헌법재판소법 제47조제2항에 따라 이미 위헌결정이 있는 날부터 효력을 상실하였으므로 조문 정비 차원에서 필요한 입법 조치라고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;이상 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;법률안 심사를 위해서 이진수 법무부차관, 기우종 법원행정처 차장께서 출석하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;법무부부터 의견을 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;개정안은 헌법재판소의 위헌결정에 따라 해당 조문을 삭제하는 것이므로 법무부는 이번 개정안에 이견이 없습니다.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;법원행정처 의견 말씀해 주세요.</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;법원행정처도 특별한 이견 없습니다.</span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;사실 지난번 회의 때 특별한 이견이 없고 위원님들 합의까지 다 된 상황입니다. 다만 그때 의결정족수가 부족해서 의결하지 못했는데요 특별한 의견 없으시면 이것은 그냥 바로 의결해도 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;그러면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;의사일정 제2항 행정소송법 일부개정법률안은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub10-5">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub10-6">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2J4J0I6H0D4C1A0B3Z6I5G2F2G6H1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(소병훈 의원 대표발의)(의안번호 2200652)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2T4S1S2A0B2Z1A5Y4Z0X5F2G4E8F8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(김남희 의원 대표발의)(의안번호 2207632)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2N5N0L9K0L1S0T9R2S2R5P9P6Y9Y7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(남인순 의원 대표발의)(의안번호 2212616)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2B5A0Y9Y0H1H1F7G3E9D5D2L8M5K5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안(용혜인 의원 대표발의)(의안번호 2212783)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시06분)</p><br/><div id="spk_12" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;다음으로 의사일정 제3항부터 제6항까지 4건의 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;박혜진 전문위원님 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;스토킹범죄 처벌법 4건의 법률안입니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;저희 소위자료 1페이지 보시면 지금 여기 소위자료에 실려 있는 4건 중에 2건은 지난 법안소위에서 심사가 된 바 있고 나머지 2건은 피해자보호명령 제도 같은 내용을 두고 있어서 지금 저희 소위에 직접 회부되어 있습니다. 2페이지 보시면 저희가 조문 조제목들을 정리를 해 두었는데요. 내용상 의원님들 안 사이에 큰 차이는 없습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;그리고 4페이지를 보시면 지금 법무부와 법원행정처가 의견을 제시해 주셨는데 법무부·법원이 합의안을 저희에게 제출을 해 주신 상태라 이 소위자료에 의원님들 안과 비교할 수 있도록 내용을 실었습니다. 5페이지에서부터는 주요 내용 중심으로 가급적 표로 정리를 해 드렸고, 34페이지에서부터는 조문대비표가 수록되어 있습니다. 그래서 5페이지에서부터 내용을 전부 말씀드리기보다는 의원님들 안과 법무부·법원이 합의해 온 안과 차이가 많이 나는 부분만 일단 보고를 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;6페이지를 보시면 피해자보호명령의 요건과 절차에 관한 부분입니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;의원님들 안은 그러니까 피해자가 자신의 스토킹범죄가 재발될 우려가 있다고 생각이 되면 법원에 피해자보호명령을 신청할 수 있도록 그렇게 안을 가져오셨었는데요 법무부와 법원은 그게 아니라 수사기관이 잠정조치를 신청하지 않았을 경우에 그 통지를 받고 90일 이내로, 약간 보충적 제도로서 제한을 해 왔습니다. 이게 의원님들 안과 부처안의 가장 큰 차이입니다.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;그리고 또 차이가 나는 부분이 소위자료 23페이지 보시면 피해자보호명령 절차라는 게 피해자가 직접 법원에 청구를 하다 보니까 피해자보호명령의 행위자나 피해자가 그 절차에 있어서 보조인을 선임할 수 있도록 하는 내용이 추가되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;그리고 피해자의 경우에는 장애나 빈곤 등의 사유가 인정이 되면 법원이 직권으로 또는 신청에 따라 변호사를 국선보조인으로 선임하도록 하는 규정을 두고 있습니다. 의원님들 안에는 이 절차가 없었는데 부처안에는 이 절차가, 이 조항이 추가되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;다음, 26페이지 보시면 법원이 피해자의 신청에 따라서 피해자보호명령을 결정해야 되는데요 그 과정에서 어떤 조사를 위해 스토킹사건조사관을 도입하는 안을 법원에서 제시했습니다. 이거는 사실 가정폭력처벌법이나 아동학대처벌법에서는 가정보호사건조사관이 있기 때문에 그들이 조사를 하고 있는데, 스토킹사건조사관 같은 경우에는 그런 내용이 지금 이 법에 없어서 새로운 조사관 제도를 신설해 달라는 내용이 법무부와 법원의 합의안으로 들어와 있습니다.</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;그 외의 내용은 시행일이 의원님들 안에서 6개월인 반면에 부처안에서는 공포 후 1년 6개월, 그렇게 조정해 왔다는 점 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;이 네 가지가 지금 의원님들 안과 부처가 합의해 온 안 간의 가장 큰 차이점들입니다.</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;이상으로 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_14" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;법무부부터 의견 말씀해 주십시오.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;합의한 안을 기준으로 말씀하시는 게 좋을 것 같습니다.</span><br/></div></div></div><div id="spk_15" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;피해자의 보호 필요성과 보호명령의 기본권 제한적 성격, 유사 입법례 등을 두루 고려해서 피해자보호명령 제도 도입을 위한 방안을 검토하여 법원과의 협의 과정을 거쳐서 수정안을 마련하였습니다. 이번 수정의견이 논의 과정에서 도움이 되었으면 하고요. 구체적인 내용에 대해서는 해당 파트에서 논의할 때 더 상세한 의견을 말씀드리도록 하겠습니다.</span><br/></div></div></div><div id="spk_16" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;다음, 법원행정처 의견 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_17" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;법원행정처 의견 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;여러 우려의 의견들이 대체로 반영되어서 이 합의안에 관해 특별한 이견이 없습니다.</span><br/></div></div></div><div id="spk_18" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;위원님들 토론하실 시간인데요.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;그 전에 하나만 점검하면 방금 말씀 주신 것처럼 시행일이 공포 후 1년 6개월로 합의안이 만들어졌다고 하는데 이것 지나치게 길지 않을까 싶은데요, 어떻습니까? 이렇게 1년 6개월로 한 이유가 있나요? 법원에서 답을 주시는 게 좋을 것 같은데요.</span><br/></div></div></div><div id="spk_19" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;저희들은 일단 절차가 마련되려면 해당 시스템을 좀 고쳐야 되고요. 그다음에 조사관도 미리 직제 조정을 통해서 마련할 필요가 있어서 그리 요청을 드렸습니다.</span><br/></div></div></div><div id="spk_20" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;더 당길 수는 없는 건가요?</span><br/></div></div></div><div id="spk_21" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;아무리 당긴다 하더라도 1년 이내로는 곤란할 것 같습니다. 1년 6개월 정도를 충분한 준비 기간으로 생각을 하고 있습니다.</span><br/></div></div></div><div id="spk_22" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;저 답변을 기준으로 해서 위원님들 토론해 주시면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;박균택 위원님.</span><br/></div></div></div><div id="spk_23" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;그 조사관이 꼭 법원에 있어야만 하는 것입니까?</span><br/></div></div></div><div id="spk_24" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;예, 저희는 그렇게 생각하고 있습니다.</span><br/></div></div></div><div id="spk_25" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;사법기관은 판단기관인데 왜 이런 조사기구 또 물리적인 조직을 갖춘 기구를 두고 싶어 하는 것입니까? 예를 들어 경찰에 요구할 수도 있고 이 법안에 나와 있는 것처럼 법무부의 보호관찰관들에게 요구하는 방법도 얼마든지 있는 것 아닙니까?</span><br/></div></div></div><div id="spk_26" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;타 기관에 요구하게 되면 적시성이 떨어지게 됩니다. 피해자들은 시기가 급합니다. 그리고 적절하게 조사가 돼서 판단에 필요한 자료들을 조사할 필요가 있기 때문에 그러합니다.</span><br/></div></div></div><div id="spk_27" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;법무부 보호관찰이든 아니면 경찰이든, 경찰서장이나 법무부의 보호관찰관들을 수명 대상으로 삼고 기간을 신속하게 할 수 있도록 의무규정을 두는 것은 어떻습니까?</span><br/></div></div></div><div id="spk_28" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;그런 방법도 생각해 볼 수는 있겠습니다마는 저희들 나름대로의 판단을 위한, 중립적으로 판단하는 기관이기 때문에 저희 나름대로 중립적으로 조사해 줄 수 있는 그런 조사관 제도가 필요하다고 생각하고 있습니다.</span><br/></div></div></div><div id="spk_29" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;그러면 경찰은 본인들이 처음에 당사자들의 요구를 안 들어 줬기 때문에 편견을 가지고 법원의 명령을 적극적으로 수행하지 않을 수 있다 이런 시각은 이해를 합니다마는 법무부의 보호관찰관들은 또 다를 수 있는 것 아닙니까? 어떻습니까?</span><br/></div></div></div><div id="spk_30" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;아무래도 타 기관입니다. 법무부 소속은 타 기관이어서 저희들의 중립적인 요구에 그대로 부응할까 저희들은 우려를 하고 있습니다.</span><br/></div></div></div><div id="spk_31" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;법무부의 보호관찰관들이 일을 편파적으로 하거나 피해자 보호를 소홀히 하는 조직은 아니지 않습니까?</span><br/></div></div></div><div id="spk_32" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;예, 그렇습니다. 여러 가지 이유가 있습니다마는 그런 우려도 있고요. 적시성이, 저희들이 요구하는 시기에…… 피해자들은 당장 다급하다고 하는데 타 기관이면 사건이 왔다 갔다 하는 데도 시간이 걸릴 것이고 또 더군다나 단순히 피해자보호명령만 있는 게 아니고 피해자보호명령이 나오기 전까지 임시조치도 있습니다. 그런 적시성들을 따지면 저희들은 나름대로 법원 내부에 조사관이 필요하다는 생각입니다.</span><br/></div></div></div><div id="spk_33" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;어쨌든 저는 법원에, 사법기관 내에 이런 조사기구들을 이렇게 자꾸 확대해 나가는 것이 옳은지에 대한 의문이 하나가 있고.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;그리고 일단 조사관을 법원 내에 둔다고 할지라도 지금 이 규정에 의하면 법무부의 보호관찰관들에게도 요청할 수 있는 근거규정을 두고 있지 않습니까, 그렇지요?</span><br/></div></div></div><div id="spk_34" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;예.</span><br/></div></div></div><div id="spk_35" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;법원의 조사관 또는 법무부의 보호관찰관들에게 자료 조사를 요구할 수 있도록 지금 이 규정에 두고 있지 않습니까?</span><br/></div></div></div><div id="spk_36" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;일이 다른 일입니다.</span><br/></div></div></div><div id="spk_37" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;다시 한번 얘기해 주시겠습니까?</span><br/></div></div></div><div id="spk_38" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;저희 자체가 조사관 수만으로도 부족하고요. 그러니까 법무부에서도 보호관찰관들이 할 수 있는 일과 저희 조사관이 할 수 있는 일의 영역이 서로 좀 다릅니다.</span><br/></div></div></div><div id="spk_39" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;그런데 조사관 신설을 염두에 두다 보니까 1년, 국민들은 이걸 가지고서 국회의 결정이 늦다고 지금 원망을 하고 있는 이런 상황인데 또 법원에 의해서 일정한 구성원들을, 조직원들을 채용해야 하기 때문에 그것 때문에 1년 반을 기다리라는 것은 너무 답답해 보입니다. 대안을 활용해서라도 시기를 좀 앞당기는 노력이 필요하지 않나 이 생각도 같이 듭니다.</span><br/></div></div></div><div id="spk_40" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;위원님 말씀 타당한 부분이 있습니다마는 저희들은 반드시 조사관 제도뿐만이 아니고 시스템 구성을 위해서도 그렇다는 말씀을 드리고 싶습니다.</span><br/></div></div></div><div id="spk_41" class="item5 speaker spk_mem" data-mem_id="6797" data-name="박균택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">박균택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2c160a9f266044d68eb065964a6e2eee.jpg" alt="박균택"></span><span class="txt"><strong class="name">박균택</strong><span class="position">위원</span><span class="area">(광주 광산구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;일단 여기까지 말씀드리겠습니다.</span><br/></div></div></div><div id="spk_42" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;조배숙 위원님 먼저 말씀하시겠습니다.</span><br/></div></div></div><div id="spk_43" class="item5 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;차장님, 지금 보니까 가정폭력처벌법 그다음에 아동학대처벌법 거기에 가정보호사건조사관이 있네요. 그렇지요?</span><br/></div></div></div><div id="spk_44" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;예, 그렇습니다.</span><br/></div></div></div><div id="spk_45" class="item5 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;그런데 지금 조사관이 몇 명 정도 있나요?</span><br/></div></div></div><div id="spk_46" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;가정보호사건조사관은 한 칠팔십 명 정도 있는 것으로 알고 있습니다.</span><br/></div></div></div><div id="spk_47" class="item5 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;칠팔십 명인데 업무가 과중합니까?</span><br/></div></div></div><div id="spk_48" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;과중합니다.</span><br/></div></div></div><div id="spk_49" class="item5 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;그러니까 지금 가정법원 가정보호사건이니까 가정폭력·아동학대 이 두 개를 다 하네요?</span><br/></div></div></div><div id="spk_50" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;예.</span><br/></div></div></div><div id="spk_51" class="item5 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;그런데 아까 박균택 위원님 말씀처럼 자꾸 새로 막 조사관을 만드는 거잖아요. 그래서 과연 그런 부분이…… 그러니까 또 다른 유형의 범죄가 생기면 거기에 대해 우리가 보호명령 제도 해 가지고 조사관을 또 해야 되나 이런 생각도 들고요. 어떤 의미에서는 보호명령에 대한 조사관 이런 부분을 통일적으로 만들어서 그런 상황으로 하는 것은 어떤가 하는 생각이 들어요.</span><br/><span class="spk_sub" id="spk_sub51-2">&nbsp;지금 가정보호사건에 있어서 가정보호사건조사관이 인원도 그렇고 업무가 과중하다, 그러니까 스토킹범죄에 대해서는 별도 조직이 있어서 이것을 감당해야 된다. 그것 아닙니까, 그렇지요?</span><br/></div></div></div><div id="spk_52" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;예.</span><br/></div></div></div><div id="spk_53" class="item5 speaker spk_mem" data-mem_id="6731" data-name="조배숙" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">조배숙 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4927504637a6435c84ff327c77eaf735.jpg" alt="조배숙"></span><span class="txt"><strong class="name">조배숙</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;그런데 자꾸 이렇게 조직을 신설한다는 것이 과연 맞는 것인가. 가정보호사건이라고 뭔가 테두리를 만들어서 스토킹범죄는 또 다른 것이다 이렇게 얘기를 하는데 그러나 피해자 보호 이런 부분에 있어서는 궤를 같이하는 것이거든요, 뭔가 보호하는 것이니까.</span><br/><span class="spk_sub" id="spk_sub53-2">&nbsp;그래서 만약에 이걸 만든다고 하면 스토킹범죄에 관련된 보호조사관 그리고 또 다른 범죄유형이 생기면 또 거기에 대한 조사관 이럴 것이 아니라 이런 부분을 뭔가 통일적으로 만들어야 되는 게 아닌가 하는 그런 생각이 들거든요. 그런 부분에 대해서는 고민을 안 해 보셨나요?</span><br/></div></div></div><div id="spk_54" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;예, 위원님 말씀처럼 궁극적으로는 전체적으로 모든 유사한 범죄유형이라든가 보호의 필요성이 있는 것에 대해서는 통일된 조사관이 필요할 수는 있습니다.</span><br/><span class="spk_sub" id="spk_sub54-2">&nbsp;그런데 현 단계에서는 피해자보호명령 제도라는, 스토킹범죄에 있어서 특별한 제도가 들어온 이상 필요하다는 것이고요. 가정법원에 있는 가사조사관들은 법률상 가사소송사건에 대해서만 할 수 있습니다. 지금 보호라든가 임시조치만 할 수 있는 게 아니고 그 조사관들이 할 수 있는 일이 양육자 지정이라든가, 실제로 전문성을 가지고 가사사건에 있어서 필요한 의견들을 듣는 데 굉장히 많은 일들을 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub54-3">&nbsp;궁극적으로는 전체적인 틀에서 일정 유형의 조사관을 함께 고민할 필요가 있다라는 위원님 말씀에 저도 공감을 하고 있습니다.</span><br/></div></div></div><div id="spk_55" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;박은정 위원님.</span><br/></div></div></div><div id="spk_56" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;피해자보호명령 제도가 신설되는 이유가 심사자료 7페이지를 보시면 스토킹처벌법 8조의 잠정조치를 청구하는 경우에 경찰이 피해자의 의견을 무시하고 신청을 하지 않는 경우 또는 경찰이 신청했는데도 검사가 이것을 청구하지 않는 경우, 그러니까 경찰과 검사가 모두 피해자의 그 요청에도 불구하고 잠정조치……</span><br/><span class="spk_sub" id="spk_sub56-2">&nbsp;잠정조치는 뭐냐 하면 접근금지라든가 유치장 유치라든가, 스토킹 피해자로서는 굉장히 고통스러운 상황에 대해서 놓여나기 위해 이 호소를 하는데도 불구하고 경찰과 검사가 이것을 해 주지 않으니까 법원에 지금 명령 제도를 도입하겠다는 거거든요. 그런데 이 조사관을 경찰과 검사, 법무부에 두는 것은 맞지가 않지요. 안 해 줘서 법원에 신청하는 건데 그 조사관을 그렇게 두는 건 맞지 않다고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub56-3">&nbsp;그래서 법원에 지금 이 조사관 제도를, 아동학대나 가정폭력 같은 경우와 마찬가지로 스토킹 조사관을 둘 필요가 있다고 저는 생각하고 다만 조배숙 위원님 말씀대로 조사관 제도를 법원 차원에서 피해자 보호를 위해 통일적으로 가져갈 수는 있겠다, 제도 자체를 설계하실 필요는 있겠다. 이것은 스토킹·아동학대·가정폭력 전체적인 조사, 가사조사관까지 포함해서, 어쨌든 국가가 여러 가지 범죄 피해에 대응하는 굉장히 일관된, 체계적인 설계는 필요하겠다는 생각이 저는 드는데요.</span><br/><span class="spk_sub" id="spk_sub56-4">&nbsp;피해자보호명령 제도에 잠정조치 기각됐을 때 피해자가 30일 이내에 신청하도록 되어 있는데 지금 법원하고 법무부 합의안이 90일인지 30일인지 이게 자료 자체가 정확하지 않거든요.</span><br/><span class="spk_sub" id="spk_sub56-5">&nbsp;30일은 맞습니까? 90일이 맞는지, 어떤 게 지금 맞는 건가요? 90일입니까?</span><br/></div></div></div><div id="spk_57" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;6페이지에 보시면 90일로……</span><br/></div></div></div><div id="spk_58" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;90일로 되어 있습니까? 그러면 90일 이내에 하는데 이게 90일 이내에, 반드시 기간 제한을 둘 필요가 있는 건지…… 스토킹이라는 것이 굉장히 오랫동안 진행이 되는 거거든요. 그런데 90일 넘어서도 피해자가 ‘나 좀 이게 할 필요가 있다’ 이렇게 신청하면 할 수 있도록 해야 되는 것이 아닌지, 반드시 90일을 해야 되는 것인지 한번 답변을 해 주셨으면 좋겠거든요.</span><br/></div></div></div><div id="spk_59" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;애초에 저희가 무제한으로 두는 것보다는 일정 정도의 기간 제한이 필요하다 싶었던 이유는 일단 사건이 무한정 반복되거나 또 방치되는 것을 방지하기 위해서 그리하였습니다. 그런데 제일 처음에 저희들은 30일 정도의 짧은 기간을 요청드렸습니다마는 그것은 너무 짧다 그래 가지고 90일 정도로, 적절하게 법무부 의견을 저희가 받아들인 것으로 그렇게 이해하고 있습니다.</span><br/></div></div></div><div id="spk_60" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;저는 굳이 이 기간을 둬야 될 필요가 있겠는가 하는 문제의식이 있고요. 또 피해자보호명령 제도의 가해자 그다음에 피해자에 대해서 보조인 두는 부분이 아동학대하고 가정폭력 같은 경우에도 있는 것 같습니다. 그런데 그 명칭이 보조인으로 되어 있지는 않은 것 같은데, 맞습니까?</span><br/></div></div></div><div id="spk_61" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;그것은 제가 살펴보겠습니다마는 여기에서는 저희가 보조인이 필요한 이유를 설명하고 있습니다.</span><br/></div></div></div><div id="spk_62" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;그러니까 보조인은 필요할 것, 대리해서 수행할 사람이 필요할 것 같기는 한데 이게 보조인 제도라는 것이 지금 변호사 제도하고 약간 배치되는, 그러니까 피해자보호명령 제도에서 스토킹 가해자의 보조인 이렇게 나오게 되면 이것은 변호사 제도하고 약간 배치되는 문제, 보조인의 법적 자격이나 지위를 어떻게 가져갈 것인가 약간 혼란스러울 수도 있는 것 같은데, 어떻게 생각하십니까?</span><br/></div></div></div><div id="spk_63" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;그 부분은 반드시 용어 자체를 따지는 것보다는 그 조직……</span><br/></div></div></div><div id="spk_64" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;‘대리인’ 이렇게 할 수는 있는 것 같은데요, 그게.</span><br/></div></div></div><div id="spk_65" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;용어는 적절히 정해 주시기 나름인데요. 저희는 그런 제도만 있다면 용어는 크게 의미가 없다고 생각하고 있습니다.</span><br/></div></div></div><div id="spk_66" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;법무부차관님은 어떻게 생각하십니까, 보조인 제도에 대해서는? 이게 합의하신 거잖아요.</span><br/></div></div></div><div id="spk_67" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_67"><label for="spk_cnt_chk_67">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub67-1">&nbsp;그렇습니다. 사실 스토킹범죄에 대해서 보조인 제도라고 하는 것이 가정폭력하고 아동학대 범죄하고는 유형이 조금 다르기 때문에 그 개념을 그대로 여기에 가져와도 되느냐에 대해서 의문의 여지가 있는 것은 사실입니다. 그런데 지금 보조인이라고 하는 개념이 법정대리인 그리고 변호사 등을 포함하는 개념으로 되어 있어서 가해자나 피해자가 약자인 경우에 꼭 변호사, 국선변호인이 아니라고 할지라도 피해자가 미성년자일 수도 있고 다양한 유형이 있을 수 있을 때 법정대리인이나 가족들도 보조인으로 할 수 있다는 차원에서 일단 이 안에 대해서는 수용하게 되었습니다.</span><br/></div></div></div><div id="spk_68" class="item5 speaker spk_mem" data-mem_id="6779" data-name="박은정" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">박은정 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b033dfb3a2f44e27a4906549e989ae47.jpg" alt="박은정"></span><span class="txt"><strong class="name">박은정</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;그러니까 피해자의 경우에는 시민단체라든가 쉼터라든가 이런 데 가서 대리할 사람이 필요할 것 같기는 한데 가해자의 보조인 제도 이렇게 하니까 약간, 이게 변호사 제도하고 어떻게 되는 건지 이런 의문이 좀 있습니다. 그런데 큰 틀에서 합의하셨다니까 저도 이 문제 크게 제기하지는 않겠는데 앞으로 이게 좀 혼란스러울 수도 있을 것 같아서 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub68-2">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_69" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;김기표 위원님.</span><br/></div></div></div><div id="spk_70" class="item5 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_70"><label for="spk_cnt_chk_70">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub70-1">&nbsp;스토킹 피해자를 이렇게 국가 자원이 조금 중복되거나 하더라도 강하게 보호해야 된다는 것은 보통 다 이견이 없을 겁니다. 그런데 저는 존경하는 조배숙 위원님 말씀이 옳다고 생각해요.</span><br/><span class="spk_sub" id="spk_sub70-2">&nbsp;그러니까 지금 현재 업무가 과중하다고 했는데 기존의 조사관들 제도가 있는데 그게 새로 스토킹 관련해서 조사관을 활용할 수 있느냐, 이게 법적인 문제가 있다면 그 법을 고쳐서 이렇게 할 수 있는 문제지 하나의 조사관 풀을 만들고 그것에 따라서…… 만약에 업무 부담이 과중하다는 것이 입증된다면 그 풀을 좀 늘려 주는 방식으로 해야지 이게 지금 스토킹 관련해서 조사관을 또 신설하고 이것은 방향이 안 맞는 것 아니냐 이런 생각이 들어요. 그래서 실제로 아까 가정사건에 대해서 조사관들이 있다고 했잖아요. 그 부분에 대한 인력이 업무를 어떻게 했는지도 좀 파악해서 정확히 그것은 나눌 수 있는 것 아니냐 이런 생각도 들고.</span><br/><span class="spk_sub" id="spk_sub70-3">&nbsp;그래서 저는 따로 이렇게 스토킹 관련해서만 조사관을 두는 것은 반대합니다. 그리고 경찰에서 거부됐고 검찰에서 거부됐다 하더라도 보호관찰관은 검찰과 다른 법무부 조직이기 때문에 그것을 활용할 수 있고 실제로 그것 때문에 또 1년 6개월 시행기간을 미룬다는 것은 저는 몸통과 꼬리가 반대로 바뀐 느낌이 있어요.</span><br/><span class="spk_sub" id="spk_sub70-4">&nbsp;그래서 일단은 시행하는 것을 빨리 당기면서 조사관 제도는 다시 한번, 저는 이 부분에서는 삭제하고 조사관 제도는 다시 논의를 좀 해 봐야 된다고 생각을 합니다.</span><br/></div></div></div><div id="spk_71" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;답변하실 게 있으면……</span><br/></div></div></div><div id="spk_72" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;예, 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub72-2">&nbsp;가사조사관 제도는 일단 법적인 문제도 있지만 가정법원에만 있습니다. 그런데 스토킹범죄는 가정법원에만 제기할 수 있는 문제가 아닙니다. 전국 법원에서, 예를 들어서 가정법원이 없는 법원에서 스토킹 문제가 제기되면 반드시 조사를 할 필요가 있기 때문에 저희가 조사관 제도의 필요를 말씀드렸던 것입니다. 이 부분을 좀 감안해 주셨으면 좋겠습니다.</span><br/></div></div></div><div id="spk_73" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;곽규택 위원님.</span><br/></div></div></div><div id="spk_74" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;차관님, 지금 6페이지에 법무부하고 법원에서 합의한 의견으로 해서 ‘수사기관의 잠정조치 미신청·미청구를 요건으로 하고 그 통지부터 90일 이내’ 이렇게 되어 있잖아요.</span><br/></div></div></div><div id="spk_75" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;그렇습니다.</span><br/></div></div></div><div id="spk_76" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_76"><label for="spk_cnt_chk_76">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub76-1">&nbsp;이게 필요하다고 생각하시는 이유가 뭐지요?</span><br/></div></div></div><div id="spk_77" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_77"><label for="spk_cnt_chk_77">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub77-1">&nbsp;기본적으로 가정폭력이나 아동학대 사건과 달리 이 사건은 스토킹범죄를 전제로 하고 있습니다. 그렇기 때문에 기본적으로 임시조치와 관련해서 수사기관의 신고를 먼저 전제로 하도록 하고 그게 이루어지지 않을 경우에 법원에 피해자가 직접 신청하는 형태로 제도를 설계하게 되었던 것입니다.</span><br/></div></div></div><div id="spk_78" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_78"><label for="spk_cnt_chk_78">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub78-1">&nbsp;그런데 이렇게 해 놓으면 이것은 피해자의 필요성에 의해서 피해자보호명령을 도입하자는 취지인데 결국에는 전제 조건이 수사기관의 행태에 따라서 요건으로 되는 것 아니에요? 그러면 사실 피해자보호명령을 새로 도입하는 것의 취지가 몰각된다고 저는 보여지는데……</span><br/><span class="spk_sub" id="spk_sub78-2">&nbsp;이렇게 하면 어떻습니까? 지금 잠정조치 요청을 피해자가 할 수 있잖아요. 그 요청을 수사기관에 한 때로부터 30일이 경과했다 이런 요건을 두면 차라리 나은 것 아닌가요? 30일 정도 수사기관이 아무런 조치 없이 그냥 가만히 있으면 잠정조치에 대한 신속한 필요성이 있는 피해자 입장에서는 ‘내가 수사기관에 잠정조치 요청을 했는데 수사기관에서 아무런 조치를 안 하고 있으니 피해자보호명령을 해 주십시오’ 이렇게 갈 수 있도록 길을 열어 둬야지, 수사기관에서 아무런 응답을 안 하고 있고 그것을 피해자는 한없이 기다려라 이렇게 되는 것인데 그게 피해자보호명령하고는 좀 안 맞는 것 같거든요. 저는 그런 취지에서 이게 필요하다고 하신다면 피해자 쪽에서 잠정조치를 요청한 것을 요건으로 하되 요청한 때로부터 일정 기간이 지나면 바로 법원에 할 수 있도록 그렇게 법무부나 법원에서 의견을 주시면 어떨까 싶고.</span><br/><span class="spk_sub" id="spk_sub78-3">&nbsp;그리고 조금 전에 스토킹사건조사관에 대해서 위원님들도 의견들이, 말씀을 많이 해 주셨는데 저도 기본적으로 위원님들의 입장에 동의하고요. 조사기능 이런 것은 사실은 행정기능에 가깝고 판단을 해야 되는 법원에서 자꾸 사건의 실체조사를 해 가지고 그것을 스스로 판단하겠다는 것은 저는 행정·사법의 기본적인 분리하고도 조금 안 맞다고 봐요. 가정법원이라는 특수성 때문에 아동학대라든지 가정폭력 같은 경우에 조사관을 두겠다 하는 것까지는 이해가 되지만 앞으로 이런 범죄사건의 판단에 있어 가지고 법원이 스스로 조사를 통해 가지고 그것을 판단하겠다 하는 것은 저는 이것은 법원에서 사법기능을 넘는 것이 아닌가 하는 생각이 좀 듭니다.</span><br/><span class="spk_sub" id="spk_sub78-4">&nbsp;그래서 스토킹사건조사관 이것에 대해서 법무부도 찬성을 하시는 입장인가요? 이게 합의를 하신 내용인가요, 법원 측과?</span><br/></div></div></div><div id="spk_79" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_79"><label for="spk_cnt_chk_79">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub79-1">&nbsp;그 점에 대해서 논의 과정에서 사실 보호관찰소 활용 부분에 대해서 법원행정처에 의견도 말씀드리고 조율하는 과정이 있었습니다만 피해자보호명령의 시급한 도입과 시행이 필요하다는 차원에서 법원의 의견을 존중해서 합의안을 이렇게 도출하게 되었습니다.</span><br/></div></div></div><div id="spk_80" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_80"><label for="spk_cnt_chk_80">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub80-1">&nbsp;저는 여기에 스토킹사건조사관을 새로 도입하는 것은 조금 신중해야 한다는 입장입니다.</span><br/><span class="spk_sub" id="spk_sub80-2">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_81" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_81"><label for="spk_cnt_chk_81">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub81-1">&nbsp;위원님 말씀하신 것의 첫 번째 사항 관련해서 답변을 좀 드려도 되겠습니까?</span><br/></div></div></div><div id="spk_82" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_82"><label for="spk_cnt_chk_82">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub82-1">&nbsp;예, 말씀하시지요.</span><br/></div></div></div><div id="spk_83" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_83"><label for="spk_cnt_chk_83">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub83-1">&nbsp;방금 신청한 때로부터 30일 이내에 하도록 하자라는 취지의 위원님 질의가 있으셨는데요. 제도를 이렇게 설계하게 된 것이 기본적으로 지금 스토킹처벌법상 피해자가 수사기관에 신고를 하게 되면 잠정조치라는 것이 이루어지게 되고요. 그 전에도 경찰이 긴급응급조치를 할 수 있습니다. 그런데 그 조치의 내용에는 접근금지라든지 통신제한 외에도 일정 기간 유치라든지 더 강력한 잠정조치를 할 수 있도록 되어 있고요. 피해자보호명령은 그것이 수사기관에서 이루어지지 않을 경우에 수사기관에서 이루어지는 잠정조치보다는 약간 제한된 형태, 지금 접근금지와 통신제한 조치 이 두 가지가 대상으로 되어 있는데요, 그와 같이 잠정조치의 내용이 조금 다르기 때문에 일단 먼저 수사기관의 잠정적인 조치와 수사를 기본적인 전제로 하고 그것이 신청이 기각되거나 받아들이지 않았을 때 90일 내에 보충적으로 법원에 직접 할 수 있는 것으로 이렇게 설계를 하게 되었다는 점을 설명드립니다. 그러니까 가정법원과……</span><br/></div></div></div><div id="spk_84" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_84"><label for="spk_cnt_chk_84">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub84-1">&nbsp;아니, 그러면 이게 잠정조치보다 강도가 덜한 것을 하면서 요건을 더 강화하는 게 되잖아요. 그러면 안 맞는 것 아닙니까?</span><br/></div></div></div><div id="spk_85" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_85"><label for="spk_cnt_chk_85">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub85-1">&nbsp;기본적으로 이 부분은 피해자들이 스토킹범죄의 피해자라고 하는 부분에 대해서 수사기관에 신고를 하는 것이고 그렇게 형사절차로 진행되어야 된다는 것이 일차적인, 기본적인 트랙인 것이고요. 그게 부족하거나 미비할 경우에 이와 같은 법원에 직접 청구하는 제도를 마련하게 됐다는 점을 다시 한번 말씀드립니다.</span><br/></div></div></div><div id="spk_86" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_86"><label for="spk_cnt_chk_86">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub86-1">&nbsp;그런 것 같으면 피해자가 수사기관에 신고만 했으면 바로 법원의 피해자보호명령을 해 달라고 해도 될 것 같은데요?</span><br/></div></div></div><div id="spk_87" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_87"><label for="spk_cnt_chk_87">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub87-1">&nbsp;그렇게 될 경우에는 잠정조치와 긴급응급조치도 있는데요. 수사기관에서도 신청을 받고 검토와 사실관계 확인을 위한 최소한의 물리적 시간도 필요한데 신청한 때로부터 몇십 일 내에 바로 법원에 피해자보호명령을 신청할 수 있도록 하게 된다면 잠정조치와 피해자보호명령이 중복돼서 나오는 경우도 있고 그와 같은 판단이 일치하지 않는 경우들도 있어서 그런 부분을 감안하게 됐던 것입니다.</span><br/></div></div></div><div id="spk_88" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_88"><label for="spk_cnt_chk_88">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub88-1">&nbsp;아니, 피해자보호명령 제도라는 게 지금 한시가 급한 피해자를 빨리 어떻게 심리적 안정이라도 주려고 하는 건데 새로 도입하는 제도에 그렇게 까다로운 조건을 붙이는 게 맞는가 하는 생각이 저는 들어요.</span><br/></div></div></div><div id="spk_89" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_89"><label for="spk_cnt_chk_89">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub89-1">&nbsp;그 점에 대해서는 일차적으로 수사기관에서 더 책임감을 가지고 수사를 기초로 해서 사실관계의 확인과 잠정조치, 긴급응급조치를 해야 된다는 것이 기본적인 임무라고 생각을 하고요. 그것보다 먼저 법원에 피해자보호명령을 통해 가지고 구제를 받도록 한다라고 하는 부분을, 그것보다 앞선 제도를 설계하는 것은 기본적인 틀이 맞지 않는 부분이 있습니다.</span><br/></div></div></div><div id="spk_90" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_90"><label for="spk_cnt_chk_90">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub90-1">&nbsp;이 정도로 하시고요.</span><br/><span class="spk_sub" id="spk_sub90-2">&nbsp;지금 쟁점이 한 두 가지 정도로 좁혀지는 것 같은데 방금 곽규택 위원님께서 말씀하신 것처럼 신청하는 것이 잠정조치를 요청한 때로부터 해서 이게 잠정조치가 미신청되거나 미청구된 때까지 기다린다는 것 자체에 대한 문제 제기가 있으셨으니 여기에 대해서 하나의 쟁점이 됐고 검토가 필요한 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub90-3">&nbsp;그리고 지금 지속적으로 위원님들께서 문제 제기하시는 조사관 제도를 둘 것인지, 이게 사실은 연동되어 있는 것 같기도 한데요 만약에 곽규택 위원님 말씀처럼 잠정조치 요청한 때로부터 30일 이후에 신청할 수 있다, 보호명령을 신청할 수 있다라고 하면 조사관 제도는 없어도 경찰이나 보호관찰소에서 조사가 일부 이루어지는 상태로 보여질 것처럼 보이기는 합니다. 그래서 지금 연동이 되어 있는 것 같으니 이 부분에 대해서 조금 더 숙고를 하겠고요.</span><br/><span class="spk_sub" id="spk_sub90-4">&nbsp;저희가 지금 잠시 정회를 해야 될 것 같습니다. 그래서 그것 숙고하시고 오후에 속개할 때 다시 그 의견을 좀 정리해서 말씀 주시면 좋겠습니다.</span><br/></div></div></div><div id="spk_91" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_91"><label for="spk_cnt_chk_91">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub91-1">&nbsp;오후에 전체회의 아니에요?</span><br/></div></div></div><div id="spk_92" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_92"><label for="spk_cnt_chk_92">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub92-1">&nbsp;1시에 하면 됩니다. 1시에 할게요.</span><br/><span class="spk_sub" id="spk_sub92-2">&nbsp;아직 심사를 마무리하지 못했습니다만 정회했다가 13시에 속개하여 심사를 이어 가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub92-3">&nbsp;정회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시33분 회의중지)</p><br/><p class="tit_sm taR">(13시09분 계속개의)</p><br/><div id="spk_93" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_93"><label for="spk_cnt_chk_93">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub93-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub93-2">&nbsp;회의를 속개하겠습니다.</span><br/><span class="spk_sub" id="spk_sub93-3">&nbsp;그러면 오전에 이어 의사일정 제3항부터 제6항까지 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안을 계속하여 심사하겠습니다.</span><br/><span class="spk_sub" id="spk_sub93-4">&nbsp;위원님들 토론하실 시간인데, 혹시 법무부나 법원행정처가 아까 오전의 쟁점에 대해서 조금 더 검토한 게 있으신가요? 의견 말씀하실 게 있으신가요, 혹시?</span><br/></div></div></div><div id="spk_94" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_94"><label for="spk_cnt_chk_94">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub94-1">&nbsp;조사관에 관해서 여러 위원님들이 우려를 말씀해 주셔서 행정처에서 그 부분에 대해 말씀을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub94-2">&nbsp;일단 스토킹방지법상 피해자보호명령 도입에 관해서는 피해자들을 보호할 필요성이 크다라는 그 이유 때문에…… 저희들도 다소 이례적인 제도이긴 합니다, 수사기관의 기소 없이 피해자가 신청한 것을 법원이 재판으로 판단해야 되는.</span><br/><span class="spk_sub" id="spk_sub94-3">&nbsp;그럼에도 불구하고 저희들이 긍정적으로 검토를 한 것은 조사관 제도의 도입이 전제되면 가능할 수도 있다라는 생각 때문이었습니다. 그 이유는 피해자들이 신청하는 것이 수사기관에서 받아들여지지 않거나 또는 방기되고 있는 경우에 결국 피해자가 신청할 수 있다라는 것인데요. 그 상태에서 법원으로 그대로 들어오게 되면 거의 99.9% 기각이 될 것입니다. 그것은 저희가 처음부터 이 제도에 관해서 다소 우려스러움에도 불구하고 도입에 관해서 긍정적 의견을 표시한 것과 정반대의 방향이기 때문에 적어도 수사기관이 하지 못한 것을 조사관이 좀 더 조사를 해서 그걸 바탕으로 판단하게 되면 인용 가능성을 높일 수 있지 않을까, 즉 이 제도의 형해화를 방지할 수 있지 않을까 하는 그런 생각을 가지고 있습니다.</span><br/><span class="spk_sub" id="spk_sub94-4">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_95" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_95"><label for="spk_cnt_chk_95">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub95-1">&nbsp;그리고 오전에도 곽규택 위원님께서 문제 제기하셨던 것처럼 청구 시기를 예를 들면 잠정조치 요청한 때로부터 30일 이후부터는 청구할 수 있도록 하자라는 의견에 대해서는 혹시 검토하신 게 있으신가요?</span><br/></div></div></div><div id="spk_96" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_96"><label for="spk_cnt_chk_96">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub96-1">&nbsp;그것 받아들이지 않은 게, 병행을 하자는 말씀이신데요 그렇게 되면 오전에 법무부차관님께서도 적절히 말씀하신 바와 같이 2개의 절차가 병행돼서 조치가 병행될 우려가 있어서 그 부분은 보충성 원칙을 유지해야 된다는 게 행정처의 의견입니다.</span><br/></div></div></div><div id="spk_97" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_97"><label for="spk_cnt_chk_97">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub97-1">&nbsp;알겠습니다.</span><br/><span class="spk_sub" id="spk_sub97-2">&nbsp;또 토론하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub97-3">&nbsp;그러면 아까 얘기했던 시행일이 공포 후 1년 6개월은 지나치게 긴 것 같아요. 이걸 더 단축시킬 수 있는 방법이 없을까요? 아까 시스템 구축 말씀하셨는데요……</span><br/></div></div></div><div id="spk_98" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_98"><label for="spk_cnt_chk_98">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub98-1">&nbsp;저희가 바라는 것은 다른 법률에서 그런 것처럼 1년 6개월의 기한을 두시고 1년 6개월의 한도 내에서 시행시기는 규칙으로 위임을 해 주시면 저희가 가장 빠른 시기로 해서…… 지금 현재로서는 저희들 생각하기로는 저희들이 정기인사를 통해서 사무분담이 이루어지는 내년 3월 1일 자 정도로 예상하고 있는데요, 법률로서는 1년 6개월 내에서 시행규칙에 위임한 바에 따라 시행시기를 정한다고 해 주시면 제일 좋을 것 같습니다.</span><br/></div></div></div><div id="spk_99" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_99"><label for="spk_cnt_chk_99">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub99-1">&nbsp;그런데 이런 것 정리할 때마다 항상 법원의 정기 인사를 얘기하시는데 법원의 정기 인사가 법률보다 우선한가요?</span><br/></div></div></div><div id="spk_100" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_100"><label for="spk_cnt_chk_100">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub100-1">&nbsp;아, 그렇지는 않습니다. 절대 그렇지는 않은데……</span><br/></div></div></div><div id="spk_101" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_101"><label for="spk_cnt_chk_101">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub101-1">&nbsp;아니면 국민의 인권침해나 범죄 피해보다 우선하나요, 그게?</span><br/></div></div></div><div id="spk_102" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_102"><label for="spk_cnt_chk_102">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub102-1">&nbsp;그렇지는 않습니다.</span><br/></div></div></div><div id="spk_103" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_103"><label for="spk_cnt_chk_103">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub103-1">&nbsp;그런 것은 아니지 않습니까?</span><br/></div></div></div><div id="spk_104" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_104"><label for="spk_cnt_chk_104">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub104-1">&nbsp;예, 맞습니다. 사무분담이라든가 실무적인 문제 때문인데요, 그렇습니다.</span><br/></div></div></div><div id="spk_105" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_105"><label for="spk_cnt_chk_105">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub105-1">&nbsp;공포 후 6개월은 도저히 불가능하다는 입장이신 것 같고요.</span><br/></div></div></div><div id="spk_106" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_106"><label for="spk_cnt_chk_106">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub106-1">&nbsp;예.</span><br/></div></div></div><div id="spk_107" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_107"><label for="spk_cnt_chk_107">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub107-1">&nbsp;1년으로 단축시키는 것은 어떻게……</span><br/></div></div></div><div id="spk_108" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_108"><label for="spk_cnt_chk_108">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub108-1">&nbsp;예, 1년까지는 저희가 노력해 보겠습니다.</span><br/></div></div></div><div id="spk_109" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_109"><label for="spk_cnt_chk_109">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub109-1">&nbsp;법무부, 어떻습니까?</span><br/></div></div></div><div id="spk_110" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_110"><label for="spk_cnt_chk_110">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub110-1">&nbsp;조사 관련해서 지금 보호관찰소도 조사기관으로 함께 들어가 있기 때문에 그와 같이 시행시기, 그러니까 가능한 한 빠른 입법과 시행이 필요하다는 것이 법무부의 입장이고요. 필요시에는 보호관찰소에서도 적극 협조하도록 하겠습니다.</span><br/></div></div></div><div id="spk_111" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_111"><label for="spk_cnt_chk_111">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub111-1">&nbsp;그렇지요.</span><br/><span class="spk_sub" id="spk_sub111-2">&nbsp;위원님들 토론하실 분 계시면 토론하십시오.</span><br/></div></div></div><div id="spk_112" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_112"><label for="spk_cnt_chk_112">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub112-1">&nbsp;이것 정리가 됐어요?</span><br/></div></div></div><div id="spk_113" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_113"><label for="spk_cnt_chk_113">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub113-1">&nbsp;예, 정리는……</span><br/></div></div></div><div id="spk_114" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_114"><label for="spk_cnt_chk_114">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub114-1">&nbsp;어떻게 하기로 한 거지요?</span><br/><span class="spk_sub" id="spk_sub114-2">&nbsp;미안합니다, 좀 늦게 와서.</span><br/></div></div></div><div id="spk_115" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_115"><label for="spk_cnt_chk_115">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub115-1">&nbsp;각 기관의 의견들은 이 합의안대로 가는 게 맞다라는 의견을 다시 한번 말씀하셨고 지금 거기에 대해 토론하는 시간입니다.</span><br/></div></div></div><div id="spk_116" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_116"><label for="spk_cnt_chk_116">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub116-1">&nbsp;그러니까 합의안의 핵심이 병렬적으로 가는 건가요? 법원에 대한 것하고……</span><br/></div></div></div><div id="spk_117" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_117"><label for="spk_cnt_chk_117">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub117-1">&nbsp;보충적이요. 조금 전에 보충적이라고 설명을 하셨어요.</span><br/></div></div></div><div id="spk_118" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_118"><label for="spk_cnt_chk_118">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub118-1">&nbsp;보충적? 미안합니다.</span><br/><span class="spk_sub" id="spk_sub118-2">&nbsp;보충적이라는 것은 검찰에서 안 해 줬을 때 법원에 한다?</span><br/></div></div></div><div id="spk_119" class="item5 speaker spk_mem" data-mem_id="6836" data-name="곽규택" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_119"><label for="spk_cnt_chk_119">곽규택 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fd163330861a4c5691ba7cfd0ad39ea6.jpg" alt="곽규택"></span><span class="txt"><strong class="name">곽규택</strong><span class="position">위원</span><span class="area">(부산 서구동구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub119-1">&nbsp;그렇지요.</span><br/></div></div></div><div id="spk_120" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_120"><label for="spk_cnt_chk_120">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub120-1">&nbsp;그러면 조사관도 필요 없다?</span><br/></div></div></div><div id="spk_121" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_121"><label for="spk_cnt_chk_121">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub121-1">&nbsp;아니요, 조사관은 필요하다라는 입장입니다.</span><br/><span class="spk_sub" id="spk_sub121-2">&nbsp;지금 조사관의 필요성에 대해서 다시 한번 짧게 설명 주십시오.</span><br/><span class="spk_sub" id="spk_sub121-3">&nbsp;위원님, 잘 경청해 주시면 좋을 것 같습니다.</span><br/></div></div></div><div id="spk_122" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_122"><label for="spk_cnt_chk_122">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub122-1">&nbsp;수사기관이 피해자의 보호명령 신청을 받아들이지 아니하거나 또는 상당 기간 방기한 경우에 피해자가 그 통지를 받은 때로부터 법원에 신청하는 경우에 피해자보호명령을 하도록 제도가 설계되어 있습니다. 조사관이 없이 그걸 바로 법원이 받게 되면 거의 99.9% 그대로 기각될 가능성이 높기 때문에 조사관이 조사를 통해서 피해자한테 좀 더 유리한 자료를 수집하는 것이 좋겠다라는 게 법원행정처의 의견입니다.</span><br/></div></div></div><div id="spk_123" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_123"><label for="spk_cnt_chk_123">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub123-1">&nbsp;그런 식으로 정리해야 되겠네요.</span><br/></div></div></div><div id="spk_124" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_124"><label for="spk_cnt_chk_124">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub124-1">&nbsp;동의합니다.</span><br/></div></div></div><div id="spk_125" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_125"><label for="spk_cnt_chk_125">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub125-1">&nbsp;그러면 위원님들 특별히 의견이 더 없으시면 다시 한번 정리해 보겠습니다.</span><br/><span class="spk_sub" id="spk_sub125-2">&nbsp;지금 법원과 법무부가 합의해서 저희에게 제출한 부처 의견 합의안을 기준으로 토론을 이어 갔고, 다만 시행일은 공포 후 1년 6개월이 아니라 공포 후 1년으로 단축시키는 것으로 이렇게 논의가 됐습니다.</span><br/><span class="spk_sub" id="spk_sub125-3">&nbsp;여기에 대해서 특별히 더 의견 없으신 것으로……</span><br/></div></div></div><div id="spk_126" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_126"><label for="spk_cnt_chk_126">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub126-1">&nbsp;위원장님, 저 한마디만……</span><br/></div></div></div><div id="spk_127" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_127"><label for="spk_cnt_chk_127">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub127-1">&nbsp;예, 전문위원님.</span><br/></div></div></div><div id="spk_128" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_128"><label for="spk_cnt_chk_128">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub128-1">&nbsp;보조인하고 국선보조인 제도를 부처안에서 신설을 해 오셨는데요, 그러니까 스토킹 행위자든 피해자든 둘 다 보조인을 선임할 수 있고 피해자의 경우는 장애나 빈곤 등의 사유가 있으면 법원이 국선보조인을 선임하여야 한다라고 규정이 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub128-2">&nbsp;그런데 행위자의 경우에는 보통 이런 유사 입법례들 보면 국선보조인, 그러니까 형사소송법 33조 1항 각호에 해당하면 국선보조인을 선임할 수 있다라는 규정이 있는데 이 규정이 여기서 빠져 있습니다. 그래서 이것도 다른 입법례들을 고려할 때 추가하는 게 맞지 않나 그런……</span><br/></div></div></div><div id="spk_129" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_129"><label for="spk_cnt_chk_129">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub129-1">&nbsp;피해자에게요?</span><br/></div></div></div><div id="spk_130" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_130"><label for="spk_cnt_chk_130">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub130-1">&nbsp;그러니까 가해자에게요. 피해자는……</span><br/></div></div></div><div id="spk_131" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_131"><label for="spk_cnt_chk_131">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub131-1">&nbsp;가해자에게 변호인을 둘 수 있게 하자는 말씀이에요?</span><br/></div></div></div><div id="spk_132" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_132"><label for="spk_cnt_chk_132">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub132-1">&nbsp;그러니까 고령 이런 경우에 형사소송법에 있는 규정에 따라서 그 요건에 해당이 되면 법원이 선임할 수 있다. 그런데 이게 아동학대처벌법에도 같은 규정이 있습니다, 행위자에 대해서도. 그래서 양쪽의 균형을 맞춰 준다는 측면에서 다른 입법례를 따라서 그걸 넣는 게 어떤가라고 말씀드립니다. 피해자는 빈곤이나 장애가 있으면 선임을 해야 합니다, 법원에서 무조건. 그런데 이 경우는 임의규정이거든요.</span><br/></div></div></div><div id="spk_133" class="item5 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_133"><label for="spk_cnt_chk_133">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub133-1">&nbsp;문을 열어 두는 게 맞겠네요.</span><br/></div></div></div><div id="spk_134" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_134"><label for="spk_cnt_chk_134">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub134-1">&nbsp;그러니까요, 다른 법에 입법례가 있다라고 하면……</span><br/></div></div></div><div id="spk_135" class="item5 speaker spk_mem" data-mem_id="6730" data-name="나경원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_135"><label for="spk_cnt_chk_135">나경원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/563d61a4466c42c8be2c4979c00e5060.png" alt="나경원"></span><span class="txt"><strong class="name">나경원</strong><span class="position">위원</span><span class="area">(서울 동작구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub135-1">&nbsp;유사 입법례에 따르지요.</span><br/></div></div></div><div id="spk_136" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_136"><label for="spk_cnt_chk_136">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub136-1">&nbsp;위원님들, 따라가는 것이 맞겠지요? 동의해 주시는 걸로 알겠습니다.</span><br/></div></div></div><div id="spk_137" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_137"><label for="spk_cnt_chk_137">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub137-1">&nbsp;저는 그렇지 않은 것 같은데, 죄송하지만 이게 스토킹으로 갈 곳이 없어 막바지에 이르러서 경찰·검사까지 갔다가 그걸 하는데 가해자에게 변호사를 해 준다? 이건 국선을 의무적으로 법원이 해 준다는 겁니까?</span><br/></div></div></div><div id="spk_138" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_138"><label for="spk_cnt_chk_138">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub138-1">&nbsp;아니요, 일정 요건에 해당되는 경우에 ‘해 줄 수 있다’입니다.</span><br/></div></div></div><div id="spk_139" class="item5 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_139"><label for="spk_cnt_chk_139">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub139-1">&nbsp;법원이 재량으로 할 수 있도록 하는 거니까요, 혹시 진짜 필요한……</span><br/></div></div></div><div id="spk_140" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_140"><label for="spk_cnt_chk_140">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub140-1">&nbsp;이게 가해자를 처벌하는 겁니까? 그게 아니라 이 과정은 보호하기 위해서 ‘어디까지 오지 마’ 그리고 오지 말고 ‘이 사람을 보호해’ 이런 건데 가해자가 뭐가 필요해서 ‘나 거기까지 갈 수 있어’라고 변호인이 필요한가요?</span><br/></div></div></div><div id="spk_141" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_141"><label for="spk_cnt_chk_141">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub141-1">&nbsp;피해자보호명령의 결정은 기본적으로 말씀하신 대로 피해자를 보호하기 위한 건데 피해자를 보호하려면 어쨌든 가해자의 행위를 제한해야 되기 때문에 법원에서 그 결정을 하시는 절차에 있어서는 어쨌든 저희가 보조인 규정을 둔 이상 국선보조인 규정도 균형을 맞추는 게 좋을 것 같다라는 말씀입니다.</span><br/></div></div></div><div id="spk_142" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_142"><label for="spk_cnt_chk_142">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub142-1">&nbsp;아니, 저는 취지에 전혀 맞지 않는 거라고 생각하고요. 이 부분은 그러니까 다른 데 있으니까, 그건 안 되지요. 스토킹해 가지고 위험한 상황까지 왔는데 거기에 변호사를 국선으로 해 줄 수 있다? 그러니까 이 사람이 뭔가 피해를 본다거나 이럴 수 있다고 하지만 여기에 그 내용이 없다면 저는 굳이 그것이 다른 데 있다 하더라도 넣을 상황은 아니다 이렇게 생각합니다.</span><br/></div></div></div><div id="spk_143" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_143"><label for="spk_cnt_chk_143">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub143-1">&nbsp;혹시 법원은 입장이 어떻습니까?</span><br/></div></div></div><div id="spk_144" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_144"><label for="spk_cnt_chk_144">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub144-1">&nbsp;조치의 내용을 이해 못 하는 행위자가 있을 수 있습니다, 100m 이내 접근금지라든가 통신제한 조치를. 그런 경우에는 뭔가 보조인들이 설명해 주고 그럴 필요가 있다는 생각입니다. 그래서 법원이 이걸 판단하기에 임의적 조치로 두는 데 대해서는 법원은 반대할 의사가 없습니다.</span><br/></div></div></div><div id="spk_145" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_145"><label for="spk_cnt_chk_145">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub145-1">&nbsp;법무부는 어떻습니까?</span><br/></div></div></div><div id="spk_146" class="item5 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_146"><label for="spk_cnt_chk_146">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub146-1">&nbsp;실태를 좀 말씀드리면요, 정말 스토킹 관련해서도 다양한 형태의 스토킹이 있습니다. 그러니까 정말 집요하게 피해자를 괴롭히고 거의 정신병까지 걸리게 하는 그런 형태의 스토킹이 있는 반면에 가족의 형태가 굉장히 다양화되면서, 가족의 형태로는 묶을 수 없지만 예컨대 남녀 간에 동거를 한다든지 같이 생활을 한다든지 연인 관계라든지 친구 관계라든지 이렇게 스토킹의 범죄 태양이 굉장히 다양한 형태로 나타나고 있고요.</span><br/><span class="spk_sub" id="spk_sub146-2">&nbsp;또한 이 과정에서 실무에서 보면 피해자라고 신고하신 분께서 신고를 하신 후에 또한 관계가 좋아진 다음에 신고를 취소하시거나 하는 형태로 이렇게 진행하는 형태도 굉장히 다양하게 나타나 있습니다.</span><br/><span class="spk_sub" id="spk_sub146-3">&nbsp;이런 점에서 봤을 때 가정폭력에 관한 법률이나 아동학대처벌법에 있듯이 이와 같은 보조인을 선임해야 될 사례를 완전히 배제할 수는 없다고 생각을 해서 법원에서 그와 같은 필요성이 있다고 주장하신 바가 있었고요. 그와 같은 운영은 실무에서 운영을 통해서 반영할 수 있다고 생각이 되어서 그 부분에 대해서는 수용 의견이었습니다.</span><br/></div></div></div><div id="spk_147" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_147"><label for="spk_cnt_chk_147">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub147-1">&nbsp;제가 잘 모르겠어서 그러는데 보조인과 변호사를 선임해서 도와줄 수 있다, 이거하고 같은 말인가요? 보조인이 변호사를 얘기하는 건가요? 조금 전에 변호사 이야기하셨지요?</span><br/></div></div></div><div id="spk_148" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_148"><label for="spk_cnt_chk_148">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub148-1">&nbsp;국선보조인의 경우에는 규정들이 변호사를 국선보조인으로 선임할 수 있다 이렇게 되어 있습니다.</span><br/></div></div></div><div id="spk_149" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_149"><label for="spk_cnt_chk_149">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub149-1">&nbsp;변호사를 국선보조인으로 선임할 수 있다?</span><br/></div></div></div><div id="spk_150" class="item5 speaker spk_mem" data-mem_id="0" data-name="박혜진" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_150"><label for="spk_cnt_chk_150">전문위원 박혜진 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박혜진"></span><span class="txt"><span class="position">전문위원</span><strong class="name">박혜진</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub150-1">&nbsp;예, 임의로.</span><br/></div></div></div><div id="spk_151" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_151"><label for="spk_cnt_chk_151">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub151-1">&nbsp;아니, 아까 말씀처럼 잘 못 알아 들어서 ‘100m까지 오면 안 돼요’ 이런 것을 이야기하는데 그게 꼭 변호사가 해야 되는 건가요? 그런 건 너무 당연하게 알려 주고 그래야 되는 거 아닌가요? 그런데 그게 변호사가 해야 되는 건가요?</span><br/><span class="spk_sub" id="spk_sub151-2">&nbsp;저는 지금 올라와 있는 정도까지만 하고 그리고 그 부분은 더 상황이 전개돼 나가면서 필요하다면 다시 개정하면 되지 않을까 그렇게 생각합니다. 그런데 굳이 보호하려고 하는 상황 속에서 그것까지 넣어 가는 것은 법의 취지에 맞지 않는다고 생각합니다.</span><br/></div></div></div><div id="spk_152" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_152"><label for="spk_cnt_chk_152">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub152-1">&nbsp;법원행정처 말씀하실 것 있지요?</span><br/></div></div></div><div id="spk_153" class="item5 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_153"><label for="spk_cnt_chk_153">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub153-1">&nbsp;한 번으로 끝나면 상관이 없는데 절차에 불복이 있거나 그랬을 경우에 피해자가 장기간 고통받는 시간을 조금이라도 줄이려면 한 번이 끝날 때쯤 가해자로 하여금 당신은 이 정도까지 절차 보장을 받았으니…… 항고심이라든가 재항고심에서도 쉽게 1심의 판단을 존중할 수 있는 그런 배경은 될 수 있을 것 같습니다.</span><br/></div></div></div><div id="spk_154" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_154"><label for="spk_cnt_chk_154">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub154-1">&nbsp;다른 위원님들 이 부분에 대한 의견이 있으신가요?</span><br/></div></div></div><div id="spk_155" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_155"><label for="spk_cnt_chk_155">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub155-1">&nbsp;제가 생각하는 건 1년 유예기 때문에 중간의 과정 속에서 필요하다면 그렇게 가는 게 저는 그 취지에 맞을 거라고 생각합니다.</span><br/></div></div></div><div id="spk_156" class="item5 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_156"><label for="spk_cnt_chk_156">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub156-1">&nbsp;맞는 말씀이기는 한데 1년 유예기간이라는 게 실무가 돌아가면서 유예가 되는 건 아니어서, 그다음에 제 생각에는 임의적으로 법원이 판단할 수 있도록 하는 거니까 사실은 가해자, 물론 피해자를 보호하기 위한 법이고 피해자 보호는 열심히 잘해야 되겠지요. 이게 법원에서 판단하는 데 있어서 가해자 쪽이 예를 들어 의견이 정리가 잘 안 된다든지, 가해자 쪽 얘기 들어 볼 것 아니에요. 그러니까 그게 실제로 재판 운영하는 데 있어서 그 사람으로 해서는 도저히 진행이 안 되겠다 하면 법원이 ‘이거는 보조인이 좀 도와주십시오’ 이렇게 하는 예가 있을 수 있어서, 그러니까 의무적인 조항이 아닌 한은 법원이 판단할 수 있도록 하면 큰 부작용은 없지 않나 이런……</span><br/><span class="spk_sub" id="spk_sub156-2">&nbsp;그래서 길을 열어 주는 느낌이거든요, 그런 어떤 절차적인 진행에 애로가 있을 때 절차를 진행할 수 있도록 길을 열어 주는 거라 꼭 하는 것은 아니니까 저는 이 정도 규정은 두는 것이 오히려 맞는 것 아닌가 하는 의견을 갖고 있습니다.</span><br/></div></div></div><div id="spk_157" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_157"><label for="spk_cnt_chk_157">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub157-1">&nbsp;그게 임의규정이고 다른 법에도 유사한 방식으로 두고 있고 이게 기본권 제한에 대해서 절차 보장을 하기 위한 어떤 일종의 제도를, 임의제도를 두자라는 취지로 좀 이해가 되는 것 같은데요, 그렇다라고 하면 다른 위원님들은 크게 이견이 없으시니 위원님이 좀 양해를 해 주시면 어떨까요?</span><br/></div></div></div><div id="spk_158" class="item5 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_158"><label for="spk_cnt_chk_158">서영교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><strong class="name">서영교</strong><span class="position">위원</span><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub158-1">&nbsp;저는 양해하기 어렵고요. 어쨌든 저는 그런 취지로 정리하겠습니다. 그리고 다 동의돼서 그렇게 가신다면 그렇게 하더라도 저는 이 부분에 대해서는 그렇게 제 의견을 하고 가도록 하겠습니다.</span><br/></div></div></div><div id="spk_159" class="item5 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_159"><label for="spk_cnt_chk_159">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub159-1">&nbsp;그러면 의견은 그렇게 남기시는 것으로 하고, 그러면 특별히 더 반대하시는 위원님이 안 계시니까 국선보조인을 추가하는 부분을 정리하시는 것으로 하지요.</span><br/><span class="spk_sub" id="spk_sub159-2">&nbsp;그러면 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub159-3">&nbsp;의사일정 제3항부터 제6항까지 스토킹범죄의 처벌 등에 관한 법률 일부개정법률안은 각각 본회의에 부의하지 아니하고 이를 통합 조정하여 위원회 대안을 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub159-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub159-5">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub159-6">&nbsp;다음은 앞서 심사를 보류했던 의사일정 제1항 국적법 일부개정법률안을 심사하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2S4T1S0H2G8E1D9L1K1L0K3I4Q8P3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 국적법 일부개정법률안(서영교 의원 대표발의)(의안번호 2205121)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시23분)</p><br/><div id="spk_161" class="item6 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_161"><label for="spk_cnt_chk_161">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub161-1">&nbsp;의사일정 제1항 국적법 일부개정법률안을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub161-2">&nbsp;심정희 수석전문위원님 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_162" class="item6 speaker spk_mem" data-mem_id="0" data-name="심정희" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_162"><label for="spk_cnt_chk_162">수석전문위원 심정희 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="심정희"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">심정희</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub162-1">&nbsp;수석전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub162-2">&nbsp;소위자료 보시겠습니다. 소위자료 2페이지입니다.</span><br/><span class="spk_sub" id="spk_sub162-3">&nbsp;서영교 의원님께서 대표발의한 법안이고요, 개정안의 내용은 배우자가 독립유공자의 직계존비속이고 대한민국 국민인 외국인으로서 그 배우자와 혼인한 후 7년이 지나고 혼인한 상태로 대한민국에 주소가 있는 사람에 대해서 간이귀화 요건을 만들려고 하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub162-4">&nbsp;위원들께서 소위를 두 번 하셨고요. 전체적인 논의 결과는 혼인 요건 외에 국내거주 요건도 좀 필요하지 않느냐, 3개월 정도는 어떠냐, 이런 말씀을 많이 해 주셔서 법무부가 수정의견을 냈습니다.</span><br/><span class="spk_sub" id="spk_sub162-5">&nbsp;5페이지 수정의견 보시겠습니다. 5페이지는 내용이고 뒤 페이지에 조문대비표가 있습니다.</span><br/><span class="spk_sub" id="spk_sub162-6">&nbsp;그래서 위원님들의 논의 결과를 받아들여서 의원님 안에서는 혼인 기간이 7년 되어 있었는데 혼인 기간 10년으로 늘리면서 국내거주 요건 3개월 이상으로 국내거주 요건 추가했습니다.</span><br/><span class="spk_sub" id="spk_sub162-7">&nbsp;그리고 독립유공자예우에 관한 법률에 보면 독립유공자의 유가족의 범위가 3세대까지인 걸로 제한돼 있어서 6페이지 조문대비표 보시면 10년이 지나고 혼인한 상태로 3개월 이상 계속해서 주소가 있는 사람을 귀화허가를 받을 수 있도록 하고 있습니다. 다만 배우자가 같은 법률 5조에 따른 유족·가족, 이게 같은 법률이 독립유공자법이거든요. 독립유공자법에 따라서 3세대인 유가족인 경우까지는 장관이 결정하도록 하고 이외의 세대에서는 국적심의위원회 심의를 거쳐서 간이귀화 여부를 결정하도록 법무부에서 수정의견을 냈습니다.</span><br/><span class="spk_sub" id="spk_sub162-8">&nbsp;이 조문 내용은 전문위원실과 협의가 되었고요. 그러면서 조문 정리를 하면서 이중국적도 가질 수 있도록 하는 내용이 추가되었고 부칙에서는 시행일만 두는 것으로 보았습니다. 그래서 공포 후 6개월이 경과한 날부터 시행하도록 조문 정리를 했습니다.</span><br/><span class="spk_sub" id="spk_sub162-9">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_163" class="item6 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_163"><label for="spk_cnt_chk_163">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub163-1">&nbsp;법무부부터 의견 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_164" class="item6 speaker spk_mem" data-mem_id="0" data-name="이진수" data-pos="법무부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_164"><label for="spk_cnt_chk_164">법무부차관 이진수 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이진수"></span><span class="txt"><span class="position">법무부차관</span><strong class="name">이진수</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub164-1">&nbsp;지난 소위 논의 이후에 서영교 위원님께서 간이귀화 신청 요건을 혼인 기간, 10년 국내거주 기간 3개월로 수정하는 의견을 주셨습니다. 법무부는 위원님께서 수정해 주신 내용을 수용하면서 세대가 내려갈수록 한국인으로서 정체성이 약화되는 점을 고려해서 4세대 이후 후손의 배우자의 경우에는 국적심의위원회 심의를 거치도록 할 예정입니다.</span><br/><span class="spk_sub" id="spk_sub164-2">&nbsp;이를 통해서 국내거주 기간 단축에 따른 우려도 해소하고 혼인의 진정성과 대한민국 국민으로서의 기본소양 등 귀화 요건을 실질적으로 심사할 수 있을 것으로 기대합니다.</span><br/><span class="spk_sub" id="spk_sub164-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_165" class="item6 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_165"><label for="spk_cnt_chk_165">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub165-1">&nbsp;법원행정처 의견 말씀해 주십시오.</span><br/></div></div></div><div id="spk_166" class="item6 speaker spk_mem" data-mem_id="0" data-name="기우종" data-pos="법원행정처차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_166"><label for="spk_cnt_chk_166">법원행정처차장 기우종 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="기우종"></span><span class="txt"><span class="position">법원행정처차장</span><strong class="name">기우종</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub166-1">&nbsp;이견 없습니다.</span><br/></div></div></div><div id="spk_167" class="item6 speaker spk_mem" data-mem_id="6603" data-name="김용민" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_167"><label for="spk_cnt_chk_167">소위원장 김용민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e8f8918e741b4ae9b72377d8ec299645.png" alt="김용민"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김용민</strong><span class="area">(경기 남양주시병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub167-1">&nbsp;이 법안 역시 지난 소위에서 여야 간에 충분히 논의하고 합의까지 이르렀습니다. 다만 그때에도 의결정족수에 미치지 못해서 저희가 의결을 못 했던 사안입니다. 그래서 오늘 특별한 이견이 없으시면 그냥 바로 처리를 해도 되지 않을까 싶습니다.</span><br/><span class="spk_sub" id="spk_sub167-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub167-3">&nbsp;지난번에 충분히 토론한 것을 기준으로 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub167-4">&nbsp;그 전에 방금 말씀하신 법무부 수정의견을 기준으로 저희가 논의를 했고 이것을 처리하는 것을 전제로 한다는 거 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub167-5">&nbsp;의사일정 제1항 국적법 일부개정법률안은 지금까지 심사하신 바와 같이 수정한 부분은 수정한 대로, 그 외 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub167-6">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub167-7">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub167-8">&nbsp;오늘 의결한 안건들의 자구 정리 등에 관한 사항은 소위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub167-9">&nbsp;이상으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub167-10">&nbsp;위원님 여러분 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub167-11">&nbsp;이진수 차관님, 기우종 차장님을 비롯한 관계 공무원 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub167-12">&nbsp;보좌진, 수석전문위원을 비롯한 위원회 직원, 경위, 속기사 여러분도 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub167-13">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(13시27분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(9인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKKYUTAEK" target="_blank"><span class="name lts3 ">곽규택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank"><span class="name lts3 ">김기표</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank"><span class="name lts3 ">김용민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJAESUB" target="_blank"><span class="name lts3 ">김재섭</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAKYUNGWON" target="_blank"><span class="name lts3 ">나경원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank"><span class="name lts3 ">박균택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank"><span class="name lts3 ">박은정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank"><span class="name lts3 ">서영교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank"><span class="name lts3 ">조배숙</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 심정희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 박혜진</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 최기도</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>법무부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 이진수</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯법원측 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>법원행정처</p><li><a class="in_nm"><span class="pos"><span class="lts2">차장</span></span><span class="name lts3"> 기우종</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56441;
+			const class_id = 2;
+			const confer_num = "N054094";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640673906" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640673906"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640673906"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640673906"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

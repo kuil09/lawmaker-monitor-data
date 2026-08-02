@@ -1,0 +1,838 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56695" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제435회 (임시회) 제1차 성평등가족위원회</strong><span class="date">(2026.05.15.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 긴급 현안질의</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이인선 위원장 (대구 수성구을)"> 
+							이인선 위원장 (대구 수성구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서범수 위원 (울산 울주군)"> 
+							서범수 위원 (울산 울주군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서명옥 위원 (서울 강남구갑)"> 
+							서명옥 위원 (서울 강남구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이달희 위원 (비례대표)"> 
+							이달희 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조은희 위원 (서울 서초구갑)"> 
+							조은희 위원 (서울 서초구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="한지아 위원 (비례대표)"> 
+							한지아 위원 (비례대표)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(6명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6722" data-name="이인선" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">이인선</span>
+												<span class="position">위원장</span>
+												<span class="area">(대구 수성구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6708" data-name="서범수" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">서범수</span>
+												<span class="position">위원</span>
+												<span class="area">(울산 울주군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6813" data-name="서명옥" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">서명옥</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강남구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6767" data-name="이달희" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">이달희</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6629" data-name="조은희" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">조은희</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 서초구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6766" data-name="한지아" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">한지아</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56695&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제435회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>성평등가족위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 5월 15일(금)</p></li><li><div class="sbj lts2">장소</div><p class="con">성평등가족위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 긴급 현안질의</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 긴급 현안질의</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시02분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제435회 국회(임시회) 제1차 성평등가족위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 회의는 국회법 제52조 3호에 따라서 조은희 위원 등 5인의 요구로 개회하게 되었습니다. 위원님들께서도 잘 아시는 바와 같이 위원회 의사일정은 국회법 제49조제2항에 따라 위원장이 간사와 협의하여 정하도록 되어 있으며 그간 성평등가족위원회 회의 역시 위원장과 여야 간사 간에 원만한 협의를 거쳐 진행하여 왔습니다. 오늘 회의에 대해서도 여야 간사 간에 협의를 진행하였으나 원만한 합의에 이르지 못하였습니다. 그렇지만 위원장으로서는 국회법 제52조제3호에 따른 개회 요구가 있었던바 더불어민주당 정원오 서울시장후보자와 관련한 최근의 논란에 대한 진상규명 필요성 등을 감안하여 오늘 회의를 개회하게 되었음을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 긴급 현안질의</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시03분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항 긴급 현안질의를 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;오늘 회의장에는 정부 측이 참석하지 않았습니다. 이로 인해 오늘 실시하고자 하였던 현안질의를 하지 못하게 된 점에 대해서 위원장으로서는 매우 유감스럽게 생각한다는 점을 말씀드립니다. 여야 합의가 안 되었다 하더라도 국회 소관 상임위 현안질의가 우선순위임에도 불구하고 차관이 출석하지 않은 것은 유감으로 엄중히 경고합니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;그러면 오늘 회의와 관련하여 의사진행발언하실 위원님들이 계시면 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;의사진행발언 좀……</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;예, 말씀하시지요.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;서범수 위원입니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;국민들께서 많은 관심을 가지고 계시는 정원오 후보 폭행 및 성비위 관련해서 국민의힘에서 회의를 요청했고요. 그래서 합의는 안 됐다 하더라도 위원장님께서 이 회의를 주재하고 계시는데요.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;하나 궁금한 게 성평등가족부장관은 왜 안 나오는지 그리고 민주당에서는 왜 이 의사일정에 대해서 합의를 안 하는지에 대한 부분 혹시 행정실장님이나 전문위원님들 받은 게 있습니까? 성평등가족부나 아니면 민주당에서 불참하는 이유를 정식적으로 통보한 게 있습니까? 어떻습니까? 위원장님, 혹시 아시고 계십니까?</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;예, 정식적으로 부처에 간사를 통해서 소집하였음에도 불구하고 참석을 하지 않아서 조금 전에, 지금 장관은 해외 출장 중이고 차관이 참석하여야 함에도 불구하고……</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;차관이라도 나와야 되는 것 아닙니까?</span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;예, 물론 미리 세종에 정해진 회의가 있다 하더라도 그 회의를 미루고 참석해야 되는데 참석하지 않아서 제가 지금 엄중히 경고한다고 말씀드렸습니다.</span><br/></div></div></div><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;이것은 완벽하게 행정부에서 입법부, 국회를 무시하는 행위라고 저는 봅니다. 위원장님께서 좀 더 강력하게 한 번 더 촉구를 해 주시고 또 강력하게 경고를 좀 해 주십사 부탁드립니다.</span><br/></div></div></div><div id="spk_12" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;예, 회의 중이라도 오실 수 있기 때문에 우리가 의사진행발언을 하고 약간 기다리는 시간을, 기다린 다음에 다시 확인해서 산회하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;그러면 현안질의는 의사진행발언 후에 5분으로 기본 정해져 있고요. 나중에 추가질의를 또 할 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;그러면 먼저 서명옥 위원님 발언해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item1 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;서울 강남갑 지역의 서명옥 위원입니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;더불어민주당 서울시장후보인 정원오 후보의 1995년 폭행 전과가 공론화되고 있습니다. 국민들에게 큰 충격을 안겨 주고 있습니다. 본 위원은 이 사안이 후보자의 단순한 과거의 실수가 아니라 우리 사회의 공직후보자의 도덕성 기준과 성인지 감수성이 처참할 정도로 무너지고 있어 매우 심각한 사안으로 판단된다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;특히 정원오 후보가 술자리의 여종업원에게 외박을 강요한 행위는 구청장 측근 비서라는 권력과 지위를 악용해서 성매매를 종용한 명백한 불법 성비위라고 생각합니다. 외박을 거절한 점주에게는 ‘앞으로 영업을 다 해먹을 것이냐’고 윽박지르는 대목에서는 자신의 권력과 지위를 노골적으로 휘두른 전형적인 협박과 갑질 행위입니다. 동네 조폭들이나 할 행동 아니겠습니까?</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;정원오 후보는 당시 사건이 5·18민주화운동에 대한 인식 차이로 인한 다툼이었다고 변명하고 있습니다. 왜 민주당의 5·18 관련 변명은 늘 여성 종업원이 있는 유흥지점에서만 시작되고 있습니까?</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;(영상자료를 보며)</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;1995년 10월 11일 사건이 발생했던 서울 양천구 신정5동 소재 ‘가애’라는 카페입니다. PPT 화면에 보시면 ‘가애(加愛)’라고 한자하고 잘 나와 있지요. 그 간판을 보시고 그 간판의 이름을 보시면 누가 봐도 유흥주점으로 보여지고 있습니다. 커피를 파는 카페가 아니라 정말 누가 봐도 외박 강요 사건이 발생한 유흥지점으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;또한 당시 양천구청장도 1995년 10월 20일 열린 양천구의회 구정질문에서 10월 11일 관내에서 발생한 유흥업소에서 있었던 사건이라고 명백하게 언급한 바가 있습니다. 저기 화면에 보시면 양천구의회 회의록, 속기록이 보여지고 있고 빨간 글씨로 유흥업소라고 되어 있지요.</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;국민께서는 2000년 5월 17일 5·18 전야제 행사 후에 있은 광주 새천년 NHK 사건을 똑똑히 기억하고 있습니다. 민주당 소속 김민석·송영길·우상호 등 소위 민주당의 지도자급의 386세대 정치인들이 민주화의 성지에서 유흥을 즐기며 동료 여성 의원에게는 차마 입에 담지 못할 폭언을 퍼부었던 그 이중성이 지금 정원오 후보에게서 그대로 재현되고 있습니다. 화면에 보시면 잘 보여 주고 있습니다. 민주당 송영길, 민주당 김민석, 지금 국무총리 하고 있지요. 민주당 우상호, 강원도지사후보로 나와 있습니다.</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;이뿐만이 아닙니다. 더불어민주당 소속 정치인들의 성비위 사건들은 마침표 없이 연속적으로 이어져 오고 있습니다. 문재인 정부의 탁현민 의전비서관은 자신의 저서를 통해 왜곡된 성 인식을 가감 없이 표출했습니다. 2007년에는 ‘내 성적 판타지는 임신한 선생님이다’. 2012년에는 ‘오빠 힘내 하면 힘이 불끈불끈 나고 오빠 달려 하면 지치지 않고 달리고 오빠 잘 자 하면 잠도 잘 온다. 누군가에게 오빠로 불린다는 것만으로도 충분히 즐거울 때가 있다’고 하였습니다.</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;이미 민주당에서는 ‘오빠’라는 단어는 성인지 감수성이 부족한 성희롱 단어로 전락한 지 오래되었습니다. 최근 부산 북구갑 구포시장에서도 오빠 논란이 있었던 것 다 잘 알고 계시지요.</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;2018년에는 안희정 전 충남도지사의 비서 성폭력 사건 피해자가 직접 방송에 출연해 자신의 피해사실을 밝혔고 안 전 지사는 3년 6개월의 징역형을 받았습니다.</span><br/><span class="spk_sub" id="spk_sub13-12">&nbsp;같은 해 민주당 민병두 의원의 노래방 성추행 사건, 정봉주 전 의원의 기자 지망생 성추행 사건을 비롯해 2020년에는 오거돈 전 부산시장이 20대 여직원을 7층 집무실로 불러서 강제로 성추행을 하였습니다. 이 사건도 징역 3년형이 확정되어서 오거돈 전 시장은 부산구치소에서 만기 출소했습니다.</span><br/><span class="spk_sub" id="spk_sub13-13">&nbsp;또 같은 해 박원순 전 서울시장의 비서 성추행 사건도 발생했습니다. 당시 민주당 여성 의원님들 뭐라고 하셨습니까? 박원순 전 시장을 감싸기 위해 ‘피해 호소인’이라는 신조어가 등장했습니다.</span><br/><span class="spk_sub" id="spk_sub13-14">&nbsp;위원장님, 죄송하지만 조금 더 발언 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_14" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;1분 더 주셔야 되겠습니다.</span><br/></div></div></div><div id="spk_15" class="item1 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;이와 같이 연달아서 민주당 김원이 의원, 박완주 의원, 또 올해는 어땠습니까? 민주당 장경태 의원까지 성추행 사건이 연달아 일어나고 있습니다. 이쯤 되면 민주당이 과연 공당으로서 최소한의 도덕적 기강을 갖추고 있는지 되묻지 않을 수가 없습니다. ‘더불어민주당’보다는 ‘더불어성비위당’으로 개명하십시오.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;사건 초기에는 무죄추정과 억울함을 강변하다가 민주당은 여론이 악화되면 허위사실 유포라고 겁박하면서 고발을 일삼고 있습니다. 입으로는 인권과 여성 권익을 외치면서 뒤로는 성을 권력의 전리품 내지 상품으로 여기는 그 이중잣대는 실수가 아닌 민주당의 체질이고 민주당의 민낯이자 본성입니다. 이런 정당과 정원오 후보에게 1000만 서울시민의 미래를 맡길 수는 없습니다. 6월 3일 1000만 서울시민들의 현명한 판단이 있을 것이라는 사실을 명심하시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;죄송하지만 1분만 더 부탁드리겠습니다, 위원장님.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;빨리 끝내겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-5">&nbsp;아울러 성평등가족부에 엄중히 경고합니다.</span><br/><span class="spk_sub" id="spk_sub15-6">&nbsp;오늘 위원회에 성평등가족부 장차관이 불출석했습니다. 여성 인권과 직결된 성비위 의혹을 외면하면서 어떻게 성평등을 논할 수 있습니까? 오늘 장차관의 불출석은 특정 후보를 편들기 위한 방탄 불출석입니다. 이는 국민에 대한 모독과 기만이며 공직자로서 용납될 수 없는 비겁한 직무유기입니다.</span><br/><span class="spk_sub" id="spk_sub15-7">&nbsp;위원장님, 권력형 성비위에 침묵하는 장관은 저는 그 자리에 있을 자격이 없다고 생각합니다. 원민경 장관이 이 엄중한 사안을 부처의 본질적 관점에서 어떻게 판단하고 있는지 회피나 변명이 아닌 책임 있는 답변을 받아 주실 것을 강력하게 요청드리는 바입니다.</span><br/></div></div></div><div id="spk_16" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 알겠습니다.</span><br/></div></div></div><div id="spk_17" class="item1 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;위원장님 꼭 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_18" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;그리하겠습니다.</span><br/></div></div></div><div id="spk_19" class="item1 speaker spk_mem" data-mem_id="6813" data-name="서명옥" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">서명옥 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6dce07c39f264381aeba58b69c846cd0.jpg" alt="서명옥"></span><span class="txt"><strong class="name">서명옥</strong><span class="position">위원</span><span class="area">(서울 강남구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_20" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;수고하셨고요.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;다음은 서범수 위원님 발언해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;울산 울주군 출신 서범수 위원입니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;지금 민주당 정원오 서울시장후보를 둘러싼 여러 가지 폭력 전과라든지 그리고 30년 만에 드러난 성비위 의혹과 관련해서 국민들이 무척 궁금해하십니다. 그래서 저희들 국민의힘 위원들은 이 진상을 규명하기 위해서 성평등가족위를 개최하자 그래서 오늘 개최를 하고 있음에도 불구하고 성평등가족부에서 장관은 물론 차관도 지금 출석을 하지 않고 또 민주당도 1명도 나오지 않았습니다. 이러한 행정부와 민주당의 회의 거부는 진실 규명 자체를 거부하는 거라고 생각을 합니다. 과연 성평등가족부가 제대로 일을 처리하고 있는지 그리고 성폭력이나 여성에 대한 보호에 관심이 있는지 하는 그런 의심을 가지지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;다 아시다시피 언론에서도 많이 나왔습니다만 정원오 후보는 95년 10월 11일 밤 11시 40분에 카페에서 음주 중에 옆에 있는 사람을 폭행하고 그로 인해서 폭력행위 등 처벌에 관한 법률 그리고 공무집행방해로 벌금 300만 원을 선고받았습니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;지난 95년 양천구의회 본회의에서 장행일 의원은 이렇게 이야기를 했습니다.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;그 PT를 한번 올려 주실래요.</span><br/><span class="spk_sub" id="spk_sub21-6">&nbsp;(영상자료를 보며)</span><br/><span class="spk_sub" id="spk_sub21-7">&nbsp;‘비서실장과 비서가 카페에서 술을 15만 원 상당을 마신 뒤 카페 주인에게 여종업원과 외박을 요구하였으나 주인이 이를 거절하자 비서실장과 비서는 앞으로 영업을 다 해 먹을 것이냐 등으로 협박하면서 주인과 말다툼하던 중’이라는 이야기를 했습니다. 그와 관련해서 그 당시에 양재호 구청장은 이렇게 이야기를 했습니다. ‘먼저 지난 11일 밤 관내 유흥업소에서 있었던 사건에 대해서 시시비비를 떠나서 크게 그 사건을 보고 저 구청장으로서 양천구 소속 1300여 공무원을 지도하는 입장에서 대단히 죄송스럽게 생각하고 있습니다’라고 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub21-8">&nbsp;저는 이 점을 지금 의심스러워하는데요. 저 당시에 그러면 장행일 구의원이 이야기할 때 구체적인 이야기를 하고 질문을 했음에도 불구하고 저 구청장은 그런 어떤 구체적인 사안에 대해서 반박할 수 있는 기회가 있었습니다. 그럼에도 불구하고 거기에 대해서는 전혀 반박을 하지 않고 어찌 됐든 죄송하다라는 식으로 지금 사죄를 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub21-9">&nbsp;그런데 지금 와서는 이제는 그게 아니었고 정치적인 관계였다라고 지금 이야기를 하고 있는데요. 이것이 공직자로서, 서울시를 책임지고 행정을 해야 할 후보로서 과연 이러한 자세가 맞느냐. 그때는 죄송합니다라고 이야기를 하고 한마디도 거기에 대해서는 반박도 하지 않으면서 이제는 이게 공론화되니까 그때 그런 일이 아니었습니다라고 한다는 게 과연 국민들께서 어떻게 생각하고 계시느냐 하는 부분들입니다. 이게 하나가 제일 큰 문제점이고.</span><br/><span class="spk_sub" id="spk_sub21-10">&nbsp;두 번째가 공무집행방해입니다. 공무집행 경찰관에 대해서, 신고를 받고 온 경찰관에 대해서 10일의 치료를 요하는 폭행을 하고 여러 가지 자해 행위를 하고 이렇게 해서 경찰관의 공무집행방해를 해 왔습니다. 서울시장이라는 자리가 과연 어떤 자리입니까? 1000만 시민의 안전과 그리고 자치경찰을 전체적으로 지휘하는 그런 자리입니다. 그런 서울시장후보가, 신고를 받고 온 경찰과 그것도 정복경찰관에 대해서 저렇게 폭행을 가하고 그래서 공무집행방해로 입건된 이 후보가 과연 서울시장으로서의 후보로서의 자격이 갖추어져 있느냐? 저는 그렇지 않다고 봅니다.</span><br/><span class="spk_sub" id="spk_sub21-11">&nbsp;지난번 이재명 대통령도 이런 이야기를 했습니다. ‘왜 이재명 대통령 음주운전이 있습니까?’ 그러니까 ‘시민운동을 하다가 벌어진 일이다’라고 지금 하는데 이것도 똑같습니다. 정원오 후보의 변명을 보면 이 폭행 사건은 성비위와 관련 없이 5·18과 관련되는 정치적인 견해 때문에 한 부분이다……</span><br/><span class="spk_sub" id="spk_sub21-12">&nbsp;1분만 더 주세요.</span><br/></div></div></div><div id="spk_22" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;3분 더 주세요. 3분 드릴 테니 천천히 얘기하세요.</span><br/></div></div></div><div id="spk_23" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;그래서 이런 부분에 대해서 명확하게 예를 좀 설명을 해 주셔야 된다. 그런 것을 진상조사를 하려고 성평등가족부가 있고 또 그것을 보호하기 위해서 성평등가족부가 있음에도 불구하고 이런 일을 방치하고 있다는 게 과연 우리 성평등가족부의 존재가치가 있는 거냐 하는 그런 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;그래서 오늘 어차피 정원오 후보도 없고 장관도 없고 민주당도 없으니까 제가 속기록을 남기기 위해서라도 이런 이야기를 좀 해야 되겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;성평등가족부장관에게 이것을 촉구를 합니다.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;그때 여종업원 외박 요구 의혹에 대해서 주무부처 장관으로 사실관계를 명확하게 진상조사를 해 주십시오. 국민들께서 무척 궁금해하십니다. 정쟁으로만 치부할 것이 아니라 국민들의 알권리를 충족하는 차원에서 성평등가족부가 나서야 한다고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;두 번째, 정원오 후보에게도 묻습니다.</span><br/><span class="spk_sub" id="spk_sub23-6">&nbsp;그때 그 일, 2차 요구를 하신 사실이 있습니까? 이것만 명확하게 이야기를 해 주시면 됩니다. 그리고 아울러 피해자에게 사과를 했다고 하셨는데 피해자가 기억 안 나는 사과가 무슨 사과입니까? 아울러 카페 여직원이라든지 출동 경찰관에게 모두 사과하셨습니까? 이것을 밝혀 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub23-7">&nbsp;아울러 민주당에게도 묻습니다.</span><br/><span class="spk_sub" id="spk_sub23-8">&nbsp;성비위 진상규명 요구를 통째로 거부하는 것은 책임 있는 공당의 자세가 아니라고 봅니다. 안희정 박원순 오거돈 등 민주당에서 배출한 광역단체장을 하려면 성 문제가 없으면 안 된다는 이야기입니까? 왜 이렇게 하나같이 똑같은 DNA를 가지고 있으면서 이런 부분을 가지고 국민들 그리고 서울시민들의 눈살을 찌푸리게 하고 피로감을 가지게끔 합니까?</span><br/><span class="spk_sub" id="spk_sub23-9">&nbsp;우리는 명확하게 기억을 합니다. 5·18 전야제에서 광주 새천년 NHK 단란주점에서 술 먹고 행패를 부렸던 여러 사람들이 이번에도 지금 후보로 나오고 있습니다. 그래 놓고는 사고 치면 전부 5·18로 실드를 치고 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-10">&nbsp;지금이라도 진심 어린 대국민 사과를 하시고 정원오 후보는 사퇴하는 것이 국민에 대한 도리라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub23-11">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_24" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;다음은 이달희 위원님 질의해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_25" class="item1 speaker spk_mem" data-mem_id="6767" data-name="이달희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">이달희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEDALHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/65be51449b5f4f8fb007b5bf0f9bd3e2.png" alt="이달희"></span><span class="txt"><strong class="name">이달희</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;카페 종업원에게 외박 요구가 있었는가 정원오 후보는 대답하십시오.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;국민의힘 비례대표 이달희 위원입니다.</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;성평등가족위원회가 반드시 짚고 넘어가야 할 중대한 사안입니다.</span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;더불어민주당 정원오 서울시장후보를 둘러싼 의혹은 단순히 젊은 시절의 폭행 전과로 대충 덮고 넘어갈 문제가 아닙니다. 유흥주점 여성 종업원에게 외박을 요구하고 이를 거절하는 업주를 향해 공직자의 신분을 내세우며 협박을 가했다는 의혹과 이를 말리는 시민과 출동한 경찰관까지 폭행한 입에 올리기조차 추악하고 참담한 권력형 주폭 사건입니다. 이 사건의 본질은 다름아닌 공직후보자가 무고한 시민과 정당하게 공무를 집행하던 경찰관을 폭행했다는 과거사에 있다는 데 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-5">&nbsp;무엇보다도 국민들께서 더 분노하는 것은 이 끔찍한 사건을 대하는 정 후보 측의 파렴치한 해명에 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-6">&nbsp;최근 당시 동석했다는 양재호 구청장의 비서실장이었던 김석영이 나서서 자신이 주도했고 정 후보는 말리다가 연루되었다며 황당한 변명을 30년 만에 늘어 놓고 있습니다. 음주운전한 당사자를 빼돌리고 음주 측정을 옆자리에 앉은 다른 사람이 하고 과실을 뒤집어씌우는 범죄행위의 꼴입니다. 이는 전형적인 책임회피이자 치졸한 말 맞추기에 불과합니다.</span><br/><span class="spk_sub" id="spk_sub25-7">&nbsp;당시 사건으로 구류 5일과 기소처분을 받은 당사자는 전부 정원오 후보 본인이었습니다. 우리나라 경찰·검찰 그리고 재판 그런 사법체계가 그렇게 만만했습니까? 사건을 주도하지 않고 단순히 말리기만 한 사람에게 공권력의 엄중한 심판이 집중되었다는 것을 지금 이 시점에 그리고 그 사실이 바뀌었다고 해명한들 어느 국민이 믿겠습니까?</span><br/><span class="spk_sub" id="spk_sub25-8">&nbsp;정 후보 측은 그동안 이 사건을 5·18 민주화운동에 대한 인식 차이로 벌어진 다툼이라고 하는 황당한 변명을 늘어놓았습니다. 그러나 판결문 어디에 뒤져 봐도 이 사건이 5·18 때문에 발생했다는 그런 유추되는 내용은 확인되지 않습니다. 심지어 어제 주진우 국민의힘 의원이 공개한 피해자 증언에 따르면 5·18 때문에 논쟁이 붙은 것은 전혀 없었다, 당시 사과를 받거나 용서한 것도 아니라고 분통을 터뜨렸습니다.</span><br/><span class="spk_sub" id="spk_sub25-9">&nbsp;더욱 기가 막힌 것은 당시 정 후보가 주취한 상태라 기억이 없다고 진술한 기사도 있습니다. 술에 취해 아무 기억도 나지 않는다고 했던 사람이 도대체 어떻게 5·18민주화운동을 둘러싼 언쟁이 그토록 선명하게 기억이 나는지, 범죄를 정당화하는 도구로 5·18의 정신을 동원한다는 것 말이나 되는 말입니까?</span><br/><span class="spk_sub" id="spk_sub25-10">&nbsp;그렇다면 정 후보 측에 묻지 않을 수 없습니다. 판결문에도 없는 5·18 그리고 피해자도 부인한 5·18을 도대체 왜 끌어들여 국민을 기만하고 있습니까? 정 후보 자신의 폭행 전과를 민주화의 이불을 뒤집어쓰고 그 이미지 뒤에 숨기려고 하는 것은 아닙니까? 이는 5·18 정신에 대한 모욕이자 사건의 본질을 흐리는 것입니다.</span><br/><span class="spk_sub" id="spk_sub25-11">&nbsp;1995년 10월 20일 양천구의회 속기록에는 당시 경악스러운 정황이 보다 구체적으로 담겨 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-12">&nbsp;(영상자료를 보며)</span><br/><span class="spk_sub" id="spk_sub25-13">&nbsp;PPT 보시는 것처럼 정 후보가 여성 종업원에게 외박을 강요하고 이를 거절한 업주를 협박했으며 그리고 이를 만류하던 시민과 출동한 경찰관을 폭행한 안하무인의 만행이 그대로 담겨 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-14">&nbsp;당시 양재호 양천구청장조차 이런……</span><br/><span class="spk_sub" id="spk_sub25-15">&nbsp;위원장님, 한 2분만 더 주십시오.</span><br/></div></div></div><div id="spk_26" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;2분 더 주시기 바랍니다.</span><br/></div></div></div><div id="spk_27" class="item1 speaker spk_mem" data-mem_id="6767" data-name="이달희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">이달희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEDALHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/65be51449b5f4f8fb007b5bf0f9bd3e2.png" alt="이달희"></span><span class="txt"><strong class="name">이달희</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;이런 구의원의 질의에 ‘관내 유흥업소에서 있었던 사건에 대해 대단히 죄송스럽게 생각한다’며 고개를 숙였습니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;이 참담한 이야기가 진실이라면 이 사안은 결코 30년 전 단순한 사건으로 치부할 수 없습니다. 여성 인권을 유린한 문제이자 공직후보자의 성 인식 문제이며 천만 시민을 우롱하고 있는 도덕성 문제입니다. 성평등가족위원회가 이런 문제를 외면해서는 안 됩니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;위원장님께 강력히 촉구합니다. 성평등가족위원회 차원에서 이 문제의 심각성을 분명히 짚고 정원오 후보와 더불어민주당을 향해 책임 있는 해명과 진상조사를 촉구해야 합니다.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;정원오 후보는 직접 국민 앞에 나서서 똑똑히 답해야 됩니다. 여성 종업원에게 외박을 요구한 것이 맞습니까? 피해자는 5·18 관련 언쟁이 없었다고 하는데 사실관계를 투명하게 밝혀야 합니다.</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;국민 여러분!</span><br/><span class="spk_sub" id="spk_sub27-6">&nbsp;그리고 위원장님!</span><br/><span class="spk_sub" id="spk_sub27-7">&nbsp;양성평등은 단순한 구호에 그쳐서는 안 됩니다. 성평등가족위원회는 이 문제를, 끝까지 진실을 밝혀야 할 의무가 있는 것입니다. 꼭 위원장님께서 이 진상이 끝까지 밝혀져서 국민들께 보고될 수 있도록 해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub27-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_28" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;잘 알겠습니다. 그리하겠습니다.</span><br/></div></div></div><div id="spk_29" class="item1 speaker spk_mem" data-mem_id="6629" data-name="조은희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">조은희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/67f9e0c2b48249b3b008743913f7ca25.jpg" alt="조은희"></span><span class="txt"><strong class="name">조은희</strong><span class="position">위원</span><span class="area">(서울 서초구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;의사진행발언 있습니다, 위원장님.</span><br/></div></div></div><div id="spk_30" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;예.</span><br/></div></div></div><div id="spk_31" class="item1 speaker spk_mem" data-mem_id="6629" data-name="조은희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">조은희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/67f9e0c2b48249b3b008743913f7ca25.jpg" alt="조은희"></span><span class="txt"><strong class="name">조은희</strong><span class="position">위원</span><span class="area">(서울 서초구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;지금 시간에 쫓기는 것도 아니니까 아예 처음부터 8분을 주시지요.</span><br/></div></div></div><div id="spk_32" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;5분 하시고 3분을 추가로 드리겠습니다, 처음부터 8분은 좀 그러니까.</span><br/></div></div></div><div id="spk_33" class="item1 speaker spk_mem" data-mem_id="6629" data-name="조은희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">조은희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/67f9e0c2b48249b3b008743913f7ca25.jpg" alt="조은희"></span><span class="txt"><strong class="name">조은희</strong><span class="position">위원</span><span class="area">(서울 서초구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;중간에 끊지 마시고……</span><br/></div></div></div><div id="spk_34" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;한지아 위원님 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_35" class="item1 speaker spk_mem" data-mem_id="6766" data-name="한지아" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">한지아 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/5156034c3ba143c3bae113a864791bcd.jpg" alt="한지아"></span><span class="txt"><strong class="name">한지아</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;정원오 후보의 유흥주점 사건을 감싸고 있는 단어들을 나열해 보겠습니다. 유흥업소, 폭력, 협박, 성매매 미수, 음주, 갑질. 이 모든 것은 약자들을 보듬기로 약속한 성평등가족위원회 위원으로서 받아들이기 어렵습니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;그런 차원에서 오늘 민주당 위원들의 불참 그리고 성평등가족부의 불참은 과연 우리 약자들을 보듬겠다라는 의지, 성평등을 수호하겠다는 그런 의지가 담겨 있는지 깊은 유감을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;어린 여성을 상품화하는 인식 또 소통보다는 폭력을 대안으로 사용하는 행태, 권력의 무게로 시민을 협박하는 적나라한 갑질이 정원오 유흥주점 사건의 본질이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;서울시장은 단순한 지방자치단체장이 아닙니다. 천만 인구, 51조 넘는 예산을 다루는 서울시장, 소통령이라고까지 불리는 이런 자리입니다. 그래서 국민들은 단순한 행정능력뿐만 아니라 권력을 어떻게 사용했는지 묻게 되는 것입니다.</span><br/><span class="spk_sub" id="spk_sub35-5">&nbsp;그런데 더 심각한 문제는 사건의 본질을 흐리려는 정원오 후보의 태도입니다. 처음에는 5·18 논쟁 때문이었다, 민주화운동과 관련된 토론 과정이었다는 식의 해명이 반복되고 있습니다. 하지만 사과는 전혀 없는 상황입니다. 폭력에 사과는 있었지만 아까 말씀드렸던 외박 요구에 대해서는 현재 사과가 전혀 없고 그것에 대한 대답이 전혀 없다는 말씀을 분명히 드립니다.</span><br/><span class="spk_sub" id="spk_sub35-6">&nbsp;공개된 녹취에 피해자는 분명하게 말합니다.</span><br/><span class="spk_sub" id="spk_sub35-7">&nbsp;위원장님께서 허락해 주신다면 어제 주진우 의원이 공개한 피해자 녹취 한 번 더 재생해도 될까요, 위원장님?</span><br/></div></div></div><div id="spk_36" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;예, 그렇게 하시지요.</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;녹취를 틀어 주시지요.</span><br/></div></div></div><div id="spk_37" class="item1 speaker spk_mem" data-mem_id="6766" data-name="한지아" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">한지아 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/5156034c3ba143c3bae113a864791bcd.jpg" alt="한지아"></span><span class="txt"><strong class="name">한지아</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;고맙습니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;(녹음자료 재생)</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;5·18 때문에 다툰 기억이 없다, 오히려 피해자는 발로 머리를 맞는 등 생명에 위협까지 느꼈다고 증언하고 있습니다. 또 사과도 못 받았다고 분명히 말하고 있습니다. 결국 드러난 것은 민주주의를 지키는 정신이 아니라 지금도 아픈 현대사인 5·18민주화운동을 이용해서 이 사안의 본질을 흐리고 정원오 후보 본인의 사적인 도구로 5·18을 이용한 것밖에는 없습니다. 그것이야말로 가장 비겁한 구태정치라고 저는 생각합니다.</span><br/><span class="spk_sub" id="spk_sub37-4">&nbsp;이번 개헌안 중에 5·18민주화 정신을 헌법전문에 담는 것에 대해 저는 공개적으로 찬성과 필요성에 대해 국민께 말씀드렸습니다. 대한민국 민주주의의 핵심 가치인 인간의 존엄과 인권을 지키겠다는 국가적 약속이 필요하다고 저는 믿었기 때문입니다. 하지만 이번 정원오 사건은 여성 인권 경시, 약자에 대한 폭력, 권력을 이용한 갑질 의혹뿐입니다.</span><br/><span class="spk_sub" id="spk_sub37-5">&nbsp;2000년 5·18 전야제 당시 발생한 새천년 NHK 유흥주점 사건에 대해 우상호 후보가 사과까지 했지만 그 기억은 25년이 지난 지금도 생생합니다. 여성 인권과 권력형 문화에 대한 문제였기 때문에 지금도 저희는 기억하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub37-6">&nbsp;이번 정원오 유흥주점 사건 역시 우리가 가볍게 봐서는 안 됩니다. 어떤 분들은 가애 유흥주점 사건은 30년이 지나지 않았느냐 하지만 이 사건은 말씀드렸듯이 잊혀질 수 있는 문제가 아닙니다. 30년이 지나도 인권, 특히 여성 인권이 유린된 사건은 우리 성평등가족위원회에서 철저한 진상조사를 통해 짚고 넘어가야 됩니다. 무엇보다 서울시장후보로 나선 정원오 후보의 구체적인 답변을 우리는 요구합니다.</span><br/><span class="spk_sub" id="spk_sub37-7">&nbsp;박원순 시장 때도 권력자 앞에서 피해자는 ‘피해 호소인’이 되었습니다. 이런 이중 잣대가 민주당 서울시장후보의 전제 조건은 아닌지 의심하게 됩니다.</span><br/><span class="spk_sub" id="spk_sub37-8">&nbsp;5·18은 누군가의 정치적 면죄부가 아닙니다. ‘권력은 국민 위에 설 수 없다’는 대한민국 민주주의의 원칙인데 민주당의 공소취소 특검에서 봤듯이 이런 명제는 민주당에게는 적용이 안 되는 게 아닌가 싶습니다. 민주당은 더 이상 침묵해서는 안 됩니다. 국민 앞에 진실을 밝히고 책임 있는 답을 내놔야 합니다.</span><br/><span class="spk_sub" id="spk_sub37-9">&nbsp;성평등가족부장관의 명확한 입장도 필요합니다. 위원장님께서 필요한 조치를 취해 주시기를 간곡히 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub37-10">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_38" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;성평등가족부장관님께 오늘 위원님들의 질의를 그대로 정리해서 전달하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub38-2">&nbsp;다음, 조은희 간사님 말씀해 주시지요.</span><br/></div></div></div><div id="spk_39" class="item1 speaker spk_mem" data-mem_id="6629" data-name="조은희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">조은희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/67f9e0c2b48249b3b008743913f7ca25.jpg" alt="조은희"></span><span class="txt"><strong class="name">조은희</strong><span class="position">위원</span><span class="area">(서울 서초구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;국민의힘 간사 서울 서초갑의 조은희 위원입니다.</span><br/><span class="spk_sub" id="spk_sub39-2">&nbsp;위원장님, 오늘 이 자리에서 저희가 던지는 질문은 간단합니다. 딱 하나입니다. 정원오 후보가 간단한 질문에 대답하시면 끝납니다. 유흥주점 여종업원에게 2차 외박을 가자고 강요했습니까, 안 했습니까? 거절한 업주를 실제로 협박했습니까, 안 했습니까? 이 대답만 하시면 끝납니다.</span><br/><span class="spk_sub" id="spk_sub39-3">&nbsp;그런데 왜 대답을 못 하십니까? 그 대답은 안 하고 캠프 뒤에 숨고 5·18 정신 뒤에 숨으니 이렇게 상임위를 열 수밖에 없는 것 아니겠습니까?</span><br/><span class="spk_sub" id="spk_sub39-4">&nbsp;위원장님, 여성에 대한 성적 강요 의혹이 있었는가 없었는가 이 문제를 논하는 이 중요한 자리에 성평등가족부 장관·차관이 불참했습니다. 왜 불참합니까? 매년 공직자 성인지교육을 실시하는 주무 부처가, 성매매 강요 의혹에 엄정히 대처해야 할 주무 부처가 집권 여당 눈치 보는 겁니까? 그렇다면 부처 스스로가 존재의 이유를 부인하는 것입니다. 위원장님, 이 문제는 엄중히 꾸짖어 주십시오.</span><br/><span class="spk_sub" id="spk_sub39-5">&nbsp;민주당에도 유감을 표합니다. 성평등가족위는 그 어느 상임위보다 성적 강요 의혹에 단호히 대처해야 합니다. 이를 근절하기 위해 노력해야 하는 곳입니다. 그런데 이 중차대한 문제를 정쟁이라면서 회피하고 장외에서 고발 운운하며 회의 소집 요구조차 거부하고 불참했습니다. 이 빈자리를 보십시오. 오늘 민주당 그리고 성평등가족부의 현주소 아닙니까? 고 박원순 시장의 권력형 성폭력 피해자를 피해 호소인이라고 지칭하던 그때의 민주당과 무엇이 다릅니까?</span><br/><span class="spk_sub" id="spk_sub39-6">&nbsp;위원장님, 다시 한번 민주당과 성평등가족부에 정원오 후보의 성매매 강요 의혹 진상조사에 응할 것을 촉구해 주십시오.</span><br/><span class="spk_sub" id="spk_sub39-7">&nbsp;의혹을 종합 정리하면, 위원님들 지금 죽 말씀하셨는데 다음과 같습니다.</span><br/><span class="spk_sub" id="spk_sub39-8">&nbsp;첫째, 성매매 강요 있었습니까, 없었습니까? 성매매 강요 의혹이 있던 장소 ‘가애’는 유흥업소입니까, 커피 마시는 카페입니까?</span><br/><span class="spk_sub" id="spk_sub39-9">&nbsp;(패널을 들어 보이며)</span><br/><span class="spk_sub" id="spk_sub39-10">&nbsp;여기 보시면 ‘가애’ 있습니다. 이 밑에 지하라고 쓰여 있습니다. 이런 곳에서, 지하에 있는 곳에서 커피를 마십니까? 아니면 뭘 합니까?</span><br/><span class="spk_sub" id="spk_sub39-11">&nbsp;1995년도 양천구의회 본회의에서 민주당 소속 양재호 구청장, 총무국장도 관내 유흥업소에서 일어난 사건이라고 공식 인정하고 사과했습니다. 이런 장소가 5·18 토론 장소입니까, 외박 강요 장소입니까?</span><br/><span class="spk_sub" id="spk_sub39-12">&nbsp;둘째, 5·18 논쟁입니다. 이것이 5·18 논쟁입니까, 주취 갑질·폭행입니까? 당시 피해자는 육성 녹취에서 5·18 논쟁은 전혀 없었으며 사과를 받거나 용서한 기억도 없다고 진술했습니다. 민주당은 여기에 당시 공범인 김석영 양천구 비서실장의 증언을 끌고 와 5·18 논쟁이 있었다고 주장합니다. 공범의 말을 믿어야 됩니까, 피해자의 말을 믿어야 됩니까?</span><br/><span class="spk_sub" id="spk_sub39-13">&nbsp;백번 양보해서 그 말을 믿는다고 칩시다. 그러면 주취 폭행 진압을 위해서 출동한 경찰관 2명과도 5·18 토론 중에 폭행했습니까? 경찰 폭행 사유는 뭡니까?</span><br/><span class="spk_sub" id="spk_sub39-14">&nbsp;셋째, 주범 바꿔치기 시도입니다. 어제 민주당은 공범이던 전 비서실장을 대동해서 판결문이 인정한 주취 폭행의 주범 정원오 후보를 두고……</span><br/></div></div></div><div id="spk_40" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;3분 주시고.</span><br/><span class="spk_sub" id="spk_sub40-2">&nbsp;다시 하시기 바랍니다.</span><br/></div></div></div><div id="spk_41" class="item1 speaker spk_mem" data-mem_id="6629" data-name="조은희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">조은희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/67f9e0c2b48249b3b008743913f7ca25.jpg" alt="조은희"></span><span class="txt"><strong class="name">조은희</strong><span class="position">위원</span><span class="area">(서울 서초구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;당시 공범이었던 비서실장은 ‘내가 폭행 주범이다’ 이러고 죄를 뒤집어썼습니다. ‘술자리에서 내가 이 아무개를 때렸다. 폭행이 벌어졌을 때 정원오 후보는 그 자리에 없었다’ 이렇게 말했습니다. 그러나 판결문은 주범으로 처벌받은 것은 정원오 후보입니다. 비서실장은 아무런 처벌도 받지 않았습니다.</span><br/><span class="spk_sub" id="spk_sub41-2">&nbsp;묻겠습니다. 죄 지은 사람은 벌을 받지 않고, 죄 지은 사람은 벌을 받았다는 겁니까? 공범의 말이 판결보다 위에 있다는 허무맹랑한 주장일 뿐입니다.</span><br/><span class="spk_sub" id="spk_sub41-3">&nbsp;정원오 후보에게 다시 물어봐야 됩니다. 가애에서 여종업원에게 성매매를 강요했습니까, 안 했습니까? 왜 답을 못 하십니까? 혹시 답을 했다가 허위사실유포로 불행해질까 봐 걱정해서 캠프 뒤에 숨는 겁니까? 그리고 주범과 공범을 바꾸는 겁니까? 아까 우리 동료 위원이 음주운전 때 운전자와 옆자리 동석자를 바꿔치는 것과 뭐가 다르냐고 물었습니다.</span><br/><span class="spk_sub" id="spk_sub41-4">&nbsp;정원오 후보는 공약 발표도 대리로 합니다. 본인의 범죄 의혹 해명마저 대리로 합니다. 대리인 뒤에서, 대통령 뒤에 숨어서 어떻게 서울시정을 논하겠습니까? 비겁한 행태를 즉각 중단하십시오. 1000만 서울시민은 대리인이 아니라 당당히 진실을 밝히는 책임 있는 일꾼을 원합니다.</span><br/><span class="spk_sub" id="spk_sub41-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_42" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub42-2">&nbsp;더 이상 발언하실 위원이 계시지……</span><br/></div></div></div><div id="spk_43" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;의사진행발언……</span><br/></div></div></div><div id="spk_44" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;예, 잠깐만 하시지요.</span><br/></div></div></div><div id="spk_45" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;오늘 우리 위원님들이 말씀하신 것 확인해야 될 사안들이 많은 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;그런데 아마 오늘 성평등가족부장관이 중국 출장간다고 못 오신 것 같은데요, 언제 들어오시지요?</span><br/></div></div></div><div id="spk_46" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;아마 월요일은 출근한다고 들었습니다.</span><br/></div></div></div><div id="spk_47" class="item1 speaker spk_mem" data-mem_id="6708" data-name="서범수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">서범수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dc9bc21d63ef4cd5968a27eadd34e0f6.jpg" alt="서범수"></span><span class="txt"><strong class="name">서범수</strong><span class="position">위원</span><span class="area">(울산 울주군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;그러면 들어오시면 이 회의를 다시 한번 더 소집해 주실 것을 우리 위원장님께 강력하게 요청을 드립니다.</span><br/></div></div></div><div id="spk_48" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;예.</span><br/></div></div></div><div id="spk_49" class="item1 speaker spk_mem" data-mem_id="6629" data-name="조은희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">조은희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/67f9e0c2b48249b3b008743913f7ca25.jpg" alt="조은희"></span><span class="txt"><strong class="name">조은희</strong><span class="position">위원</span><span class="area">(서울 서초구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;확실하게 대답해 주십시오.</span><br/></div></div></div><div id="spk_50" class="item1 speaker spk_mem" data-mem_id="6722" data-name="이인선" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">위원장 이인선 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/f7214149825143218b24268f4de14974.jpg" alt="이인선"></span><span class="txt"><span class="position">위원장</span><strong class="name">이인선</strong><span class="area">(대구 수성구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;알겠습니다. 지시하겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;오늘 위원님들의 발언이 계셨던 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub50-3">&nbsp;오늘 성평등가족위원회는 긴급 현안질의로 정원오 서울시장후보자의 과거 폭행 사건과 해명 논란, 공직후보자로서의 자격 문제를 점검했습니다.</span><br/><span class="spk_sub" id="spk_sub50-4">&nbsp;분명히 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub50-5">&nbsp;이 사안은 단순한 과거사가 아닙니다. 공직후보자의 폭력 전력, 성인지 감수성 그리고 국민 앞에서의 정직성을 묻는 중대한 문제입니다. 관련 자료에 따르면 정 후보자는 1995년 양천구청장 비서관 신분으로 술자리 폭행사건에 연루되었고, 시민과 출동 경찰관을 폭행했고, 공무집행방해 혐의로 처벌받은 전력이 있습니다. 또한 최근 언론 보도에 따르면 피해자 녹취에서 5·18 관련 언쟁은 없었다, 사과나 용서도 없었다는 주장도 제기되었습니다.</span><br/><span class="spk_sub" id="spk_sub50-6">&nbsp;문제는 분명합니다. 서울시장후보라면 진실 공방 뒤에 숨을 것이 아니라 국민 앞에 직접 설명해야 합니다. 5·18 민주화운동은 개인의 폭력 전과를 포장하는 방패가 될 수 없습니다. 또한 여성 종업원 관련 부적절한 의혹까지 제기된 상황입니다. 여성과 가족, 시민의 안전과 인권을 책임질 서울시장후보에게 결코 가볍게 넘길 수 없는 문제입니다.</span><br/><span class="spk_sub" id="spk_sub50-7">&nbsp;더불어민주당에도 묻겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-8">&nbsp;여성 인권과 피해자 보호를 말해 온 정당이 왜 자기 후보의 폭력 전력과 여성 관련 의혹 앞에서는 침묵합니까? 이것이야말로 국민이 분노하는 바로 내로남불입니다.</span><br/><span class="spk_sub" id="spk_sub50-9">&nbsp;특히 지난 박원순 전 서울시장, 오거돈 전 부산시장, 안희정 전 충남지사 등 광역단체장의 경우도 반면교사로 삼아야 할 것입니다. 정원오 후보자는 더 이상 회피하지 말고 당시 사건의 진실과 피해자 사과 여부, 5·18 해명 논란, 여성 관련 의혹에 대해 서울시민 앞에 직접 답하시기 바랍니다. 서울시민들은 이 사안을 결코 가볍게 여기지 않고 있습니다. 공직후보자의 폭력 전력, 성인지 감수성, 피해자에 대한 책임까지 어떻게 대응하고 답변하는지 철저히 지켜보겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-10">&nbsp;오늘 회의는 사실은 여당 위원님들과 성평등가족부차관 등 정부 측이 참석을 하지 않았습니다. 그래서 지금 행정실장님께서는 확인 전화를 해 주시고 지금 1분 뒤에, 확인을 해 본 결과 참석하지 않을 것 같으면 정회를 하도록 하겠습니다. 잠깐 확인 한번 해 보시지요, 오고 계신지 어떤지.</span><br/><span class="spk_sub" id="spk_sub50-11">&nbsp;1분만 기다려 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub50-12">&nbsp;확인을 하고 있습니다만 행정실장이 차관께 참석 여부를 다시 확인하는 시간 동안 산회보다는 밤 12시까지 정회를 하는 쪽으로 제가 결정하겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-13">&nbsp;지금 차관이 세종시에서 참석이 어렵다는 확인을 했습니다. 그래서 오늘 이 긴급 현안질의를 정회하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-14">&nbsp;그러면 정회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(14시46분 회의중지)</p><br/><p class="tit_sm taR">(계속개의되지 않았음)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(6인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank"><span class="name lts3 ">서명옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank"><span class="name lts3 ">서범수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEDALHEE" target="_blank"><span class="name lts3 ">이달희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINSEON" target="_blank"><span class="name lts3 ">이인선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOEUNHEE" target="_blank"><span class="name lts3 ">조은희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank"><span class="name lts3 ">한지아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYEONHEE" target="_blank"><span class="name lts3 ">이연희</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이옥순</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 김태규</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 13. 이용우 의원 대표발의)(의안번호 2216852)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 20. 이주희 의원 대표발의)(의안번호 2216923)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">2월 23일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>결혼중개업의 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 26. 박형수 의원 대표발의)(의안번호 2217066)</div></div><div class="con"><p class="tit_sm"><strong>가족친화 사회환경의 조성 촉진에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 2. 26. 조승래 의원 대표발의)(의안번호 2217076)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 2월 27일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 5. 이기헌 의원 대표발의)(의안번호 2217265)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 6일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 6. 신장식 의원 대표발의)(의안번호 2217277)</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 6. 손솔 의원 대표발의)(의안번호 2217300)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 3월 9일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 9. 이춘석 의원 대표발의)(의안번호 2217325)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 10일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아이돌봄 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 16. 김선교 의원 대표발의)(의안번호 2217499)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 17일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 17. 이수진 의원 대표발의)(의안번호 2217541)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 18일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>학교 밖 청소년 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 18. 백승아 의원 대표발의)(의안번호 2217587)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 19. 백혜련 의원 대표발의)(의안번호 2217602)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 23. 임미애 의원 대표발의)(의안번호 2217683)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 24일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 24. 황정아 의원 대표발의)(의안번호 2217704)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 25일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>다문화가족지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 25. 김남희 의원 대표발의)(의안번호 2217759)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 26일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 1. 이주희 의원 대표발의)(의안번호 2218012)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 3. 박홍배 의원 대표발의)(의안번호 2218079)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 6일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아이돌봄 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 13. 조은희 의원 대표발의)(의안번호 2218272)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 14일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>한부모가족지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 14. 안상훈 의원 대표발의)(의안번호 2218327)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 15일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 15. 정춘생 의원 대표발의)(의안번호 2218334)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 16. 윤종군 의원 대표발의)(의안번호 2218382)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 17일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 17. 전진숙 의원 대표발의)(의안번호 2218395)</div></div><div class="con"><p class="tit_sm"><strong>청소년복지 지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 17. 임미애 의원 대표발의)(의안번호 2218406)</div></div><div class="con"><p class="tit_sm"><strong>건강가정기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 17. 서영교 의원 대표발의)(의안번호 2218419)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 4월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 27. 조은희 의원 대표발의)(의안번호 2218623)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>성평등 국회 실현을 위한 실천 결의안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 28. 이주희 의원 등 60인 발의)(의안번호 2218680)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 30일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 7. 서영교 의원 대표발의)(의안번호 2218880)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 8일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>다문화가족지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 8. 전진숙 의원 대표발의)(의안번호 2218898)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 11일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>고독사 예방 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 23. 허영 의원 대표발의)(의안번호 2217691)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 24일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>정보통신망 이용촉진 및 정보보호 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 26. 이주희 의원 대표발의)(의안번호 2217788)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">3월 27일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>지역고용 활성화에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 3. 31. 안호영 의원 대표발의)(의안번호 2217999)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 1일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 27. 조은희 의원 대표발의)(의안번호 2218627)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 28일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="13.950844985845414%"><col width="52.82019387492494%"><col width="17.427296903148324%"><col width="15.801664236081326%"></colgroup><thead><tr><th scope="col">공포번호</th><th scope="col">행정입법명</th><th scope="col">공포일자</th><th scope="col">구분</th></tr></thead><tr><td>제36222호<br/></td><td>학교 밖 청소년 지원에 관한 법률 시행령 일부개정령<br/></td><td>2026. 3. 24.<br/></td><td>시행령<br/></td></tr><tr><td>제36220호<br/></td><td>규제 재검토기한 정비를 위한 136개 법령의 일부개정에 관한 대통령령<br/></td><td>2026. 3. 24.<br/></td><td>시행령<br/></td></tr><tr><td>제36221호<br/></td><td>인신매매등방지 및 피해자보호 등에 관한 법률 시행령 일부개정령<br/></td><td>2026. 3. 24. <br/></td><td>시행령<br/></td></tr><tr><td>제36222호<br/></td><td>성폭력방지 및 피해자보호 등에 관한 법률 시행령 일부개정령<br/></td><td>2026. 3. 24.<br/></td><td>시행령<br/></td></tr><tr><td>제36270호<br/></td><td>아이돌봄 지원법 시행령 일부개정령<br/></td><td>2026. 4. 21.<br/></td><td>시행령<br/></td></tr><tr><td>제36271호<br/></td><td>가정폭력방지 및 피해자보호 등에 관한 법률 시행령 일부개정령<br/></td><td>2026. 4. 21.<br/></td><td>시행령<br/></td></tr><tr><td>제6호<br/></td><td>국민의 행정상 의무이행행위 편의 개선을 위한 2개 법령의 일부개정에 관한 성평등가족부령<br/></td><td>2026. 3. 24.<br/></td><td>시행규칙<br/></td></tr><tr><td>제8호<br/></td><td>성평등가족부 직제 시행규칙 일부개정령<br/></td><td>2026. 3. 24.<br/></td><td>시행규칙<br/></td></tr><tr><td>제9호<br/></td><td>아이돌봄 지원법 시행규칙 일부개정령<br/></td><td>2026. 4. 21.<br/></td><td>시행규칙<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯보고서 제출</strong></p><div class="con"><p class="tit_sm"><strong>2026년도 기금 자산운용지침</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 1. 성평등가족부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026회계연도 1분기 세출예산 이용·전용·이체 및 기금운용계획변경 내역</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 6. 성평등가족부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 성평등가족부 자체평가(주요정책) 결과보고서</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 6. 성평등가족부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026년도 성평등가족부 성과관리시행계획</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 13. 성평등가족부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>제3차 양성평등정책 기본계획(2023-2027) 2026년 시행계획</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 29. 성평등가족부장관 제출)</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56695;
+			const class_id = 2;
+			const confer_num = "N054266";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640606121" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640606121"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640606121"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640606121"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

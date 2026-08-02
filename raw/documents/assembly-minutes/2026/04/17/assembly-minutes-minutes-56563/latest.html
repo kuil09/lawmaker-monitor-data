@@ -1,0 +1,933 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56563" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제434회 (임시회) 제8차 정치개혁특별위원회(법안심사제1소위원회)</strong><span class="date">(2026.04.17.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 공직선거법 일부개정법률안(정희용 의원 대표발의)(의안번호 2205718)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 공직선거법 일부개정법률안(김성회 의원 대표발의)(의안번호 2217187)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 공직선거법 일부개정법률안(서미화 의원·용혜인 의원 대표발의)(의안번호 2209350)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 공직선거법 일부개정법률안(박민규 의원 대표발의)(의안번호 2211447)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2207526)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 공직선거법 일부개정법률안(한민수 의원 대표발의)(의안번호 2207688)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2208546)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 공직선거법 일부개정법률안(양부남 의원 대표발의)(의안번호 2208908)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 공직선거법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2209854)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 공직선거법 일부개정법률안(이원택 의원 대표발의)(의안번호 2210184)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2211844)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2213202)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2213833)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 공직선거법 일부개정법률안(차규근 의원·김영배 의원 대표발의)(의안번호 2214319)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 공직선거법 일부개정법률안(장경태 의원 대표발의)(의안번호 2214491)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 공직선거법 일부개정법률안(진성준 의원 대표발의)(의안번호 2215353)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 공직선거법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2216018)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216188)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 공직선거법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216218)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 공직선거법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2216233)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 공직선거법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2216301)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 공직선거법 일부개정법률안(김성원 의원 대표발의)(의안번호 2216316)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2216342)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2216465)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 공직선거법 일부개정법률안(정점식 의원 대표발의)(의안번호 2216500)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 공직선거법 일부개정법률안(한창민 의원 대표발의)(의안번호 2216758)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">27. 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2216809)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">28. 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216847)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">29. 공직선거법 일부개정법률안(임미애 의원·정춘생 의원·정혜경 의원 대표발의)(의안번호 2217216)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">30. 공직선거법 일부개정법률안(김문수 의원 대표발의)(의안번호 2217475)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">31. 공직선거법 일부개정법률안(배준영 의원 대표발의)(의안번호 2217598)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">32. 공직선거법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217643)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">33. 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2217699)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">34. 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2215337)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">35. 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213920)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">36. 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(김한규 의원 대표발의)(의안번호 2217211)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="윤건영 소위원장 (서울 구로구을)"> 
+							윤건영 소위원장 (서울 구로구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="임미애 위원 (비례대표)"> 
+							임미애 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="이해식 위원 (서울 강동구을)"> 
+							이해식 위원 (서울 강동구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="윤준병 위원 (전북 정읍시고창군)"> 
+							윤준병 위원 (전북 정읍시고창군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김승수 위원 (대구 북구을)"> 
+							김승수 위원 (대구 북구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="배준영 위원 (인천 중구강화군옹진군)"> 
+							배준영 위원 (인천 중구강화군옹진군)
+						</option>
+					
+					
+						<option value="강동완 중앙선거관리위원회사무차장">강동완 중앙선거관리위원회사무차장</option>
+					
+						<option value="박연병 행정안전부자치분권국장">박연병 행정안전부자치분권국장</option>
+					
+						<option value="조문상 전문위원">조문상 전문위원</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(6명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">윤건영</span>
+												<span class="position">소위원장</span>
+												<span class="area">(서울 구로구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6781" data-name="임미애" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">임미애</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6648" data-name="이해식" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">이해식</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강동구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6677" data-name="윤준병" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">윤준병</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 정읍시고창군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6597" data-name="김승수" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">김승수</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 북구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6700" data-name="배준영" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">배준영</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 중구강화군옹진군)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="강동완" data-pos="중앙선거관리위원회사무차장"> 
+											<label for="spk_attend0">
+												<span class="name">강동완</span>
+												<span class="position">중앙선거관리위원회사무차장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="박연병" data-pos="행정안전부자치분권국장"> 
+											<label for="spk_attend1">
+												<span class="name">박연병</span>
+												<span class="position">행정안전부자치분권국장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="조문상" data-pos="전문위원"> 
+											<label for="spk_attend2">
+												<span class="name">조문상</span>
+												<span class="position">전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56563&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제434회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>정치개혁특별위원회회의록</h1><p class="tit_sm">(법안심사제1소위원회)</p></div></div><p class="num">제8호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 4월 17일(금)</p></li><li><div class="sbj lts2">장소</div><p class="con">행정안전위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 공직선거법 일부개정법률안(정희용 의원 대표발의)(의안번호 2205718)</li><li><span class="num">2.</span> 공직선거법 일부개정법률안(김성회 의원 대표발의)(의안번호 2217187)</li><li><span class="num">3.</span> 공직선거법 일부개정법률안(서미화 의원·용혜인 의원 대표발의)(의안번호 2209350)</li><li><span class="num">4.</span> 공직선거법 일부개정법률안(박민규 의원 대표발의)(의안번호 2211447)</li><li><span class="num">5.</span> 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2207526)</li><li><span class="num">6.</span> 공직선거법 일부개정법률안(한민수 의원 대표발의)(의안번호 2207688)</li><li><span class="num">7.</span> 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2208546)</li><li><span class="num">8.</span> 공직선거법 일부개정법률안(양부남 의원 대표발의)(의안번호 2208908)</li><li><span class="num">9.</span> 공직선거법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2209854)</li><li><span class="num">10.</span> 공직선거법 일부개정법률안(이원택 의원 대표발의)(의안번호 2210184)</li><li><span class="num">11.</span> 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2211844)</li><li><span class="num">12.</span> 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2213202)</li><li><span class="num">13.</span> 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2213833)</li><li><span class="num">14.</span> 공직선거법 일부개정법률안(차규근 의원·김영배 의원 대표발의)(의안번호 2214319)</li><li><span class="num">15.</span> 공직선거법 일부개정법률안(장경태 의원 대표발의)(의안번호 2214491)</li><li><span class="num">16.</span> 공직선거법 일부개정법률안(진성준 의원 대표발의)(의안번호 2215353)</li><li><span class="num">17.</span> 공직선거법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2216018)</li><li><span class="num">18.</span> 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216188)</li><li><span class="num">19.</span> 공직선거법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216218)</li><li><span class="num">20.</span> 공직선거법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2216233)</li><li><span class="num">21.</span> 공직선거법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2216301)</li><li><span class="num">22.</span> 공직선거법 일부개정법률안(김성원 의원 대표발의)(의안번호 2216316)</li><li><span class="num">23.</span> 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2216342)</li><li><span class="num">24.</span> 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2216465)</li><li><span class="num">25.</span> 공직선거법 일부개정법률안(정점식 의원 대표발의)(의안번호 2216500)</li><li><span class="num">26.</span> 공직선거법 일부개정법률안(한창민 의원 대표발의)(의안번호 2216758)</li><li><span class="num">27.</span> 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2216809)</li><li><span class="num">28.</span> 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216847)</li><li><span class="num">29.</span> 공직선거법 일부개정법률안(임미애 의원·정춘생 의원·정혜경 의원 대표발의)(의안번호 2217216)</li><li><span class="num">30.</span> 공직선거법 일부개정법률안(김문수 의원 대표발의)(의안번호 2217475)</li><li><span class="num">31.</span> 공직선거법 일부개정법률안(배준영 의원 대표발의)(의안번호 2217598)</li><li><span class="num">32.</span> 공직선거법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217643)</li><li><span class="num">33.</span> 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2217699)</li><li><span class="num">34.</span> 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2215337)</li><li><span class="num">35.</span> 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213920)</li><li><span class="num">36.</span> 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(김한규 의원 대표발의)(의안번호 2217211)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 공직선거법 일부개정법률안(정희용 의원 대표발의)(의안번호 2205718)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 공직선거법 일부개정법률안(김성회 의원 대표발의)(의안번호 2217187)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 공직선거법 일부개정법률안(서미화 의원·용혜인 의원 대표발의)(의안번호 2209350)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 공직선거법 일부개정법률안(박민규 의원 대표발의)(의안번호 2211447)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2207526)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 공직선거법 일부개정법률안(한민수 의원 대표발의)(의안번호 2207688)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2208546)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 공직선거법 일부개정법률안(양부남 의원 대표발의)(의안번호 2208908)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 공직선거법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2209854)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 공직선거법 일부개정법률안(이원택 의원 대표발의)(의안번호 2210184)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2211844)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2213202)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2213833)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 공직선거법 일부개정법률안(차규근 의원·김영배 의원 대표발의)(의안번호 2214319)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 공직선거법 일부개정법률안(장경태 의원 대표발의)(의안번호 2214491)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 공직선거법 일부개정법률안(진성준 의원 대표발의)(의안번호 2215353)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 공직선거법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2216018)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216188)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 공직선거법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216218)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 공직선거법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2216233)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 공직선거법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2216301)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 공직선거법 일부개정법률안(김성원 의원 대표발의)(의안번호 2216316)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2216342)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2216465)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">25.</span> 공직선거법 일부개정법률안(정점식 의원 대표발의)(의안번호 2216500)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">26.</span> 공직선거법 일부개정법률안(한창민 의원 대표발의)(의안번호 2216758)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">27.</span> 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2216809)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">28.</span> 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216847)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">29.</span> 공직선거법 일부개정법률안(임미애 의원·정춘생 의원·정혜경 의원 대표발의)(의안번호 2217216)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">30.</span> 공직선거법 일부개정법률안(김문수 의원 대표발의)(의안번호 2217475)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">31.</span> 공직선거법 일부개정법률안(배준영 의원 대표발의)(의안번호 2217598)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">32.</span> 공직선거법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217643)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">33.</span> 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2217699)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">34.</span> 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2215337)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">35.</span> 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213920)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">36.</span> 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(김한규 의원 대표발의)(의안번호 2217211)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(18시55분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제434회 국회(임시회) 제8차 공직선거법및지방선거구제개편심사소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;바쁘신 일정 중에도 소위원회에 참석해 주신 위원님 여러분께 감사의 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;오늘 회의는 여야 간사 간의 사전 협의에 따라 선거구 획정, 선거 여론조사, 장애인 선거 편의 등에 관한 공직선거법과 제주특별자치도법을 심사하여 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;법률안 심사는 전문위원으로부터 일괄 보고를 듣고 정부 측 답변을 들은 다음 위원님들 간에 의견을 교환하는 방식으로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Q4R1P1Q1F5F0D9C4D3B0B2J2K2I2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 공직선거법 일부개정법률안(정희용 의원 대표발의)(의안번호 2205718)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2B5Z0Y3H2G4O1N4L1K9K5S7R1Q8P3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 공직선거법 일부개정법률안(김성회 의원 대표발의)(의안번호 2217187)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2W5U0W3D1E1C1B5B5Z0A0I8J4H5F3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 공직선거법 일부개정법률안(서미화 의원·용혜인 의원 대표발의)(의안번호 2209350)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G5E0F7A0B1Z1Z0Y0Z7X3X0F8E8E7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 공직선거법 일부개정법률안(박민규 의원 대표발의)(의안번호 2211447)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V4W1U2U2D7D1B6C4B4Z5Z2H1H0G8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2207526)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V5U0U1T1U7P1Q4O3N4N5L1M3U0S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 공직선거법 일부개정법률안(한민수 의원 대표발의)(의안번호 2207688)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B4C1A2Y1Z9H1H4G2G4F3F8D4M8M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2208546)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2N5V0V3U0S7T1R1R3A5A4Y9X1Y5W5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 공직선거법 일부개정법률안(양부남 의원 대표발의)(의안번호 2208908)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H5H0F2G2O7P1N1N1M9K5L6S3T6S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 공직선거법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2209854)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z5Z0I3I1G0H1F3E1E7M1N0L3M8K8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 공직선거법 일부개정법률안(이원택 의원 대표발의)(의안번호 2210184)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2E5C0D7K2L8J0K9I2J6H1I3D8C5C0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2211844)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2P4Q1O2P1X9V1V3U3V6T3T4B5A5A3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2213202)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2M5U1T0T2R7S1Q7R3Z3Z1Y0Y7W5V5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 공직선거법 일부개정법률안(이해식 의원 대표발의)(의안번호 2213833)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I5G1H1F1G1B1A1A4Z3Z3X3Y6G0H8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 공직선거법 일부개정법률안(차규근 의원·김영배 의원 대표발의)(의안번호 2214319)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2M5K0L3J0K4R1S9R2P6P1N3P6W1X2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 공직선거법 일부개정법률안(장경태 의원 대표발의)(의안번호 2214491)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2H5F1G2E0F3D1L6M5J2H4I7Q9Q3P0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 공직선거법 일부개정법률안(진성준 의원 대표발의)(의안번호 2215353)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2B6B0Z1I0I6G1H5F2G8E3F3N3N3L5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 공직선거법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2216018)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y5Y1W1E2F4D1E0D5D9B3C4J8I4J5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216188)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2S5T1R2S0A8A1Y1X1Y2W2W3S1T9R1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 공직선거법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216218)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2U6B0C1A1A4Z0X9Y5G8G1E5F8E9E7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 공직선거법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2216233)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J6I0I1E2E2D1D2B2A7B4I6J4H0I6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 공직선거법 일부개정법률안(용혜인 의원 대표발의)(의안번호 2216301)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y6Y0W1X2E2G1E6E2C8B2C4J8K5I6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 공직선거법 일부개정법률안(김성원 의원 대표발의)(의안번호 2216316)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2Q6Q0O1P2N2O1M8N1I0J1H5G0G4F3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 공직선거법 일부개정법률안(임미애 의원 대표발의)(의안번호 2216342)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2N6O0M1M3L0M1K0K5S6T1R1P9Q0O2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2216465)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I6J0I1I2G8H1O5N0O4M1M9L3L1H2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 공직선거법 일부개정법률안(정점식 의원 대표발의)(의안번호 2216500)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2Q6P0P2N0O6M1N5U4W1U5U7S7T9R7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 공직선거법 일부개정법률안(한창민 의원 대표발의)(의안번호 2216758)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2C6D0L2M1K0L1J8H0I3Q5Q2O2P1O1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 공직선거법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2216809)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J6H0H2P1O0O0N9N5L2M3U3V5T4U5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 공직선거법 일부개정법률안(정혜경 의원 대표발의)(의안번호 2216847)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2U6S0R2R2P6Q1Y4Z0X7X0V2U3V7C8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 공직선거법 일부개정법률안(임미애 의원·정춘생 의원·정혜경 의원 대표발의)(의안번호 2217216)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2P6Q0O3P0N5V1W0U5U8T2U9S7S9A5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 공직선거법 일부개정법률안(김문수 의원 대표발의)(의안번호 2217475)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2P6O0L3U1T7V1S1B3A6Z2X9E8D1B1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 공직선거법 일부개정법률안(배준영 의원 대표발의)(의안번호 2217598)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2W6U0D3D1B5C1A3B2Z5A3V6W2U7V8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 공직선거법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217643)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2F6E0D3B2C3K1J3J3Q3P0Q8P3N6V7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 공직선거법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2217699)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2O5O1N2O1J5K1I6J1H5F3G9O1O5M2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 공직선거법 일부개정법률안(한병도 의원 대표발의)(의안번호 2215337)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2J5K0S9T3R0R1P0O5P8X1X7V7W5U9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(정춘생 의원 대표발의)(의안번호 2213920)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2A6X0V3V0T3U1S4T5B1B2A0A8Z9X3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(김한규 의원 대표발의)(의안번호 2217211)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정 제1항부터 의사일정 제36항까지 이상 총 36건의 공직선거법 일부개정법률안과 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;오늘 법률안 심사를 위해 중앙선거관리위원회 강동완 사무차장께서 출석하셨습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;간단히 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item36 speaker spk_mem" data-mem_id="0" data-name="강동완" data-pos="중앙선거관리위원회사무차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">중앙선거관리위원회사무차장 강동완 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="강동완"></span><span class="txt"><span class="position">중앙선거관리위원회사무차장</span><strong class="name">강동완</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;안녕하십니까? 중앙선거관리위원회사무차장 강동완입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;존경하는 윤건영 소위원회 위원장과 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;그동안 너무 고생 많으셨고요. 어려운 국정 심의와 바쁘신 의정활동에도 불구하시고 우리 위원회 소관 공직선거법 개정법률안에 대해 심사해 주셔서 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;오늘 소위원회 심사 과정에서 위원님들께서 주시는 고견에 대해 우리 위원회 입장을 성실히 답변드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_5" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;행정안전부에서는 박연병 자치분권국장이 출석하셨습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;간단히 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_6" class="item36 speaker spk_mem" data-mem_id="0" data-name="박연병" data-pos="행정안전부자치분권국장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">행정안전부자치분권국장 박연병 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박연병"></span><span class="txt"><span class="position">행정안전부자치분권국장</span><strong class="name">박연병</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;위원님들 고생 많으셨고요. 말씀 주신 의견들 잘 반영해서 저희가 집행에 차질이 없도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_7" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;그러면 법률안 심사에 들어가겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;먼저 전문위원께서 소위 심사자료를 중심으로 간략히 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_8" class="item36 speaker spk_mem" data-mem_id="0" data-name="조문상" data-pos="전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">전문위원 조문상 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="조문상"></span><span class="txt"><span class="position">전문위원</span><strong class="name">조문상</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;지금 배부해 드린 유인물이 소위 자료 선거구 관련 획정 사항 하나 그다음에 공직선거법 제도개선 사항 하나와 공직선거법 별표 2, 시도의회의원지역선거구구역표가 있고요 별표 3, 시군구의회의원 총정수표가 있습니다. 그다음에 별지로 부대의견을 배부해 드렸습니다. 이 부분을 참고해 주시기 바라고요.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;먼저 선거구 관련 획정 사항 소위 자료를 봐 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;1쪽입니다. 교섭단체 간 합의사항을 토대로 대안에 대해서 일괄적으로 설명을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;먼저 1쪽에 지방의회의원 선거구 조정 결과를 보시면 광역의회의원 및 기초의회의원을 각각 25명 증원하는 것으로 되어 있습니다. 따라서 시도의원 정수는 25명 증원된 754명, 시군의회 총정수는 25명 증원된 3003명이 되겠습니다. 아울러 시도의원의 증원 인원과 해당 지역은 옆의 표를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;그다음에 2번, 광역의회 비례대표의석 확대와 관련해서 현행 광역의회 비례대표 시도의회의원 정수 비율을 100분의 14까지 상향 조정하는 것으로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;2쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;제주도의 경우 현행 100분의 10인 제주도의회 비례대표의회의원 정수 비율을 100분의 25로 상향 조정하고 일몰에 따라서 교육의원 관련 규정을 삭제하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;3쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;광역의회의원선거 중대선거구제 도입과 관련해서 현재 광주광역시 국회의원지역선거구 중 동구남구갑, 북구갑, 북구을, 광산구을 선거구 4곳에 대해서 중대선거구제를 도입하기로 하였습니다. 보시는 바와 같이 4개 선거구에 대해서 지역구당 최대 4인까지 선출할 수 있도록 했고요. 해당 사항은 부칙 제5조로 규정하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub8-10">&nbsp;4쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-11">&nbsp;아울러 자치구·시·군의회의원 선거에 대한 중대선거구제 시범실시를 종전 11곳은 그대로 유지하고 16곳을 추가 지정하여 총 27곳의 선거구로 확대하기로 하였습니다. 따라서 중대선거구제 확대 지역에서는 하나의 지역구당 최대 5인까지 선출할 수 있도록 했고요. 관련 사항을 제3조 부칙에서 마련하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub8-12">&nbsp;5쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-13">&nbsp;헌법불합치 지역 특례와 관련해서 최소정수 기준인 인구 5만 미만에 최소 1명을 보유하고 5만 이상에 최소 2명을 보유하는 기준은 현행을 그대로 유지하도록 하되 부칙에서 도서·산간·접경·농산어촌지역 및 인구감소지역 등을 고려하여 선거구를 획정하도록 하는 내용을 반영하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-14">&nbsp;아울러 배부해 드린 부대의견을 봐 주시면 2건의 부대의견을 제안하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-15">&nbsp;제가 읽어 보겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-16">&nbsp;첫 번째는 ‘이 법에 따라 구성된 전남광주통합특별시의회는 종전 전라남도의회의 의석 규모와 종전 광주광역시의회의 의석 규모의 차이를 고려하여 전남광주통합특별시의회의장, 전남광주통합특별시의회 내 상임위원장 등의 배분이 균형 있게 이루어지도록 노력하여야 한다’라는 내용이고요.</span><br/><span class="spk_sub" id="spk_sub8-17">&nbsp;두 번째는 ‘시도의회는 선거구획정안의 취지가 적극적으로 반영될 수 있도록 노력한다’는 규정입니다.</span><br/><span class="spk_sub" id="spk_sub8-18">&nbsp;6쪽을 봐 주시면 시행일과 관련해서는 대부분의 경우 공포한 날부터 시행하도록 하는데, 별표 1에 국회의원선거구인데요 여기도 지금 통합특별시가 되면서 전라남도와 광주광역시를 전남광주통합특별시로 명칭을 변경하는 내용이 되겠습니다. 이 규정은 7월 1일부터 시행하도록 하고 조금 뒤에 설명드릴 휴대전화 가상번호 제공과 관련해서는 공포 후 6개월부터 시행하도록 하였고요.</span><br/><span class="spk_sub" id="spk_sub8-19">&nbsp;그 밖에 부칙에 대해서는 기존에 있던 내용들입니다. 또한 필요한 경과조치들을 규정하는 내용들이기 때문에 이 부분을 참고해 주시면 되겠습니다. 이건 마치고요.</span><br/><span class="spk_sub" id="spk_sub8-20">&nbsp;두 번째 별첨자료인 공직선거법 제도개선 사항을 봐 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-21">&nbsp;첫 번째 사항입니다. 지난번 소위 때 의결이 됐던 사항인데요. 후보자비방죄의 대상에서 ‘후보자가 되고자 하는 자’ 부분을 삭제하는 내용인데 당시 의견을 주신 게 예비후보자는 포함하도록 하는 것이 좋겠다라는 말씀을 주셔서 예비후보자를 포함하는 것으로 수정하되 후보자비방죄가 이 조뿐만이 아니라 82조의4와 110조에도 있기 때문에 함께 수정하는 것으로 하는 수정의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-22">&nbsp;2쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-23">&nbsp;미반환 선거비용 징수주체 변경과 관련해서 지난 소위에서 시·도별 의견을 확인 후에 이의가 없으면 의결하는 것으로 잠정적으로 결정을 했는데요. 보시는 바와 같이 17개 시·도의 의견을 조회한 결과 5개 시·도로부터 신중검토 의견이 왔다는 말씀을 드립니다. 이 부분과 관련해서는 의논을 좀 해 주셔야 할 것으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub8-24">&nbsp;3쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-25">&nbsp;선거여론조사 실시 서면신고의무 예외 삭제와 관련해서 선관위 측 의견이 양부남 의원안과 같이 제1호 ‘제3자로부터 여론조사 의뢰받은 여론조사 기관·단체’, 제2호 ‘정당’은 그대로 유지하고 나머지 부분은 삭제하는 양부남 의원안을 수용할 수 있다는 의견을 제시하여서 이 부분을 반영하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-26">&nbsp;4쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-27">&nbsp;휴대전화 가상번호의 제공 관련된 기간 단축과 관련해서는 선거여론조사의 시의성과 정확성 제고를 위해 타당한 것으로 보였고요. 다만 기간 단축 내용만 수용하고 웹조사 방식의 선거여론조사 시 가상번호 활용과 가상번호의 유효기간 규정은 반영하지 않는 것으로 수정의견을 제시했다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub8-28">&nbsp;금치산자제도 폐지에 따른 선거권 제한규정은 최보윤, 서미화·용혜인 의원안을 그대로 반영하되 금치산자 규정 자체가 19조 제1호와 제218조의8에도 있기 때문에 관련 규정도 함께 삭제하는 것으로 의견을 제시하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-29">&nbsp;5쪽입니다.</span><br/><span class="spk_sub" id="spk_sub8-30">&nbsp;후보자 등의 비방금지 대상에 장애를 추가하는 내용에 대해서는 수용하는 것으로 하고, 다만 이 부분에 대해서 이의 제기가 있은 날부터 3일 이내에 조치를 하도록 할 경우 3일 이내 조치가 물리적으로 어려움이 있을 것으로 보이기 때문에 현행과 같이 이의 제기에 대한 처리기한은 따로 정하지 않는 내용의 수정의견을 제시했다는 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub8-31">&nbsp;마지막으로 장애인의 투표소 접근성 확보와 관련해서는 제반시설에 임시기표소를 추가하는 김성회 의원안을 그대로 원안대로 반영하는 것으로 마련하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-32">&nbsp;이상 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_9" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;선관위 측 의견 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_10" class="item36 speaker spk_mem" data-mem_id="0" data-name="강동완" data-pos="중앙선거관리위원회사무차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">중앙선거관리위원회사무차장 강동완 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="강동완"></span><span class="txt"><span class="position">중앙선거관리위원회사무차장</span><strong class="name">강동완</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;저희들 여야 합의로 이루어진 법안에 대해서 동의합니다.</span><br/></div></div></div><div id="spk_11" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;행안부 측 의견 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_12" class="item36 speaker spk_mem" data-mem_id="0" data-name="박연병" data-pos="행정안전부자치분권국장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">행정안전부자치분권국장 박연병 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박연병"></span><span class="txt"><span class="position">행정안전부자치분권국장</span><strong class="name">박연병</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;저희도 동의를 합니다.</span><br/></div></div></div><div id="spk_13" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;위원님들 의견 말씀해 주시기 전에 여야 간사 간에 협의했던 내용들을 간단하게 소개하고 가겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;저희가 법안소위 과정에서 여러 토론이 있었습니다. 하지만 이견의 차이를 극복하지 못한 부분 그리고 여러 사정으로 인해서 오늘 법안 처리는 여야가 합의한 만큼만 처리를 하자라고 여야 간사 간에 협의가 있었습니다. 따라서 처리하는 부분들이 위원님들이 생각하실 때 성에 차지 않는 부분이 있다 하더라도 너른 마음으로 양해를 좀 부탁드리고요.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;특히 미반환 선거비용 징수주체 변경 건 관련해서는 지방자치단체 다섯 군데에서 신중검토 의견도 있고 야당에서도 지금은 처리하는 것이 시의적으로 적절치 않다라는 의견을 주셔서 여당도 그걸 받아들여서 미반환 선거비용 징수주체 변경과 관련해서는 이번 회기에 처리하지 않는 걸로 했습니다. </span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;그리고 나머지 부분은 여야 간에 합의가 돼서 올라온 의견이라는 말씀을 드리고요.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;의견이 있으신 위원님들 계시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;임미애 위원님.</span><br/></div></div></div><div id="spk_14" class="item36 speaker spk_mem" data-mem_id="6781" data-name="임미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">임미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7181892839544a728a62343111231bf7.png" alt="임미애"></span><span class="txt"><strong class="name">임미애</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;위원장님, 책상 위에 깔려 있는 보고자료하고 부대의견으로 나와 있는 자료의 부대의견이 여기는 2개가 올라와 있는데 여기 부대의견은 하나밖에 안 올라와 있어서…… 부대의견이 지금 여기 올라와 있는 의견은 하나입니다. 전남광주통합특별시의회에 관한 부대의견이 올라와 있는데 지금 책상 위에 있는 부대의견에는 하나가 더 들어와 있거든요. 어느 게 더 맞나요?</span><br/></div></div></div><div id="spk_15" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;별지로 깔아 둔 게 맞습니다.</span><br/></div></div></div><div id="spk_16" class="item36 speaker spk_mem" data-mem_id="6781" data-name="임미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">임미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7181892839544a728a62343111231bf7.png" alt="임미애"></span><span class="txt"><strong class="name">임미애</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;맞나요?</span><br/></div></div></div><div id="spk_17" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예.</span><br/></div></div></div><div id="spk_18" class="item36 speaker spk_mem" data-mem_id="6781" data-name="임미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">임미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7181892839544a728a62343111231bf7.png" alt="임미애"></span><span class="txt"><strong class="name">임미애</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;그러면 두 번째 있는 부대의견이 ‘시도의회는 선거구획정안의 취지가 적극적으로 반영될 수 있도록 노력한다’라고 담겨져 있습니다. 저희가 22년도 선거에서 기초의회의 중대선거구제를 11곳에서 30곳으로 확대했던 것을 이번 선거에서는 15곳으로 확대한다고 얘기하는 건, 저는 이 취지가 그동안 기초의회에서 2인 선거구가 집중적으로 무투표 당선이 발생하고 다양성이 확보되지 않는다는 그동안 여러 시민단체, 전문가, 시도의회, 기초의회, 많은 분들의 지적사항을 받아들여서 26곳에 전국적으로 시범 선거구가 설정된 거다라고 생각을 하는데요.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;그러면 그런 취지를 생각한다면, 이번에 이렇게 법이 통과되고 나서 다시 기초의회의 선거구 획정과 관련해서는 시도의회에서 논의가 될 텐데 기초의회 선거구획정위원회의 의견이 무시된 채로 지역구가 다시 쪼개지는 일이 발생하는 일은 저는 막아야 된다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;앞에 계신 야당의 존경하는 위원님들도 그렇고 특히 경북에서 3인 선거구 2개를 합쳐서 2인 선거구 3개로 만든다든가 4인 선거구 있는 곳을 2인 선거구로 쪼갠다든가 하는 것은 저희 정개특위가 긴 시간 논의를 하면서 해 왔던 기초의회 중대선거구제의 확대라는 근본 취지에 어긋나는 행위라는 것을 분명하게 말씀드리고, 부대의견대로 선관위에서도 이 제도가 시도의회에서 논의가 될 때 부대의견을 충분하게 반영해서 기초의회가 더 이상 2인 선거구로 쪼개지지 않도록 각별한 관심을 가지고 획정위의 안이 시도의회에서 변경사항 없이 처리될 수 있도록 일을 진행해 주셨으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;가능할까요?</span><br/></div></div></div><div id="spk_19" class="item36 speaker spk_mem" data-mem_id="0" data-name="강동완" data-pos="중앙선거관리위원회사무차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">중앙선거관리위원회사무차장 강동완 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="강동완"></span><span class="txt"><span class="position">중앙선거관리위원회사무차장</span><strong class="name">강동완</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;노력하겠습니다.</span><br/></div></div></div><div id="spk_20" class="item36 speaker spk_mem" data-mem_id="6781" data-name="임미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">임미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7181892839544a728a62343111231bf7.png" alt="임미애"></span><span class="txt"><strong class="name">임미애</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;이게 걱정이 많이 됩니다. 그래서 저는 여기 선거구획정안의 취지가 적극적으로 반영될 수 있도록 노력한다라는 부대의견이 반드시 일정한 강제성을 가지고 시도의회에서 반영되기를 바라는 마음입니다.</span><br/></div></div></div><div id="spk_21" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;임미애 위원님 마음에 대해서는 많은 위원님들이 공감을 하실 거고요. 다만 문안에 대해서 조금 아쉬움이 있을 텐데……</span><br/></div></div></div><div id="spk_22" class="item36 speaker spk_mem" data-mem_id="6781" data-name="임미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">임미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7181892839544a728a62343111231bf7.png" alt="임미애"></span><span class="txt"><strong class="name">임미애</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;매우 아쉽습니다.</span><br/></div></div></div><div id="spk_23" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;그 부분은 여야 합의로 문안을 채택했다라는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;이해식 위원님.</span><br/></div></div></div><div id="spk_24" class="item36 speaker spk_mem" data-mem_id="6648" data-name="이해식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">이해식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEHAESIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/931541823bd142f090e3b63461bbe976.jpg" alt="이해식"></span><span class="txt"><strong class="name">이해식</strong><span class="position">위원</span><span class="area">(서울 강동구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;저도 한말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;부대의견의 가와 관련해서, 저는 애초에 이 안을 제안하면서 부칙에 명시하는 게 어떠냐 이런 제안을 했는데 부대의견에 남기는 것으로 정리된 것 같습니다. 여야가 합의해서 통과를 한 만큼 저도 동의를 하겠습니다. 다만 전남광주통합특별시의회에서 원구성을 할 때 국회의 부대의견이 정확하게 관철이 될 수 있도록 노력해 주셨으면 좋겠다라고 하는 말씀을 꼭 드리고 싶습니다.</span><br/></div></div></div><div id="spk_25" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;윤준병 위원님.</span><br/></div></div></div><div id="spk_26" class="item36 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;확인 겸해서 좀 질의하겠습니다.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;기초의원 총정수 있잖아요. 거기에는 지역 플러스 비례가 합쳐져서 하는 거지요?</span><br/></div></div></div><div id="spk_27" class="item36 speaker spk_mem" data-mem_id="0" data-name="강동완" data-pos="중앙선거관리위원회사무차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">중앙선거관리위원회사무차장 강동완 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="강동완"></span><span class="txt"><span class="position">중앙선거관리위원회사무차장</span><strong class="name">강동완</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;그렇습니다.</span><br/></div></div></div><div id="spk_28" class="item36 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;그러면 지금 내용을 보면 지역이 도의원 정수가 늘어나면 기초의원 정수가 한 명씩 느는 걸로 했는데 전북의 경우 보니까 예전에는 198명인데 지금 200명으로 돼 있어요. 그러면 지금 우리가 비례대표 14%로 조정하겠다고 한 내용이 실제 정수에는 전혀 반영이 안 된 결과가 될 것 같은데……</span><br/></div></div></div><div id="spk_29" class="item36 speaker spk_mem" data-mem_id="0" data-name="강동완" data-pos="중앙선거관리위원회사무차장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">중앙선거관리위원회사무차장 강동완 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="강동완"></span><span class="txt"><span class="position">중앙선거관리위원회사무차장</span><strong class="name">강동완</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;광역만입니다.</span><br/></div></div></div><div id="spk_30" class="item36 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;아, 기초는 안 하고?</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;내가 잘못 인식을 했습니다.</span><br/></div></div></div><div id="spk_31" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;김승수 위원님 발언 듣고 마무리 좀 하도록 하겠습니다.</span><br/></div></div></div><div id="spk_32" class="item36 speaker spk_mem" data-mem_id="6597" data-name="김승수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">김승수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSEUNGSU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ed6fa85a063842c59f5cfc4cca90eafb.jpg" alt="김승수"></span><span class="txt"><strong class="name">김승수</strong><span class="position">위원</span><span class="area">(대구 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;일단 여야 합의안에 대해서 존중을 합니다마는 이번에 일부 광역의회의원선거에 중대선거구제가 도입됐는데 그게 광주광역시에 도입이 됐습니다.</span><br/><span class="spk_sub" id="spk_sub32-2">&nbsp;그런데 또 도입되면서 기존의 제8회 선거와 관련해 가지고 다 합치면 각 선거구별로 한 명씩 의원정수가 늘어나서 총 4명이 늘어나는 것으로 이렇게 돼 있습니다.</span><br/><span class="spk_sub" id="spk_sub32-3">&nbsp;저는 이게 시·도 통합하고 중대선거구제 도입하고 또 중대선거구제 도입하면서 정원을 늘리는 것이 논리적으로 무슨 상관관계가 있는지 굉장히 이해하기 어렵다는 말씀을 드립니다. 인구가 늘어났다 그러면 이해가 됩니다마는 광주 같은 경우에 2022년 인구가 143만, 이번에 인구가 한 138만, 5만 정도가 줄었는데도 불구하고 이것 자체가 국민들한테 과연 설득력이 있느냐.</span><br/><span class="spk_sub" id="spk_sub32-4">&nbsp;마찬가지입니다. 이번에 또 기초의원들 관련한 선거구도 중대선거구제 시범실시 지역이 늘어났는데 다 한 명씩 의원정수를 늘리는 것으로 그렇게 해 놨습니다. 중대선거구제 실시하고 의원정수 늘리는 것하고 무슨 논리적인 연관성이 있는지 이해하기 힘들다. 저도 이해하기 때문에 국민들이 납득하기가 힘들지 않겠는가 이런 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub32-5">&nbsp;그리고 공직선거법 개정과 관련해서 미반환 선거비용 징수주체를 국세청에서 지방자치단체로 전환하는 것에 대해서는 신중검토 해서 다음에 논의하기로 했던 것에 대해서 저도 반대의견을 냈던 사람으로서 다행스럽다 생각을 하고요.</span><br/><span class="spk_sub" id="spk_sub32-6">&nbsp;이번에 전체 지자체 광역시도 중에 의견을 낸 데가 다섯 군데밖에 없는데 다섯 군데는 다 일단 신중검토 의견을 냈습니다. 그래서 다음에 논의할 때는 의견을 내지 않은 지방자치단체에 대해서도 전부 다 여기에 동의하느냐, 찬성하느냐, 전혀 의견이 없느냐 그것을 정확하게 제시해 주면 심의하는 데 도움이 되지 않겠는가 생각합니다.</span><br/><span class="spk_sub" id="spk_sub32-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_33" class="item36 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;한마디만 할게요.</span><br/></div></div></div><div id="spk_34" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;예, 다음 배준영 위원님.</span><br/></div></div></div><div id="spk_35" class="item36 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;아까 윤준병 위원님께서도 말씀을 하셨는데 저도……</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;인천 같은 경우에는 지금 자치구도 개편되고 인구도 늘어서 시의원이 지역은 3명 늘고 비례대표는 2명 늘어 갖고 시의원이 토털 5명 늘었는데 저희 기초의원은 2명이 늘었어요. 123명에서 125명으로 늘었는데, 그게 제가 이해하기로도 윤 위원님 말씀대로 그렇게 늘어나는 게 매칭돼서 늘어나는 것으로 알고 있었는데 이 부분을 좀 설명을……</span><br/></div></div></div><div id="spk_36" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;혹시 행안부에서 설명이 바로 가능할까요? 아니면 제 생각에는 배준영 위원님이 양해해 주신다면 배준영 위원님께 행안부에서 좀 데이터를 보여 주고 설명하시는 게 맞을 것 같아서요. 소위 끝나고 나서 전체회의 그 사이에 충분히 설명이 가능하지 않을까요?</span><br/></div></div></div><div id="spk_37" class="item36 speaker spk_mem" data-mem_id="0" data-name="박연병" data-pos="행정안전부자치분권국장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">행정안전부자치분권국장 박연병 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박연병"></span><span class="txt"><span class="position">행정안전부자치분권국장</span><strong class="name">박연병</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;예, 그렇게 설명드리도록 하겠습니다.</span><br/></div></div></div><div id="spk_38" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;배 위원님 그렇게 하시면 어떻겠습니까? 전체회의 사이에 시간이 있으니까요.</span><br/></div></div></div><div id="spk_39" class="item36 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;알겠습니다.</span><br/></div></div></div><div id="spk_40" class="item36 speaker spk_mem" data-mem_id="6687" data-name="윤건영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">소위원장 윤건영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/86149364515f47e0a4b1cdeaec6f19ca.jpg" alt="윤건영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤건영</strong><span class="area">(서울 구로구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;다른 의견이 없으시면 논의를 종료하고 논의한 사항에 대해서 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub40-2">&nbsp;의사일정 제1항부터 제33항까지는 각각 본회의에 부의하지 않고 제34항은 소위에서 계속 심사하기로 하며 지난 소위에서 의결한 대안에서 의사일정 제34항의 내용을 제외한 뒤 지금까지 심사한 결과를 반영하여 공직선거법 일부개정법률안(대안)을 우리 위원회안으로 다시 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-4">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-5">&nbsp;의사일정 제35항 및 제36항은 각각 본회의에 부의하지 않고 지금까지 심사한 결과를 반영하여 제주특별자치도 설치 및 국제자유도시 조성을 위한 특별법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub40-6">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub40-7">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub40-8">&nbsp;이것으로 1소위 법안심사를 모두 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub40-9">&nbsp;오늘 의결한 법안에 대한 체계와 자구 정리는 소위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub40-10">&nbsp;위원님 여러분 정말 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub40-11">&nbsp;정부 관계자 여러분과 전문위원을 비롯한 공무원 여러분, 국회 보좌진 모두 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub40-12">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(19시15분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(17인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMOONSOO" target="_blank"><span class="name lts3 ">김문수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSEUNGSU" target="_blank"><span class="name lts3 ">김승수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMEUNHYE" target="_blank"><span class="name lts3 ">김은혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJAESUB" target="_blank"><span class="name lts3 ">김재섭</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKDUKHYUM" target="_blank"><span class="name lts3 ">박덕흠</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank"><span class="name lts3 ">배준영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOILJUN" target="_blank"><span class="name lts3 ">서일준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGJAEBONG" target="_blank"><span class="name lts3 ">송재봉</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOUNKUNYOUNG" target="_blank"><span class="name lts3 ">윤건영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGSIK" target="_blank"><span class="name lts3 ">이상식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAESIK" target="_blank"><span class="name lts3 ">이해식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMJONGDEUK" target="_blank"><span class="name lts3 ">임종득</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank"><span class="name lts3 ">정춘생</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank"><span class="name lts3 ">조승환</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 정순임</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 조문상</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>행정안전부</p><li><a class="in_nm"><span class="pos"><span class="lts6">자치분권국장</span></span><span class="name lts3"> 박연병</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯중앙선거관리위원회측 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>중앙선거관리위원회</p><li><a class="in_nm"><span class="pos"><span class="lts4">사무차장</span></span><span class="name lts3"> 강동완</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">법제국장</span></span><span class="name lts3"> 박세진</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56563;
+			const class_id = 3;
+			const confer_num = "N054200";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640631909" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640631909"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640631909"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640631909"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

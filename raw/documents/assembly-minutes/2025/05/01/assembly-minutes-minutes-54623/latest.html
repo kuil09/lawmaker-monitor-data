@@ -1,0 +1,664 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=54623" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제424회 (임시회) 제3차 예산결산특별위원회</strong><span class="date">(2025.05.01.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2025년도 제1회 추가경정예산안(의안번호 2209986)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2025년도 복권기금운용계획변경안(의안번호 2209987)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 2025년도 공공자금관리기금운용계획변경안(의안번호 2209988)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 2025년도 정보통신진흥기금운용계획변경안(의안번호 2209989)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 2025년도 방송통신발전기금운용계획변경안(의안번호 2209990)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 2025년도 중소벤처기업창업 및 진흥기금운용계획변경안(의안번호 2209991)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 2025년도 소상공인시장진흥기금운용계획변경안(의안번호 2209992)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 2025년도 고용보험기금운용계획변경안(의안번호 2209993)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 2025년도 임금채권보장기금운용계획변경안(의안번호 2209994)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 2025년도 산업재해보상보험및예방기금운용계획변경안(의안번호 2209995)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 2025년도 근로복지진흥기금운용계획변경안(의안번호 2209996)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 2025년도 주택도시기금운용계획변경안(의안번호 2209997)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박정 위원장 (경기 파주시을)"> 
+							박정 위원장 (경기 파주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="허영 위원 (강원 춘천시철원군화천군양구군갑)"> 
+							허영 위원 (강원 춘천시철원군화천군양구군갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤종오 위원 (울산 북구)"> 
+							윤종오 위원 (울산 북구)
+						</option>
+					
+					
+						<option value="최상목 부총리겸기획재정부장관">최상목 부총리겸기획재정부장관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(3명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6688" data-name="박정" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">박정</span>
+												<span class="position">위원장</span>
+												<span class="area">(경기 파주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6612" data-name="허영" data-pos="소위원장대리"> 
+											<label for="spk_mem1">												
+												<span class="name">허영</span>
+												<span class="position">위원</span>
+												<span class="area">(강원 춘천시철원군화천군양구군갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6744" data-name="윤종오" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">윤종오</span>
+												<span class="position">위원</span>
+												<span class="area">(울산 북구)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="최상목" data-pos="부총리겸기획재정부장관"> 
+											<label for="spk_attend0">
+												<span class="name">최상목</span>
+												<span class="position">부총리겸기획재정부장관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=54623&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제424회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>예산결산특별위원회회의록</h1></div></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2025년 5월 1일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">제2회의장</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2025년도 제1회 추가경정예산안(의안번호 2209986)</li><li><span class="num">2.</span> 2025년도 복권기금운용계획변경안(의안번호 2209987)</li><li><span class="num">3.</span> 2025년도 공공자금관리기금운용계획변경안(의안번호 2209988)</li><li><span class="num">4.</span> 2025년도 정보통신진흥기금운용계획변경안(의안번호 2209989)</li><li><span class="num">5.</span> 2025년도 방송통신발전기금운용계획변경안(의안번호 2209990)</li><li><span class="num">6.</span> 2025년도 중소벤처기업창업 및 진흥기금운용계획변경안(의안번호 2209991)</li><li><span class="num">7.</span> 2025년도 소상공인시장진흥기금운용계획변경안(의안번호 2209992)</li><li><span class="num">8.</span> 2025년도 고용보험기금운용계획변경안(의안번호 2209993)</li><li><span class="num">9.</span> 2025년도 임금채권보장기금운용계획변경안(의안번호 2209994)</li><li><span class="num">10.</span> 2025년도 산업재해보상보험및예방기금운용계획변경안(의안번호 2209995)</li><li><span class="num">11.</span> 2025년도 근로복지진흥기금운용계획변경안(의안번호 2209996)</li><li><span class="num">12.</span> 2025년도 주택도시기금운용계획변경안(의안번호 2209997)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2025년도 제1회 추가경정예산안(의안번호 2209986)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2025년도 복권기금운용계획변경안(의안번호 2209987)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 2025년도 공공자금관리기금운용계획변경안(의안번호 2209988)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 2025년도 정보통신진흥기금운용계획변경안(의안번호 2209989)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 2025년도 방송통신발전기금운용계획변경안(의안번호 2209990)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 2025년도 중소벤처기업창업 및 진흥기금운용계획변경안(의안번호 2209991)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 2025년도 소상공인시장진흥기금운용계획변경안(의안번호 2209992)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 2025년도 고용보험기금운용계획변경안(의안번호 2209993)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 2025년도 임금채권보장기금운용계획변경안(의안번호 2209994)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 2025년도 산업재해보상보험및예방기금운용계획변경안(의안번호 2209995)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 2025년도 근로복지진흥기금운용계획변경안(의안번호 2209996)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 2025년도 주택도시기금운용계획변경안(의안번호 2209997)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(19시07분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제424회 국회(임시회) 제3차 예산결산특별위원회를 개의하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 유인물로 대체하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;의사일정에 들어가기에 앞서 위원장으로서 한말씀 올리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;3일간의 예결위 심사 일정을 모두 마치고 교섭단체 간 합의 아래 추경안을 상정하게 되었습니다. 지난 12월 3일 비상계엄으로 시작된 민주주의의 위기가 이번 합의로 조금 극복된 느낌입니다. 이번 일을 계기로 각 당이 모두 계엄의 늪을 빠져나왔으면 합니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;아쉬움은 있습니다. 좀 더 많은 내용을 좀 더 시간을 가지고 심사가 이루어지길 바랐지만 여러 이유로 그러지 못했습니다. 국민이 보시기에 부족한 추경이었음을 누구보다 잘 압니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;전체회의에서 그리고 소위원회에서 여러 위원님들의 간곡한 목소리도 들었습니다. 모두의 목소리를 다 담고 싶었지만 그러지 못한 점에 대해 위원장으로서 유감의 뜻을 전합니다.</span><br/><span class="spk_sub" id="spk_sub2-9">&nbsp;그러나 이번 예결위는 추경이라는 배를 띄웠을 뿐입니다. 다음 예결위가 이 키를 잡고 긴 항해를 마무리해 줄 것이라 믿습니다.</span><br/><span class="spk_sub" id="spk_sub2-10">&nbsp;정부도 오늘의 시간이 끝이 아닌 시작이라는 마음으로 앞으로 국정에 임해 주실 것을 부탁드립니다. 그래야 경제가, 국민이 숨을 쉬고 살아갈 수 있을 것입니다.</span><br/><span class="spk_sub" id="spk_sub2-11">&nbsp;이번은 단촐하게 13.8조 원에 그쳤지만 다음 추경은 두 배 이상이 돼서 국가경제와 민생경제를 든든하게 받치는 알찬 추경이 되기를 바라겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-12">&nbsp;그동안 추경 심의를 위해 노고를 아끼지 않으신 예결위원님들께 감사드립니다. 특히 허영·구자근 간사님께 특별한 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-13">&nbsp;이번 추경이 끝이 아닌 시작이라는 마음으로 의결에 임해 주실 것을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub2-14">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2U5W0A4H2Y1L1P7D2A5G0O9C6J1U1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 2025년도 제1회 추가경정예산안(의안번호 2209986)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2C5U0C4Z2M1M1W7K3N1Z3J3E4Y8W3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 2025년도 복권기금운용계획변경안(의안번호 2209987)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2P5T0W4Z2C1X1G7Z3E2H5G5F1C3C3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 2025년도 공공자금관리기금운용계획변경안(의안번호 2209988)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2R5K0E4P2H1H1S7P3P3G1U7O2X7S2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 2025년도 정보통신진흥기금운용계획변경안(의안번호 2209989)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2S5D0O4B2F1P1M7F3U3O3N8B6R8C7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 2025년도 방송통신발전기금운용계획변경안(의안번호 2209990)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2N5G0B4C2W1O1C7U3C3X5K9R0U9S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 2025년도 중소벤처기업창업 및 진흥기금운용계획변경안(의안번호 2209991)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2W5F0P4X2X1I1P7A3H4P1W8K9K6S1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 2025년도 소상공인시장진흥기금운용계획변경안(의안번호 2209992)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H5T0S4T2Q1N1F7M3V4T3X6E2J3C1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 2025년도 고용보험기금운용계획변경안(의안번호 2209993)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2R5X0O4D2J1B1G7X3V4W5S2G6D4K8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 2025년도 임금채권보장기금운용계획변경안(의안번호 2209994)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2L5S0P4W2J1Z1D7Y3A5H1E7V4B7A6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 2025년도 산업재해보상보험및예방기금운용계획변경안(의안번호 2209995)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2A5Q0E4K2P1U1X7Q3O5O3R7R1V6O8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 2025년도 근로복지진흥기금운용계획변경안(의안번호 2209996)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2T5N0V4P2T1T1B7L3A5I5Y4I7D6L7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 2025년도 주택도시기금운용계획변경안(의안번호 2209997)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(19시10분)</p><br/><div id="spk_4" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항 2025년도 제1회 추가경정예산안부터 의사일정 제12항 2025년도 주택도시기금운용계획변경안까지 이상 12건을 일괄하여 계속 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;먼저 추경예산안 등 조정소위원회가 심사한 결과에 대해서 보고를 받겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;소위 위원으로 활동해 주신 허영 간사님 나오셔서 심사 결과를 보고하여 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item12 speaker spk_mem" data-mem_id="6612" data-name="허영" data-pos="소위원장대리"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장대리 허영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/52e5baf2188242e8b7688e9ca3748bab.png" alt="허영"></span><span class="txt"><span class="position">소위원장대리</span><strong class="name">허영</strong><span class="area">(강원 춘천시철원군화천군양구군갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;예산결산특별위원회 간사 더불어민주당 허영입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;지금부터 2025회계연도 제1회 추가경정예산안 및 11건의 기금운용계획변경안에 대한 소위원회의 심사 결과를 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;먼저 심사경과를 간략히 말씀드리면 우리 소위원회는 두 차례에 걸친 회의와 보류안건 등의 심사를 위한 간사 간 협의 및 부대의견 협의를 통해 추가경정예산안 심사가 신속히 이루어지도록 최선을 다하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;우리 소위원회는 상임위원회 예비심사 결과를 원칙적으로 존중하였으며 전체회의 과정에서 제기된 위원님들의 지적사항을 심사하고 이를 최대한 반영하고자 노력하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;신속한 추가경정예산안 심사를 위해 산불 피해, 경기침체 등으로 인해 어려움을 겪는 국민들에게 조속한 민생 회복에 보탬이 될 수 있도록 하였다는 점도 함께 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;특히 열정적으로 추가경정예산안 심사에 애써 주신 여기 앉아 계신 모든 예결위원 여러분들과 국무위원 여러분 그리고 존경하는 박정 위원장님, 구자근 간사님, 김영환 위원님, 김형동 위원님, 안도걸 위원님, 이종욱 위원님, 장철민 위원님, 최형두 소위 위원님께 깊은 감사의 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;우리 위원회의 심사에 따른 총 조정내역을 말씀드리면, 정부가 제출한 12조 1565억 원의 추경안에 대해 1조 8843억 원을 증액하고 2639억 원을 감액하여 총 1조 6205억 원이 증액되었습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;주요 증액 내용을 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;첫째, 산불 예방을 위해 산불방지대책 사업 88억 원, 산림헬기 도입 및 운영 사업 50억 원을 증액하고 산불지역 마을단위 복구·재생을 위해 100억 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;둘째, 여름철 수해를 대비하기 위해 국가하천 정비 관련 225억 원을 증액하고 하수관로 정비 관련 287억 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;셋째, 민생 회복 및 지역경제 활성화를 위해 지역사랑상품권 및 지역화폐 발행 지원에 필요한 관련 예산 4000억 원을 증액했습니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;넷째, 물가안정 및 농수산물의 소비 진작을 위해 농축산물 할인 지원 700억 원과 수산물 할인 지원 300억 원을 증액했습니다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;다섯째, 마약·딥페이크·성범죄 등 민생침해범죄에 대응하기 위해 법무부 국민생활침해범죄 수사 사업 37억 원 등을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;다음 부대의견으로는 정부는 특별재난지역으로 선포된 경북·경남·울산의 산불 피해에 대해 주택 전파 피해자에 대한 주거비 총 지원금을 최소 1억 원 이상 지원하고 피해 농가 생계비를 최대 12개월로 확대하며 공장·상가 철거·복구에 대한 신규 지원과 농기계에 대한 정부 지원율 상향 등을 적극적으로 강구하도록 하는 등 총 11건의 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-15">&nbsp;이러한 수정사항을 반영하고 부대의견을 첨부하여 제1회 추가경정예산안과 공공자금관리기금, 정보통신진흥기금, 방송통신발전기금, 중소벤처기업창업 및 진흥기금, 소상공인시장진흥기금, 임금채권보장기금, 주택도시기금 등 7건의 기금운용계획변경안에 대해서는 각각 수정 의결하였습니다. 그리고 복권기금, 고용보험기금, 산업재해보상보험및예방기금, 근로복지진흥기금 등 4건의 기금운용계획변경안에 대해서는 각각 원안 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-16">&nbsp;이번 추경예산이 신속하게 지원되어 산불 피해로 인한 주민들과 경기침체로 어려운 소상공인, 날로 격화되고 심화되고 있는 글로벌 통상 질서와 경제 전쟁 속에서 우리 대한민국이 선도국가로서의 위치를 하루빨리 회복하고 선도해 나갈 수 있도록 편성했다는 것을 다시 한번 강조드리면서 우리 국민 여러분들께 이 추경안이 최소한의 마중물이 되도록 정부는 신속 집행에 최선의 노력을 다해 주시길 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-17">&nbsp;보다 자세한 내용은 배부해 드린 유인물을 참조하시고 우리 추경안등조정소위원회가 심사보고한 대로 의결하여 주시기 바라겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-18">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;여러분들, 컴퓨터 단말기에 지금 배포가 되어 있습니다. 참조해 주시고요.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;방금 보고받으신 내용에 대해 의견 있으신 위원님 계시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;제가 조금 더 서둘러서 협의를 하고 여러분들에게 배포 형태로 드렸어야 되는데 단말기에 그냥 수록한 걸로 해서 불편하신 점 있으면 너그럽게 양해해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_7" class="item12 speaker spk_mem" data-mem_id="6744" data-name="윤종오" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">윤종오 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4cc7cc8814354a4b85dde1c745f33b1c.png" alt="윤종오"></span><span class="txt"><strong class="name">윤종오</strong><span class="position">위원</span><span class="area">(울산 북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;불편한 것이 아니라 예산 (청취 불능) 맞지 않습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;마이크 좀 켜 주세요.</span><br/></div></div></div><div id="spk_8" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;그러면 조금 나올 때까지 기다릴까요? 어떻게……</span><br/></div></div></div><div id="spk_9" class="item12 speaker spk_mem" data-mem_id="6744" data-name="윤종오" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">윤종오 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4cc7cc8814354a4b85dde1c745f33b1c.png" alt="윤종오"></span><span class="txt"><strong class="name">윤종오</strong><span class="position">위원</span><span class="area">(울산 북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;마이크 켜 주세요.</span><br/></div></div></div><div id="spk_10" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;내용들이 좀 있어서 보시기에는 불편하시지만 단말기를 봐 주시고 또 배포 자료는 바로 다시 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;(「회의 자료에 있습니까?」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;회의 자료에 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;(「소위 자료 보면 됩니까?」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub10-5">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub10-6">&nbsp;그러면 더 이상 의견이 없으시면 이상으로 토론을 종결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-7">&nbsp;(「이의 있습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub10-8">&nbsp;지금 단말기에 내용이 올라와 있어서 확인하시고 그것에 따라서 의견을 주시면 될 것 같습니다. 그게 꼭 종이 형태로 배포해야 되는 것은 아니고 단말기에 올려도 되는 형태이기 때문에 그렇게 참조해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item12 speaker spk_mem" data-mem_id="6744" data-name="윤종오" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">윤종오 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4cc7cc8814354a4b85dde1c745f33b1c.png" alt="윤종오"></span><span class="txt"><strong class="name">윤종오</strong><span class="position">위원</span><span class="area">(울산 북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;마이크 좀 켜 주세요.</span><br/></div></div></div><div id="spk_12" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;의견 있으시다니까 말씀……</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;시간 3분 드리세요.</span><br/></div></div></div><div id="spk_13" class="item12 speaker spk_mem" data-mem_id="6744" data-name="윤종오" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">윤종오 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4cc7cc8814354a4b85dde1c745f33b1c.png" alt="윤종오"></span><span class="txt"><strong class="name">윤종오</strong><span class="position">위원</span><span class="area">(울산 북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;진보당 울산 북구 윤종오 위원입니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;지금 우리 예산결산 심사를 하는 데 있어서 방금 보고하시고 이제 지금 단말기에 올라왔습니다. 이걸 확인하고 검토하고 문제점이 있는지 최소한의 이의 제기를 할 수 있는 시간을 주셔야 됨에도 불구하고 교섭단체 간사끼리 합의했다고 일방적으로 이렇게 통과시키는 것은 예산을 바라보고 있는 국민들이 매우 실망할 일이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;여기 참여하신 국회의원들 아무것도 모르고 앉아 가지고 방금 올린 것 가지고 거수기처럼 손드는 게 이게 지금 국민들한테 얼마나 부끄러운 일입니까? 최소한의 설명 시간은 있어야 되는 것 아닌가요? 가뜩이나 찔끔 추경 올렸다고 많은 국민들이 비판하고 있고 여러 상임위에서 민생 예산이 올라왔음에도 불구하고 그냥 싹둑 다 자르고 아무 내용도 모르고 여기서 거수기처럼 손드는 게 과연 제대로 민주주의가 작동하는가 의심스럽습니다. 앞으로 이런 일 없었으면 좋겠습니다.</span><br/></div></div></div><div id="spk_14" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;윤종오 위원님 말씀 잘 새겨서 앞으로 좀 더 심도 있는 토의와 그리고 의결된 사항을 미리 좀 아실 수 있도록 제도개선이나 이런 것들 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;그러면 더 이상 의견 없으신가요?</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;이상으로 토론을 종결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;그러면 의결하기에 앞서 2025년도 제1회 추가경정예산안 및 11건의 기금운용계획변경안 중 증액되었거나 새 비목이 설치된 부분에 대한 정부 측 의견을 듣겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-6">&nbsp;최상목 부총리겸기획재정부장관님 나오셔서 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_15" class="item12 speaker spk_mem" data-mem_id="0" data-name="최상목" data-pos="부총리겸기획재정부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">부총리겸기획재정부장관 최상목 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최상목"></span><span class="txt"><span class="position">부총리겸기획재정부장관</span><strong class="name">최상목</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;정부는 25년 제1회 추가경정예산안 및 11개 기금운용계획변경안 심의 과정에서 정부 원안보다 증액된 부분과 새 비목이 설치된 부분에 대해 이의가 없습니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_16" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;그러면 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;의사일정 제1항 2025년도 제1회 추가경정예산안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-5">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-6">&nbsp;다음은 의사일정 제2항 2025년도 복권기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-8">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-9">&nbsp;다음은 의사일정 제3항 2025년도 공공자금관리기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-12">&nbsp;다음은 의사일정 제4항 2025년도 정보통신진흥기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-13">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-14">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-15">&nbsp;다음은 의사일정 제5항 2025년도 방송통신발전기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-16">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-17">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-18">&nbsp;다음은 의사일정 제6항 2025년도 중소벤처기업창업 및 진흥기금운용계획 변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-19">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-20">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-21">&nbsp;다음은 의사일정 제7항 2025년도 소상공인시장진흥기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-22">&nbsp;이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-23">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-24">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-25">&nbsp;다음은 의사일정 제8항 2025년도 고용보험기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-26">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-27">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-28">&nbsp;다음은 의사일정 제9항 2025년도 임금채권보장기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-29">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-30">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-31">&nbsp;다음은 의사일정 제10항 2025년도 산업재해보상보험및예방기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-32">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-33">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-34">&nbsp;다음은 의사일정 제11항 2025년도 근로복지진흥기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-35">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-36">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-37">&nbsp;다음은 의사일정 제12항 2025년도 주택도시기금운용계획변경안은 심사보고와 같이 부대의견을 첨부하여 수정한 부분은 수정안대로, 기타 부분은 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-38">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-39">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub16-40">&nbsp;구체적인 계수 정리 및 자구 수정 등은 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub16-41">&nbsp;그러면 정부 측으로부터 인사말씀을 듣겠습니다.</span><br/><span class="spk_sub" id="spk_sub16-42">&nbsp;최상목 부총리겸기획재정부장관님 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_17" class="item12 speaker spk_mem" data-mem_id="0" data-name="최상목" data-pos="부총리겸기획재정부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">부총리겸기획재정부장관 최상목 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최상목"></span><span class="txt"><span class="position">부총리겸기획재정부장관</span><strong class="name">최상목</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;존경하는 박정 위원장님 그리고 예결위 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;지난 예결위 과정에서 심도 있는 논의를 거쳐 2025년도 제1회 추가경정예산안과 11개의 기금운용계획변경안을 의결해 주신 데 대해 깊은 감사의 말씀을 드립니다. 정부는 금번 추경예산이 신속히 집행되어 우리 국민께 최대한 빨리 닿을 수 있도록 총력을 기울이겠습니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;아울러 그간 심의 과정에서 위원님 여러분께서 제기해 주신 지적과 귀한 고견들에 대해서는 향후 예산편성 및 정책 수립 과정에서 적극 반영되도록 최대한 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;성심성의껏 심의해 주신 위원님들의 노고에 다시 한번 깊은 감사의 말씀과 존경을 표합니다.</span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_18" class="item12 speaker spk_mem" data-mem_id="6688" data-name="박정" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 박정 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/152aafe19d524e949398c1807d54fc7a.jpg" alt="박정"></span><span class="txt"><span class="position">위원장</span><strong class="name">박정</strong><span class="area">(경기 파주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;이상으로 2025년도 제1회 추가경정예산안 및 기금운용계획변경안에 대한 우리 위원회 심사가 모두 마무리되었습니다.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;위원장으로서 마지막으로 한말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;천지개벽이 일어나지 않는 한 오늘 이 회의가 제가 주재하는 마지막 예결위 회의가 될 것 같습니다. 1년 동안 믿고 함께해 주신 예결위원님들께 감사인사드립니다. 또한 위원회를 원만하게 이끌기 위해 노력해 주신 구자근·허영 간사님께도 심심한 감사인사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub18-5">&nbsp;1년이었는데 10년 같았습니다. 국회의 예산심의권을 강화하기 위해 헌정사상 최초로 법정기한 내에 예산안 심의를 마쳤습니다. 또 그것 때문에 국민의힘 위원님들의 거센 항의도 있었고 욕도 많이 먹었습니다. 평생 들을 욕을 그때 다 들은 기분이었습니다. 특히 12·3 비상계엄이라는 초유의 사태도 감내해야 했습니다.</span><br/><span class="spk_sub" id="spk_sub18-6">&nbsp;돌이켜 보면 그것이 정답이었을까라는 고민은 해 봅니다. 당시에 마무리발언을 하면서 ‘가지 않은 길, 가지 않을 수 없는 길’이라고 표현했던 생각이 납니다. 그러나 그 어떤 길도 불순한 의도를 가진 사악한 길은 아니었습니다. 그리고 국민의힘 위원님들의 비판도 마찬가지였다고 봅니다.</span><br/><span class="spk_sub" id="spk_sub18-7">&nbsp;길은 걷다 보면 만나기 마련입니다. 우리도 그 어느 지점에서 같은 길을 가고 있을 것입니다. 그래서 지난 1년이 우리 모두에게 힘이 되는 길이었다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub18-8">&nbsp;예결위 위원님들, 1년 동안 정말 수고 많으셨습니다. 우리는 가장 중요한 한국 정치사의 한 페이지를 함께한 동지들입니다. 앞으로 그 어떤 의정활동을 하는 순간에도 여러분의 얼굴을 떠올리며 기억하겠습니다.</span><br/><span class="spk_sub" id="spk_sub18-9">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub18-10">&nbsp;그리고 최상목 부총리겸기획재정부장관님을 비롯한 정부 측 관계자 여러분, 불철주야 위원님을 보좌하고 계시는 보좌진 여러분, 원활한 회의 진행을 위해 물심양면으로 힘써 준 수석전문위원을 비롯한 우리 위원회 직원 여러분, 의정기록과와 의회경호과 직원 여러분, 우리 위원회 회의에 지속적인 관심으로 지켜봐 주시는 언론인 여러분께도 깊은 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub18-11">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(19시31분 산회)</p><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(45인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KUJAKEUN" target="_blank"><span class="name lts3 ">구자근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWONHYANGYEOP" target="_blank"><span class="name lts3 ">권향엽</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWON" target="_blank"><span class="name lts3 ">김성원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSEUNGSU" target="_blank"><span class="name lts3 ">김승수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGJIN" target="_blank"><span class="name lts3 ">김영진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGWHAN" target="_blank"><span class="name lts3 ">김영환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHYUNGDONG" target="_blank"><span class="name lts3 ">김형동</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSooHyun" target="_blank"><span class="name lts3 ">박수현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEUNG" target="_blank"><span class="name lts2 ">박정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHBUMSOO" target="_blank"><span class="name lts3 ">서범수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank"><span class="name lts3 ">서영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINDONGUK" target="_blank"><span class="name lts3 ">신동욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINYEONGDAE" target="_blank"><span class="name lts3 ">신영대</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/EOMTAEYOUNG" target="_blank"><span class="name lts3 ">엄태영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank"><span class="name lts3 ">오기형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHSAEHEE" target="_blank"><span class="name lts3 ">오세희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/WISEONGGON" target="_blank"><span class="name lts3 ">위성곤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJONGO" target="_blank"><span class="name lts3 ">윤종오</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEGANG" target="_blank"><span class="name lts3 ">이재강</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJONHWOOK" target="_blank"><span class="name lts3 ">이종욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUYOUNGLEE" target="_blank"><span class="name lts3 ">이주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMJONGDEUK" target="_blank"><span class="name lts3 ">임종득</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMHOSEON" target="_blank"><span class="name lts3 ">임호선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JANGKYUNGTAE" target="_blank"><span class="name lts3 ">장경태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHULMINJANG" target="_blank"><span class="name lts3 ">장철민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGYEONWOOK" target="_blank"><span class="name lts3 ">정연욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank"><span class="name lts3 ">조승환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJIYEON" target="_blank"><span class="name lts3 ">조지연</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank"><span class="name lts3 ">주철현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank"><span class="name lts3 ">차규근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIEUNSEOK" target="_blank"><span class="name lts3 ">최은석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank"><span class="name lts3 ">최형두</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANKIHO" target="_blank"><span class="name lts3 ">한기호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANMINSOO" target="_blank"><span class="name lts3 ">한민수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHSUNGMOO" target="_blank"><span class="name lts3 ">허성무</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank"><span class="name lts2 ">허영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HONGKEEWON" target="_blank"><span class="name lts3 ">홍기원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGUNHA" target="_blank"><span class="name lts3 ">황운하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGJUNGA" target="_blank"><span class="name lts3 ">황정아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(5인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMOONSOO" target="_blank"><span class="name lts3 ">김문수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGJOO" target="_blank"><span class="name lts3 ">김병주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAESEON" target="_blank"><span class="name lts3 ">김태선</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOBAESOOK" target="_blank"><span class="name lts3 ">조배숙</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이신우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 정대영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 이동훈</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 이형진</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>감사원</p><li><a class="in_nm"><span class="pos"><span class="lts2">원장</span></span><span class="name lts3"> 최재해</span></a></li><p>기획재정부</p><li><a class="in_nm"><span class="pos"><span class="lts6">부총리겸장관</span></span><span class="name lts3"> 최상목</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제2차관</span></span><span class="name lts3"> 김윤상</span></a></li><p>교육부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 오석환</span></a></li><p>과학기술정보통신부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 유상임</span></a></li><p>외교부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 조태열</span></a></li><p>법무부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 박성재</span></a></li><p>행정안전부</p><li><a class="in_nm"><span class="pos"><span class="lts6">장관직무대행</span></span><span class="name lts3"> 고기동</span></a></li><p>문화체육관광부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 유인촌</span></a></li><p>농림축산식품부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 송미령</span></a></li><p>산업통상자원부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 안덕근</span></a></li><p>보건복지부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 조규홍</span></a></li><p>환경부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 김완섭</span></a></li><p>고용노동부</p><li><a class="in_nm"><span class="pos"><span class="lts6">장관직무대행</span></span><span class="name lts3"> 김민석</span></a></li><p>여성가족부</p><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김기남</span></a></li><p>국토교통부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 박상우</span></a></li><p>해양수산부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 송명달</span></a></li><p>중소벤처기업부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 오영주</span></a></li><p>경찰청</p><li><a class="in_nm"><span class="pos"><span class="lts6">청장직무대행</span></span><span class="name lts3"> 이호영</span></a></li><p>소방청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 허석곤</span></a></li><p>산림청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 임상섭</span></a></li><p>해양경찰청</p><li><a class="in_nm"><span class="pos"><span class="lts6">차장직무대리</span></span><span class="name lts3"> 안성식</span></a></li><p>방송통신위원회</p><li><a class="in_nm"><span class="pos"><span class="lts4">부위원장</span></span><span class="name lts3"> 김태규</span></a></li><p>금융위원회</p><li><a class="in_nm"><span class="pos"><span class="lts3">위원장</span></span><span class="name lts3"> 김병환</span></a></li><p>개인정보보호위원회</p><li><a class="in_nm"><span class="pos"><span class="lts3">위원장</span></span><span class="name lts3"> 고학수</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯예비심사보고서 송부</strong></p><div class="con"><p class="tit_sm"><strong>2025년도 제1회 추가경정예산안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 4. 21. 정부 제출)(의안번호 2209986)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 29일 소관 상임위원회(정무·행정안전·산업통상자원중소벤처기업·국토교통)의 예비심사보고서가 각각 송부됨</div></div><div class="con"><p class="tit_sm"><strong>2025년도 중소벤처기업창업 및 진흥기금운용계획변경안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 4. 21. 정부 제출)(의안번호 2209991)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 소상공인시장진흥기금운용계획변경안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 4. 21. 정부 제출)(의안번호 2209992)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 4월 29일 소관 상임위원회(산업통상자원중소벤처기업)의 예비심사보고서가 송부됨</div></div><div class="con"><p class="tit_sm"><strong>2025년도 주택도시기금운용계획변경안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2025. 4. 21. 정부 제출)(의안번호 2209997)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 29일 소관 상임위원회(국토교통)의 예비심사보고서가 송부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 54623;
+			const class_id = 4;
+			const confer_num = "N052918";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641074791" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641074791"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641074792"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641074792"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

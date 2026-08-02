@@ -1,0 +1,757 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52491" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제418회 (정기회) 제2차 보건복지위원회</strong><span class="date">(2024.09.30.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2024년도 국정감사 증인·참고인 출석 요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박주민 위원장 (서울 은평구갑)"> 
+							박주민 위원장 (서울 은평구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이수진 위원 (경기 성남시중원구)"> 
+							이수진 위원 (경기 성남시중원구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김미애 위원 (부산 해운대구을)"> 
+							김미애 위원 (부산 해운대구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="강선우 위원 (서울 강서구갑)"> 
+							강선우 위원 (서울 강서구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박희승 위원 (전북 남원시장수군임실군순창군)"> 
+							박희승 위원 (전북 남원시장수군임실군순창군)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(5명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6691" data-name="박주민" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">박주민</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 은평구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6664" data-name="이수진" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">이수진</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 성남시중원구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6589" data-name="김미애" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김미애</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 해운대구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6854" data-name="강선우" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">강선우</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강서구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6796" data-name="박희승" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">박희승</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 남원시장수군임실군순창군)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52491&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제418회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>보건복지위원회회의록</h1></div></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 9월 30일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">보건복지위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2024년도 국정감사 증인·참고인 출석 요구의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2024년도 국정감사 증인·참고인 출석 요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시33분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제418회 국회(정기회) 제2차 보건복지위원회를 개회하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 2024년도 국정감사 증인·참고인 출석 요구의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정 제1항 2024년도 국정감사 증인·참고인 출석 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;이 안건은 국회법 제129조와 국정감사 및 조사에 관한 법률 제10조에 따라 국정감사에 관련된 증인 및 참고인의 출석을 요구하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;2024년도 국정감사에 출석을 요구할 증인과 참고인에 대하여 위원장이 간사 위원님들과 협의한 결과를 위원님들께 배부해 드린 바 있습니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;주요 내용을 말씀드리면 감사 대상기관의 기관증인으로 중앙부처는 국장급 이상, 공공기관은 임원급 이상, 총 139명에 대하여 해당기관 감사에 출석을 요구하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub3-5">&nbsp;기관증인의 경우 오늘 이후 각 대상기관에서 공석이었던 증인 자리에 새로 임명되거나 인사이동으로 변경된 경우에는 해당 직위에 보직된 자가 증인 지위를 승계하는 것으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-6">&nbsp;일반증인과 참고인에 대해서는 사전에 간사 위원님들과 협의한 결과 일반증인 16인과 참고인 40인에 대해서 출석을 요구하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub3-7">&nbsp;오늘 이후로 증인·참고인 출석을 추가로 요구하는 경우, 증인 등에 대하여 출석일자를 변경하거나 출석 요구를 철회하는 경우에는 위원장과 간사 간의 협의를 거쳐 추후 위원회를 열어 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-8">&nbsp;다만 국회에서의 증언·감정 등에 관한 법률 제5조에 따르면 증인 등의 출석요구서는 출석요구일 7일 전에 송달되어야 하므로 추가로 출석을 요구하실 경우에는 출석요구서 송달 기한을 감안하여 신청해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub3-9">&nbsp;그러면 배부해 드린 유인물과 같이 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub3-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub3-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub3-12"><div class="taR">(일반증인 및 참고인 명단은 끝에 실음)</div></span></div></div></div><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6664" data-name="이수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">이수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/813a596915cc475d89c50722ce5764bc.jpg" alt="이수진"></span><span class="txt"><strong class="name">이수진</strong><span class="position">위원</span><span class="area">(경기 성남시중원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;위원장님, 의사진행발언 있습니다.</span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;이수진 위원님 말씀하십시오.</span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6664" data-name="이수진" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">이수진 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/813a596915cc475d89c50722ce5764bc.jpg" alt="이수진"></span><span class="txt"><strong class="name">이수진</strong><span class="position">위원</span><span class="area">(경기 성남시중원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;방금 2024년도 국정감사 증인·참고인 출석 요구의 건이 의결이 됐는데요. 실제로 저뿐만 아니라 여러 위원님들께서 국감에 필요한 증인 신청과 관련해서 채택이 되지 않은 부분에 대해 많은 우려를 표하고 있습니다. 국민을 대신해서 국회에서 잘못된 부분을 바로잡고 개선해야 되는 게 저희 국회의원들의 역할일 텐데요.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;특히나 이번에 제가 증인으로 신청한 성남시장 신상진 그리고 네이버나 쿠팡 대표이사들이 다 빠졌습니다. 실제로 공공의료 현장이 우리 시민들을 위해서 제대로 정착되기 위해서는 지자체장의 역할과 또 소신 있는 그런 결단이 참 중요한데 무엇 하나 제대로 진행되지 않고 있고 우리 중앙정부에서 그리고 국회에서 공공의료 제대로 잘해라, 이렇게 법을 만들고 예산을 지원해도 실제로 집행이 잘 안 되고 현장에서 지자체장의 판단에 따라서 운영이 안 된다라면 공공의료가 어떻게 강화될 수 있겠습니까? 심각한 위기에 처한 공공의료원들의 제대로 된 운영을 위해서 지자체장들의 역할이 정말 중요하다는 것을 보여 줘야 되는 국감이 아니었을까, 많이 우려스럽습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;그리고 온라인으로 의약품이 거래되면서 관련해서 문제들이 상당히 많이 발생하고 있습니다. 이런 문제들이, 실제로 온라인 회사인 네이버나 쿠팡 대표이사들이 제대로 역할을 하고 의약품 거래에 있어서 문제점을 제대로 파악하고 있는지 그리고 이 문제점에 대해서 개선할 의지는 있는지, 국정감사 자리가 아니면 국민들이 어디서 확인하실 수 있겠습니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;관련해서―저희가 종감까지 시간이 있습니다―간사님들 간에 합의를 좀 하시고 논의를 좀 더 이어 가셔서 우리 국민들께서 필요로 하는 국정감사 증인 채택이 다시 이루어졌으면 좋겠다는 바람을 전합니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;또 마지막으로 119 소방구급대원들, 사실 응급이송체계도 좀 문제가 있지 않습니까? 제대로 된 이송이 안 되고 있고 또 현장 구급대원들의 목소리를 실제로 국민들께서 알고 계셔야 됩니다. 개선이 되기 위해서는 현장의 목소리를 국감장에서 분명하게 들려주셔야 되는데 이런 부분들도 어찌 된 일인지 빠졌습니다. 관련해서 앞으로 좀 더 논의를 하셔서…… 그리고 제대로 된 개선책이 마련되지 않는다라면 국회의 역할이 무엇이겠습니까? 국정감사에서조차도 제대로 증인을 불러서 물어볼 수 없다라면 이게 제대로 된 국정감사가 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;이 점 혜량하셔서 박주민 위원장께서 잘 검토하셔서 조치를 취해 주시기를 간곡하게 부탁드립니다.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;김미애 간사님.</span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6589" data-name="김미애" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">김미애 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c1a5f2ce1f3c439cbe027e15722925f9.png" alt="김미애"></span><span class="txt"><strong class="name">김미애</strong><span class="position">위원</span><span class="area">(부산 해운대구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;국감 증인·참고인 채택을 두고 긴 시간 강선우 간사님과 협의를 진행했고 숙고의 시간을 거쳐서 합의에 이르렀습니다. 아쉬운 점 상당히 많습니다. 소수당의 비애, 한계도 절감했습니다. 그러나 현재 다수 상임위에서 진행되는 것처럼 보건복지위마저도 증인·참고인을 일방 강행 처리하는 모습은 국민께 결코 바람직하지 않다 생각했습니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;구체적인 협의 과정을 모두 말씀드릴 수는 없지만 복지위는 타 상임위와는 달라야 한다 생각했고 당초 입장에서 한발씩 물러나며 합의했다는 점을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;우리 복지위는 국민의 생명과 건강, 약자 복지를 위해 일하는 상임위입니다. 그렇기 때문에 과거 정치적 대립 상황에서도 정쟁을 자제하고 여야가 협력해 왔습니다. </span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;다음 주부터 시작될 22대 국회 첫 복지위 국정감사가 국민께 이로운 정책 대안을 제시하는 건설적이고 실질적이고 생산적인 논의의 장이 되기를 바랍니다. </span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;특히 어려움을 겪는 국민께 작은 기대와 희망을 드릴 수 있으면 하는 마음 간절하고 이 점에 있어서 위원장님과 여야 위원님들이 함께 노력했으면 하는 바람입니다. </span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;이상입니다. </span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;강선우 간사님.</span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6854" data-name="강선우" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">강선우 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/20176db75bd943df8714cc2d9a686ff7.jpg" alt="강선우"></span><span class="txt"><strong class="name">강선우</strong><span class="position">위원</span><span class="area">(서울 강서구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;다소 늦었지만 오늘 2024년 국정감사 증인·참고인 명단을 여야 합의로 의결하게 돼서 무척 다행스럽게 생각합니다. </span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;지난한 협의 과정을 저를 믿고 기다려 주신 우리 민주당 소속 위원님들과 아울러 여야 합의에 도달하기까지 애써 주신 국민의힘 김미애 간사께 특별한 감사 인사 전합니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;우리 민주당은 올해 국감에서 ‘365 국정감사’라는 기조를 밝힙니다. 이 중 3대 국감 기조는 끝장 감사, 눈높이 감사, 민생 감사이고 또 6대 의혹은 김건희 여사 국정농단, 경제·민생 대란, 정부의 무능과 실정, 권력기관 폭주, 인사 폭망, 국권·국격 추락을 뜻합니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;이에 우리 국회 보건복지위에서는 무엇보다 현재 윤석열발 의대 정원으로 촉발된 의료대란으로 인한 국민적 피해를 시작으로 윤석열 정권의 약자 없는 약자 복지와 사회서비스 시장 폐해, 나아가 의료계의 친윤석열·친김건희 인사 특혜 의혹 등 이슈에 집중할 예정입니다.</span><br/><span class="spk_sub" id="spk_sub10-5">&nbsp;다가오는 국정감사에서 끝까지 국민의 눈높이에서 민생을 위한 국정감사를 하겠다는 각오를 밝힙니다.</span><br/><span class="spk_sub" id="spk_sub10-6">&nbsp;정부 측의 성실한 자료제출과 답변을 거듭 당부드리고요. 덧붙여 이번 증인 출석과 발언에 있어서는 동행명령장 발부와 위증 시 고발 등 강도 높은 조치를 하겠다는 점 미리 말씀드립니다. </span><br/><span class="spk_sub" id="spk_sub10-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;박희승 위원님.</span><br/></div></div></div><div id="spk_12" class="item1 speaker spk_mem" data-mem_id="6796" data-name="박희승" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">박희승 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHEESEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/bf9aa018b72e42a5a91c90fc4c70c626.jpg" alt="박희승"></span><span class="txt"><strong class="name">박희승</strong><span class="position">위원</span><span class="area">(전북 남원시장수군임실군순창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;저는 지난 7월 복지위 전체회의에서부터 국민연금이 위탁운용사로 사모펀드 MBK를 선정하면서 2980억 원을 배정한 것에 대해서 문제 제기를 해 왔습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;국민연금으로부터 위탁운용사로 선정되면 그 자체는 기업 가치와 투자 유치에 큰 이점이 있을 수 있습니다. 그런데 그동안 MBK가 적대적·약탈적 M&amp;A 과정에서 단기수익에만 집착한 채 우리 사회와 경제에 해를 끼친 사례가 한두 번이 아닙니다. </span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;국민의 노후를 책임지고 있는 국민연금이 우리 기업과 근로자들의 일자리를 빼앗는 투기적 사모펀드에 돈을 맡긴다는 것이 첫째, ESG 원칙에 부합하는 것인지? 둘째, MBK파트너스 위탁운용사 선정 과정과 절차를 확인하는 것이 당연합니다. </span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;심지어 제가 문제를 제기한 이후 산자위 그다음에 국토위, 정무위에서 논의 중에 MBK 김병주 대표를 증인으로 확정했습니다. 그런데 맨 먼저 문제를 제기한 저희 복지위에서는 증인 채택이 불발된 것에 대해 유감스럽다는 말을 하지 않을 수 없습니다. </span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;다시 한번 양 간사님께서 협의해 주셔서 MBK 측을 증인으로 선정해 주시기 바라고, 저는 김병주 대표가 아니라 김광일 부회장이 증인으로 나와도 된다는 의사표시를 사전에 했습니다. 국민연금 국감은 아직 시간이 있습니다. 김광일 부회장이라도 증인으로 선정해 주시길 정중히 부탁드립니다. </span><br/></div></div></div><div id="spk_13" class="item1 speaker spk_mem" data-mem_id="6691" data-name="박주민" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 박주민 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4e926bae67ad43a6a87ad68da8d0c0fe.png" alt="박주민"></span><span class="txt"><span class="position">위원장</span><strong class="name">박주민</strong><span class="area">(서울 은평구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;오늘 양당 간사님들께서 증인·참고인 협의 과정에 대해서 말씀을 해 주셨습니다. 대단히 애를 쓰셨다는 말씀 드리겠고요. </span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;그럼에도 불구하고 지금 몇몇 위원님들께서 추가로 증인이나 참고인이 필요하다는 의견을 주신 바 있기 때문에 양당 간사님들께서 추가적으로 논의를 해 주셨으면 좋겠다는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;오늘 회의를 마치기 전에 국정감사 준비와 관련해서 잠시 안내말씀을 드릴 텐데요. 최근 국회가 종이자료 줄이기에 많은 관심과 노력을 기울이고 있습니다. 그래서 우리 보건복지위원회도 의원실에서 피감기관의 제출 자료를 전자 방식으로 받기를 희망하는 경우에 종이 책자는 제출하지 않도록 하는 등 종이 사용 줄이기에 적극 동참하고 있습니다. 앞으로도 위원님들의 지속적인 관심과 참여 부탁드리겠습니다. </span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;오늘 회의에 참석해 주신 위원님 여러분 수고 많으셨습니다. </span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;수석전문위원을 비롯한 위원회 직원 여러분, 보좌 직원 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;오늘 회의는 이것으로 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시44분 산회)</p><br/><div class="line_dot">&nbsp;</div><br/></div><div class="minutes_footer"><p class="tit"><strong>일반증인 및 참고인 명단</strong></p>증인(16인)<div class="table_wrap2"><table class="normal"><caption>일반증인 및 참고인 명단</caption><colgroup><col width="8.3281634399401%"><col width="20.57332335009092%"><col width="17.715263664563054%"><col width="36.074446464862554%"><col width="17.308803080543374%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업(소속 및 직위)</th><th scope="col">출석일 및 관련 피감기관</th><th scope="col">신문요지 및 신청이유</th><th scope="col">신청위원(소속정당)</th></tr></thead><tr><td>김소연<br/></td><td>PCL 대표<br/></td><td rowspan=4>10. 8.(화) 보건복지부<br/></td><td>코로나19 타액 자가진단키트 체외의료기기 허가 절차 정당성 관련<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td>신준식<br/></td><td>자생한방병원 이사장<br/></td><td>첩약 및 약침 급여화 절차 정당성 관련<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td>이응우<br/></td><td>충남 계룡시장<br/></td><td>노인학대 사례 관련<br/></td><td>김예지<br/>(국민의힘)<br/></td></tr><tr><td>황성윤<br/></td><td>법무법인 화우 변호사<br/></td><td>코로나19 타액 자가진단키트 체외의료기기 허가 절차 정당성 관련<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td>김성수<br/></td><td>(사)한국방역협회 <br/>회장<br/></td><td rowspan=2>10. 8.(화) 질병관리청<br/></td><td>1986년부터 현재까지 매년 법정교육, 일반교육, 감염병매개체방역관리과정을 교육 책임기관으로 맡아 실시해 오면서 정부의 I.V.M 정책을 독성 화학살충제 방역 환경으로 추락시킨 교육 실패 책임에 대한 증언<br/></td><td>이개호<br/>(더불어민주당)<br/></td></tr><tr><td>이동규<br/></td><td>고신대학교 교수<br/></td><td>02년부터 최근까지 장기간 매년 받은 연구용역 책임자, 주요 전염병 매개모기 방제지침서 집필위원, 지침서 자문위원, 감염병매개체방역관리과정 강사로 활동하면서 국민건강 매개체감염병방역 분야를 독성 화학살충제 방역으로 추락시킨 정책실패 원인자 책임에 대한 증언<br/></td><td>이개호<br/>(더불어민주당)<br/></td></tr><tr><td>조영식<br/></td><td>SD바이오센서 회장<br/></td><td rowspan=7>10. 10.(목) 식품의약품안전처<br/></td><td>코로나19 자가진단키드 리콜 관련<br/></td><td>이주영<br/>(개혁신당)<br/></td></tr><tr><td>신수희<br/></td><td>암젠코리아 유한회사 대표자<br/></td><td>신약 임상시험 참여 중 백혈병 발병하여 사망한 사건, 발병 시 병원 측 대응 문제 및 인과관계 입증 책임 유가족에게 전가. 식약처 매뉴얼 검토<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td rowspan=3>조민수<br/></td><td rowspan=3>㈜코스트코코리아 대표<br/></td><td>코스트코코리아 양평점에서 ‘미국산 냉장 앞다리 불고기’ 제품에서 2개의 금속조각 발견, 향후 대책 신문<br/></td><td>소병훈<br/>(더불어민주당)<br/></td></tr><tr><td rowspan=2>반품 상품 대장균 검출 관련 식약처 점검 상황 및 수입축산물 관리 제도 보완 등<br/></td><td>백종헌<br/>(국민의힘)<br/></td></tr><tr><td>한지아<br/>(국민의힘)<br/></td></tr><tr><td>주성원<br/></td><td>쿠팡 전무<br/></td><td>의약품 온라인 거래 관련 문제 점검<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td>퀸선<br/></td><td>웨일코코리아 대표<br/></td><td>의료제품, 식품, 화장품 불법 유통 및 광고 관련<br/></td><td>서영석<br/>(더불어민주당)<br/></td></tr><tr><td>박정관<br/></td><td>디알엑스솔루션 대표<br/></td><td>10. 10.(목) 한국희귀·필수의약품센터<br/></td><td>희귀질환자들의 자가치료용 의약품 배송 관련<br/></td><td>서영석<br/>(더불어민주당)<br/></td></tr><tr><td>고승윤<br/></td><td>㈜비브로스 대표<br/></td><td rowspan=5>10. 23.(수) 보건복지부<br/></td><td>병원 진료 예약 어플 똑딱 유료화 관련 상대적 피해 문제 해결 방안 이행 점검<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td rowspan=2>양재웅<br/></td><td rowspan=2>W진병원 대표원장<br/></td><td>정신의료기관 내 강박 사망 관련 질의<br/></td><td>김윤<br/>(더불어민주당)<br/></td></tr><tr><td>격리 강박 환자 사망사건에 대한 심문<br/></td><td>서미화<br/>(더불어민주당)<br/></td></tr><tr><td>허정운<br/></td><td>W진병원 진료과장<br/></td><td>격리 강박 환자 사망사건에 대한 심문<br/></td><td>서미화<br/>(더불어민주당)<br/></td></tr><tr><td>기동훈<br/></td><td>메디스태프 대표<br/></td><td>의사 온라인 커뮤니티 메디스태프 관련 <br/></td><td>한지아<br/>(국민의힘)<br/></td></tr></table></div><br/>참고인(40인)<div class="table_wrap2"><table class="normal"><caption>일반증인 및 참고인 명단</caption><colgroup><col width="8.3281634399401%"><col width="20.57332335009092%"><col width="17.715263664563054%"><col width="36.074446464862554%"><col width="17.308803080543374%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업(소속 및 직위)</th><th scope="col">출석일 및 관련 피감기관</th><th scope="col">신문요지 및 신청이유</th><th scope="col">신청위원(소속정당)</th></tr></thead><tr><td>구민정<br/></td><td>당뇨병교육간호사<br/>(대한당뇨병교육간호사회장/서울대 어린이병원 당뇨병교육실 간호사)<br/></td><td rowspan=26>10. 8.(화) 보건복지부<br/></td><td>당뇨병 환자를 교육하는 간호사이자 췌장장애 선정에 관련성이 있는 전문가<br/></td><td>서미화<br/>(더불어민주당)<br/></td></tr><tr><td>권정현<br/></td><td>한국개발연구원 연구위원<br/></td><td>정부의 의대정원 2000명 증원 정책에 대한 견해<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td>김건남<br/></td><td>대한응급구조사협회 광주전남지회장<br/></td><td>의료대란 이후 응급환자 이송 관련 현장 목소리 경청<br/></td><td>박희승<br/>(더불어민주당)<br/></td></tr><tr><td>김대중<br/></td><td>내분비내과 의사<br/>(대한내분비학회 보험이사/아주의대 당뇨병센터 교수)<br/></td><td>당뇨병 환자를 진료하는 의사이자 췌장장애 선정에 관련성이 있는 전문가<br/></td><td>서미화<br/>(더불어민주당)<br/></td></tr><tr><td>남우동<br/></td><td>강원대학교병원 병원장<br/></td><td>지방국립대학교 경영난 및 공공임상교수제 사업 현황 관련 질의<br/></td><td>장종태<br/>(더불어민주당)<br/></td></tr><tr><td>박조은<br/></td><td>자영업<br/></td><td>중증 아토피 피부염 환자 치료 환경 개선 관련<br/></td><td>전진숙<br/>(더불어민주당)<br/></td></tr><tr><td>신영석<br/></td><td>한국보건사회연구원 명예연구위원<br/></td><td>정부의 의대정원 2,000명 증원 정책에 대한 견해<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td rowspan=2>안기종<br/></td><td rowspan=2>한국환자단체연합회 회장<br/></td><td>국민 중심 의료개혁 추진 필요성, 일차의료 강화 및 국민주치의제 도입 필요성에 대한 견해<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td>의료대란 관련 환자 피해 상황 검토<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td>이해국<br/></td><td>가톨릭대 의과대학 정신건강의학과 교수<br/></td><td>ICD-11(국제질병분류 11차 개정판) 내 게임이용장애 질병코드의 KCD-10 등재 관련<br/></td><td>전진숙<br/>(더불어민주당)<br/></td></tr><tr><td>임진수<br/></td><td>대한의사협회 기획이사<br/></td><td>의료대란 관련 사직 전공의 당사자 의견 경청<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td rowspan=2>조승연<br/></td><td rowspan=2>전국지방의료원연합회 회장<br/></td><td>코로나19 회복기 보상 관련 질의<br/></td><td>김윤<br/>(더불어민주당)<br/></td></tr><tr><td>지방의료원 등 공공의료정책 관련 점검<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td>최희선<br/></td><td>전국보건의료산업노동조합 위원장<br/></td><td>병원노동자 노동상황 실태 점검<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td>홍윤철<br/></td><td>서울대학교 의과대학 예방의학과 교수<br/></td><td>정부의 의대정원 2,000명 증원 정책에 대한 견해<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td>김신애<br/></td><td>장애인 부모<br/></td><td>경장영양제(유동식) 공급부족에 따른 장애인의 건강권에 대한 현장 증언<br/></td><td>최보윤<br/>(국민의힘)<br/></td></tr><tr><td>박종훈<br/></td><td>고려대 교수<br/></td><td>필수의료 및 지역의료 정상화 관련<br/></td><td>김미애<br/>(국민의힘)<br/></td></tr><tr><td>박진주<br/></td><td>동대문종합사회복지관 팀장<br/></td><td>경계선 지능인 지원 및 대책 마련 관련<br/></td><td>안상훈<br/>(국민의힘)<br/></td></tr><tr><td>서은교<br/></td><td>경기지역상담기관 기관장<br/></td><td>보호출산제 시행 관련<br/></td><td>김미애<br/>(국민의힘)<br/></td></tr><tr><td>안창국<br/></td><td>금융위원회 금융산업국장<br/></td><td>실손보험 문제점 및 개선방안 마련 관련<br/></td><td>서명옥<br/>(국민의힘)<br/></td></tr><tr><td>오복경<br/></td><td>충청남도남부노인보호전문기관 관장<br/></td><td>노인학대 사례 관련<br/></td><td>김예지<br/>(국민의힘)<br/></td></tr><tr><td>이훈상<br/></td><td>㈜큐라코 대표이사<br/></td><td>사회서비스 투자펀드 관련 질의<br/></td><td>안상훈<br/>(국민의힘)<br/></td></tr><tr><td>정태근<br/></td><td>한국근육장애인협회장<br/></td><td>희귀중증질환 재활 관련 현장 의견 청취<br/></td><td>최보윤<br/>(국민의힘)<br/></td></tr><tr><td>최윤정<br/></td><td>전)은평장애인자립생활센터 활동가<br/></td><td>장애노인 활동지원 및 장애인일자리 관련<br/></td><td>김예지<br/>(국민의힘)<br/></td></tr><tr><td>박정환<br/></td><td>한양대학교병원 내분비대사내과 교수<br/></td><td>제2차 국가비만관리종합대책 관련<br/></td><td>이주영<br/>(개혁신당)<br/></td></tr><tr><td>정형준<br/></td><td>원진녹색병원 부원장<br/></td><td>의료대란 관련<br/></td><td>김선민<br/>(조국혁신당)<br/></td></tr><tr><td>김도윤<br/></td><td>타투유니온 지회장<br/></td><td rowspan=6>10. 10.(목) 식품의약품안전처<br/></td><td>문신사법 제정 필요성 관련<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td>남경필<br/></td><td>마약예방치유단체 ‘은구(NGU)’ 대표<br/></td><td>마약 재발방지 단체 활동 관련<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td>정경주<br/></td><td>한국병원약사회 부회장<br/></td><td>의료기관 내 마약류 오남용 관련 질의<br/></td><td>김윤<br/>(더불어민주당)<br/></td></tr><tr><td>지성용<br/></td><td>유가족<br/>(사망자의 형)<br/></td><td>신약 임상시험 참여 중 백혈병 발병하여 사망한 사건, 발병 시 병원측 대응 문제 및 인과관계 입증 책임 유가족에게 전가. 식약처 매뉴얼 검토<br/></td><td>이수진<br/>(더불어민주당)<br/></td></tr><tr><td rowspan=2>김재성<br/></td><td rowspan=2>인천참사랑병원 진료과장<br/></td><td rowspan=2>마약중독 치료 및 재활 관련 의료현장의 고충 청취<br/></td><td>서명옥<br/>(국민의힘)<br/></td></tr><tr><td>한지아<br/>(국민의힘)<br/></td></tr><tr><td>이승준<br/></td><td>㈜일공비 이사<br/></td><td>10. 16.(수) 건강보험심사평가원<br/></td><td>SMA 환자 급여기준 확대 불구하고 불승인 증가 관련<br/></td><td>강선우 (더불어민주당)<br/></td></tr><tr><td>김대연 <br/></td><td>의료법인 희정의료재단 양구우리병원 부장<br/></td><td>10. 16.(수) 국민건강보험공단, 건강보험심사평가원<br/></td><td>지방의료기관 간호사 지원 시범사업 종료(2024년 12월 31일)를 앞두고 사업의 연장 필요성 확인 및 의료취약지 현장의 목소리 청취, 취약지 의료인력 공급 지원, 의료서비스 개선 등 시범사업의 효과 점검<br/></td><td>김예지<br/>(국민의힘)<br/></td></tr><tr><td>조정일<br/></td><td>한국폐암환우회 회장<br/></td><td>10. 16.(수) 국민건강보험공단<br/></td><td>폐암 국가검진 대상자 확대 필요성 관련<br/></td><td>서명옥<br/>(국민의힘)<br/></td></tr><tr><td>김민<br/></td><td>기후변화청년모임 빅웨이브 대표<br/></td><td>10. 18.(금) 국민연금공단<br/></td><td>국민연금 탈석탄 선언 관련<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td>김춘심<br/></td><td>전)서울시사회서비스원 요양보호사<br/></td><td>10. 21.(월) 중앙사회서비스원<br/></td><td>돌봄의 공공성 확보를 위해 서울시사회서비스원의 필요성에 대한 견해<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td>한분영<br/></td><td>덴마크한국인<br/>진상규명그룹 공동대표<br/></td><td>10. 21.(월) 아동권리보장원<br/></td><td>입양기록 전산화 문제, 입양인 정보공개청구 소송 등 입양제도 관련<br/></td><td>남인순<br/>(더불어민주당)<br/></td></tr><tr><td>강현석<br/></td><td>장애인 지역사회 자립지원 시범사업 전주지역 수행기관<br/></td><td rowspan=5>10. 23.(수) 보건복지부<br/></td><td>보건복지부 탈시설 시범사업 관련 질문<br/>수행기관이 겪는 시범사업 집행의 어려움 등<br/></td><td>서미화<br/>(더불어민주당)<br/></td></tr><tr><td>권영대<br/></td><td>한국수포성박리증환우회 팀장<br/></td><td>수포성 박리증 환자 치료재료 급여화 및 희귀질환권리법 제정 필요성 관련<br/></td><td>강선우<br/>(더불어민주당)<br/></td></tr><tr><td>박초현<br/></td><td>피플퍼스트 성북센터<br/>(성북발달장애인자립생활센터)<br/></td><td>보건복지부 탈시설 시범사업 관련 탈시설 당사자 질문<br/>탈시설 경험과 필요성 등<br/></td><td>서미화<br/>(더불어민주당)<br/></td></tr><tr><td>신석철<br/></td><td>한국정신장애인연합회 상임대표<br/></td><td>정신의료기관 내 강박 사망 관련 질의<br/></td><td>김윤<br/>(더불어민주당)<br/></td></tr><tr><td>유승규<br/></td><td>안무서운회사 대표<br/></td><td>고립·은둔청년 관련<br/></td><td>김미애<br/>(국민의힘)<br/></td></tr></table></div><br/><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(21인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMMIAE" target="_blank"><span class="name lts3 ">김미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYEAJI" target="_blank"><span class="name lts3 ">김예지</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOON" target="_blank"><span class="name lts2 ">김윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJUMIN" target="_blank"><span class="name lts3 ">박주민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHEESEONG" target="_blank"><span class="name lts3 ">박희승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEKJONGHEAN" target="_blank"><span class="name lts3 ">백종헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUHMYUNGOK" target="_blank"><span class="name lts3 ">서명옥</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOMIHWA" target="_blank"><span class="name lts3 ">서미화</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGSEOK" target="_blank"><span class="name lts3 ">서영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SOBYUNGHOON" target="_blank"><span class="name lts3 ">소병훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank"><span class="name lts3 ">안상훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUYOUNGLEE" target="_blank"><span class="name lts3 ">이주영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHANGJONGTAE" target="_blank"><span class="name lts3 ">장종태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONJINSOOK" target="_blank"><span class="name lts3 ">전진숙</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIBOYUN" target="_blank"><span class="name lts3 ">최보윤</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANZEEA" target="_blank"><span class="name lts3 ">한지아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNMIN" target="_blank"><span class="name lts3 ">김선민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이지민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 정경윤</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 연광석</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52491;
+			const class_id = 2;
+			const confer_num = "054143";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785641362620" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785641362620"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785641362621"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785641362621"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

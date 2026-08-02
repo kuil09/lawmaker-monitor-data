@@ -1,0 +1,727 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56338" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제433회 (임시회) 제4차 대미투자특별법처리를위한특별위원회</strong><span class="date">(2026.03.09.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 한미 전략적 투자 관리를 위한 특별법안(대안)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김상훈 위원장 (대구 서구)"> 
+							김상훈 위원장 (대구 서구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정태호 위원 (서울 관악구을)"> 
+							정태호 위원 (서울 관악구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="안도걸 위원 (광주 동구남구을)"> 
+							안도걸 위원 (광주 동구남구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박성훈 위원 (부산 북구을)"> 
+							박성훈 위원 (부산 북구을)
+						</option>
+					
+					
+						<option value="구윤철 부총리겸재정경제부장관">구윤철 부총리겸재정경제부장관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(4명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6593" data-name="김상훈" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">김상훈</span>
+												<span class="position">위원장</span>
+												<span class="area">(대구 서구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6633" data-name="정태호" data-pos="소위원장"> 
+											<label for="spk_mem1">												
+												<span class="name">정태호</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 관악구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6572" data-name="안도걸" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">안도걸</span>
+												<span class="position">위원</span>
+												<span class="area">(광주 동구남구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6852" data-name="박성훈" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">박성훈</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 북구을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="구윤철" data-pos="부총리겸재정경제부장관"> 
+											<label for="spk_attend0">
+												<span class="name">구윤철</span>
+												<span class="position">부총리겸재정경제부장관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56338&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제433회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>대미투자특별법처리를위한특별위원회회의록</h1></div></div><p class="num">제4호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 3월 9일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">재정경제기획위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</li><li><span class="num">2.</span> 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</li><li><span class="num">3.</span> 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</li><li><span class="num">4.</span> 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</li><li><span class="num">5.</span> 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</li><li><span class="num">6.</span> 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</li><li><span class="num">7.</span> 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</li><li><span class="num">8.</span> 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</li><li><span class="num">9.</span> 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</li><li><span class="num">10.</span> 한미 전략적 투자 관리를 위한 특별법안(대안)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 한미 전략적 투자 관리를 위한 특별법안(대안)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시02분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6593" data-name="김상훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 김상훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3c232b2892bb448f8d66df3661218621.jpg" alt="김상훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">김상훈</strong><span class="area">(대구 서구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제433회 국회(임시회) 제4차 대미투자특별법 처리를 위한 특별위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘은 법안심사소위원회에서 심사한 법안을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;참고로 오늘 회의는 국회방송에서 유튜브 생중계할 예정이며, 김정관 산업통상부장관은 산업통상자원위원회 전체회의 참석으로 출석하기 어렵다는 요청이 있어 위원장이 간사님들과 협의하여 양해하였다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2M5N1V1W2U5U1S5T4S7Z4A9Y3Z1X3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 한미 전략적 투자 관리를 위한 특별법안(김병기 의원 대표발의)(의안번호 2214555)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Z5X1W2W0E4E1C4D2C9C0A0B9J2J7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 한미 전략적 투자 관리를 위한 특별법안(홍기원 의원 대표발의)(의안번호 2214959)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S5Q1R2P0P8O1W6W5U3V5T6U9S3T5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 한미 전략적 투자 관리를 위한 특별법안(진성준 의원 대표발의)(의안번호 2215180)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K5K1T2T1R7S1Q5R5P4X0Y6W7X3V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 한미 전략적 투자 관리를 위한 특별법안(박성훈 의원 대표발의)(의안번호 2215497)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K5K1S2T1R8R1Q6O3P5W0X1W6W5U6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 한미 전략적 투자 관리를 위한 특별법안(안도걸 의원 대표발의)(의안번호 2215548)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I6J0R1R2P7Q0P9P1N7O5W5U5V1T8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 한미 전략적 투자 관리를 위한 특별법안(정일영 의원 대표발의)(의안번호 2216352)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T6T0B2C0A4A1Z4X2Y5G0H0F8F9D9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 한미 전략적 투자 관리를 위한 특별법안(박수영 의원 대표발의)(의안번호 2216594)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2W6W0U2V0U4U1S7T5B3Z1A5Y3Z5X6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 한미 전략적 투자 관리를 위한 특별법안(김건 의원 대표발의)(의안번호 2216596)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2L6J0J2R0S9Q0R9P1Q6O5K8K8J5K3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 한미 전략적 투자 관리를 위한 특별법안(정태호 의원 대표발의)(의안번호 2216681)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2B6T0B3I0U6O1M0T5T1N2C3C2L7N1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 한미 전략적 투자 관리를 위한 특별법안(대안)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시03분)</p><br/><div id="spk_4" class="item10 speaker spk_mem" data-mem_id="6593" data-name="김상훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 김상훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3c232b2892bb448f8d66df3661218621.jpg" alt="김상훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">김상훈</strong><span class="area">(대구 서구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항부터 제10항까지 10건의 한미 전략적 투자 관리를 위한 특별법안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;구체적인 안건 목록은 단말기에 배부해 드린 의사일정을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;먼저 정태호 소위원장님 나오셔서 소위원회 심사결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_5" class="item10 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 정태호 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><span class="position">소위원장</span><strong class="name">정태호</strong><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;법안심사소위원회 정태호 소위원장입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;글로벌 통상환경의 불확실성이 그 어느 때보다 가중되고 있는 엄중한 상황에서 우리 기업을 보호하고 국익을 증진하기 위한 입법적 토대를 우리 위원회에서 마련하게 된 것을 매우 뜻깊게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;우리 소위원회는 지난 3일에 걸쳐 한미 전략적 투자 관리를 위한 특별법안 9건을 심도 있게 심사한 결과 이를 통합하여 하나의 대안으로 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;대안의 주요 내용을 말씀드리면 첫째, 투자 사업을 발굴·검토하는 사업관리위원회와 최종 선정 주체인 운영위원회로 구성된 중층적 의사결정 체계를 구축함으로써 투자 결정의 신중성과 전문성을 확보하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;둘째, 전략적투자를 전담 지원하기 위하여 한미전략투자공사를 신규 설립하고 자본금 규모를 2조 원으로, 임원 수를 3명 이내로 규정함으로써 보다 효율적인 공사 운영이 가능토록 하였습니다. 또한 리스크관리위원회를 설치함으로써 투자 업무의 안정성을 제고하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;셋째, 체계적인 투자 집행과 재원 관리를 위해서 공사에 한미전략투자기금을 설치하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;기금의 재원은 공사 출연금, 외국환평형기금과 한국은행의 위탁자산, 정부보증채 등으로 조성하며 이를 미국 투자 특수목적법인(SPV) 출자·투자와 조선협력투자지원을 위한 대출·보증 등에 사용하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;다음은 국회 통제와 관련된 부분입니다.</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;넷째, 대미투자의 투명성을 담보하기 위하여 기금의 관리·운용, 경제 및 산업 영향평가, 전략적투자 성과 등이 담긴 연차보고서를 정부가 매년 국회에 공식 서류로 제출하도록 규정하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-10">&nbsp;다섯째, 정부가 대미투자 협의를 개시하기 전 운영위원회 심의를 거친 후보 사업의 내용을 국회 소관 상임위원회인 재정경제기획위원회와 산업통상자원중소벤처기업위원회에 사전 보고하도록 함으로써 실효적인 국회 통제가 가능하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-11">&nbsp;여섯째, 대미투자는 상업적 합리성을 원칙으로 하되 국가안보 또는 공급망 안정 등 불가피한 사유가 있는 경우에 한하여 예외를 허용하였습니다. 다만 이 경우 국회 소관 상임위원회의 사전 동의를 받도록 함으로써 엄격한 수준의 통제 장치를 마련하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-12">&nbsp;또한 대안을 의결하면서, 정부는 제2조제1호사목에 따라 전략적 산업 분야와 관련된 대통령령을 제정·개정 또는 폐지하는 경우 입법예고 전에 전략적 산업 분야 선정 근거 및 경과 등을 국회 소관 상임위원회에 보고하여야 한다.</span><br/><span class="spk_sub" id="spk_sub5-13">&nbsp;정부는 제41조제1항제7호에 따라 한미전략투자기금의 재원과 관련된 대통령령을 제정·개정 또는 폐지하는 경우 입법예고 전에 재원의 추가 근거 및 경과 등을 국회 소관 상임위원회에 보고하여야 한다.</span><br/><span class="spk_sub" id="spk_sub5-14">&nbsp;정부는 이 법 시행 전 대미투자 예비검토와 관련하여 대외경제장관회의규정에 따른 대외경제장관회의에서 의결한 사안에 대해 이 법 시행 이후 사업관리위원회의 심의 및 운영위원회의 심의·의결이 신속하게 이루어질 수 있도록 한다는 등 3건의 부대의견을 함께 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub5-15">&nbsp;이상으로 소위 심사보고를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-16">&nbsp;그동안 소위에서 진지하게 논의를 해 주신 국민의힘 박수영 간사님, 강승규 위원님, 박상웅 위원님 그리고 더불어민주당 허영 위원님, 박지혜 위원님과 조국혁신당 차규근 위원님께 깊은 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub5-17">&nbsp;보다 자세한 내용은 배부해 드린 자료를 참고해 주시기 바라며, 우리 소위원회에서 심사보고한 대로 의결하여 주시기를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub5-18">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item10 speaker spk_mem" data-mem_id="6593" data-name="김상훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 김상훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3c232b2892bb448f8d66df3661218621.jpg" alt="김상훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">김상훈</strong><span class="area">(대구 서구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;원만한 합의에 이를 수 있도록 법안심사에 애써 주신 정태호 소위원장님, 박수영 간사님, 법안소위 위원님들, 특위 위원님들 감사합니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;방금 보고받으신 소위 심사결과에 대해 질의하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;존경하는 안도걸 위원님.</span><br/></div></div></div><div id="spk_7" class="item10 speaker spk_mem" data-mem_id="6572" data-name="안도걸" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">안도걸 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/56e742cc39304aad9ff06ad5490cc084.png" alt="안도걸"></span><span class="txt"><strong class="name">안도걸</strong><span class="position">위원</span><span class="area">(광주 동구남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;한 가지만 여쭙겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;수고 많으셨고요.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;투자공사의 자본금 관련해 가지고 당초 정부안에는 3조 원이었거든요. 그런데 2조 원이 됐고 저도 이 내용을 조금 들어 보고 검토를 좀 해 봤는데요.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;당초 정부안에 따르면 대출이라든가 보증할 수 있는 그 금액이 약 6000억, 7000억 정도로 제가 알고 있거든요. 그런데 약간 그것도 우리가 마스가 쪽에, 조선협력 쪽에 필요한 어떤 지원 소요에 비하면 좀 부족하지 않느냐라는 의견도 있었거든요. 그런데 최종안에 보면 3조보다도 더 줄어서 지금 2조로 됐는데 2조 원 가지고 충분히 필요한 보증이라든가 대출을 할 수 있는 어떤 재원이 가능한지 부총리께 한번 여쭙겠습니다.</span><br/></div></div></div><div id="spk_8" class="item10 speaker spk_mem" data-mem_id="0" data-name="구윤철" data-pos="부총리겸재정경제부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">부총리겸재정경제부장관 구윤철 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="구윤철"></span><span class="txt"><span class="position">부총리겸재정경제부장관</span><strong class="name">구윤철</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;정부는 당초에는 이게 대출·보증을 한 20년 정도 하기 때문에 한 3조 정도가 있어야지만 가능하다고 봤습니다만 또 소위 논의 과정에서 20년 장기간 동안에 상황이 어떻게 될지 모르니까 우선 한 2조 원 정도로 하고 또 필요하다면 그 상황에서 보자 이렇게 논의된 걸로 알고 있어서 정부도 소위 위원님들 말씀도 일응 또 수긍할 점도 있어서 그렇게 했다는 말씀을 드리겠습니다.</span><br/></div></div></div><div id="spk_9" class="item10 speaker spk_mem" data-mem_id="6572" data-name="안도걸" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">안도걸 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/56e742cc39304aad9ff06ad5490cc084.png" alt="안도걸"></span><span class="txt"><strong class="name">안도걸</strong><span class="position">위원</span><span class="area">(광주 동구남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;알겠습니다.</span><br/></div></div></div><div id="spk_10" class="item10 speaker spk_mem" data-mem_id="6593" data-name="김상훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 김상훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3c232b2892bb448f8d66df3661218621.jpg" alt="김상훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">김상훈</strong><span class="area">(대구 서구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;존경하는 박성훈 위원님.</span><br/></div></div></div><div id="spk_11" class="item10 speaker spk_mem" data-mem_id="6852" data-name="박성훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">박성훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b196b02e4744aeebe20983e2f9ad5b8.png" alt="박성훈"></span><span class="txt"><strong class="name">박성훈</strong><span class="position">위원</span><span class="area">(부산 북구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;부총리님, 소위에서 다들 고생하셔 가지고 안을 만들어 주셨는데 한미전략투자공사와 기존의 수출입은행과 산업은행과의 관계를 어떻게 설정하실지에 대해서 간략하게 설명 좀 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_12" class="item10 speaker spk_mem" data-mem_id="0" data-name="구윤철" data-pos="부총리겸재정경제부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">부총리겸재정경제부장관 구윤철 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="구윤철"></span><span class="txt"><span class="position">부총리겸재정경제부장관</span><strong class="name">구윤철</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;지금 공사는 전적으로 책임을 지는 곳이고요. 공사의 의무는 투자 그다음에 대출보증 이렇게 돼 있습니다. 그래서 공사가 혹시나 부족한 부분에 있어서는 수은이나 산은 또는 무역보험공사, 기타 필요한 기관의 도움을 받아서 협업을 하는 그런 식으로 운영을 하려고 하고 있고요. 어쨌거나 하여튼 책임을 지는 것은 투자공사가 전적으로 책임을 지고 다른 기관과의 협의를 통해서 효율적으로 운영될 수 있게 그렇게 하도록 하겠습니다.</span><br/></div></div></div><div id="spk_13" class="item10 speaker spk_mem" data-mem_id="6593" data-name="김상훈" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 김상훈 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3c232b2892bb448f8d66df3661218621.jpg" alt="김상훈"></span><span class="txt"><span class="position">위원장</span><strong class="name">김상훈</strong><span class="area">(대구 서구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;또 질의하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;질의하실 위원님이 없으시므로 토론을 종결하고 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;안건 의결에 앞서 비용추계서 첨부를 생략하는 의결을 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;오늘 의결할 안건은 국회법 제66조제3항 및 제79조의2제3항에 따라 비용추계서 첨부를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;국회법 제58조제5항 단서에 따라 제정안인 의사일정 제10항 한미 전략적 투자 관리를 위한 특별법안에 대해 축조심사를 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;먼저 제1조부터 제10조까지에 대해 의견 있으신 위원님 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;의견이 없으시면 다음으로 제11조부터 제20조까지에 대해 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-12">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-13">&nbsp;의견이 없으시면 다음 제21조부터 제30조까지에 대해 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-14">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-15">&nbsp;의견이 없으시면 다음 제31조부터 제40조까지에 대해 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-16">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-17">&nbsp;의견이 없으시면 다음 제41조부터 제50조까지에 대해 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-18">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-19">&nbsp;의견이 없으시면 다음 제51조부터 제54조까지에 대해 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-20">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-21">&nbsp;의견이 없으시면 마지막으로 부칙 제1조부터 제4조에 대해 의견을 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-22">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-23">&nbsp;없으시면 이것으로 축조심사를 모두 마치고 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-24">&nbsp;그러면 안건을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-25">&nbsp;의사일정 제1항부터 제9항까지 이상 9건의 법률안은 각각 본회의에 부의하지 아니하고 이를 통합 조정한 의사일정 제10항 한미 전략적 투자 관리를 위한 특별법안(대안)을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub13-26">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub13-27">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub13-28">&nbsp;법률안에 대한 의결을 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub13-29">&nbsp;오늘 의결한 안건들의 체계와 자구를 정리하는 사항과 국회법 제44조에 따라 운영위원회에 제출해야 할 활동결과보고서와 관련된 사항은 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub13-30">&nbsp;대미투자특위를 운영하는 과정 중에서 여러 가지 논란이 있었습니다마는 여기 계신 특위 위원님들 전부 합심해서 특위 존속기한인 오늘까지 법률안 합의처리를 마무리해 주신 데 대해 정말 진심으로 감사의 인사 말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-31">&nbsp;그러면 오늘 회의는 이것으로 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-32">&nbsp;위원님 여러분 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-33">&nbsp;부총리를 비롯한 정부 관계자와 수석전문위원을 비롯한 위원회 직원 및 보좌진 여러분도 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub13-34">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(14시13분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(13인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGMYOUNGGU" target="_blank"><span class="name lts3 ">강명구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank"><span class="name lts3 ">김상훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHYUNJUNG" target="_blank"><span class="name lts3 ">김현정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGWOONG" target="_blank"><span class="name lts3 ">박상웅</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSUNGHOON" target="_blank"><span class="name lts3 ">박성훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHINOOK" target="_blank"><span class="name lts3 ">정진욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank"><span class="name lts3 ">정태호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHAGYUGEUN" target="_blank"><span class="name lts3 ">차규근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HUHYOUNG" target="_blank"><span class="name lts2 ">허영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank"><span class="name lts3 ">강민국</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank"><span class="name lts3 ">박수영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGILYOUNG" target="_blank"><span class="name lts3 ">정일영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 최병권</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 임명현</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>재정경제부</p><li><a class="in_nm"><span class="pos"><span class="lts6">부총리겸장관</span></span><span class="name lts3"> 구윤철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김후진</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">혁신성장실장</span></span><span class="name lts3"> 민경설</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">전략경제정책관</span></span><span class="name lts3"> 고광희</span></a></li><p>산업통상부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 문신학</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">통상정책국장직무대리</span></span><span class="name lts3"> 김영만</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56338;
+			const class_id = 3;
+			const confer_num = "N054018";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785640713592" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785640713592"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785640713592"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785640713592"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

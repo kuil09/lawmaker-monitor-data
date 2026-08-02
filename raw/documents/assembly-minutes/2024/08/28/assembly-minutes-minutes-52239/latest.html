@@ -1,0 +1,753 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=55912" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제429회 (정기회) 제14차 국회본회의</strong><span class="date">(2025.12.02.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 특정강력범죄의 처벌에 관한 특례법 일부개정법률안(대안)(법제사법위원장 제출)(의안번호 2214596)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 형법 일부개정법률안(대안)(법제사법위원장 제출)(의안번호 2214597)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 형사소송법 일부개정법률안(대안)(법제사법위원장 제출)(의안번호 2214602)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 형의 집행 및 수용자의 처우에 관한 법률 일부개정법률안(대안)(법제사법위원장 제출)(의안번호 2214603)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 전자장치 부착 등에 관한 법률 일부개정법률안(김기표 의원 대표발의)(의안번호 2213215)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 헌법재판소법 일부개정법률안(대안)(법제사법위원장 제출)(의안번호 2214604)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 전자조달의 이용 및 촉진에 관한 법률 일부개정법률안(진성준 의원 대표발의)(의안번호 2207493)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 협동조합 기본법 일부개정법률안(진선미 의원 대표발의)(의안번호 2202286)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214177)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 담배사업법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214588)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 한국수출입은행법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214179)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 세무사법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214181)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 관세사법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214180)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 방위사업법 일부개정법률안(대안)(국방위원장 제출)(의안번호 2214171)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 간토 대학살사건 진상규명 및 피해자 명예회복에 관한 특별법안(윤건영 의원 대표발의)(의안번호 2202457)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 인천광역시 제물포구·영종구 및 검단구 설치 등에 관한 법률 일부개정법률안(대안)(행정안전위원장 제출)(의안번호 2214184)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 5·18민주화운동 관련자 보상 등에 관한 법률 일부개정법률안(추미애 의원 대표발의)(의안번호 2205561)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 선거관리위원회법 일부개정법률안(대안)(행정안전위원장 제출)(의안번호 2214183)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 경찰관 직무집행법 일부개정법률안(대안)(행정안전위원장 제출)(의안번호 2214182)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 도로교통법 일부개정법률안(대안)(행정안전위원장 제출)(의안번호 2214185)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 농업·농촌 및 식품산업 기본법 일부개정법률안(대안)(농림축산식품해양수산위원장 제출)(의안번호 2214194)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 선박평형수(船舶平衡水) 관리법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2207813)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 양식산업발전법 일부개정법률안(조경태 의원 대표발의)(의안번호 2212128)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 해양환경관리법 일부개정법률안(문대림 의원 대표발의)(의안번호 2211275)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 수산업협동조합법 일부개정법률안(대안)(농림축산식품해양수산위원장 제출)(의안번호 2214187)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안(대안)(농림축산식품해양수산위원장 제출)(의안번호 2214186)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">27. 중소기업기술 보호 지원에 관한 법률 일부개정법률안(김한규 의원 대표발의)(의안번호 2209535)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">28. 1인 창조기업 육성에 관한 법률 일부개정법률안(김소희 의원 대표발의)(의안번호 2205163)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">29. 중소기업 기술혁신 촉진법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214605)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">30. 벤처기업육성에 관한 특별법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214608)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">31. 벤처투자 촉진에 관한 법률 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214595)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">32. 소상공인 보호 및 지원에 관한 법률 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214598)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">33. 중소기업창업 지원법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214601)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">34. 중소기업기본법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214600)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">35. 지역상권 상생 및 활성화에 관한 법률 일부개정법률안(구자근 의원 대표발의)(의안번호 2212212)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">36. 중소기업진흥에 관한 법률 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출(의안번호 2214607)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">37. 규제자유특구 및 지역특화발전특구에 관한 규제특례법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214606)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">38. 액화석유가스의 안전관리 및 사업법 일부개정법률안(서일준 의원 대표발의)(의안번호 2210894)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">39. 이러닝(전자학습)산업 발전 및 이러닝 활용 촉진에 관한 법률 일부개정법률안(서일준 의원 대표발의)(의안번호 2210898)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">40. 광업법 일부개정법률안(이철규 의원 대표발의)(의안번호 2207484)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">41. 석유화학산업의 경쟁력 강화 및 지원에 관한 특별법안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214590)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">42. 산업 디지털 전환 촉진법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214589)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">43. 폐광지역 개발 지원에 관한 특별법 일부개정법률안(대안)(산업통상자원중소벤처기업위원장 제출)(의안번호 2214592)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">44. 건강기능식품에 관한 법률 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214614)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">45. 식품위생법 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214610)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">46. 장애인복지법 일부개정법률안(이수진 의원 대표발의)(의안번호 2204168)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">47. 사회복지사 등의 처우 및 지위 향상을 위한 법률 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214196)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">48. 아동복지법 일부개정법률안(김미애 의원 대표발의)(의안번호 2203223)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">49. 전공의의 수련환경 개선 및 지위 향상을 위한 법률 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214197)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">50. 의료기사 등에 관한 법률 일부개정법률안(남인순 의원 대표발의)(의안번호 2208530)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">51. 검역법 일부개정법률안(한지아 의원 대표발의)(의안번호 2209083)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">52. 노인장기요양보험법 일부개정법률안(김미애 의원 대표발의)(의안번호 2211029)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">53. 암관리법 일부개정법률안(소병훈 의원 대표발의)(의안번호 2208628)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">54. 응급의료에 관한 법률 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214199)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">55. 국민건강보험법 일부개정법률안(안상훈 의원 대표발의)(의안번호 2206601)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">56. 의료법 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214616)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">57. 마약류 관리에 관한 법률 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214195)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">58. 의료기기법 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214612)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">59. 감염병의 예방 및 관리에 관한 법률 일부개정법률안(대안)(보건복지위원장 제출)(의안번호 2214198)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">60. 보건의료인력지원법 일부개정법률안(이수진 의원 대표발의)(의안번호 2208922)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">61. 지역의사의 양성 및 지원 등에 관한 법률안(대안)(보건복지위원장 제출)(의안번호 2214617)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">62. 사회복지공동모금회법 일부개정법률안(최보윤 의원 대표발의)(의안번호 2208697)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">63. 위생용품 관리법 일부개정법률안(백종헌 의원 대표발의)(의안번호 2211963)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">64. 화장품법 일부개정법률안(강선우 의원 대표발의)(의안번호 2211154)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item65">65. 바이오의약품 위탁개발생산 기업 등의 규제지원에 관한 특별법안(한지아 의원 대표발의)(의안번호 2207703)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item66">66. 축산물 위생관리법 일부개정법률안(김미애 의원 대표발의)(의안번호 2209417)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item67">67. 노인복지법 일부개정법률안(안상훈 의원 대표발의)(의안번호 2209698)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item68">68. 자살예방 및 생명존중문화 조성을 위한 법률 일부개정법률안(정부 제출)(의안번호 2209098)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item69">69. 항공안전법 일부개정법률안(대안)(국토교통위원장 제출)(의안번호 2214064)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item70">70. 결혼중개업의 관리에 관한 법률 일부개정법률안(송옥주 의원 대표발의)(의안번호 2207817)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item71">71. 다문화가족지원법 일부개정법률안(강경숙 의원 대표발의)(의안번호 2202741)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item72">72. 양성평등기본법 일부개정법률안(이연희 의원 대표발의)(의안번호 2205005)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item73">73. 여성의 경제활동 촉진과 경력단절 예방법 일부개정법률안(이연희 의원 대표발의)(의안번호 2202994)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item74">74. 여성폭력방지기본법 일부개정법률안(이인선 의원 대표발의)(의안번호 2209123)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item75">75. 청소년 보호법 일부개정법률안(이병진 의원 대표발의)(의안번호 2204119)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item76">76. 가족친화 사회환경의 조성 촉진에 관한 법률 일부개정법률안(대안)(성평등가족위원장 제출)(의안번호 2214193)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item77">77. 성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안(대안)(성평등가족위원장 제출)(의안번호 2214189)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item78">78. 아동·청소년의 성보호에 관한 법률 일부개정법률안(대안)(성평등가족위원장 제출)(의안번호 2214190)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item79">79. 청소년복지 지원법 일부개정법률안(대안)(성평등가족위원장 제출)(의안번호 2214192)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item80">80. 국유재산특례제한법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214730)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item81">81. 국세기본법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214734)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item82">82. 국세징수법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214735)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item83">83. 소득세법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214737)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item84">84. 상속세 및 증여세법 일부개정법률안(정부 제출)(의안번호 2212657)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item85">85. 종합부동산세법 일부개정법률안(정부 제출)(의안번호 2212658)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item86">86. 부가가치세법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214736)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item87">87. 개별소비세법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214732)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item88">88. 조세특례제한법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214738)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item89">89. 관세법 일부개정법률안(대안)(기획재정위원장 제출)(의안번호 2214733)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item90">90. 국제조세조정에 관한 법률 일부개정법률안(정부 제출)(의안번호 2212654)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item91">91. 법인세법 일부개정법률안(정부 제출)(의안번호 2212656)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item92">92. 교육세법 일부개정법률안(정부 제출)(의안번호 2212660)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item93">93. 국가재정법 일부개정법률안(고민정 의원 대표발의)(의안번호 2214026)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item94">94. 영유아특별회계법안(문정복 의원 대표발의)(의안번호 2213036)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item95">95. 고등·평생교육지원특별회계법 일부개정법률안(대안)(교육위원장 제출)(의안번호 2214731)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item96">96. 2026년도 예산안(의안번호 2212630)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item97">97. 2026년도 기금운용계획안(의안번호 2212631)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item98">98. 2026년도 임대형 민자사업(BTL) 한도액안(의안번호 2212632)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item99">99. 2026년도 무역보험계약 체결 한도에 대한 동의안(의안번호 2212670)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박정 위원장 (경기 파주시을)"> 
+							박정 위원장 (경기 파주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서지영 위원 (부산 동래구)"> 
+							서지영 위원 (부산 동래구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조지연 위원 (경북 경산시)"> 
+							조지연 위원 (경북 경산시)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김용태 위원 (경기 포천시가평군)"> 
+							김용태 위원 (경기 포천시가평군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김태선 위원 (울산 동구)"> 
+							김태선 위원 (울산 동구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박지혜 위원 (경기 의정부시갑)"> 
+							박지혜 위원 (경기 의정부시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이준석 위원 (경기 화성시을)"> 
+							이준석 위원 (경기 화성시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤종오 위원 (울산 북구)"> 
+							윤종오 위원 (울산 북구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김영환 위원 (경기 고양시정)"> 
+							김영환 위원 (경기 고양시정)
+						</option>
+					
