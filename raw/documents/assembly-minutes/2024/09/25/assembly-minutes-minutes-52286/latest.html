@@ -1,0 +1,761 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52286" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제418회 (정기회) 제1차 정무위원회</strong><span class="date">(2024.09.25.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2024년도 국정감사계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2024년도 국정감사 서류제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 2024년도 국정감사 증인 등 출석요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(신동욱 의원 대표발의)(의안번호 2201108)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201167)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201169)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201171)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 독립유공자예우에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201175)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 보훈보상대상자 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201177)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201180)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201181)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 제대군인지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201231)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 독립유공자예우에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201463)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201629)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 독립유공자예우에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201634)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201638)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 보훈보상대상자 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201639)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201641)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정희용 의원 대표발의)(의안번호 2201759)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201928)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 보훈보상대상자 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201930)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 보훈보상대상자 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201947)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201953)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202042)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 독립유공자예우에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202043)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 보훈보상대상자 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202044)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">27. 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202045)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">28. 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202046)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">29. 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202047)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">30. 제대군인지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202048)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">31. 유엔참전용사의 명예선양 등에 관한 법률 일부개정법률안(이상휘 의원 대표발의)(의안번호 2202181)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">32. 국가보훈 기본법 일부개정법률안(박지혜 의원 대표발의)(의안번호 2202230)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">33. 독립유공자예우에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202321)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">34. 독점규제 및 공정거래에 관한 법률 일부개정법률안(박충권 의원 대표발의)(의안번호 2201289)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">35. 하도급거래 공정화에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2201300)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">36. 온라인 플랫폼 중개거래의 공정화에 관한 법률안(김남근 의원 대표발의)(의안번호 2201416)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">37. 온라인 플랫폼 독점규제에 관한 법률안(김남근 의원 대표발의)(의안번호 2201430)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">38. 온라인 플랫폼 독점규제 및 거래공정화에 관한 법률안(박주민 의원 대표발의)(의안번호 2201432)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">39. 표시·광고의 공정화에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201470)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">40. 대리점거래의 공정화에 관한 법률 일부개정법률안(이강일 의원 대표발의)(의안번호 2201589)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">41. 제조물 책임법 일부개정법률안(정준호 의원 대표발의)(의안번호 2201746)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">42. 독점규제 및 공정거래에 관한 법률 일부개정법률안(김상훈 의원 대표발의)(의안번호 2201768)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">43. 제조물 책임법 일부개정법률안(허영 의원 대표발의)(의안번호 2201779)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">44. 하도급거래 공정화에 관한 법률 일부개정법률안(채현일 의원 대표발의)(의안번호 2201818)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">45. 제조물 책임법 일부개정법률안(채현일 의원 대표발의)(의안번호 2201820)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">46. 제조물 책임법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2201824)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">47. 독점규제 및 공정거래에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201853)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">48. 제조물 책임법 일부개정법률안(권성동 의원 대표발의)(의안번호 2201905)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">49. 소비자기본법 일부개정법률안(한민수 의원 대표발의)(의안번호 2201933)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">50. 하도급거래 공정화에 관한 법률 일부개정법률안(김원이 의원 대표발의)(의안번호 2202055)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">51. 소비자기본법 일부개정법률안(임오경 의원 대표발의)(의안번호 2202146)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">52. 경제 형벌규정 개선을 위한 대규모유통업에서의 거래 공정화에 관한 법률 등 4개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202169)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">53. 하도급거래 공정화에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202263)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">54. 전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202327)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">55. 금융소비자 보호에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201085)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">56. 자본시장과 금융투자업에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201086)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">57. 금융혁신지원 특별법 일부개정법률안(송석준 의원 대표발의)(의안번호 2201160)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">58. 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201190)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">59. 전자금융거래법 일부개정법률안(임오경 의원 대표발의)(의안번호 2201315)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">60. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(한정애 의원 대표발의)(의안번호 2201319)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">61. 한국산업은행법 일부개정법률안(김태년 의원 대표발의)(의안번호 2201358)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">62. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2201391)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">63. 주식회사 등의 외부감사에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2201449)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">64. 전기통신금융사기 피해 방지 및 피해금 환급에 관한 특별법 일부개정법률안(양부남 의원 대표발의)(의안번호 2201452)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item65">65. 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201498)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item66">66. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(조정식 의원 대표발의)(의안번호 2201514)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item67">67. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(민병덕 의원 대표발의)(의안번호 2201517)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item68">68. 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201551)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item69">69. 여신전문금융업법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201552)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item70">70. 예금자보호법 일부개정법률안(김현정 의원 대표발의)(의안번호 2201608)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item71">71. 금융위원회의 설치 등에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201774)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item72">72. 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(한민수 의원 대표발의)(의안번호 2201924)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item73">73. 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201944)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item74">74. 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201978)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item75">75. 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(조은희 의원 대표발의)(의안번호 2202060)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item76">76. 기후위기 대응을 위한 금융의 촉진 등에 관한 특별법안(김소희 의원 대표발의)(의안번호 2202155)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item77">77. 경제 형벌규정 개선을 위한 공인회계사법 등 3개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202170)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item78">78. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202172)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item79">79. 금융혁신지원 특별법 일부개정법률안(정부 제출)(의안번호 2202188)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item80">80. 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202198)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item81">81. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2202252)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item82">82. 금융소비자 보호에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2202265)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item83">83. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(천준호 의원 대표발의)(의안번호 2202381)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item84">84. 신용정보의 이용 및 보호에 관한 법률 일부개정법률안(황운하 의원 대표발의)(의안번호 2202394)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item85">85. 은행법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2202398)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item86">86. 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201156)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item87">87. 공익신고자 보호법 일부개정법률안(신장식 의원 대표발의)(의안번호 2201546)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item88">88. 공익신고자 보호법 일부개정법률안(박선원 의원 대표발의)(의안번호 2201557)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item89">89. 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(부승찬 의원 대표발의)(의안번호 2202036)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item90">90. 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2202349)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item91">91. 개인정보 보호법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2201471)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item92">92. 개인정보 보호법 일부개정법률안(황운하 의원 대표발의)(의안번호 2202395)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+			<div class="list list3">
+				<a href="#pop_appendix" class="tit btn_pop" id="btn_apdinx" >부록</a>
+			</div>
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤한홍 위원장 (경남 창원시마산회원구)"> 
+							윤한홍 위원장 (경남 창원시마산회원구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박상혁 위원 (경기 김포시을)"> 
+							박상혁 위원 (경기 김포시을)
+						</option>
+					
+					
+						<option value="최병권 수석전문위원">최병권 수석전문위원</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(2명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">윤한홍</span>
+												<span class="position">위원장</span>
+												<span class="area">(경남 창원시마산회원구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6678" data-name="박상혁" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">박상혁</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 김포시을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="최병권" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">최병권</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52286&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제418회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>정무위원회회의록</h1></div></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 9월 25일(수)</p></li><li><div class="sbj lts2">장소</div><p class="con">정무위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2024년도 국정감사계획서 채택의 건</li><li><span class="num">2.</span> 2024년도 국정감사 서류제출 요구의 건</li><li><span class="num">3.</span> 2024년도 국정감사 증인 등 출석요구의 건</li><li><span class="num">4.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(신동욱 의원 대표발의)(의안번호 2201108)</li><li><span class="num">5.</span> 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201167)</li><li><span class="num">6.</span> 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201169)</li><li><span class="num">7.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201171)</li><li><span class="num">8.</span> 독립유공자예우에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201175)</li><li><span class="num">9.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201177)</li><li><span class="num">10.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201180)</li><li><span class="num">11.</span> 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201181)</li><li><span class="num">12.</span> 제대군인지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201231)</li><li><span class="num">13.</span> 독립유공자예우에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201463)</li><li><span class="num">14.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201629)</li><li><span class="num">15.</span> 독립유공자예우에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201634)</li><li><span class="num">16.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201638)</li><li><span class="num">17.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201639)</li><li><span class="num">18.</span> 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201641)</li><li><span class="num">19.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정희용 의원 대표발의)(의안번호 2201759)</li><li><span class="num">20.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201928)</li><li><span class="num">21.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201930)</li><li><span class="num">22.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201947)</li><li><span class="num">23.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201953)</li><li><span class="num">24.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202042)</li><li><span class="num">25.</span> 독립유공자예우에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202043)</li><li><span class="num">26.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202044)</li><li><span class="num">27.</span> 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202045)</li><li><span class="num">28.</span> 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202046)</li><li><span class="num">29.</span> 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202047)</li><li><span class="num">30.</span> 제대군인지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202048)</li><li><span class="num">31.</span> 유엔참전용사의 명예선양 등에 관한 법률 일부개정법률안(이상휘 의원 대표발의)(의안번호 2202181)</li><li><span class="num">32.</span> 국가보훈 기본법 일부개정법률안(박지혜 의원 대표발의)(의안번호 2202230)</li><li><span class="num">33.</span> 독립유공자예우에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202321)</li><li><span class="num">34.</span> 독점규제 및 공정거래에 관한 법률 일부개정법률안(박충권 의원 대표발의)(의안번호 2201289)</li><li><span class="num">35.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2201300)</li><li><span class="num">36.</span> 온라인 플랫폼 중개거래의 공정화에 관한 법률안(김남근 의원 대표발의)(의안번호 2201416)</li><li><span class="num">37.</span> 온라인 플랫폼 독점규제에 관한 법률안(김남근 의원 대표발의)(의안번호 2201430)</li><li><span class="num">38.</span> 온라인 플랫폼 독점규제 및 거래공정화에 관한 법률안(박주민 의원 대표발의)(의안번호 2201432)</li><li><span class="num">39.</span> 표시·광고의 공정화에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201470)</li><li><span class="num">40.</span> 대리점거래의 공정화에 관한 법률 일부개정법률안(이강일 의원 대표발의)(의안번호 2201589)</li><li><span class="num">41.</span> 제조물 책임법 일부개정법률안(정준호 의원 대표발의)(의안번호 2201746)</li><li><span class="num">42.</span> 독점규제 및 공정거래에 관한 법률 일부개정법률안(김상훈 의원 대표발의)(의안번호 2201768)</li><li><span class="num">43.</span> 제조물 책임법 일부개정법률안(허영 의원 대표발의)(의안번호 2201779)</li><li><span class="num">44.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(채현일 의원 대표발의)(의안번호 2201818)</li><li><span class="num">45.</span> 제조물 책임법 일부개정법률안(채현일 의원 대표발의)(의안번호 2201820)</li><li><span class="num">46.</span> 제조물 책임법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2201824)</li><li><span class="num">47.</span> 독점규제 및 공정거래에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201853)</li><li><span class="num">48.</span> 제조물 책임법 일부개정법률안(권성동 의원 대표발의)(의안번호 2201905)</li><li><span class="num">49.</span> 소비자기본법 일부개정법률안(한민수 의원 대표발의)(의안번호 2201933)</li><li><span class="num">50.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(김원이 의원 대표발의)(의안번호 2202055)</li><li><span class="num">51.</span> 소비자기본법 일부개정법률안(임오경 의원 대표발의)(의안번호 2202146)</li><li><span class="num">52.</span> 경제 형벌규정 개선을 위한 대규모유통업에서의 거래 공정화에 관한 법률 등 4개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202169)</li><li><span class="num">53.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202263)</li><li><span class="num">54.</span> 전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202327)</li><li><span class="num">55.</span> 금융소비자 보호에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201085)</li><li><span class="num">56.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201086)</li><li><span class="num">57.</span> 금융혁신지원 특별법 일부개정법률안(송석준 의원 대표발의)(의안번호 2201160)</li><li><span class="num">58.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201190)</li><li><span class="num">59.</span> 전자금융거래법 일부개정법률안(임오경 의원 대표발의)(의안번호 2201315)</li><li><span class="num">60.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(한정애 의원 대표발의)(의안번호 2201319)</li><li><span class="num">61.</span> 한국산업은행법 일부개정법률안(김태년 의원 대표발의)(의안번호 2201358)</li><li><span class="num">62.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2201391)</li><li><span class="num">63.</span> 주식회사 등의 외부감사에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2201449)</li><li><span class="num">64.</span> 전기통신금융사기 피해 방지 및 피해금 환급에 관한 특별법 일부개정법률안(양부남 의원 대표발의)(의안번호 2201452)</li><li><span class="num">65.</span> 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201498)</li><li><span class="num">66.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(조정식 의원 대표발의)(의안번호 2201514)</li><li><span class="num">67.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(민병덕 의원 대표발의)(의안번호 2201517)</li><li><span class="num">68.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201551)</li><li><span class="num">69.</span> 여신전문금융업법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201552)</li><li><span class="num">70.</span> 예금자보호법 일부개정법률안(김현정 의원 대표발의)(의안번호 2201608)</li><li><span class="num">71.</span> 금융위원회의 설치 등에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201774)</li><li><span class="num">72.</span> 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(한민수 의원 대표발의)(의안번호 2201924)</li><li><span class="num">73.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201944)</li><li><span class="num">74.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201978)</li><li><span class="num">75.</span> 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(조은희 의원 대표발의)(의안번호 2202060)</li><li><span class="num">76.</span> 기후위기 대응을 위한 금융의 촉진 등에 관한 특별법안(김소희 의원 대표발의)(의안번호 2202155)</li><li><span class="num">77.</span> 경제 형벌규정 개선을 위한 공인회계사법 등 3개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202170)</li><li><span class="num">78.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202172)</li><li><span class="num">79.</span> 금융혁신지원 특별법 일부개정법률안(정부 제출)(의안번호 2202188)</li><li><span class="num">80.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202198)</li><li><span class="num">81.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2202252)</li><li><span class="num">82.</span> 금융소비자 보호에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2202265)</li><li><span class="num">83.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(천준호 의원 대표발의)(의안번호 2202381)</li><li><span class="num">84.</span> 신용정보의 이용 및 보호에 관한 법률 일부개정법률안(황운하 의원 대표발의)(의안번호 2202394)</li><li><span class="num">85.</span> 은행법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2202398)</li><li><span class="num">86.</span> 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201156)</li><li><span class="num">87.</span> 공익신고자 보호법 일부개정법률안(신장식 의원 대표발의)(의안번호 2201546)</li><li><span class="num">88.</span> 공익신고자 보호법 일부개정법률안(박선원 의원 대표발의)(의안번호 2201557)</li><li><span class="num">89.</span> 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(부승찬 의원 대표발의)(의안번호 2202036)</li><li><span class="num">90.</span> 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2202349)</li><li><span class="num">91.</span> 개인정보 보호법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2201471)</li><li><span class="num">92.</span> 개인정보 보호법 일부개정법률안(황운하 의원 대표발의)(의안번호 2202395)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2024년도 국정감사계획서 채택의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2024년도 국정감사 서류제출 요구의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 2024년도 국정감사 증인 등 출석요구의 건</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(신동욱 의원 대표발의)(의안번호 2201108)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201167)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201169)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201171)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 독립유공자예우에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201175)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201177)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201180)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201181)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 제대군인지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201231)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 독립유공자예우에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201463)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201629)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 독립유공자예우에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201634)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201638)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201639)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201641)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정희용 의원 대표발의)(의안번호 2201759)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201928)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201930)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201947)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201953)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202042)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">25.</span> 독립유공자예우에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202043)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">26.</span> 보훈보상대상자 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202044)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">27.</span> 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202045)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">28.</span> 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202046)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">29.</span> 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202047)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">30.</span> 제대군인지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202048)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">31.</span> 유엔참전용사의 명예선양 등에 관한 법률 일부개정법률안(이상휘 의원 대표발의)(의안번호 2202181)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">32.</span> 국가보훈 기본법 일부개정법률안(박지혜 의원 대표발의)(의안번호 2202230)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">33.</span> 독립유공자예우에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202321)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">34.</span> 독점규제 및 공정거래에 관한 법률 일부개정법률안(박충권 의원 대표발의)(의안번호 2201289)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">35.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2201300)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">36.</span> 온라인 플랫폼 중개거래의 공정화에 관한 법률안(김남근 의원 대표발의)(의안번호 2201416)</a></li><li id="head_item37"><a href="#" class="move" data-target="#item37"><span class="num">37.</span> 온라인 플랫폼 독점규제에 관한 법률안(김남근 의원 대표발의)(의안번호 2201430)</a></li><li id="head_item38"><a href="#" class="move" data-target="#item38"><span class="num">38.</span> 온라인 플랫폼 독점규제 및 거래공정화에 관한 법률안(박주민 의원 대표발의)(의안번호 2201432)</a></li><li id="head_item39"><a href="#" class="move" data-target="#item39"><span class="num">39.</span> 표시·광고의 공정화에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201470)</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">40.</span> 대리점거래의 공정화에 관한 법률 일부개정법률안(이강일 의원 대표발의)(의안번호 2201589)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">41.</span> 제조물 책임법 일부개정법률안(정준호 의원 대표발의)(의안번호 2201746)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">42.</span> 독점규제 및 공정거래에 관한 법률 일부개정법률안(김상훈 의원 대표발의)(의안번호 2201768)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">43.</span> 제조물 책임법 일부개정법률안(허영 의원 대표발의)(의안번호 2201779)</a></li><li id="head_item44"><a href="#" class="move" data-target="#item44"><span class="num">44.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(채현일 의원 대표발의)(의안번호 2201818)</a></li><li id="head_item45"><a href="#" class="move" data-target="#item45"><span class="num">45.</span> 제조물 책임법 일부개정법률안(채현일 의원 대표발의)(의안번호 2201820)</a></li><li id="head_item46"><a href="#" class="move" data-target="#item46"><span class="num">46.</span> 제조물 책임법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2201824)</a></li><li id="head_item47"><a href="#" class="move" data-target="#item47"><span class="num">47.</span> 독점규제 및 공정거래에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201853)</a></li><li id="head_item48"><a href="#" class="move" data-target="#item48"><span class="num">48.</span> 제조물 책임법 일부개정법률안(권성동 의원 대표발의)(의안번호 2201905)</a></li><li id="head_item49"><a href="#" class="move" data-target="#item49"><span class="num">49.</span> 소비자기본법 일부개정법률안(한민수 의원 대표발의)(의안번호 2201933)</a></li><li id="head_item50"><a href="#" class="move" data-target="#item50"><span class="num">50.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(김원이 의원 대표발의)(의안번호 2202055)</a></li><li id="head_item51"><a href="#" class="move" data-target="#item51"><span class="num">51.</span> 소비자기본법 일부개정법률안(임오경 의원 대표발의)(의안번호 2202146)</a></li><li id="head_item52"><a href="#" class="move" data-target="#item52"><span class="num">52.</span> 경제 형벌규정 개선을 위한 대규모유통업에서의 거래 공정화에 관한 법률 등 4개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202169)</a></li><li id="head_item53"><a href="#" class="move" data-target="#item53"><span class="num">53.</span> 하도급거래 공정화에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202263)</a></li><li id="head_item54"><a href="#" class="move" data-target="#item54"><span class="num">54.</span> 전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202327)</a></li><li id="head_item55"><a href="#" class="move" data-target="#item55"><span class="num">55.</span> 금융소비자 보호에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201085)</a></li><li id="head_item56"><a href="#" class="move" data-target="#item56"><span class="num">56.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201086)</a></li><li id="head_item57"><a href="#" class="move" data-target="#item57"><span class="num">57.</span> 금융혁신지원 특별법 일부개정법률안(송석준 의원 대표발의)(의안번호 2201160)</a></li><li id="head_item58"><a href="#" class="move" data-target="#item58"><span class="num">58.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201190)</a></li><li id="head_item59"><a href="#" class="move" data-target="#item59"><span class="num">59.</span> 전자금융거래법 일부개정법률안(임오경 의원 대표발의)(의안번호 2201315)</a></li><li id="head_item60"><a href="#" class="move" data-target="#item60"><span class="num">60.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(한정애 의원 대표발의)(의안번호 2201319)</a></li><li id="head_item61"><a href="#" class="move" data-target="#item61"><span class="num">61.</span> 한국산업은행법 일부개정법률안(김태년 의원 대표발의)(의안번호 2201358)</a></li><li id="head_item62"><a href="#" class="move" data-target="#item62"><span class="num">62.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2201391)</a></li><li id="head_item63"><a href="#" class="move" data-target="#item63"><span class="num">63.</span> 주식회사 등의 외부감사에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2201449)</a></li><li id="head_item64"><a href="#" class="move" data-target="#item64"><span class="num">64.</span> 전기통신금융사기 피해 방지 및 피해금 환급에 관한 특별법 일부개정법률안(양부남 의원 대표발의)(의안번호 2201452)</a></li><li id="head_item65"><a href="#" class="move" data-target="#item65"><span class="num">65.</span> 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201498)</a></li><li id="head_item66"><a href="#" class="move" data-target="#item66"><span class="num">66.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(조정식 의원 대표발의)(의안번호 2201514)</a></li><li id="head_item67"><a href="#" class="move" data-target="#item67"><span class="num">67.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(민병덕 의원 대표발의)(의안번호 2201517)</a></li><li id="head_item68"><a href="#" class="move" data-target="#item68"><span class="num">68.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201551)</a></li><li id="head_item69"><a href="#" class="move" data-target="#item69"><span class="num">69.</span> 여신전문금융업법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201552)</a></li><li id="head_item70"><a href="#" class="move" data-target="#item70"><span class="num">70.</span> 예금자보호법 일부개정법률안(김현정 의원 대표발의)(의안번호 2201608)</a></li><li id="head_item71"><a href="#" class="move" data-target="#item71"><span class="num">71.</span> 금융위원회의 설치 등에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201774)</a></li><li id="head_item72"><a href="#" class="move" data-target="#item72"><span class="num">72.</span> 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(한민수 의원 대표발의)(의안번호 2201924)</a></li><li id="head_item73"><a href="#" class="move" data-target="#item73"><span class="num">73.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201944)</a></li><li id="head_item74"><a href="#" class="move" data-target="#item74"><span class="num">74.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201978)</a></li><li id="head_item75"><a href="#" class="move" data-target="#item75"><span class="num">75.</span> 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(조은희 의원 대표발의)(의안번호 2202060)</a></li><li id="head_item76"><a href="#" class="move" data-target="#item76"><span class="num">76.</span> 기후위기 대응을 위한 금융의 촉진 등에 관한 특별법안(김소희 의원 대표발의)(의안번호 2202155)</a></li><li id="head_item77"><a href="#" class="move" data-target="#item77"><span class="num">77.</span> 경제 형벌규정 개선을 위한 공인회계사법 등 3개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202170)</a></li><li id="head_item78"><a href="#" class="move" data-target="#item78"><span class="num">78.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202172)</a></li><li id="head_item79"><a href="#" class="move" data-target="#item79"><span class="num">79.</span> 금융혁신지원 특별법 일부개정법률안(정부 제출)(의안번호 2202188)</a></li><li id="head_item80"><a href="#" class="move" data-target="#item80"><span class="num">80.</span> 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202198)</a></li><li id="head_item81"><a href="#" class="move" data-target="#item81"><span class="num">81.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2202252)</a></li><li id="head_item82"><a href="#" class="move" data-target="#item82"><span class="num">82.</span> 금융소비자 보호에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2202265)</a></li><li id="head_item83"><a href="#" class="move" data-target="#item83"><span class="num">83.</span> 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(천준호 의원 대표발의)(의안번호 2202381)</a></li><li id="head_item84"><a href="#" class="move" data-target="#item84"><span class="num">84.</span> 신용정보의 이용 및 보호에 관한 법률 일부개정법률안(황운하 의원 대표발의)(의안번호 2202394)</a></li><li id="head_item85"><a href="#" class="move" data-target="#item85"><span class="num">85.</span> 은행법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2202398)</a></li><li id="head_item86"><a href="#" class="move" data-target="#item86"><span class="num">86.</span> 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201156)</a></li><li id="head_item87"><a href="#" class="move" data-target="#item87"><span class="num">87.</span> 공익신고자 보호법 일부개정법률안(신장식 의원 대표발의)(의안번호 2201546)</a></li><li id="head_item88"><a href="#" class="move" data-target="#item88"><span class="num">88.</span> 공익신고자 보호법 일부개정법률안(박선원 의원 대표발의)(의안번호 2201557)</a></li><li id="head_item89"><a href="#" class="move" data-target="#item89"><span class="num">89.</span> 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(부승찬 의원 대표발의)(의안번호 2202036)</a></li><li id="head_item90"><a href="#" class="move" data-target="#item90"><span class="num">90.</span> 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2202349)</a></li><li id="head_item91"><a href="#" class="move" data-target="#item91"><span class="num">91.</span> 개인정보 보호법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2201471)</a></li><li id="head_item92"><a href="#" class="move" data-target="#item92"><span class="num">92.</span> 개인정보 보호법 일부개정법률안(황운하 의원 대표발의)(의안번호 2202395)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(15시04분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제418회 국회(정기회) 제1차 정무위원회를 개회하겠습니다. </span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘 회의에서는 국정감사계획서 채택 등 국정감사 관련 안건들을 먼저 처리하고 우리 위원회에 회부된 법률안을 상정하겠습니다. </span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;보고사항은 단말기를 참조해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub2-5"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-6">&nbsp;그러면 의사일정에 들어가겠습니다. </span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;참고로 오늘 회의에 공정거래위원회 한기정 위원장은 전원회의 주재를 이유로 불출석사유서를 제출하였고 여야 간사님이 양해해 주셔서 조홍선 부위원장이 출석하였다는 점을 말씀드립니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 2024년도 국정감사계획서 채택의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;의사일정 제1항 2024년도 국정감사계획서 채택의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;국정감사계획서 채택 안건은 국정감사 기간은 10월 7일부터 10월 25일까지 19일간으로 하고 감사 대상기관은 국무조정실 등 7개의 국가기관과 37개 공공기관 그리고 감사원 감사 대상기관인 금융감독원을 포함하여 총 45개 기관을 선정하였습니다. </span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;감사결과보고서 작성은 위원장이 간사 위원들과 협의하여 작성한 후 이를 전체회의의 보고 절차를 거쳐 채택하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;또한 불가피한 사유로 국정감사 일정 등 세부사항을 변경할 필요가 있는 경우에는 위원장이 간사 위원과 협의하여 변경할 수 있도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub3-5">&nbsp;국정감사 일정 등 자세한 내용은 배부해 드린 국정감사계획서(안)을 참고하여 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub3-6">&nbsp;그러면 우리 위원회의 2024년도 국정감사계획서(안)을 배부하여 드린 유인물과 같이 채택하고자 하는데 이의 없으십니까? </span><br/><span class="spk_sub" id="spk_sub3-7">&nbsp;(「예」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub3-8">&nbsp;가결되었음을 선포합니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 2024년도 국정감사 서류제출 요구의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시06분)</p><br/><div id="spk_5" class="item2 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;다음은 의사일정 제2항 2024년도 국정감사 서류제출 요구의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;동 안건은 현재까지 접수된 서류제출 요구를 의결하기 위한 것입니다. </span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;배부해 드린 유인물과 같이 각 위원님들로부터 국정감사 대상기관에 대해 1만 3558건의 서류제출 요구가 접수되었습니다. </span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;이들 자료에 대해서는 국정감사 일정을 감안하여 해당 기관으로부터 9월 30일 월요일 17시까지 각 의원실로 답변서가 제출되도록 요구하겠습니다. </span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;그리고 오늘 의결 이후에 서류제출을 요구하실 위원님들께서는 의정자료전자유통시스템을 통하여 피감기관 감사 7일 전까지 요구를 해 주시기 바랍니다. 이 경우 해당 기관은 자료 요구를 받은 때부터 3일 이내에 제출하여 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;그러면 의사일정 제2항 2024년도 국정감사 서류제출 요구의 건은 배부하여 드린 유인물과 같이 의결하고자 합니다. </span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;이의 없으십니까? </span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;(「예」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub5-9">&nbsp;가결되었음을 선포합니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">3. 2024년도 국정감사 증인 등 출석요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시07분)</p><br/><div id="spk_7" class="item3 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;다음은 의사일정 제3항 2024년도 국정감사 증인 등 출석요구의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;국정감사 중 출석을 요구할 증인 등에는 각 기관 소속 증인과 일반증인 및 참고인이 있습니다. </span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;오늘 의결하는 사항은 각 기관에 소속된 기관증인 281명입니다. 각각 출석요구일에 국정감사장으로 출석을 요구하려는 것입니다. </span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;그리고 오늘 출석 요구된 기관증인이 인사이동으로 변경된 경우에는 새로 임명된 보직자가 증인 지위를 승계하는 것으로 하고 공석일 경우에는 부서 내 차상위 직급에 있는 자가 증인으로 출석 요구된 것으로 하고자 합니다. </span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;그러면 의사일정 제3항 2024년도 국정감사 증인 등 출석요구의 건은 배부하여 드린 유인물과 같이 의결하고자 합니다. </span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;이의 없으십니까? </span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;(「예」하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;가결되었음을 선포합니다. </span><br/><span class="spk_sub" id="spk_sub7-9">&nbsp;추가되는 일반증인 및 참고인 채택은 간사 위원 간 협의를 마치는 대로 회의 날짜를 따로 정하여 의결하도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub7-10">&nbsp;다음은 우리 위원회에 회부된 법률안 등을 상정하도록 하겠습니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2B4Z0Y6U2T6T1T1R0Z9Y1X8V6W8E1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(신동욱 의원 대표발의)(의안번호 2201108)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2E4D0C6D2B7J1I8J3H4G0O7P8N2H2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201167)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2R4P0F6G2E7C1C8J3K4J5I2R4Q4O9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201169)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2V4T0B6A2Z7Y1Y8G3F5E2C6L0M4M8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201171)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2L4K0L5J3H0Q1O4P2O0N0R8Q0O7P4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 독립유공자예우에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201175)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2V4U0G6O2N7L1J8G3H6F3D7D8K8L9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 보훈보상대상자 지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201177)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2J4H0G6F2H7Q1O8N3N7M4I8H5F6G9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201180)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2K4L0E6D2B7A1B8K3I8H1F9C3A0B8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201181)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2H4D0E6C2O7K1L8J3I7G1H6Q7O4M4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 제대군인지원에 관한 법률 일부개정법률안(김선교 의원 대표발의)(의안번호 2201231)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y4W0X7S0T1S1S4Q2R0P0X3Y3W7X4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 독립유공자예우에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201463)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2O4P0N7O0M5K1L6T1U6S1S5R1P8Q1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201629)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2O4M0N7M0M5U1S6T1R7S5Q6R6Z8X6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 독립유공자예우에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201634)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2G4H0F7G0E5F1D6Z1Z8Y5Y6X6V2W9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201638)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_E2U4L0W7G2Y2X0S8D5Z1D2H3U5R1S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 보훈보상대상자 지원에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201639)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I4J0H7I0P5Q1O6N1N5M1M4I2I5H0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(최은석 의원 대표발의)(의안번호 2201641)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2C4B0B7A0B4I0J9H3G6G0E1G4N8O7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정희용 의원 대표발의)(의안번호 2201759)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2W4U0V7T0U4C1C5B1Z2A0Y3Z9U5V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201928)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2A4Z0X7Y0X4X1F5D1E3C0D7B3C0X4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 보훈보상대상자 지원에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2201930)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2F4E0M7J1J8F0C9B1L4R0Q2P1M1L7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 보훈보상대상자 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201947)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2E4L0I7G1P8O0N9T1T2S2Q7H2Q8M2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(김상욱 의원 대표발의)(의안번호 2201953)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_W2O4S0P7D2W2M0X8J4P6U4J6Y4Q1Q6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 국가유공자 등 예우 및 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202042)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_R2T4G0G7K2U2I0I8C4O7G4I0F3T1O5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 독립유공자예우에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202043)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_E2U4L0W7G2Y2X0S8D5Z1D2H3U5R1S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 보훈보상대상자 지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202044)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_P2Q4A0O7S2F2C0C8R5U1H3L3L4M5I4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 고엽제후유의증 등 환자지원 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202045)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_H2Q4S0S7H2C2X0J8V5K1E4M3K7J0X8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 5·18민주유공자예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202046)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_W2R4G0A7D2X2H0J8U5T1J5T3Q0D6Q3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 특수임무유공자 예우 및 단체설립에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202047)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_S2U4H0Y7G2I2J0E8Q5F2G0C4U1J2G7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 제대군인지원에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202048)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F4D0E7N1L9K1I0Q3P6S2Q3P7X2Y9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 유엔참전용사의 명예선양 등에 관한 법률 일부개정법률안(이상휘 의원 대표발의)(의안번호 2202181)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2S4R0Z7W1V8W1W4E3B3A4J2I9G2B4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 국가보훈 기본법 일부개정법률안(박지혜 의원 대표발의)(의안번호 2202230)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2A4G0G6F2B1G1G2M3L0K3J5S5O8O3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 독립유공자예우에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202321)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S4Q0R6P0X5Y1W0X1V1U5U0C5C6B3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 독점규제 및 공정거래에 관한 법률 일부개정법률안(박충권 의원 대표발의)(의안번호 2201289)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2O4M0E5D3L1K1J6H2I5R4P6S5R9P7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 하도급거래 공정화에 관한 법률 일부개정법률안(이학영 의원 대표발의)(의안번호 2201300)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2Z4U0T6Z2Z1W1F0C1B5I5G8F1L5L8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 온라인 플랫폼 중개거래의 공정화에 관한 법률안(김남근 의원 대표발의)(의안번호 2201416)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item37" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2D4D0C6J2I1H1D0A1Z4I5H9Q2P2J4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">37. 온라인 플랫폼 독점규제에 관한 법률안(김남근 의원 대표발의)(의안번호 2201430)</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item38" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2L4M0K7L0A4Y1Z0Y4Y2W2E7F8D9E0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">38. 온라인 플랫폼 독점규제 및 거래공정화에 관한 법률안(박주민 의원 대표발의)(의안번호 2201432)</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item39" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2W4U0U7T0T1P1P7O2M2N3M7M1U0U4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">39. 표시·광고의 공정화에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201470)</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2D4C0D7B0B2X1Y6W4X4V0T0U3C2C0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">40. 대리점거래의 공정화에 관한 법률 일부개정법률안(이강일 의원 대표발의)(의안번호 2201589)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2W4D0E7D0D9B1C5B0W4X5V0W3U9T4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">41. 제조물 책임법 일부개정법률안(정준호 의원 대표발의)(의안번호 2201746)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2W4X0V7V1U0S1T7A5B2A4A6Z6X3X2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">42. 독점규제 및 공정거래에 관한 법률 일부개정법률안(김상훈 의원 대표발의)(의안번호 2201768)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2V4T0U7S1R2R1Z1Z1Y4Z5X2W8W1S1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">43. 제조물 책임법 일부개정법률안(허영 의원 대표발의)(의안번호 2201779)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item44" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2E4C0D7C1C5K0I8J5H2I1G8O0P3N7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">44. 하도급거래 공정화에 관한 법률 일부개정법률안(채현일 의원 대표발의)(의안번호 2201818)</a><a class="btn_move move" data-target="#head_item44" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item45" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2W4W0U7V1U5S0S8O5P3N1N9M5K0L7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">45. 제조물 책임법 일부개정법률안(채현일 의원 대표발의)(의안번호 2201820)</a><a class="btn_move move" data-target="#head_item45" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item46" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2T4B0B7A1Y5Z1X5Y5G4E2F7D5D9C5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">46. 제조물 책임법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2201824)</a><a class="btn_move move" data-target="#head_item46" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item47" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2A4Y0U7U1S1U1S0S4Q7R0Z6X7Y1W0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">47. 독점규제 및 공정거래에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201853)</a><a class="btn_move move" data-target="#head_item47" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item48" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E4A0Z6X2Y1M1L5M4H2G1F1D9E8M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">48. 제조물 책임법 일부개정법률안(권성동 의원 대표발의)(의안번호 2201905)</a><a class="btn_move move" data-target="#head_item48" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item49" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2M4J0H7Q1P7O1V6V5U4C0B8A6U9T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">49. 소비자기본법 일부개정법률안(한민수 의원 대표발의)(의안번호 2201933)</a><a class="btn_move move" data-target="#head_item49" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item50" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2C4D0L7J1J0I1J6H3D2D5C1D3B2B9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">50. 하도급거래 공정화에 관한 법률 일부개정법률안(김원이 의원 대표발의)(의안번호 2202055)</a><a class="btn_move move" data-target="#head_item50" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item51" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2E4C0D7B1C0Y1W0W0U8W1U2U5C5B8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">51. 소비자기본법 일부개정법률안(임오경 의원 대표발의)(의안번호 2202146)</a><a class="btn_move move" data-target="#head_item51" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item52" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_R2I4Y0W7D2H3Q2G0C2T6S2K6B3H4Q5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">52. 경제 형벌규정 개선을 위한 대규모유통업에서의 거래 공정화에 관한 법률 등 4개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202169)</a><a class="btn_move move" data-target="#head_item52" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item53" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P4O0O7N1N6C2B1B3Z6A5Z0Z2H4F1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">53. 하도급거래 공정화에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202263)</a><a class="btn_move move" data-target="#head_item53" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item54" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2X4F0J7J2R5Q1P0N4O6K0J5I2G9O6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">54. 전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안(정준호 의원 대표발의)(의안번호 2202327)</a><a class="btn_move move" data-target="#head_item54" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item55" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2L4J0I6H2I4Q1P0N4M3N1U7T8S0Q6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">55. 금융소비자 보호에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201085)</a><a class="btn_move move" data-target="#head_item55" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item56" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2R4S0Q6P2X4W1A0Z4X2V3E3F0D9C7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">56. 자본시장과 금융투자업에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201086)</a><a class="btn_move move" data-target="#head_item56" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item57" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2X4X0U6T1R7N1K3J2S6P1O0X5U8S8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">57. 금융혁신지원 특별법 일부개정법률안(송석준 의원 대표발의)(의안번호 2201160)</a><a class="btn_move move" data-target="#head_item57" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item58" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_N2O4F0R6M2J8R1C9I1P3W1G3V6P3K0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">58. 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201190)</a><a class="btn_move move" data-target="#head_item58" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item59" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2P4N0O6W2V7T1S5O3P6N4M0K7L5T2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">59. 전자금융거래법 일부개정법률안(임오경 의원 대표발의)(의안번호 2201315)</a><a class="btn_move move" data-target="#head_item59" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item60" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2H4I0H6H1F2G1F7M0N8L2M2K2L9J9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">60. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(한정애 의원 대표발의)(의안번호 2201319)</a><a class="btn_move move" data-target="#head_item60" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item61" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2J4K0S7S0R3P1Q0O3P7X0X2W8U3V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">61. 한국산업은행법 일부개정법률안(김태년 의원 대표발의)(의안번호 2201358)</a><a class="btn_move move" data-target="#head_item61" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item62" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2U4S0B7B0Z2A1Y1Z0X7Y2T0S0S8R1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">62. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(서영교 의원 대표발의)(의안번호 2201391)</a><a class="btn_move move" data-target="#head_item62" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item63" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2A4B0Z7Y0Y1G1H8F0G8E1D2D5Z9A7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">63. 주식회사 등의 외부감사에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2201449)</a><a class="btn_move move" data-target="#head_item63" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item64" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2N4N0M7N0L3H2H1F2G2F3F4D1E3M0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">64. 전기통신금융사기 피해 방지 및 피해금 환급에 관한 특별법 일부개정법률안(양부남 의원 대표발의)(의안번호 2201452)</a><a class="btn_move move" data-target="#head_item64" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item65" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2T4U0S7T0R1R1Q7Y2Y3X1Y0W1W9V0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">65. 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(이정문 의원 대표발의)(의안번호 2201498)</a><a class="btn_move move" data-target="#head_item65" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item66" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U4V0T7U0C2C1B4B5A0Y5Y2G9H0F1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">66. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(조정식 의원 대표발의)(의안번호 2201514)</a><a class="btn_move move" data-target="#head_item66" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item67" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2D4D0C6J2K8I1J5H5I8G1O4P4N2O2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">67. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(민병덕 의원 대표발의)(의안번호 2201517)</a><a class="btn_move move" data-target="#head_item67" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item68" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2R4P0Q7O0P9X0X7W1U1V3T1T5Q6Q2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">68. 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201551)</a><a class="btn_move move" data-target="#head_item68" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item69" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2H4G0E7F0D3D1L2K2K2I3J3I3I8E2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">69. 여신전문금융업법 일부개정법률안(이수진 의원 대표발의)(의안번호 2201552)</a><a class="btn_move move" data-target="#head_item69" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item70" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2X4V0W7V0V9D0B7C0A8B1Z2A6W4U5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">70. 예금자보호법 일부개정법률안(김현정 의원 대표발의)(의안번호 2201608)</a><a class="btn_move move" data-target="#head_item70" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item71" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2U4V0D7E1C0A1B1A3A0V3U1V2T2U7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">71. 금융위원회의 설치 등에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201774)</a><a class="btn_move move" data-target="#head_item71" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item72" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2G4K0J7G1P7O1N6T5S4S5Q8N2W0V5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">72. 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(한민수 의원 대표발의)(의안번호 2201924)</a><a class="btn_move move" data-target="#head_item72" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item73" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2A4Z0I7F1E7A1Z6Y1F8E1N4M6L3F0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">73. 자본시장과 금융투자업에 관한 법률 일부개정법률안(김현정 의원 대표발의)(의안번호 2201944)</a><a class="btn_move move" data-target="#head_item73" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item74" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_J2H4K0A7G1X9N0I9J4R2H3S9O0U0D2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">74. 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2201978)</a><a class="btn_move move" data-target="#head_item74" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item75" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2G4E0E6D2B8C1X4Y0W2V0W4U7V1C9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">75. 금융실명거래 및 비밀보장에 관한 법률 일부개정법률안(조은희 의원 대표발의)(의안번호 2202060)</a><a class="btn_move move" data-target="#head_item75" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item76" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Z4T0S7R1Z9Y1X4V5E0D5C2I9H8G4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">76. 기후위기 대응을 위한 금융의 촉진 등에 관한 특별법안(김소희 의원 대표발의)(의안번호 2202155)</a><a class="btn_move move" data-target="#head_item76" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item77" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_H2O4X0G7K2O3U2K0J2O6V3X5U4G7E4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">77. 경제 형벌규정 개선을 위한 공인회계사법 등 3개 법률의 일부개정에 관한 법률안(정부 제출)(의안번호 2202170)</a><a class="btn_move move" data-target="#head_item77" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item78" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2A4Y0Y7X1Y5W2W0E3D2D2B0C4B3B5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">78. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2202172)</a><a class="btn_move move" data-target="#head_item78" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item79" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_X2A4X0S7W2K4Y1D3G0F6H2I4W4Z9L3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">79. 금융혁신지원 특별법 일부개정법률안(정부 제출)(의안번호 2202188)</a><a class="btn_move move" data-target="#head_item79" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item80" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_W2A4Q0D7A2Y4W1K4E2O3U3S3P9F7G8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">80. 자본시장과 금융투자업에 관한 법률 일부개정법률안(정부 제출)(의안번호 2202198)</a><a class="btn_move move" data-target="#head_item80" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item81" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2G4F0E7M2L4J1S1Q3P0O0O3X1V5U5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">81. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2202252)</a><a class="btn_move move" data-target="#head_item81" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item82" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2M4I0I6H2H8G1E4F4M0O4M4M9L6J7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">82. 금융소비자 보호에 관한 법률 일부개정법률안(진선미 의원 대표발의)(의안번호 2202265)</a><a class="btn_move move" data-target="#head_item82" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item83" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2X4V0D7C3A0B1A0W0I8H1D9B1A2B0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">83. 대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안(천준호 의원 대표발의)(의안번호 2202381)</a><a class="btn_move move" data-target="#head_item83" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item84" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2G4H0L7K2S5R1P5Q3P0L0J7I8H8I8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">84. 신용정보의 이용 및 보호에 관한 법률 일부개정법률안(황운하 의원 대표발의)(의안번호 2202394)</a><a class="btn_move move" data-target="#head_item84" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item85" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2P4O0N7V2T5S1Q7Y2X1X1G8E7F7E3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">85. 은행법 일부개정법률안(박홍배 의원 대표발의)(의안번호 2202398)</a><a class="btn_move move" data-target="#head_item85" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item86" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2W4X0V6U2C1B1C5E5C5B2J4I2J6H9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">86. 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(민형배 의원 대표발의)(의안번호 2201156)</a><a class="btn_move move" data-target="#head_item86" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item87" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z4Z0H7I0G5H1F4E3E9A1B0Z7Z5Y8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">87. 공익신고자 보호법 일부개정법률안(신장식 의원 대표발의)(의안번호 2201546)</a><a class="btn_move move" data-target="#head_item87" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item88" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2H4G0F6E1L7L1R1Q0P6Y5W7T0Q2O9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">88. 공익신고자 보호법 일부개정법률안(박선원 의원 대표발의)(의안번호 2201557)</a><a class="btn_move move" data-target="#head_item88" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item89" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2D4B0Z7A1I6J1H5H4F2E0F6M3N1L4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">89. 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(부승찬 의원 대표발의)(의안번호 2202036)</a><a class="btn_move move" data-target="#head_item89" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item90" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z4Z0I7I1G5H1F4D2E7M0N2L1K5K3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">90. 부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안(박상혁 의원 대표발의)(의안번호 2202349)</a><a class="btn_move move" data-target="#head_item90" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item91" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T4R0O6P2N6M1L5T1T1C4B2A2Z3H9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">91. 개인정보 보호법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2201471)</a><a class="btn_move move" data-target="#head_item91" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item92" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2D4C0B7B2X5W1U5T2C5C5B9Z4Y5G5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">92. 개인정보 보호법 일부개정법률안(황운하 의원 대표발의)(의안번호 2202395)</a><a class="btn_move move" data-target="#head_item92" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시08분)</p><br/><div id="spk_9" class="item92 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;의사일정 제4항부터 제92항까지 이상 89건의 법률안을 일괄하여 상정합니다. </span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;안건의 상세한 내용은 노트북을 통해서 확인해 주시기 바라고요. </span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;부처별 제안설명을 할 순서입니다만 효율적인 의사진행을 위하여 제안설명은 서면으로 대체하도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub9-4"><div class="taR">(제안설명서는 부록에 실음)</div></span><span class="spk_sub" id="spk_sub9-5">&nbsp;다음은 검토보고 순서입니다. </span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;최병권 수석전문위원 나오셔서 오늘 상정하는 법률안에 대해서 일괄하여 검토보고해 주시기 바랍니다. </span><br/></div></div></div><div id="spk_10" class="item92 speaker spk_mem" data-mem_id="0" data-name="최병권" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">수석전문위원 최병권 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="최병권"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">최병권</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;수석전문위원입니다. </span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;국가보훈부 등 5개 소관 총 89건의 법률안에 대한 검토보고를 간략히 요약하여 보고드리겠습니다. </span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;배부해 드린 법률안 검토보고 요약본을 참조해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;먼저 자료 5쪽입니다. </span><br/><span class="spk_sub" id="spk_sub10-5">&nbsp;의사일정 제19항 정희용 의원이 대표발의한 참전유공자 예우 및 단체설립에 관한 법률 개정안은 참전유공자가 사망한 경우 그 배우자에게 생계지원금을 지급할 수 있는 근거를 마련하는 것으로 참전유공자 사망으로 생계지원금 지급이 중단될 경우 배우자의 생계곤란이 심화될 수 있다는 점을 고려할 때 필요한 입법조치로 보입니다. </span><br/><span class="spk_sub" id="spk_sub10-6">&nbsp;다만 참전유공자의 배우자에게 생계지원금을 지급하게 될 경우 고엽제후유의증환자와의 형평성 문제가 제기될 수 있으므로 고엽제후유의증환자의 배우자에게 생계지원금을 지급하는 안에 대해서도 검토할 필요가 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-7">&nbsp;다음으로 13쪽입니다.</span><br/><span class="spk_sub" id="spk_sub10-8">&nbsp;의사일정 제40항 이강일 의원이 대표발의한 대리점거래의 공정화에 관한 법률 개정안은 공급업자의 범위 확대, 서명계약서 작성의무 강화, 대리점의 계약갱신요구권 신설, 계약 해지 시 통지의무 부과, 대리점단체의 구성권 명문화, 부당한영업지역침해·점포환경개선·광고판촉행사강요 금지, 전속고발권의 폐지 등 대리점을 위한 보호 제도를 마련하는 것으로 공급업자와 대리점의 거래상 동등한 지위를 보장하는 차원에서 긍정적인 측면이 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-9">&nbsp;다만 공급업자가 매출액이 적은 중소기업인 경우 거래상 우월적 지위가 형성되기 어려운 측면이 있다는 점을 감안하여 개정 목적 달성을 위한 매출액 규모의 적정 기준에 대한 검토가 필요할 것으로 보이고, 대리점거래의 거래상 특징을 고려하여 개별 사안별로 규율 방식에 대한 검토가 필요할 것으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub10-10">&nbsp;다음으로 24쪽입니다.</span><br/><span class="spk_sub" id="spk_sub10-11">&nbsp;의사일정 제60항·66항·81항·83항, 한정애·조정식·김태선·천준호 의원이 각각 대표발의한 대부업 등의 등록 및 금융이용자 보호에 관한 법률 개정안은 대부업 또는 대부중개업 등록을 위한 자기자본 요건을 현행보다 강화하고 등록한 이후에도 이를 유지하지 않으면 그 등록을 취소하며 대부업 등의 등록 시 대표자가 금융위원회 등록 대부업체의 임직원으로서 1년 이상 근무한 경력을 요구하는 등 대부업 등록 요건을 강화하는 것으로, 현행 요건이 지나치게 낮아 영세한 대부업자가 난립하여 시도의 행정력 낭비를 유발하고 잦은 등록·폐업이 일어나거나 등록업자의 지위를 불법적인 사채 운용에 활용하는 등 대부업 이용자에게 피해를 초래할 우려를 감안할 때 타당한 입법 취지로 보입니다.</span><br/><span class="spk_sub" id="spk_sub10-12">&nbsp;다만 개별 내용별로 살펴보면 대부업자의 자본 요건을 상향하는 것은 위와 같은 개정안의 취지와 사업자 수 감소로 인한 저신용자 등에 대한 신용공급 감소 우려 등을 종합적으로 고려하여 적정 수준에 대한 논의가 필요할 것으로 보이고 전업 대부중개업자에 대한 자본 요건 신설은 유사 업종의 사례, 대부중개업 시장의 추가 위축 가능성 등을 고려하여 도입 여부 및 수준을 결정할 필요가 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-13">&nbsp;다음으로 25쪽입니다.</span><br/><span class="spk_sub" id="spk_sub10-14">&nbsp;의사일정 제61항 김태년 의원이 대표발의한 한국산업은행법 개정안은 한국산업은행의 법정자본금 한도를 현행 30조에서 40조 원으로 상향하려는 것으로 한국산업은행의 중장기 자본여력을 확대하여 정책금융기관으로서 정책금융 수요에 대해 적기에 안정적으로 대응하는 데에 기여할 수 있을 것으로 기대됩니다.</span><br/><span class="spk_sub" id="spk_sub10-15">&nbsp;이에 대하여 금융위는 100조 원 규모의 첨단산업 규모 육성과 지역경제 활성화 및 시장안정 기능 수행을 위해 법정자본금을 50조까지 확대할 필요가 있다는 입장입니다.</span><br/><span class="spk_sub" id="spk_sub10-16">&nbsp;자본금 증액 시점 및 규모와 관련하여 정책자금 공급이 과도하게 확대될 경우 해당 부문으로의 원활한 민간자금의 유입과 효율적인 자원 배분을 저해하여 유휴 민간자금의 흐름을 왜곡하는 부작용을 유발할 수 있으며 시장원리에 따른 구조조정 및 민간의 혁신을 유인하지 못하여 장기적으로 시장경쟁력을 약화시킬 우려가 있다는 점을 고려한 논의가 필요할 것으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub10-17">&nbsp;마지막으로 31쪽입니다.</span><br/><span class="spk_sub" id="spk_sub10-18">&nbsp;의사일정 제70항 김현정 의원이 대표발의한 예금자보호법 개정안은 예금보험기금에 금융안정계정을 설치하여 금융시장 급변으로 인한 유동성 경색 등 일시적 어려움에 처한 정상금융회사에 대해 자금 지원을 할 수 있는 법적 근거를 마련하는 것으로, 금융권 스스로 마련한 재원을 활용해 신속히 자금을 지원함으로써 금융회사의 부실화를 예방하고 금융시장의 시스템 위기 발생 가능성을 차단하는 긍정적인 효과가 있을 것으로 기대됩니다.</span><br/><span class="spk_sub" id="spk_sub10-19">&nbsp;다만 금융안정계정이 남용될 경우 예금보험제도 등을 위한 예금보험기금 적립금의 손실이 발생할 수 있으므로 그 발동 요건을 보다 강화하는 방안과 자금 지원의 객관성 및 투명성을 제고할 수 있도록 소관 상임위에 사후 보고하도록 하는 방안 등을 함께 논의할 필요가 있습니다.</span><br/><span class="spk_sub" id="spk_sub10-20">&nbsp;이상 검토보고를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-21"><div class="taR">(검토보고서는 부록으로 보존함)</div></span></div></div></div><div id="spk_11" class="item92 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;다음은 대체토론을 할 순서입니다마는 효율적인 의사진행을 위해서 대체토론을 마치는 것을 전제로 오늘 상정한 안건들을 각각 소위원회에 회부하여 심사하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;그러면 오늘 상정한 법률안에 대하여 대체토론을 하실 위원님들은 손을 들어 주십시오. 그러면 시간을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;대체토론할 위원님 없으시면 오늘 회의는 이것으로 마치도록 하겠습니다.</span><br/></div></div></div><div id="spk_12" class="item92 speaker spk_mem" data-mem_id="6678" data-name="박상혁" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">박상혁 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/963e0c49236e4f5a83fb777e6225456b.jpg" alt="박상혁"></span><span class="txt"><strong class="name">박상혁</strong><span class="position">위원</span><span class="area">(경기 김포시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;위원장님!</span><br/></div></div></div><div id="spk_13" class="item92 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;아, 있습니까?</span><br/></div></div></div><div id="spk_14" class="item92 speaker spk_mem" data-mem_id="6678" data-name="박상혁" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">박상혁 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/963e0c49236e4f5a83fb777e6225456b.jpg" alt="박상혁"></span><span class="txt"><strong class="name">박상혁</strong><span class="position">위원</span><span class="area">(경기 김포시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;의사진행발언 잠깐 짧게 하겠습니다.</span><br/></div></div></div><div id="spk_15" class="item92 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;박상혁 위원님, 대체토론 아니고 의사진행발언이요?</span><br/></div></div></div><div id="spk_16" class="item92 speaker spk_mem" data-mem_id="6678" data-name="박상혁" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">박상혁 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/963e0c49236e4f5a83fb777e6225456b.jpg" alt="박상혁"></span><span class="txt"><strong class="name">박상혁</strong><span class="position">위원</span><span class="area">(경기 김포시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 국감 때문에 그렇습니다.</span><br/></div></div></div><div id="spk_17" class="item92 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예, 2분 드리세요.</span><br/></div></div></div><div id="spk_18" class="item92 speaker spk_mem" data-mem_id="6678" data-name="박상혁" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">박상혁 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/963e0c49236e4f5a83fb777e6225456b.jpg" alt="박상혁"></span><span class="txt"><strong class="name">박상혁</strong><span class="position">위원</span><span class="area">(경기 김포시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;경기도 김포을의 박상혁 위원입니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;다른 얘기는 아니고요 국정감사 때마다 항상 나오는 얘기인데 다른 상임위에서도 그렇고 보면 우리가 자료 요구라든지 또 여러 가지 자료를 내면서 굉장히 종이 낭비가 심할 정도로 많은 책자들이라든지 이런 경우들이 많습니다. 그래서 이전 21대 국회에서도 그렇고 종이 없는 국감을 하자 이런 여러 가지 좋은 제안들이 각 상임위의 위원들로부터 많이 있었습니다.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;그래서 이번에 위원장님께서 그리고 또 여기 계시는 우리 피감기관에 있는 많은 증인들께서도 협조를 해 주셔서 가급적이면 종이 없는 국감을 실천할 수 있도록 전자문서 이런 것들을 좀 해 주셔 가지고 이번에 정무위는 다른 상임위보다 모범적으로 탄소 중립을 할 수 있는 그런 모습이 되었으면 좋겠다는 말씀드리고요. 위원장님께서 꼭 그런 부분들을 많이 좀 지시해 주셨으면 좋겠습니다.</span><br/></div></div></div><div id="spk_19" class="item92 speaker spk_mem" data-mem_id="6675" data-name="윤한홍" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">위원장 윤한홍 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d175dc8a752d47059aa74a230ee93a5c.jpg" alt="윤한홍"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤한홍</strong><span class="area">(경남 창원시마산회원구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;박상혁 위원님께서 좋은 제안을 해 주신 것 같습니다. 우리 간사님들하고 의논해서 적극적으로 검토하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;그러면 오늘 회의는 이것으로 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;오늘 회의에 출석하신 각 기관장님과 관계자 여러분께 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(15시16분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(21인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGMYOUNGGU" target="_blank"><span class="name lts3 ">강명구</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank"><span class="name lts3 ">강민국</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGJUNHYEON" target="_blank"><span class="name lts3 ">강준현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGHOONSIK" target="_blank"><span class="name lts3 ">강훈식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWEONSEONGDONG" target="_blank"><span class="name lts3 ">권성동</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank"><span class="name lts3 ">김병기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMAN" target="_blank"><span class="name lts3 ">김용만</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJAESUB" target="_blank"><span class="name lts3 ">김재섭</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHYUNJUNG" target="_blank"><span class="name lts3 ">김현정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSANGHYUK" target="_blank"><span class="name lts3 ">박상혁</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOODONGSOO" target="_blank"><span class="name lts3 ">유동수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank"><span class="name lts3 ">유영하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONHANHONG" target="_blank"><span class="name lts3 ">윤한홍</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKANGILL" target="_blank"><span class="name lts3 ">이강일</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEINYOUNG" target="_blank"><span class="name lts3 ">이인영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNGMUN" target="_blank"><span class="name lts3 ">이정문</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHUNSEUNG" target="_blank"><span class="name lts3 ">이헌승</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank"><span class="name lts3 ">조승래</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank"><span class="name lts3 ">천준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANCHANGMIN" target="_blank"><span class="name lts3 ">한창민</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank"><span class="name lts3 ">김남근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINBYOUNGDUG" target="_blank"><span class="name lts3 ">민병덕</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 최병권</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 황승기</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 최기도</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>국가보훈부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 강정애</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김주용</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">보훈문화정책실장</span></span><span class="name lts3"> 오진영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">보상정책국장</span></span><span class="name lts3"> 이승우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">복지증진국장</span></span><span class="name lts3"> 최병완</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">제대군인국장</span></span><span class="name lts3"> 김진수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 박진수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">보훈예우정책관</span></span><span class="name lts3"> 임종배</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">보훈의료심의관</span></span><span class="name lts3"> 한상균</span></a></li><p>공정거래위원회</p><li><a class="in_nm"><span class="pos"><span class="lts4">부위원장</span></span><span class="name lts3"> 조홍선</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 전성복</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">경쟁정책국장</span></span><span class="name lts3"> 신동열</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">소비자정책국장</span></span><span class="name lts3"> 박세민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">기업협력정책관</span></span><span class="name lts3"> 선중규</span></a></li><p>국민권익위원회</p><li><a class="in_nm"><span class="pos"><span class="lts3">위원장</span></span><span class="name lts3"> 유철환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts19">부위원장겸중앙행정심판위원장겸사무처장</span></span><span class="name lts3"> 박종민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 안준호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">부패방지국장직무대리</span></span><span class="name lts3"> 김정대</span></a></li><p>금융위원회</p><li><a class="in_nm"><span class="pos"><span class="lts3">위원장</span></span><span class="name lts3"> 김병환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">사무처장</span></span><span class="name lts3"> 권대영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">금융소비자국장</span></span><span class="name lts3"> 김진홍</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">금융정책국장</span></span><span class="name lts3"> 신진창</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">금융산업국장</span></span><span class="name lts3"> 안창국</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">자본시장국장</span></span><span class="name lts3"> 박민우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">구조개선정책관</span></span><span class="name lts3"> 김동환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">디지털금융정책관</span></span><span class="name lts3"> 전요섭</span></a></li><p>개인정보보호위원회</p><li><a class="in_nm"><span class="pos"><span class="lts3">위원장</span></span><span class="name lts3"> 고학수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">부위원장</span></span><span class="name lts3"> 최장혁</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">사무처장</span></span><span class="name lts3"> 이정렬</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 고은영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국립묘지의 설치 및 운영에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 22. 조승래 의원 대표발의)(의안번호 2203070)</div></div><div class="con"><p class="tit_sm"><strong>부패방지 및 국민권익위원회의 설치와 운영에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 22. 김현정 의원 대표발의)(의안번호 2203071)</div></div><div class="con"><p class="tit_sm"><strong>독점규제 및 공정거래에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 22. 정연욱 의원 대표발의)(의안번호 2203082)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 8월 23일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>한국산업은행법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 23. 이헌승 의원 대표발의)(의안번호 2203117)</div></div><div class="con"><p class="tit_sm"><strong>전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 23. 김용민 의원 대표발의)(의안번호 2203161)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 8월 26일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>상품권 유통질서 확립 및 상품권이용자 보호에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 26. 오세희 의원 대표발의)(의안번호 2203181)</div></div><div class="con"><p class="tit_sm"><strong>신용정보의 이용 및 보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 26. 허영 의원 대표발의)(의안번호 2203183)</div></div><div class="con"><p class="tit_sm"><strong>금융실명거래 및 비밀보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 26. 허영 의원 대표발의)(의안번호 2203184)</div></div><div class="con"><p class="tit_sm"><strong>참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 26. 박용갑 의원 대표발의)(의안번호 2203205)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 8월 27일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>자본시장과 금융투자업에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 27. 박상혁 의원 대표발의)(의안번호 2203215)</div></div><div class="con"><p class="tit_sm"><strong>대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 27. 최형두 의원 대표발의)(의안번호 2203233)</div></div><div class="con"><p class="tit_sm"><strong>영주귀국 독립유공자 후손지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 27. 김성원 의원 대표발의)(의안번호 2203248)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 8월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>예금자보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 28. 박수민 의원 대표발의)(의안번호 2203306)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">8월 29일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>소비자기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 29. 백혜련 의원 대표발의)(의안번호 2203327)</div></div><div class="con"><p class="tit_sm"><strong>전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 29. 백혜련 의원 대표발의)(의안번호 2203349)</div></div><div class="con"><p class="tit_sm"><strong>자본시장과 금융투자업에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 29. 진성준 의원 대표발의)(의안번호 2203375)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 8월 30일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>청년기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 30. 민병덕 의원 대표발의)(의안번호 2203409)</div></div><div class="con"><p class="tit_sm"><strong>제대군인지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 30. 황희 의원 대표발의)(의안번호 2203445)</div></div><div class="con"><p class="tit_sm"><strong>피한정후견인 결격조항 정비를 위한 정무위원회 소관 2개 법률 일부개정을 위한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 30. 김도읍 의원 대표발의)(의안번호 2203456)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 9월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>제조물 책임법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 주호영 의원 대표발의)(의안번호 2203476)</div></div><div class="con"><p class="tit_sm"><strong>서민의 금융생활 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 김우영 의원 대표발의)(의안번호 2203483)</div></div><div class="con"><p class="tit_sm"><strong>영주귀국 독립유공자 후손의 정착지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 유영하 의원 대표발의)(의안번호 2203496)</div></div><div class="con"><p class="tit_sm"><strong>하도급거래 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 김상훈 의원 대표발의)(의안번호 2203498)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 예산안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 정부 제출)(의안번호 2203519)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 기금운용계획안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 정부 제출)(의안번호 2203520)</div></div><div class="con"><p class="tit_sm"><strong>하도급거래 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 2. 윤한홍 의원 대표발의)(의안번호 2203535)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 7건 9월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>여신전문금융업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 3. 윤영석 의원 대표발의)(의안번호 2203555)</div></div><div class="con"><p class="tit_sm"><strong>대규모유통업에서의 거래 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 3. 윤영석 의원 대표발의)(의안번호 2203574)</div></div><div class="con"><p class="tit_sm"><strong>전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 3. 윤영석 의원 대표발의)(의안번호 2203577)</div></div><div class="con"><p class="tit_sm"><strong>보험사기방지 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 3. 이정문 의원 대표발의)(의안번호 2203586)</div></div><div class="con"><p class="tit_sm"><strong>행정심판법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 3. 이정문 의원 대표발의)(의안번호 2203587)</div></div><div class="con"><p class="tit_sm"><strong>보훈보상대상자 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 3. 이정문 의원 대표발의)(의안번호 2203590)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 6건 9월 4일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가맹사업거래의 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 4. 김한규 의원 대표발의)(의안번호 2203612)</div></div><div class="con"><p class="tit_sm"><strong>금융실명거래 및 비밀보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 4. 박희승 의원 대표발의)(의안번호 2203617)</div></div><div class="con"><p class="tit_sm"><strong>전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 4. 임미애 의원 대표발의)(의안번호 2203634)</div></div><div class="con"><p class="tit_sm"><strong>부정청탁 및 금품등 수수의 금지에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 4. 정희용 의원 대표발의)(의안번호 2203639)</div></div><div class="con"><p class="tit_sm"><strong>대규모유통업에서의 거래 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 4. 임미애 의원 대표발의)(의안번호 2203644)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 9월 5일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가맹사업거래의 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 5. 김한규 의원 대표발의)(의안번호 2203665)</div></div><div class="con"><p class="tit_sm"><strong>대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 5. 정태호 의원 대표발의)(의안번호 2203677)</div></div><div class="con"><p class="tit_sm"><strong>공직자의 이해충돌 방지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 5. 한창민 의원 대표발의)(의안번호 2203684)</div></div><div class="con"><p class="tit_sm"><strong>자본시장과 금융투자업에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 5. 김남근 의원 대표발의)(의안번호 2203715)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 9월 6일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가맹사업거래의 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 6. 김한규 의원 대표발의)(의안번호 2203728)</div></div><div class="con"><p class="tit_sm"><strong>국립묘지의 설치 및 운영에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 6. 조승래 의원 대표발의)(의안번호 2203761)</div></div><div class="con"><p class="tit_sm"><strong>특정 금융거래정보의 보고 및 이용 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 6. 강민국 의원 대표발의)(의안번호 2203764)</div></div><div class="con"><p class="tit_sm"><strong>금융위원회의 설치 등에 관한 법률 전부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 6. 김현정 의원 대표발의)(의안번호 2203771)</div></div><div class="con"><p class="tit_sm"><strong>공중 등 협박목적 및 대량살상무기확산을 위한 자금조달행위의 금지에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 6. 강민국 의원 대표발의)(의안번호 2203772)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 9월 9일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>특정 금융거래정보의 보고 및 이용 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 강민국 의원 대표발의)(의안번호 2203781)</div></div><div class="con"><p class="tit_sm"><strong>가맹사업거래의 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 김한규 의원 대표발의)(의안번호 2203782)</div></div><div class="con"><p class="tit_sm"><strong>한국산업은행법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 유동수 의원 대표발의)(의안번호 2203789)</div></div><div class="con"><p class="tit_sm"><strong>개인정보 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 정준호 의원 대표발의)(의안번호 2203792)</div></div><div class="con"><p class="tit_sm"><strong>하도급거래 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이강일 의원 대표발의)(의안번호 2203798)</div></div><div class="con"><p class="tit_sm"><strong>금융소비자 보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 김현정 의원 대표발의)(의안번호 2203811)</div></div><div class="con"><p class="tit_sm"><strong>온라인 플랫폼 독점규제 및 공정거래에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이강일 의원 대표발의)(의안번호 2203817)</div></div><div class="con"><p class="tit_sm"><strong>보훈기금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203819)</div></div><div class="con"><p class="tit_sm"><strong>예금자보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203820)</div></div><div class="con"><p class="tit_sm"><strong>한국주택금융공사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203821)</div></div><div class="con"><p class="tit_sm"><strong>공적자금상환기금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203823)</div></div><div class="con"><p class="tit_sm"><strong>농림수산업자 신용보증법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203824)</div></div><div class="con"><p class="tit_sm"><strong>농어가목돈마련저축에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203825)</div></div><div class="con"><p class="tit_sm"><strong>신용보증기금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 이정문 의원 대표발의)(의안번호 2203826)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 14건 9월 10일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>가맹사업거래의 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 10. 김한규 의원 대표발의)(의안번호 2203829)</div></div><div class="con"><p class="tit_sm"><strong>전자상거래 등에서의 소비자보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 10. 이강일 의원 대표발의)(의안번호 2203831)</div></div><div class="con"><p class="tit_sm"><strong>특정 금융거래정보의 보고 및 이용 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 10. 강민국 의원 대표발의)(의안번호 2203833)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 9월 11일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>개인금융채권의 관리 및 개인금융채무자의 보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 권성동 의원 대표발의)(의안번호 2203914)</div></div><div class="con"><p class="tit_sm"><strong>독점규제 및 공정거래에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 김상훈 의원 대표발의)(의안번호 2203922)</div></div><div class="con"><p class="tit_sm"><strong>금융중심지의 조성과 발전에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 김한규 의원 대표발의)(의안번호 2203932)</div></div><div class="con"><p class="tit_sm"><strong>약관의 규제에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 이언주 의원 대표발의)(의안번호 2203943)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 9월 12일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>금융실명거래 및 비밀보장에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 12. 이기헌 의원 대표발의)(의안번호 2203957)</div></div><div class="con"><p class="tit_sm"><strong>개인정보 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 12. 김태선 의원 대표발의)(의안번호 2203968)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 13일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>독점규제 및 공정거래에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 13. 박범계 의원 대표발의)(의안번호 2204010)</div></div><div class="con"><p class="tit_sm"><strong>자본시장과 금융투자업에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 13. 강민국 의원 대표발의)(의안번호 2204014)</div></div><div class="con"><p class="tit_sm"><strong>하도급거래 공정화에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 13. 김동아 의원 대표발의)(의안번호 2204032)</div></div><div class="con"><p class="tit_sm"><strong>대부업 등의 등록 및 금융이용자 보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 13. 김선교 의원 대표발의)(의안번호 2204042)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 9월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>참전유공자 예우 및 단체설립에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 19. 이헌승 의원 대표발의)(의안번호 2204070)</div></div><div class="con"><p class="tit_sm"><strong>개인정보 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 19. 이강일 의원 대표발의)(의안번호 2204077)</div></div><div class="con"><p class="tit_sm"><strong>신용보증기금법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 19. 유영하 의원 대표발의)(의안번호 2204094)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 9월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>불법온라인사행행위 방지를 위한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 최민희 의원 대표발의)(의안번호 2203897)</div></div><div class="con"><p class="tit_sm"><strong>개인정보 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 20. 이강일 의원 대표발의)(의안번호 2204100)</div></div><div class="con"><p class="tit_sm"><strong>제조물 책임법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 20. 이헌승 의원 대표발의)(의안번호 2204104)</div></div><div class="con"><p class="tit_sm"><strong>국가유공자 등 단체 설립에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 20. 김용태 의원·천하람 의원·민병덕 의원 대표발의)(의안번호 2204112)</div></div><div class="con"><p class="tit_sm"><strong>예금자보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 20. 송석준 의원 대표발의)(의안번호 2204129)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 5건 9월 23일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>장애인권리보장법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 23. 최보윤 의원 대표발의)(의안번호 2203162)</div></div><div class="con"><p class="tit_sm"><strong>장애인복지법 전부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 23. 최보윤 의원 대표발의)(의안번호 2203163)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 8월 26일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>대한민국 정부와 필리핀공화국 정부 간의 자유무역협정 비준동의안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 27. 정부 제출)(의안번호 2203224)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">8월 28일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>인공지능 발전 진흥과 사회적 책임에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 28. 배준영 의원 대표발의)(의안번호 2203297)</div></div><div class="con"><p class="tit_sm"><strong>문화예술기술투자조합의 결성 및 운용에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 28. 황희 의원 대표발의)(의안번호 2203300)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 8월 29일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>헌법부정 및 역사왜곡행위자 공직임용금지 등에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 28. 김용만 의원 발의)(의안번호 2203296)</div></div><div class="con"><p class="tit_sm"><strong>특례시 지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 29. 김승원 의원 대표발의)(의안번호 2203341)</div></div><div class="con"><p class="tit_sm"><strong>국가기간전력망 확충에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 29. 김정호 의원 대표발의)(의안번호 2203383)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 8월 30일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국회에서의 증언·감정 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 8. 30. 김병기 의원 대표발의)(의안번호 2203425)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 2일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>미세플라스틱 저감 및 관리에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 4. 이수진 의원 대표발의)(의안번호 2203652)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 5일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>정부조직법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 6. 김현정 의원 대표발의)(의안번호 2203770)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 9일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가기간 전력망 확충 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 정진욱 의원 대표발의)(의안번호 2203796)</div></div><div class="con"><p class="tit_sm"><strong>학생맞춤통합지원법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 9. 백승아 의원 대표발의)(의안번호 2203822)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 10일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>공무직위원회 설치 및 운영에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 10. 김주영 의원 대표발의)(의안번호 2203830)</div></div><div class="con"><p class="tit_sm"><strong>의료법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 10. 김선민 의원 대표발의)(의안번호 2203869)</div></div><div class="con"><p class="tit_sm"><strong>국가기간전력망확충특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 10. 이상식 의원 대표발의)(의안번호 2203882)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 9월 11일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가기간 전력망 확충 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2024. 9. 11. 김석기 의원 대표발의)(의안번호 2203896)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 12일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="24.68958418219639%"><col width="12.551735969633935%"><col width="12.551735969633935%"><col width="12.551735969633935%"><col width="12.551735969633935%"><col width="12.551735969633935%"><col width="12.551735969633935%"></colgroup><thead><tr><th scope="col">구분</th><th scope="col">대통령령</th><th scope="col">총리령</th><th scope="col">부령</th><th scope="col">훈령</th><th scope="col">예규</th><th scope="col">고시</th></tr></thead><tr><td>국무조정실<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td></tr><tr><td>국가보훈부<br/></td><td>3<br/></td><td>-<br/></td><td>2<br/></td><td>13<br/></td><td>2<br/></td><td>1<br/></td></tr><tr><td>공정거래위원회<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>1<br/></td></tr><tr><td>국민권익위원회<br/></td><td>1<br/></td><td>-<br/></td><td>-<br/></td><td>3<br/></td><td>1<br/></td><td>1<br/></td></tr><tr><td>금융위원회<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td></tr><tr><td>개인정보보호위원회<br/></td><td>-<br/></td><td>-<br/></td><td>-<br/></td><td>1<br/></td><td>-<br/></td><td>-<br/></td></tr></table></div><br/></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52286;
+			const class_id = 2;
+			const confer_num = "054127";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785643287027" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785643287027"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785643287027"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785643287027"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

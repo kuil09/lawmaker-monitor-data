@@ -1,0 +1,625 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=52348" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제418회 (정기회) 제5차 과학기술정보방송통신위원회</strong><span class="date">(2024.10.07.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2024년도 국정감사 증인 등 추가 출석 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2024년도 국정감사 증인에 대한 동행명령장 발부의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최민희 위원장 (경기 남양주시갑)"> 
+							최민희 위원장 (경기 남양주시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="최형두 위원 (경남 창원시마산합포구)"> 
+							최형두 위원 (경남 창원시마산합포구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김현 위원 (경기 안산시을)"> 
+							김현 위원 (경기 안산시을)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(3명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6738" data-name="최민희" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">최민희</span>
+												<span class="position">위원장</span>
+												<span class="area">(경기 남양주시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6620" data-name="최형두" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">최형두</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 창원시마산합포구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6737" data-name="김현" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김현</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 안산시을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=52348&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제418회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>과학기술정보방송통신위원회회의록</h1></div></div><p class="num">제5호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2024년 10월 7일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">과학기술정보방송통신위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2024년도 국정감사 증인 등 추가 출석 요구의 건</li><li><span class="num">2.</span> 2024년도 국정감사 증인에 대한 동행명령장 발부의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2024년도 국정감사 증인 등 추가 출석 요구의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2024년도 국정감사 증인에 대한 동행명령장 발부의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시35분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;국정감사 중이지만 안건 처리를 위하여 잠시 전체회의를 개회하도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;제418회 국회(정기회) 과학기술정보방송통신위원회 제5차 전체회의를 개회합니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 2024년도 국정감사 증인 등 추가 출석 요구의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;당초 회의 안건은 아니었으나 간사와의 협의에 따라 2024년도 국정감사 증인 등 추가 출석 요구의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;이 증인은요, 강필구 참고인은 본인이 자발적으로 증인 하시겠다고 동의를 하셔서 의결하는 것이고요. </span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;그다음에 윤원일 검사의 경우는 출석요구서가 본인에게 송달이 안 됐다고 합니다. 그래서 10월 24일 확감 때 출석하도록 하기 위한 것입니다. </span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;2024년도 국정감사 증인 등 추가 출석 요구의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub3-5">&nbsp;이 안건은 10월 7일부터 10월 25일까지 실시되는 국정감사와 관련하여 국정감사 및 조사에 관한 법률 제10조 및 국회에서의 증언·감정 등에 관한 법률 제2조 및 제5조에 따라 증인과 참고인의 출석을 추가로 요구하기 위한 절차입니다. </span><br/><span class="spk_sub" id="spk_sub3-6">&nbsp;증인 및 참고인에 대하여 간사 위원과 협의한 결과 증인 2명을 추가로 채택하기로 하였습니다. </span><br/><span class="spk_sub" id="spk_sub3-7">&nbsp;구체적인 명단과 출석일시 등은 배부해 드린 자료를 참고하여 주시기 바랍니다. </span><br/></div></div></div><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;이의 있습니다. </span><br/></div></div></div><div id="spk_5" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;손 드셨어요? </span><br/></div></div></div><div id="spk_6" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;예.</span><br/></div></div></div><div id="spk_7" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;아직 안 끝났는데 잠깐 기다리세요. </span><br/></div></div></div><div id="spk_8" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;예.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;합의되지 않았습니다.</span><br/></div></div></div><div id="spk_9" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;배부해 드린 바와 같이 증인 등에 대하여 출석을 요구하는 것에 대하여 이의 없으십니까? </span><br/></div></div></div><div id="spk_10" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;이의 있습니다. </span><br/></div></div></div><div id="spk_11" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;표결에 들어가기 전에 드리겠습니다. </span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;2분 드리세요. </span><br/></div></div></div><div id="spk_12" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;우선해 방송통신위 혁신기획담당관 강필구 과장님이신가요? </span><br/></div></div></div><div id="spk_13" class="item1 speaker spk_mem" data-mem_id="6737" data-name="김현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">김현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1f184c9b9ef14a2b999ccf0c4fdd7870.jpg" alt="김현"></span><span class="txt"><strong class="name">김현</strong><span class="position">위원</span><span class="area">(경기 안산시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;예.</span><br/></div></div></div><div id="spk_14" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;과장님은 오전에 성실히 답변하고 지금 현장에도 있습니다. 이분을, 공무원을 이 국정감사장의 위력적인 분위기로 자발적 증인으로 동의를 했다고 하지만 그러나 국정감사장에서 우리가 충분히 지금도 물을 수 있는 사안을 굳이 증인으로 해서 더 위압적인 분위기를 만드는 것은 적절치 않다고 생각을 합니다. 그리고 이분은 공직자로서 성실하게 그 업무를 수행하고 있는 것이고, 우리가 언제든지 업무에 대해서 물어볼 수가 있고 또 여기서도 질의할 수 있지 않습니까? </span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;다음에 윤원일 대검 형사 3과장, 사실은 이 증인에 대해서는 협의된 바가 없습니다. 그냥 증인 요청하겠다고 말하면 그게 다 협의됐다고 생각하시는 것 같은데 협의는 아무리 합의와 다르다 하더라도 그래도 충분히 숙의돼야 되지 않습니까? </span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;이미 우리 과방위의 증인·참고인, 증인 숫자가 국회에서 가장 많다고 합니다. 그런데 또 불러서 이렇게 해야 되겠습니까? 그리고 벌써 수사 형사, 경찰관도 부르고 검사도 부르고 이렇게 해서…… 참 이게 우리가 과방위에서 자꾸 나는 무슨 이게 법사위처럼 뭐가 자꾸 바뀌는 것 같습니다. 아니면 행안위로 가든지…… </span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;우리 과학기술정보·방송통신을 충실히 다뤄야 될 사안에서 증인을 이렇게 자꾸 새롭게 추가를 하고, 또 이분이 이례적으로 파견된 사정기관 관련인데 오늘 이와 관련해서 다른 분도 나와 계시지 않습니까? 물어보면……</span><br/></div></div></div><div id="spk_15" class="item1 speaker spk_mem" data-mem_id="6737" data-name="김현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">김현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1f184c9b9ef14a2b999ccf0c4fdd7870.jpg" alt="김현"></span><span class="txt"><strong class="name">김현</strong><span class="position">위원</span><span class="area">(경기 안산시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;달라요. 파견검사하고 달라요. 그래서…… </span><br/></div></div></div><div id="spk_16" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;저기요, 좀…… </span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;하세요. 끝까지 하세요.</span><br/></div></div></div><div id="spk_17" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;그리고 제가 알기로는 방통위에는 항상, 이쪽도 사법적인 이런 절차와 관련해서 항상 검사가 파견되지 않았습니까? 그런데 이분을 굳이 다시 이렇게…… 그래서 저희들 반대합니다. 반대하고…… </span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;또 다수결로 밀어붙이시겠지만 지금 이미 우리 과방위의 증인 숫자가 너무 많고 과학기술정보·방송통신의 본령과는 다른 증인도 너무 많다 이런 점을 좀 염두에 두십시오. </span><br/></div></div></div><div id="spk_18" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;윤원일 검사의 경우는 이미 명단에 들어가 있습니다. 그렇기 때문에 추가가 아니에요. 그냥 증인 출석 송부가 제대로 안 돼 있기 때문에 10월 24일, 일시를 바꾸는 사안이고요. </span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;그다음에 강필구 과장, 혁신기획담당관에 대해서는 본인이 소명할 것이, 소명 기회를 주기 위한 것입니다. 그래서 본인이 동의하셨습니다. </span><br/></div></div></div><div id="spk_19" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;그런데 증인이 아니고 여기서 그냥 다른 일반 진술을 할 수 있지 않습니까, 우리가? </span><br/></div></div></div><div id="spk_20" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;본인이 동의한 사안을 왜 그러세요? </span><br/></div></div></div><div id="spk_21" class="item1 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;아니, 그런데 이 분위기에서 ‘동의할래?’ 그러면 누가 동의 안 하겠습니까? </span><br/></div></div></div><div id="spk_22" class="item1 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;아니요, 아닙니다. 이것은 보고까지 하고 저희가 답변을 받은 사안입니다. </span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;이의가 있으므로 표결에 부치도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;표결 방법은 거수로 하도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub22-4">&nbsp;국정감사 증인 등 추가 출석 요구의 건을 유인물과 같이 찬성하시는 위원님 거수해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub22-5">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub22-6">&nbsp;열두 분이십니다. </span><br/><span class="spk_sub" id="spk_sub22-7">&nbsp;반대하시는 위원님 거수해 주십시오. </span><br/><span class="spk_sub" id="spk_sub22-8">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub22-9">&nbsp;찬성 12인, 반대 7인, 기권 1인으로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub22-10"><div class="taR">(일반증인 명단은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub22-11">&nbsp;출석 요구의 철회 및 일시 변경 등에 관한 경미한 사항은 위원장과 간사에게 위임해 주시기 바랍니다. </span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 2024년도 국정감사 증인에 대한 동행명령장 발부의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시41분)</p><br/><div id="spk_24" class="item2 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;위원님께 양해의 말씀을 드립니다. </span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;당초 회의 안건은 아니었으나 간사와의 협의에 따라 2024년도 국정감사 증인에 대한 동행명령장 발부의 건을 상정합니다. </span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;이 안건은 우오현·임무영 증인의 경우 불출석사유서를 제출하지 않았거나 불출석사유서를 제출하였으나 국회에서의 증언·감정 등에 관한 법률 제5조의2에 따른 부득이한 사유로 보기 어려워 위원장과 간사 위원 간 협의를 거쳐 동법 제6조에 따라 오늘 17시까지 국정감사장으로 동행할 것을 명령하기 위한 것입니다. </span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;그러면 이상 말씀드린 바와 같이 2024년도 국정감사 증인에 대한 동행명령장 발부의 건을 의결하고자 하는데 이의 있으십니까? </span><br/></div></div></div><div id="spk_25" class="item2 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;이의 있습니다. </span><br/></div></div></div><div id="spk_26" class="item2 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;1분 드리세요.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;같은 이유잖아요. </span><br/></div></div></div><div id="spk_27" class="item2 speaker spk_mem" data-mem_id="6620" data-name="최형두" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">최형두 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/fbac5267e24343b98623752d6c854616.jpg" alt="최형두"></span><span class="txt"><strong class="name">최형두</strong><span class="position">위원</span><span class="area">(경남 창원시마산합포구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;임무영 변호사의 경우를 보면, 불출석사유서 읽어 보셨습니까? ‘발신인은 변호사 1인과 공동으로 소규모 법률사무소를 운영하는 사람으로서’…… 오늘 구속 기소된 사람 재판이 몇 건이라고도 합니다. 이걸 날짜를 정해서 이렇게 부른다는 것이 맞지 않고, 더욱이 지금 이분이 무엇 때문에 불렸지요? 뭡니까? 하도 증인이 많아서 저도 헷갈리고…… 새로운 방문진 이사로 선임된 사람입니까? 그건 방문진 때 또 해야겠지만 따져 보면 알 문제고. </span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;그리고 또 현재 국정감사·조사에 관한 법률 8조는 계속 중인 재판에 관여할 목적으로 감사가 행사돼서는 안 된다고 규정하고 있다고 지금 이렇게 소명하고 있습니다. </span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;그리고 또 발신인에 대한 신문 요지인 방문진 이사 선임 관련은 ‘현재 법원에 계속 중인 행정법원 사건이다. 그래서 귀 위원회가 재판에 관여할 목적으로 감사를 진행하지 않는다고 믿고 있으나 그 의도와……</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;(발언시간 초과로 마이크 중단)</span><br/><div class="line_dot">&nbsp;</div><span class="spk_sub" id="spk_sub27-5">&nbsp;(마이크 중단 이후 계속 발언한 부분)</span><br/><span class="spk_sub" id="spk_sub27-6">무관하게 결과적으로 재판에 영향을 미칠 것이다’라고 보고 있습니다. 그래서 이분의 불출석사유서는 매우 정당하다고 생각됩니다. </span><br/><span class="spk_sub" id="spk_sub27-7">&nbsp;그리고 우오현 SM그룹 회장만 하더라도 보니까 지역민방에 출자한 회사 회장이라고 해서 부르는데 그 회사의 책임자를 부르면 될 문제지 이걸 굳이 기업인을 불러서 이렇게 지역민방까지 국회가 겁박한다는 인상을 줘서 되겠습니까? 그래서 반대합니다, 저희들은.</span><br/><div class="line_dot">&nbsp;</div></div></div></div><div id="spk_28" class="item2 speaker spk_mem" data-mem_id="6738" data-name="최민희" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">위원장 최민희 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/0797d25588a14280a94de3bbe12ca8eb.png" alt="최민희"></span><span class="txt"><span class="position">위원장</span><strong class="name">최민희</strong><span class="area">(경기 남양주시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;동행명령장 발부의 건에 대한 이의가 있으므로 표결에 부치도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;표결 방법은 거수로 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;동행명령장 발부의 건을 유인물과 같이 찬성하시는 위원님 거수해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub28-4">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub28-5">&nbsp;반대하시는 위원님 거수해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub28-6">&nbsp;(거수 표결)</span><br/><span class="spk_sub" id="spk_sub28-7">&nbsp;찬성 12인, 반대 7인, 기권 1인으로 가결되었음을 선포합니다. </span><br/><span class="spk_sub" id="spk_sub28-8">&nbsp;동행명령장 발부와 이를 집행할 직원의 지정 등 세부 절차에 관해서는 위원장에게 위임해 주시기 바랍니다. </span><br/><span class="spk_sub" id="spk_sub28-9">&nbsp;전체회의를 잠시 정회하고 계속하여 국정감사를 진행하도록 하겠습니다. </span><br/><span class="spk_sub" id="spk_sub28-10">&nbsp;정회를 선포합니다. </span><br/></div></div></div><p class="tit_sm taR">(14시44분 회의중지)</p><br/><p class="tit_sm taR">(계속개의되지 않았음)</p><br/><div class="line_dot">&nbsp;</div><br/></div><div class="minutes_footer"><p class="tit"><strong>증인 명단</strong></p>증인(2인)<div class="table_wrap2"><table class="normal"><caption>증인 명단</caption><colgroup><col width="8.363589490192709%"><col width="23.0927879347756%"><col width="18.836874556899478%"><col width="49.70674801813221%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">소속 및 직위</th><th scope="col">출석요구일</th><th scope="col">출석 요지 및 신청이유</th></tr></thead><tr><td>윤원일<br/></td><td>대검찰청 형사 3과 과장<br/></td><td>2024. 10. 24.(목) 10:00 방송통신위원회<br/></td><td>방통위에 이례적으로 파견된 사정기관 관련 및 방통위 내외부에 대한 전방위적 감사 관련<br/></td></tr><tr><td>강필구<br/></td><td>방송통신위원회 혁신기획담당관<br/></td><td>2024. 10. 7.(월) 의결시 방송통신위원회<br/></td><td>방통위 관련 국정감사<br/></td></tr></table></div><br/><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(20인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMWOOYOUNG" target="_blank"><span class="name lts3 ">김우영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJANGKYOM" target="_blank"><span class="name lts3 ">김장겸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHyun" target="_blank"><span class="name lts2 ">김현</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NOHJONGMYUN" target="_blank"><span class="name lts3 ">노종면</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKMINKYU" target="_blank"><span class="name lts3 ">박민규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEONGHUN" target="_blank"><span class="name lts3 ">박정훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKCHOONGKWON" target="_blank"><span class="name lts3 ">박충권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINSungBum" target="_blank"><span class="name lts3 ">신성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGHWI" target="_blank"><span class="name lts3 ">이상휘</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJEONGHEON" target="_blank"><span class="name lts3 ">이정헌</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNSEOK" target="_blank"><span class="name lts3 ">이준석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHAIMIN" target="_blank"><span class="name lts3 ">이해민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEHOONKI" target="_blank"><span class="name lts3 ">이훈기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGDONGYOUNG" target="_blank"><span class="name lts3 ">정동영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOINCHEUL" target="_blank"><span class="name lts3 ">조인철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIMinhee" target="_blank"><span class="name lts3 ">최민희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOISOOJIN" target="_blank"><span class="name lts3 ">최수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOIHYUNGDU" target="_blank"><span class="name lts3 ">최형두</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANMINSOO" target="_blank"><span class="name lts3 ">한민수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGJUNGA" target="_blank"><span class="name lts3 ">황정아</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 김건오</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 임명현</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">입법심의관</span></span><span class="name lts3"> 정석배</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 52348;
+			const class_id = 2;
+			const confer_num = "054177";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785643286541" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785643286541"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785643286541"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785643286541"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>

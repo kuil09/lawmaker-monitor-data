@@ -1,0 +1,859 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=56251" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제432회 (임시회) 제5차 연금개혁특별위원회</strong><span class="date">(2026.02.05.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 간사 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">o 간사(안상훈) 인사</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">2. 민간자문위원회 중간 보고의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤영석 위원장 (경남 양산시갑)"> 
+							윤영석 위원장 (경남 양산시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="안상훈 위원 (비례대표)"> 
+							안상훈 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박수민 위원 (서울 강남구을)"> 
+							박수민 위원 (서울 강남구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="남인순 위원 (서울 송파구병)"> 
+							남인순 위원 (서울 송파구병)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="오기형 위원 (서울 도봉구을)"> 
+							오기형 위원 (서울 도봉구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박홍배 위원 (비례대표)"> 
+							박홍배 위원 (비례대표)
+						</option>
+					
+					
+						<option value="박명호 민간자문위원회공동위원장">박명호 민간자문위원회공동위원장</option>
+					
+						<option value="주은선 민간자문위원회공동위원장">주은선 민간자문위원회공동위원장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(6명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6682" data-name="윤영석" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">윤영석</span>
+												<span class="position">위원장</span>
+												<span class="area">(경남 양산시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6805" data-name="안상훈" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">안상훈</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6790" data-name="박수민" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">박수민</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 강남구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6663" data-name="남인순" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">남인순</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 송파구병)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6699" data-name="오기형" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">오기형</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 도봉구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6791" data-name="박홍배" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">박홍배</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(2명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="박명호" data-pos="민간자문위원회공동위원장"> 
+											<label for="spk_attend0">
+												<span class="name">박명호</span>
+												<span class="position">민간자문위원회공동위원장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="주은선" data-pos="민간자문위원회공동위원장"> 
+											<label for="spk_attend1">
+												<span class="name">주은선</span>
+												<span class="position">민간자문위원회공동위원장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=56251&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+	
+		
+			<div class="minutes_header"><div class="tit_wrap"><p class="turn">제432회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>연금개혁특별위원회회의록</h1></div></div><p class="num">제5호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 2월 5일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">보건복지위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 간사 선임의 건</li><li><span class="num">2.</span> 민간자문위원회 중간 보고의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 간사 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2">o 간사(안상훈) 인사</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">2.</span> 민간자문위원회 중간 보고의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(09시07분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;좌석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제5차 연금개혁특별위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;지난 2025년 12월 11일 국회 본회의에서 우리 국회 연금개혁특별위원회를 2026년 12월 말까지 1년 연장하는 안이 통과되었습니다. 그렇게 해서 우리가 좀 더 깊이 있게 또 심도 있게, 폭넓게 국민의 삶의 안정성을 보장할 수 있는 연금개혁을 하기 위해서, 오늘 회의를 기점으로 해서 다시 본격적인 활동에 들어가게 되었습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;오늘 보고사항은 노트북 단말기 자료를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-5"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-6">&nbsp;오늘 회의 진행 순서를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;오늘은 먼저 간사 선임의 건을 의결하고 민간자문위원회 공동위원장으로부터 민간자문위원회의 활동에 대한 중간보고를 받도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;의사일정에 들어가기에 앞서서 국회사무처 인사발령으로 우리 특별위원회에 새롭게 근무하게 된 직원을 소개하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-9">&nbsp;보건복지위원회의 박동찬 전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub2-10">&nbsp;보건복지위원회의 신은호 전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub2-11">&nbsp;(인사)</span><br/><span class="spk_sub" id="spk_sub2-12">&nbsp;두 분 환영합니다. 우리 연금개혁특별위원회 의정활동 지원에 최선을 다해 주시기를 부탁드립니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 간사 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(09시09분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;그러면 의사일정 제1항 간사 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;지난 2025년 12월 22일 자로 우리 위원회의 위원 개선이 있었습니다. 그동안 국민의힘 간사를 맡으셨던 김미애 위원님께서 사임을 하시게 되었습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;그동안 김미애 위원님 수고를 많이 해 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;그리고 안상훈 위원님께서 새로 보임을 하시게 됨에 따라서 국민의힘에서 추천한 안상훈 위원님을 우리 위원회 간사로 선임하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;그러면 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">o 간사(안상훈) 인사</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(09시10분)</p><br/><div id="spk_6" class="item2 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;그러면 안상훈 간사님의 인사말씀을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;안상훈 간사님, 인사말씀 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_7" class="item2 speaker spk_mem" data-mem_id="6805" data-name="안상훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">안상훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ba1a4675a60a42d8ad14b64f5f35a93c.png" alt="안상훈"></span><span class="txt"><strong class="name">안상훈</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;위원장님, 감사합니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;한 분도 이의 표명을 안 해 주셔서 감사합니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;사실 연금개혁, 지난번에 국민연금이 한 번 있었고 그 전에도 여러 노력들이 있었는데 연금개혁은 개별 부처가 담당하는 개별 연금만 가지고는 사실은 정답을 찾기가 거의 불가능하다고 여겨지고, 아마 다들 아실 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;그래서 지금 국회 연금특위가 구성이 됐고, 제가 알기로 우리의 미션은 구조개혁이라는 틀에서 여러 연금들의 정합성을 좀 따져 보면서 특히 급한 불을 끄는 것의 터를 닦는 그런 작업을 우리가 하는 걸로 알고 있습니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;작년에도 굉장히 열심히, 특히 민간자문위원들께서 활동을 많이 해 주셨던 것 같고 그러한 토대에서 올해는 우리가 힘을 합쳐서 위원님들 중심으로, 적어도 올 연말까지 진행되는 이 특위에서 앞으로 대한민국의 노후소득보장과 연금 분야의 재정안정성 이 두 마리 토끼를 잡을 수 있을 건지, 어떻게 잡을 건지, 우선순위가 뭘지 이런 것들을 정리라도 좀 하는 데 기여를 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;이 문제는 아마 여야가 따로 없어야 되는 문제인 것 같고요. 오기형 간사님과는 제가 오늘 여기 오기 전에도 여러 번 통화도 나누고 그랬는데 생각이 같은 부분이 많은 것 같아서 모시고 열심히 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_8" class="item2 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;감사합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">2. 민간자문위원회 중간 보고의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(09시12분)</p><br/><div id="spk_10" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;다음으로 의사일정 제2항 민간자문위원회 중간 보고의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;우리 특별위원회는 지난 2025년 9월 30일 민간자문위원회 구성 결과를 보고하였고 민간자문위원회는 이후 네 차례 회의를 개최하여서 연금개혁에 대한 논의를 진행하였습니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;그동안 민간자문위원회의 열정적인 활동에 임해 주신 박명호·주은선 공동위원장님과 또 위원님들께 감사의 말씀을 드리면서 두 분 공동위원장님께서 중간 결과를 보고해 주시겠습니다.</span><br/><span class="spk_sub" id="spk_sub10-4">&nbsp;먼저 박명호 공동위원장님, 발언대로 나오셔서 보고하여 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item3 speaker spk_mem" data-mem_id="0" data-name="박명호" data-pos="민간자문위원회공동위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">민간자문위원회공동위원장 박명호 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박명호"></span><span class="txt"><span class="position">민간자문위원회공동위원장</span><strong class="name">박명호</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;존경하는 위원장님 그리고 연금개혁특별위원회 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;민간자문위원회 공동위원장 박명호입니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;지방선거 등을 앞둔 바쁜 정치 일정 속에서도 연금개혁특위를 계속 가동해 주신 데 대해 국민의 한 사람으로서 깊은 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;연금은 선거 주기에 따라 미룰 수 있는 사안이 아니며 오늘 이 자리가 그 점을 분명히 보여 주고 있다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;먼저 민간자문위원회의 현실을 공동위원장의 한 명으로서 좀 솔직하게 말씀드리고자 합니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;여러분들도 다 아시다시피 민간자문위원회는 여야 추천 각 11명, 총 22명으로 구성되어 있습니다. 출범 단계에서부터 각 진영의 문제의식과 인식 차이가 그대로 반영된 구조입니다. 그 결과 논의 과정은 합의 도출에 상당히 큰 어려움이 있습니다. 노후소득보장을 우선해야 한다는 시각과 연금재정의 지속가능성을 최우선으로 봐야 한다는 시각 사이의 간극이 논의 과정에서 계속 드러나고 있습니다. 이 두 시각은 모두 나름의 논리를 가지고 있다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;다만 연금개혁특별위원회는 출발점에서부터 분명한 목적을 가지고 있다고 생각합니다. 다시 말하면 연금재정의 지속가능성을 확보하기 위한 재정안정화 조치를 논의하고 그 토대 위에서 노후소득보장을 어떻게 구현할 것인지를 다루기 위한 기구라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-8">&nbsp;아쉽게도 실제 민간자문위원회의 논의 과정을 보면 논의의 출발점이 되어야 할 재정안정화 조치가 충분히 선행되지 못하고 있는 것이 현실입니다. 이는 자문위원 개개인의 성실성이나 전문성의 문제가 아니라 다양한 시각을 그대로 반영하도록 구성된 민간자문위원회의 구조적 한계에서 비롯된 측면이 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-9">&nbsp;특히 2025년 법 개정 이후 다시 연금개혁특별위원회가 설치된 상황을 고려할 때 재정안정화는 선택 가능한 여러 의제 중 하나가 아니라 모든 논의의 전제조건이라고 생각합니다. 이 점에 대해 특위 차원에서 명확한 가이드라인이 제시된다면 민간자문위원회 논의 역시 보다 생산적인 방향으로 정리될 수 있을 거라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-10">&nbsp;이러한 상황에서 최근 국민연금 기금운용수익률 개선이 크게 되면서 기금 고갈 시점이 2090년까지 늦춰질 수 있다는 전망도 존재합니다. 이를 근거로 제도개혁의 필요성을 낮게 보는 시각도 일부 나타나고 있습니다.</span><br/><span class="spk_sub" id="spk_sub11-11">&nbsp;그런데 민간자문위원 중 한 분은 매 회의 때마다 자신은 2050년생을 대표한다고 말합니다. 지금 우리 입장에서 보면 2090년대는 먼 미래처럼 보이지만 2050년생에게는 그렇지 않습니다. 그 시점에 이들은 은퇴자가 아니라 40대의 핵심 경제활동인구입니다. 기금이 고갈된 이후 발생하게 되는 부담, 다시 말하면 보험료 인상이든 세금 투입이든 그 부담을 실제로 떠안게 되는 세대입니다. 이는 세대 간 형평성 측면에서 매우 심각한 문제라고 봅니다. 국민연금이 지속가능성을 확보하는 방식, 다시 말해 낸 것만큼 받고 부담과 급여가 구조적으로 연동되는 제도로 전환되지 않는다면 이러한 문제는 반복될 수밖에 없습니다.</span><br/><span class="spk_sub" id="spk_sub11-12">&nbsp;그리고 이 논의는 국민연금에만 국한되지 않습니다. 현재 공무원연금, 사학연금, 군인연금 등 다른 직역연금 역시 저부담·고급여 구조라는 유사한 문제를 안고 있습니다. 그럼에도 직역연금 개혁은 늘 정치적·사회적 저항에 부딪혀 왔습니다. 저는 국민연금이 먼저 지속가능한 구조로 전환된다고 한다면 이것이 직역연금 개혁을 추진할 수 있는 강력한 동력이 될 수 있다고 봅니다.</span><br/><span class="spk_sub" id="spk_sub11-13">&nbsp;다시 말해 국민연금 개혁은 끝이 아니라 새로운 출발점입니다. 국민연금의 구조적 전환이 이루어질 때 비로소 직역연금 전반에 대한 지속가능한 재정개혁 논의도 현실적인 궤도에 오를 수 있다고 봅니다.</span><br/><span class="spk_sub" id="spk_sub11-14">&nbsp;존경하는 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub11-15">&nbsp;연금개혁특별위원회는 바로 이러한 구조적 문제를 다루기 위해 구성되었다고 봅니다. 민간자문위원회가 겪고 있는 시각 차이와 논의의 난맥상은 이 문제가 어렵다는 증거이자 동시에 더 이상 미룰 수 없다는 증거라고 생각합니다. 이제 중요한 것은 이 간격을 어떤 기준과 어떤 순서로 정리해 나갈 것인가 하는 점입니다.</span><br/><span class="spk_sub" id="spk_sub11-16">&nbsp;오늘의 중간 보고는 결론이 아닙니다. 분명한 새로운 출발점입니다. 민간자문위원회는 재정의 지속가능성, 세대 간 형평성 그리고 그 토대 위의 노후소득보장이라는 기준을 놓치지 않고 논의를 이어 갈 것입니다.</span><br/><span class="spk_sub" id="spk_sub11-17">&nbsp;다만 연금개혁특별위원회 차원에서 보다 명확한 기준과 논의의 방향을 제시해 주신다면 민간자문위원회 역시 그 틀 안에서 보다 집중적이고 실질적인 자문을 통해 입법 논의에 기여할 수 있을 거라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub11-18">&nbsp;경청해 주셔서 감사합니다.</span><br/></div></div></div><div id="spk_12" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;다음은 주은선 공동위원장님 발언대로 나오셔서 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item3 speaker spk_mem" data-mem_id="0" data-name="주은선" data-pos="민간자문위원회공동위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">민간자문위원회공동위원장 주은선 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="주은선"></span><span class="txt"><span class="position">민간자문위원회공동위원장</span><strong class="name">주은선</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;공동위원장 주은선입니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;민간자문위원회는 앞서 말씀드린 것처럼 네 차례의 회의가 진행이 되었고요. 큰 틀에서 큰 주제별로 이견들을 노출하는 그런 회의를 진행했고요. 4월부터, 아마 3월부터는 좀 더 세부적인 주제를 가지고 논의를 할 예정입니다. 주로 공적연금과 국가 역할, 기초층위 재구조화, 기초연금과 국민연금의 관계 그리고 퇴직연금 등등 다양한 주제에 대해서 이야기를 할 예정입니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;저는 연금특위 그리고 연금특위 자문위원회가 구성이 된 것이 지난 연금개혁의 불완전성에서 비롯됐다라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;지난번 연금개혁을 하기는 했지만 소득보장 면에서도 상당히 미흡하고 장기적으로 지속가능하고 좀 더 공평한 재정부담 구조를 만드는 것 그리고 계속 증가하고 있는 비임금 노동자에 대한 대응 등 사각지대 문제 이런 것들에 대한 대응이 앞으로 절실하게 요구가 되는 상황이라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;단적으로 소득보장 같은 경우 신규 수급자 기준으로 말씀을 드리면 2025년도에 연금을 새로 받는 사람에 비해서 가입기간이 계속 늘어남에도 불구하고 연금액이 늘어나는 시점이 2055년인 것으로 추정이 됩니다. 그러니까 우리가 소득대체율을 약간 올리는 그런 개혁을 했더라도 그게 효과를 나타내는 게 2055년이 된다라는 것이고요.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;재정 면에서도 기금 소진 시점을 우리가 약간 늦추기는 했지만 역시 말씀드린 것처럼 기금 소진 시점보다는 향후에 수입과 지출의 완결적인 구조를 만들어 가는 것이 더 중요하다라고 생각을 합니다. 그러면서 여전히 많은 과제를 갖고 있고요.</span><br/><span class="spk_sub" id="spk_sub13-7">&nbsp;이렇게 국민연금 개혁에 관해서도 미진한 부분이 있고 특히 사각지대 문제―아까 말씀드린 것처럼요―그런 것들은 구체적으로 우리가 해결해 나갈 수 있는 것들이라고 생각을 하고요. 기초연금과 퇴직연금에 관해서도 역시 우리가 함께 다루어 나가야 될 이슈들이 있다라고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub13-8">&nbsp;그리고 퇴직연금에 관해서는 이미 많은 논의가 이루어진 것으로 알고 있는데요. 아까 박명호 위원장님께서 말씀을 하신 것처럼 사실 쉽지는 않습니다. 노후소득보장제도 그리고 공적연금을 바라보는 입장의 차이, 간극이 굉장히 넓습니다.</span><br/><span class="spk_sub" id="spk_sub13-9">&nbsp;그럼에도 불구하고 우리가 좀 더 정확한 자료들, 여러 부처들이 자료 제공을 위해서 노력해 주고 계신데요. 좀 더 정확한 자료들을 같이 공유하고 논의하는 과정에서 최대한의 접점을 찾아보고자 노력을 하고 있습니다. 바라건대……</span><br/><span class="spk_sub" id="spk_sub13-10">&nbsp;연금개혁에 관한 논의 그리고 입법 작업은 굉장히 세부적인, 디테일한 작업이 중요하다라고 생각을 하는데요. 그래서 연금특위의 논의에 도움이 될 만한, 도움이 될 수 있는, 참고할 수 있을 만한 그런 자료를 민간자문위에서 논의를 해서 내놓고자 노력하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-11">&nbsp;이것으로 마치겠습니다.</span><br/></div></div></div><div id="spk_14" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;그동안 네 차례의 민간자문위원회 활동, 회의에 저도 참관을 한 적이 있습니다마는 아주 열정적으로 임해 주신 두 분 공동위원장님과 위원님들께 감사의 말씀을 드리면서 앞으로도 민간자문위원회가 내실 있게 더 열정적으로 운영될 수 있도록 노력해 주시기를 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;아울러서 민간자문위원회 활동에 대해서 의견이 있으신 위원님께서는 본 위원장과 간사님들께 말씀을 해 주시면 적극적으로 반영을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;국회 연금개혁위원회 활동에 대한 국민들의 관심과 기대가 상당히 높습니다. 우리 위원회에는 여야 최고의 능력 있고 또 명망 있는 위원님들이 지금 활동을 하고 계십니다. 지방선거를 앞둔 그런 시기지만 중차대한 국가적 개혁의 과제를 감안해서 우리 연금개혁위원회 활동을 좀 더 적극적으로 할 필요가 있다고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub14-5">&nbsp;그래서 오기형 간사님 또 안상훈 간사님 중심으로 해서 각종 연금의 운영 현황과 정부의 연금개혁에 대한 방향을 지난번에 일부 받았습니다마는 정부에서 좀 더 깊이 있게 수립해서 보고를 한다고 했습니다. 그래서 그러한 부분에 대해서도 보고를 받고 또 우리 위원님들께서 현안질의를 할 수 있도록 그렇게 해서 연금개혁을 구체화할 수 있도록 빠른 시일 내에 전체회의를 열어서 회의를 해 주시면 좋겠다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub14-6">&nbsp;오늘 오전 이른 시간에……</span><br/></div></div></div><div id="spk_15" class="item3 speaker spk_mem" data-mem_id="6790" data-name="박수민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">박수민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9ad8cb999cab47f6b28aa03733c969d0.jpg" alt="박수민"></span><span class="txt"><strong class="name">박수민</strong><span class="position">위원</span><span class="area">(서울 강남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;위원장님, 저 의사진행발언 좀 하겠습니다.</span><br/></div></div></div><div id="spk_16" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 그렇게 하시지요.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;존경하는 박수민 위원님 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_17" class="item3 speaker spk_mem" data-mem_id="6790" data-name="박수민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">박수민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9ad8cb999cab47f6b28aa03733c969d0.jpg" alt="박수민"></span><span class="txt"><strong class="name">박수민</strong><span class="position">위원</span><span class="area">(서울 강남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;민간자문위원회 활동 보고해 주셔서 감사합니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;그런데 지금 얘기를 들어 보면 재정안정론, 소득보장론 양대 축이 다시 부딪치는, 재현되고 있는 느낌이 들거든요. 그런데 저희가 21대 국회에서 실패한 부분에 대해서 민간자문위원들이 알아서 상의하라고 하는 것, 저는 이것을 용납할 수 없습니다. 받아들일 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;왜냐? 민간자문위원들은 큰 틀에서 저희가 어떤 요구를 했을 때 그 전문성이 활용될 수 있는 것이지, 재정을 안정시킬 것이냐 소득을 보장할 것이냐 이것은 합의될 수 없는 평행선입니다. 이것을 놓고서 민간자문위원들에게 시간을 드리고 계속 논의하게 하고 저희 특위 활동은 소강 상태이고, 이런 것을 뭉개는 거라고 합니다. 절대 안 됩니다.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;그리고 제가 여기 이 자리에서 했던 얘기인데 연금은 납입하고 분배받고 이 두 개 제도에 대해서 논의 많이 하는데 실제로 저희가 납부한 돈이, 재원이 40년 넘게 운용되는 곳은 자본시장입니다. 제가 이 얘기는 분명히 했습니다. 그래서 자본시장이 좋아져야 연금이 좋아진다 얘기했고, 제가 이 얘기를 다시 상기시켜 드리는 이유는 주식이 오르면서 기금 재정이 안정된다고 즉각적으로 지금 다 얘기하고 있지 않습니까? 그렇지요?</span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;자본시장 좋아졌습니다. 그러면 저희가 해야 될 게 무엇입니까? 결정을 해 줘야 됩니다. 기금 고갈 연도가 늘어났으니까 개혁을 하지 말자는 것인지, 재정안정화를 포기하자는 것인지 아니면 기왕에 이렇게 늘었으니까 이제 드디어 미래세대 부담을 줄여 나가자 이렇게 할 것인지……</span><br/><span class="spk_sub" id="spk_sub17-6">&nbsp;저는 당연히 후자입니다. 연금은 대한민국이 망하지 않는 한 망해서는 안 됩니다. 이것이 첫 번째 국가의 운영 원칙입니다.</span><br/><span class="spk_sub" id="spk_sub17-7">&nbsp;그러면 연금의 재정안정과 지속가능성을 1원칙으로 정했을 때 소득보장이 부족한 것은 어떻게 하느냐? 그것은 재정이 감당해야 됩니다. 현세대의 문제는 재정이 감당해야 되고 미래세대는 항구적으로 대한민국이 유지되고 국민연금이 유지된다는 신뢰 속에서만 납입할 수 있고, 그것을 설계해 주는 것이 현세대의 책임이라고 저는 생각합니다. 그리고 그 책임을 다하기 위해서 우리는 뭘 해야 되느냐? 자본시장을 좋게 하고 재정안정화 장치를 집어넣어야 됩니다.</span><br/><span class="spk_sub" id="spk_sub17-8">&nbsp;이 간단한 제1원칙하에 의사결정을 하지 않고 민간자문위원님들한테 끝없이 토론하게 하면 뭐 합니까? 저는 이런 운영에 대해서 받아들일 수 없습니다. 안 하는 게 낫습니다. 차라리 연금특위 안 하면 국회가 뭐 하라고 여론의 압력이라도 있을 건데 연금특위라고 간판 걸어 놓고 영업은 안 하고, 실제 메뉴 결정은 안 해 주고 주방에서 알아서 하라고 하는 식으로 민간자문위원님들에게 시간을 계속 드리고 결론을 내라? 지금 양대 의견이 부딪쳐서 그것은 특위 차원에서 큰 결정을 해야 된다, 벌써 민간자문 공동위원장님이 말씀하지 않습니까?</span><br/><span class="spk_sub" id="spk_sub17-9">&nbsp;22대 국회는 달라야 된다고 생각합니다. 이 점 저희가 밤을 새워서 토론을 하더라도 끝장을 봐야 민간자문위원님들이 일하는 거지, 저는 이렇게 뭉개는 운영은 받아들일 수 없습니다.</span><br/></div></div></div><div id="spk_18" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;박수민 위원님, 좋은 말씀 감사합니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;남인순 위원님 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_19" class="item3 speaker spk_mem" data-mem_id="6663" data-name="남인순" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">남인순 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b265059dddd24f329d9361e3d0f62e4e.jpg" alt="남인순"></span><span class="txt"><strong class="name">남인순</strong><span class="position">위원</span><span class="area">(서울 송파구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;두 분 공동위원장님, 그동안 논의하시느라고 굉장히 고생하신 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;제가 볼 때는 자문위원회의 활동시간을 좀 정해야 되는 것이 아닌가, 간사님들과 위원장님과 또 공동위원장님이 같이 협의를 하셔 갖고 활동시간을 정해야 된다고 생각을 합니다. 그래서 그 부분에 대해서도 아마 논의가 있지 않나 싶은데요. 그 활동기간이 좀 정해지고……</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;저희가 자문위원을 구성했던 이유는 거기서 다 결론을 내라고 했던 취지는 아닌 것 같습니다. 각각의 주장들이 있고 지난 21대 연금개혁특위 논의에서도 재정안정화냐 아니면 노후소득보장이냐, 우선순위에 대한 방점은 다 틀렸고요. 그것을 공론화 과정에서, 어떻게 보면 국민들의 숙의를 통해서 그런 의견들을 정리해 나가는 과정이 있습니다. 저는 이게 국회에서 다 정리되는 것도 아니라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;그래서 일단 자문위원회에서는 각각의 논점들에 대해서 그것을 조금 더 정리해 주는 역할, 어떤 결론을 내는 역할이라기보다는 각각의 주장에 대한 논거를 여러 가지 데이터라든지 이론적 기반이라든지 외국 사례라든지 이런 것을 통해서 좀 정리해 주시는 역할을 했으면 좋겠다 그런 생각이 들고요.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;그것을 갖고 국회에서 우선순위에 대한 논의는 한번 정리를 해야 될 것 같습니다. 어떤 것을 논의해 나갈 것인지, 국민들한테 어떤 의제를 물을 것인지는 국회에서 한번 정리를 해 주고 그런 다음에 국민 공론화 과정을 거쳐서 숙의 과정을 통해서 연금특위 활동이 최종적으로 마무리가 되는 형태로 가는 것이 좋지 않겠는가 그런 생각이 들어서 이후의 진행 일정에 대해서 간사님과 위원장님께서 협의를 좀 해 주셨으면 하는 생각입니다.</span><br/></div></div></div><div id="spk_20" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;남인순 위원님, 좋은 말씀 감사합니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;다음은 오기형 간사님께서 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_21" class="item3 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;오늘 두 분 공동위원장님, 그동안 논의하면서 수고 많으셨고 또 감사합니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;두 분의 말씀에 의견 차이가 있기도 하지만 공통 부분도 많습니다. 그리고 지금 안상훈 간사님이랑도 이견도 있지만 또 공통 부분은 더 많다고 생각을 합니다. 그러니까 그것을 찾아 나가는 과정이라서 방금 남인순 위원님께서 말씀하신 것처럼 실제 자문위원회의 역할이 있고 그다음에 저희가 여기서 토론하고 책임져야 될 역할도 있는 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;지금 박수민 위원님 말씀하신 것처럼 몇 가지에 대해서 이후에 우선순위를 정해야 된다는 말씀도 공감하고요.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;지금까지 했던 것 중에서 많은 사회적 의제들이 올라온 것들이 있습니다. 기초연금의 여러 가지 민감하지만, 여야가 서로 정치적 부담 때문에 말을 못 하지만 한걸음 가야 될 주제가 있지 않습니까.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;그다음에 퇴직연금의 기금화에 대해서도 논쟁이 지금 현실적인 테이블에 들어와 있습니다.</span><br/><span class="spk_sub" id="spk_sub21-6">&nbsp;그리고 국민연금 자체에 대해서 재정안정성, 지속가능성을 기반으로 하면서 소득 보장을 어떻게 할 것인가에 대해서, 이게 그렇게 충돌되는 문제인가 그렇게 보지는 않습니다.</span><br/><span class="spk_sub" id="spk_sub21-7">&nbsp;아무튼 구체적인 의제의 우선순위에 대해서는 안상훈 간사님이랑 미리 같이 협의를 해 가지고 논의의 스케줄을 한번 준비를 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-8">&nbsp;그리고 위원장님이 오늘 주문하셨다시피 저희가 이후에 현안보고도 한번 받아 봐야겠고 그다음 이후 일정 시점을 별도로 협의를 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-9">&nbsp;아무튼 논의는 이렇게 서로 각자의 의견들을 개진하고 그 속에서의 공통 분모와 우선순위를 잡는 작업을 신속하게 해서 그다음 한걸음 한걸음 논의의 공간을 같이 지혜를 모았으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub21-10">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_22" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;다른 위원님?</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;박수민 위원님 말씀해 주십시오.</span><br/></div></div></div><div id="spk_23" class="item3 speaker spk_mem" data-mem_id="6790" data-name="박수민" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">박수민 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOMIN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9ad8cb999cab47f6b28aa03733c969d0.jpg" alt="박수민"></span><span class="txt"><strong class="name">박수민</strong><span class="position">위원</span><span class="area">(서울 강남구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;위원장님 감사합니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;퇴직연금 기금화 이게 자꾸 뉴스에 올라왔다 사라졌다 이렇게 하는데 상당히 불편합니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;국민연금은 국가에 위탁을 해서 운영하는 국가보증 체계인 거고 퇴직연금은 민간 스스로 자율적으로 해서 해외 성공 사례가 있는 겁니다. 그런데 이것을 수익률을 단순 비교해서 원인 파악을 안 한 다음에 국민연금처럼 기금화·공단화를 하면 수익률이 비슷해질 거다라는 도식적인 비교를 하고 있는데 이것은 원인 분석이 안 된 겁니다. 민간 퇴직연금 운용 시장 그 시장을 활성화시키면 되는 것을 공단을 하나 만들어서 이중의 비용이 들 수도 있고 퇴직연금이라는 기본 출발점과 전혀 상치되는 결론인데 이것이 계속 뉴스에 오르락내리락하고, 대통령 주재 회의까지도 한 번 논의됐었지요?</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;그래서 이것은 저희 연금특위가 반드시 상황을 보고받고 토론을 해야 되는 것이지, 전 세계적으로 퇴직연금을 공단으로 한다? 들어 보지도 못한 것이고.</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;그러면 퇴직연금 뭐 하러 합니까? 기업들한테 맡겨 놓은 게 401K 미국 방식이고 그 401K를 통해서 미국의 뮤추얼펀드가 발전하고 자본시장이 발전해서 수익률이 높아져서 미국의 중산층에게 혜택을 주고 있는 것인데 정답이 나와 있는 길을 저희가 따라가지 않고 갑자기 도식적인 비교를 해서 공단화까지 얘기가 나오는 것에 대해서 극히 불편하고 저희 연금특위가 이 논점을 놓쳐서는 안 된다고 생각합니다.</span><br/></div></div></div><div id="spk_24" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;말씀 감사합니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;박홍배 위원님 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_25" class="item3 speaker spk_mem" data-mem_id="6791" data-name="박홍배" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">박홍배 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cdaf530a93c04f1cb5cb4795fa2cdc5e.jpg" alt="박홍배"></span><span class="txt"><strong class="name">박홍배</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;박수민 위원님 말씀 잘 들었습니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;그리고 국민의힘 위원님들 또는 지도부에서 퇴직연금 기금화 또는 기금형 퇴직연금이라고 부르는 것에 대해서 많은 오해들을 좀 하고 계신다라는 생각이 듭니다.</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;그래서 오늘 자문위원님들의 보고를 받는 자리에서 간단하게 이렇게 토론을 할 문제는 아니고 분명히 지금 현재 퇴직금 형태로 그리고 DB형과 DC형 형태로 운용이 되고 있는 이 퇴직연금 부분들을 다 모아서 국가 또는 공공기관이 운영하는 공단에다 이 퇴직금을 다 맡겨야 된다라는 논의가 절대 아니고 지난해부터 지금까지 계속해서 한국노총과 민주노총 그리고 경총 그리고 청년들까지 참여하는 노사정 대화에서 이 기금형 퇴직연금의 향후 방안에 대해서 심도 깊은 논의들이 진행이 되어 온 것으로 알고 있습니다. 이 논의들을 함께 진행을 해 온 정부부처로부터 어느 정도 결론이 나고 있는 부분들에 대해서 보고를 저희가 한번 받으면서 논의를 하면 충분하다.</span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;그리고 결코 이 퇴직연금의 주체들인 근로자들의 퇴직연금에 대한 권리를 빼앗는다라는 방향에서 논의가 되고 있는 것이 절대 아니고 추가적인 선택지를 주기 위한 논의들이다. 그리고 그것이 공단일지 국민연금일지 또는 과거에 일본에서 운영을 했다가 운영에 실패하면서 부도가 난 적이 있는 이런 민간에 맡기는 방식일지 이런 부분들에 대해서는 앞으로 논의하면 된다 이렇게 봅니다.</span><br/></div></div></div><div id="spk_26" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;혹시 다른 위원님들 추가적으로 하실 말씀 있습니까?</span><br/><span class="spk_sub" id="spk_sub26-3">&nbsp;안상훈 간사님 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_27" class="item3 speaker spk_mem" data-mem_id="6805" data-name="안상훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">안상훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ba1a4675a60a42d8ad14b64f5f35a93c.png" alt="안상훈"></span><span class="txt"><strong class="name">안상훈</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;제가 오늘 처음 와서 전체적인 여태까지의 논의를 다 파악하고 있지는 못합니다마는 지금 우리 위원회 운영 관련해서 조금 바뀌어야 될 부분이 눈에 보여서 말씀을 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;그게 뭐냐면 첫 번째는 아까 민간위원회 공동위원장님 두 분 말씀하셨지만 여전히 이게 재정안정과 소득보장 또 평행선으로 부딪치고 있는데 사실은 위원회 구성될 때 명시된 목적은 2개를 다 하기 위한 방안을 도출하는 거였거든요. 그래서 우리가 민간위원회도 마찬가지고 저희도 마찬가지고 2개를 함께 보는 그런 시각으로 전환이 필요할 것 같습니다. 질문이 좋아야지 제대로 된 답이 나올 수 있다는 차원에서 말씀드리고요.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;또 하나는 이게 지금 너무 과도하게 민간자문위원님들의 토론과 논의 이런 쪽에 우리가 기대서는 안 될 것 같고 국회 연금특위이기는 하지만 전반적으로 이 제도 설계라든지 내용을 끌고 가는 것은 퇴직연금은 노동부, 국민연금이나 기초연금은 복지부, 다른 것들은 다른 부, 이렇게 하고 있지 않습니까.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;그래서 일차적으로 부처들에서 이 연금개혁과 관련된 내용이 준비가 제대로 돼야 될 것 같고 또 부처 간에도 이것을 협의해서 노후소득보장 미진한 것을 퇴직연금이 좀 도와주고 그리고 국민연금은 재정안정화에 박차를 가하고 이런 것들이 정부 차원에서도 같이 이루어져야지 그렇지 않으면 여기 위원님들이 하루 24시간을 1년 내내 투여한다고 해도 제가 보기에는 일의 진도가 전혀 나가지 않을 것 같다는 생각이 들어서 위원장님께 부탁말씀 드리고요.</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;그리고 오기형 간사님하고도 이 얘기를 앞으로 잘해야 될 것 같다는 생각이 들었습니다.</span><br/></div></div></div><div id="spk_28" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;좋은 말씀 감사합니다.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;또 추가적으로 혹시 위원님들?</span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;남인순 위원님.</span><br/></div></div></div><div id="spk_29" class="item3 speaker spk_mem" data-mem_id="6663" data-name="남인순" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">남인순 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b265059dddd24f329d9361e3d0f62e4e.jpg" alt="남인순"></span><span class="txt"><strong class="name">남인순</strong><span class="position">위원</span><span class="area">(서울 송파구병)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;아마 자문위원님들이 논의하실 때 재정안정화 얘기하시다 보면 결국은 이 연기금이 언제까지 가느냐 이 논쟁을 하시고 계신 것 같은데요.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;지금 수익률 개선으로 전망이 달라지고 있다고 하는 그런 얘기도 있지만 어쨌든 정부가 2027년에 재정계산을 하도록 돼 있는 것으로 알고 있거든요. 그래서 아마 올해 그것을 준비하는 것으로 알고 있습니다, 재정계산 관련해서.</span><br/><span class="spk_sub" id="spk_sub29-3">&nbsp;그래서 저희가 국회에서 논의를 할 때도 27년이 재정재계산을 하는 그런 해이기 때문에 올해는 그것을 준비하는 거니까 너무 그것이 몇 년도에 고갈된다 어떤 그런 가상을 갖고 자꾸 얘기하는 것보다는 정부가 어쨌든 법에 의해서 계산을 하도록 돼 있으니까 그 논의가 되면서 하는 것이 어떻게 보면 굉장히 근거 기반의 논의가 될 수 있다고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub29-4">&nbsp;그래서 그런 안건을 짜실 때 재정안정화 부분은 저희가 지속가능성이나 아니면 세대 간 형평성 부분을 얘기하게 되는 것이고 노후소득보장 쪽으로 얘기를 할 때는 다층적 연금 구조 부분을 얘기해야 되기 때문에 지금 나온 퇴직연금에 관한 문제 아니면 국민연금과 기초연금과의 관계 문제 또 사각지대 해소 문제 이런 것들을 얘기해야 되는 거거든요.</span><br/><span class="spk_sub" id="spk_sub29-5">&nbsp;그래서 안건을 급히 빠르게 논의해야 될 것을 조금 순위별로 정리를 간사님들께서 위원장님과 함께 해 주셔서, 저희가 자문위원회가 논의가 다 된 다음에 하는 것보다는 중간보고 자료가 오늘 나왔으니까 한 번 정도는 그 안건을 조정하는 회의를 위원님들과 같이 저희들도 이렇게, 회의에서만 하지 마시고 워크숍 같은 것 한번 위원장님께서 마련해 주시면 저희가 지방선거 이전에 한 번 정도는 시간을 내서 위원님들과 숙의 토론도 해 봤으면 하는 제안을 드립니다.</span><br/></div></div></div><div id="spk_30" class="item3 speaker spk_mem" data-mem_id="6682" data-name="윤영석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">위원장 윤영석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/cb71903baa8340718ea02ae96cd6a25f.jpg" alt="윤영석"></span><span class="txt"><span class="position">위원장</span><strong class="name">윤영석</strong><span class="area">(경남 양산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;알겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;혹시 또 다른 의견 있으십니까?</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;오늘 위원님들께서 참 좋은 말씀 많이 해 주셨습니다. 그동안에 민간자문위원회 구성과 또 네 차례의 회의…… 민간자문위원회는 우리 연금개혁 분야의 각계 전문가들로 다 구성이 돼 있고 청년세대를 대표할 수 있는 그런 분들도 위원으로 지금 활동을 하고 계십니다.</span><br/><span class="spk_sub" id="spk_sub30-4">&nbsp;그래서 민간자문위원회에서 논의하는 그 자체가 상당히 저는 의미가 있다고 생각합니다. 그렇지만 우리 위원회가 민간자문위원회 활동에만 의지를 할 수 없기 때문에 그동안의 민간자문위원회의 논의 결과 또 논의한 내용들을 토대로 우리 위원회가 좀 더 심도 있게 그러한 방향을 결정해 나가야 된다 생각하고 이러한 부분들을 하는 과정에서 또 공론화 과정과 또 정부의, 특히 정부의 연금개혁에 대한 방향을 보고받아야 됩니다.</span><br/><span class="spk_sub" id="spk_sub30-5">&nbsp;그래서 빠른 시일 내에 우리 여야의 간사님들과 또 위원님들께서 같이 협의해 주셔 가지고, 저도 같이 협의를 하겠습니다. 그렇게 해서 정부의 보고를 받을 수 있도록 하고 각종 연금의 운영 현황에 대해서도 있는 그대로 깊이 있게 보고를 받도록 해서 앞으로 우리 위원회에서 좀 더 자주 이런 회의를 열어서 논의를 해 가야 된다고 저는 생각을 합니다. 그렇게 좀 해 주시기를 바라고.</span><br/><span class="spk_sub" id="spk_sub30-6">&nbsp;오늘 회의에서 더 이상 다른 위원님들께서 추가적인 말씀이 없으시면 회의를 마무리하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-7">&nbsp;다른 의견 없으십니까?</span><br/><span class="spk_sub" id="spk_sub30-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub30-9">&nbsp;알겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-10">&nbsp;오늘 이른 시간에 회의에 참석해 주신 위원님들께 다시 한번 감사의 말씀을 드리면서 수석전문위원을 비롯해서 위원회의 직원 및 보좌 직원 여러분도 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub30-11">&nbsp;그러면 오늘 회의는 이것으로 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-12">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(09시41분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(11인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJAESUB" target="_blank"><span class="name lts3 ">김재섭</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/NAMINSOON" target="_blank"><span class="name lts3 ">남인순</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOGYEONGJONG" target="_blank"><span class="name lts3 ">모경종</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSOOMIN" target="_blank"><span class="name lts3 ">박수민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHONGBAE" target="_blank"><span class="name lts3 ">박홍배</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank"><span class="name lts3 ">안상훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank"><span class="name lts3 ">오기형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank"><span class="name lts3 ">윤영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNJONGDUK" target="_blank"><span class="name lts3 ">전종덕</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이지민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 박동찬</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 신은호</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 자문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts13">홍익대학교 경제학부 교수</span></span><span class="name lts3"> 박명호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts15">경기대학교 사회복지학과 교수</span></span><span class="name lts3"> 주은선</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="25.0%"><col width="25.0%"><col width="25.0%"><col width="25.0%"></colgroup><thead><tr><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>김미애<br/></td><td>안상훈<br/></td><td>국민의힘<br/></td><td>2025. 12. 22.<br/></td></tr></table></div><br/></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 56251;
+			const class_id = 3;
+			const confer_num = "N053949";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785643248698" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785643248698"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785643248698"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785643248698"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
