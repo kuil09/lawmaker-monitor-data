@@ -1,0 +1,925 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57028" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제437회 (임시회) 제2차 국방위원회</strong><span class="date">(2026.07.30.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 간사 선임의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">o 간사(임종득) 인사</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="진성준 위원장 (서울 강서구을)"> 
+							진성준 위원장 (서울 강서구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="임종득 위원 (경북 영주시영양군봉화군)"> 
+							임종득 위원 (경북 영주시영양군봉화군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="강선영 위원 (비례대표)"> 
+							강선영 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+								
+							
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="柳榮夏(유영하) 위원 (대구 달서구갑)"> 
+							柳榮夏(유영하) 위원 (대구 달서구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="유용원 위원 (비례대표)"> 
+							유용원 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="한기호 위원 (강원 춘천시철원군화천군양구군을)"> 
+							한기호 위원 (강원 춘천시철원군화천군양구군을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김병주 위원 (경기 남양주시을)"> 
+							김병주 위원 (경기 남양주시을)
+						</option>
+					
+					
+						<option value="공춘택 수석전문위원">공춘택 수석전문위원</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6623" data-name="진성준" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">진성준</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 강서구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6806" data-name="임종득" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">임종득</span>
+												<span class="position">위원</span>
+												<span class="area">(경북 영주시영양군봉화군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6846" data-name="강선영" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">강선영</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+											
+										
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6795" data-name="柳榮夏(유영하)" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">柳榮夏(유영하)</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 달서구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6571" data-name="유용원" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">유용원</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6618" data-name="한기호" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">한기호</span>
+												<span class="position">위원</span>
+												<span class="area">(강원 춘천시철원군화천군양구군을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6592" data-name="김병주" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">김병주</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 남양주시을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(1명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="공춘택" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">공춘택</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57028&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제437회 국회<br/>(임시회)</p><div class="tit_in"><div class="tit"><h1>국방위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 7월 30일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">국방위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 간사 선임의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 간사 선임의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2">o 간사(임종득) 인사</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(13시27분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제437회 국회(임시회) 제2차 국방위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;보고사항은 배부해 드린 유인물을 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 회의는 국회 유튜브 채널로 생중계가 되고 있습니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;의사일정에 들어가기 전에 이렇게 여야 위원님들이 모두 한자리에 모였으니까 잠깐 인사 올리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;오늘 우리 국민의힘 위원님들께서 위원회의 정상화를 위해서 함께 나서 주신 것에 대해서 참으로 감사하게 생각합니다. 저보다 더 잘 아시겠습니다마는 안보에는 여야가 없지 않습니까? 우리 국방위원회도 그런 정신으로 일해 온 오랜 전통이 있습니다. 그래서 국방위원회는 각 당을 대표하는 중진 위원님들로 구성이 되어 있고 또 그렇기 때문에 대한민국의 국방과 안보를 위해서 초당적으로 협력하는 위원회로 알고 있습니다. 제22대 후반기 국회가 어렵게 출발한 만큼 앞으로 위원장으로서 이러한 전통을 잘 이어 가겠다 하는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;또 우리 여야 위원님들과 함께 우리 국방위원회가 국민께 신뢰받고 기대받는 위원회가 될 수 있도록 최선을 다하겠습니다. 위원님들 많이 협조해 주시기를 당부드립니다.</span><br/><span class="spk_sub" id="spk_sub2-9">&nbsp;오늘 회의는 국민의힘 위원님들 인사를 듣고 간사를 선임하는 순서로 진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-10">&nbsp;먼저 임종득 위원님부터 인사해 주시지요.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6806" data-name="임종득" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">임종득 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMJONGDEUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2428b9f1f3534b0fa71adf578e168d6c.jpg" alt="임종득"></span><span class="txt"><strong class="name">임종득</strong><span class="position">위원</span><span class="area">(경북 영주시영양군봉화군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;반갑습니다. 국민의힘 국방위원회 간사로 내정된 임종득 위원입니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;사실 이재명 정부 들어와서 안보 공백에 대한 국민적 우려가 상당히 심화되고 있습니다. 이러한 시기에 또 야당 간사로서 임무를 수행하게 되어서 책임에 막중함을 느낍니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;방금 위원장님께서 안보 문제는 여야가 없다라고 말씀하셨는데 100% 동의를 합니다. 그래서 야당 간사로서 안보 문제에 관한 국민들의 우려 사항들이 있다면 확인할 건 확인하고 또 짚을 건 짚고 막을 건 막아서는 가운데 여야가 한목소리를 내면서 국민의 생명과 재산을 보호하는 본연의 안보 문제에 최선을 다하겠다는 약속의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;간사로서 말씀을 다 해 주신 것 같아요. 간사 선임되고 난 다음에 간사 인사가 또 있습니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;(웃음소리)</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;다음은 강선영 위원님 인사하시지요.</span><br/></div></div></div><div id="spk_5" class="item0 speaker spk_mem" data-mem_id="6846" data-name="강선영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">강선영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGSUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/89a10eac7851470598886907100ae5ad.jpg" alt="강선영"></span><span class="txt"><strong class="name">강선영</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;안녕하십니까?</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;또 저는 국방위에서 2년간 제 본연의 임무를 수행하게 됐습니다. 여러 가지 국방위에서 다뤄야 할 큰 이슈가, 국가적 이슈가 많은 것 같습니다. 위원장님 말씀하신 것처럼 여야가 없고 국가안보는 한목소리를 내야 한다는 큰 취지에서 저희가 같이 정부에서 무엇을 하고 있는가에 대해서 잘 짚어 줄 것인가, 그것이 우리 국가안보에 얼마나 도움이 될 것인가라는 측면에서 제가 이번 국방위원회 활동을 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;특히 이번 양당 간사님께서 다 예비역 장군이셨으니까 모든 결정은 대한민국의 안보를 위한 것으로 양당이 잘 국방위를 이끌어 갈 거라고 기대하고 있습니다. 그렇게 되기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;이상입니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_6" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;이어서 유영하 위원님 인사하시지요.</span><br/></div></div></div><div id="spk_7" class="item0 speaker spk_mem" data-mem_id="6795" data-name="柳榮夏" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">柳榮夏 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/32a8a3160f2e48dea973ec7f54668fa7.jpg" alt="柳榮夏"></span><span class="txt"><strong class="name">柳榮夏</strong><span class="position">위원</span><span class="area">(대구 달서구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;반갑습니다. 저는 대구 달서갑을 지역구로 두고 있습니다. 유영하입니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;먼저 존경하는 진성준 위원장님을 모시고 국방위원으로서 소명을 하게 돼서 무한한 영광으로 생각합니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;전반기에 저는 천준호 위원님과 같이 정무위에서 활동을 했습니다. 아까 위원장님께서 말씀하시다시피 국가안보에는 여야가 없다고 생각합니다. 물론 야당으로서 정부·여당을 견제하고 또 행정부를 견제해야 되겠지만 이게 국가 국익에 상관되는 일에서는 어떤 경우에도 충분히 협조할 자세가 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;다만 한 가지 말씀드릴 것은 저는 지금까지 배워 오면서 민주공화정의 중요한 요체는 관용과 절제라고 배웠습니다. 그 관용과 절제가 무너지고 광장의 목소리에 묻히면 저희가 피와 땀으로 지켜낸 민주공화정은 저는 굉장히 위태롭다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;아무쪼록 여기 계신 여러 위원님들 말씀을 경청하고 배우는 자세로 임하겠습니다. 열심히 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;마치겠습니다.</span><br/></div></div></div><div id="spk_8" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;이어서 유용원 위원님 인사말씀해 주시지요.</span><br/></div></div></div><div id="spk_9" class="item0 speaker spk_mem" data-mem_id="6571" data-name="유용원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">유용원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YUYONGWEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b031714b64d9427ea119a6225c44bf1c.jpg" alt="유용원"></span><span class="txt"><strong class="name">유용원</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;유용원입니다.</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;저도 전반기에 이어서 국방위를 맡게 됐는데요. 저는 국방위를 떠나면 물 떠난 고기라고 1·2·3지망을 다 국방위를 써냈습니다. 다행히 반영이 돼서 국방위를 다시 맡게 됐고요.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;위원장님 너무 좋은 말씀 하셨는데 저도 기본적으로 안보에 여야가 없다고 생각합니다. 그럼에도 또 안보 관련해서 여러 현안들이 있는데 지적할 것은 지적하고 같이 목소리를 낼 것은 내도록 그렇게 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_10" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;끝으로 한기호 위원님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item0 speaker spk_mem" data-mem_id="6618" data-name="한기호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">한기호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANKIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9bb2d649d55a495d99c6750cc124e5bf.png" alt="한기호"></span><span class="txt"><strong class="name">한기호</strong><span class="position">위원</span><span class="area">(강원 춘천시철원군화천군양구군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;또 국방위원입니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;제가 항상―아마 우리 위원장님도 얘기 들으셨을 거예요―가나다순으로 앉지 말고 거꾸로도 좀 앉자. 한 씨가 되다 보니까 천준호 위원님도 저기 계시는데 맨날 끝에 앉는데 좀 뒤집어도 앉자 이런 얘기를 옛날에 하신 거 들었지요?</span><br/></div></div></div><div id="spk_12" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;예, 들었습니다.</span><br/></div></div></div><div id="spk_13" class="item0 speaker spk_mem" data-mem_id="6618" data-name="한기호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">한기호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANKIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9bb2d649d55a495d99c6750cc124e5bf.png" alt="한기호"></span><span class="txt"><strong class="name">한기호</strong><span class="position">위원</span><span class="area">(강원 춘천시철원군화천군양구군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;위원장님, 한번 바꿔 주시지요.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;(웃음소리)</span><br/></div></div></div><div id="spk_14" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;그럴까요? 간사위원님들 협의하셔서 합의하시면 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_15" class="item0 speaker spk_mem" data-mem_id="6846" data-name="강선영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">강선영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGSUNYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/89a10eac7851470598886907100ae5ad.jpg" alt="강선영"></span><span class="txt"><strong class="name">강선영</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;예, 간사만 앉으시고……</span><br/></div></div></div><div id="spk_16" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;예, 그러니까.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;간사 간에 한번 협의해 주시지요.</span><br/></div></div></div><div id="spk_17" class="item0 speaker spk_mem" data-mem_id="6618" data-name="한기호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">한기호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/HANKIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9bb2d649d55a495d99c6750cc124e5bf.png" alt="한기호"></span><span class="txt"><strong class="name">한기호</strong><span class="position">위원</span><span class="area">(강원 춘천시철원군화천군양구군을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;제가 재미있으라고 말씀드리는 겁니다.</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;그런데 가능한 한 우리 상임위도 서로 얼굴 붉히지 않고 참 차분한 목소리로 진지하게 이렇게 위원회가 운영됐으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;고맙습니다.</span><br/></div></div></div><div id="spk_18" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;기왕에 그런 말씀이 있으셨으니 우리 간사위원님들 한번 협의해 주시고 저희 수석께서도 국회의 관행이나 이런 거 한번 따져 보시고 해서 가능하면 그렇게 하는 것도 좋다고 생각합니다.</span><br/></div></div></div><div id="spk_19" class="item0 speaker spk_mem" data-mem_id="0" data-name="공춘택" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">수석전문위원 공춘택 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="공춘택"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">공춘택</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;확인해 보겠습니다.</span><br/></div></div></div><div id="spk_20" class="item0 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;의논해 주시지요.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;국회사무처 인사이동으로 우리 위원회에 새로 보임된 직원이 있습니다.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;공춘택 수석전문위원이 새로 오셨습니다.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;인사드리시지요.</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;(인사)</span><br/><span class="spk_sub" id="spk_sub20-6">&nbsp;새로 보임된 수석전문위원은 위원님들의 의정활동을 최선을 다해서 지원해 주시고 도와주시기를 바랍니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 간사 선임의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(13시34분)</p><br/><div id="spk_22" class="item1 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;그러면 의사일정 제1항 간사 선임의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;국회법 제50조에 따르면 위원회의 간사는 각 교섭단체별로 1명씩 호선하도록 되어 있습니다. 그렇지만 그동안의 관례에 따라서 해당 교섭단체에서 추천한 분을 간사님으로 선임하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;앞서 임종득 위원님께서 인사하시면서 국민의힘의 간사위원으로 내정됐다 하는 신고를 해 주셨는데, 그렇게 교섭단체 국민의힘에서는 임종득 위원님을 간사위원으로 추천했습니다.</span><br/><span class="spk_sub" id="spk_sub22-4">&nbsp;이에 따라서 임종득 위원님을 우리 위원회의 간사로 선임하고자 하는데 이의 있습니까?</span><br/><span class="spk_sub" id="spk_sub22-5">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub22-6">&nbsp;없으시지요?</span><br/><span class="spk_sub" id="spk_sub22-7">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">o 간사(임종득) 인사</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_23" class="item2 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;그러면 새로 선임되신 간사위원님의 인사말씀 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;인사해 주십시오.</span><br/></div></div></div><div id="spk_24" class="item2 speaker spk_mem" data-mem_id="6806" data-name="임종득" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">임종득 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMJONGDEUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/2428b9f1f3534b0fa71adf578e168d6c.jpg" alt="임종득"></span><span class="txt"><strong class="name">임종득</strong><span class="position">위원</span><span class="area">(경북 영주시영양군봉화군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;아까 할 얘기 다 했는데요.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;먼저 부족한 저를 우리 국방위원회 국민의힘 간사로 임명해 주신 진성준 위원장님 그리고 여야 위원님들께 진심으로 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;조금 전에도 제가 말씀을 드렸습니다마는 이재명 정부에서의 안보 공백과 관련된 국민적 우려 이 부분들은 국방위원회에서 풀어 내야 될 하나의 큰 과제라고 저는 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;안보에는 여야가 없다라고 다들 이야기를 하고 있는데, 정말 당파를 떠나서 국가의 이익을 위해서 그다음 국민의 생명과 재산을 보호하면서 행복한 국민들을 만드는 방법이 뭔지를 함께 고민하면서 국방위원회를 이끌어 나갈 수 있으면 좋겠다라는 생각을 가지고 있습니다.</span><br/><span class="spk_sub" id="spk_sub24-5">&nbsp;특히 우리 야당 위원님들 저보다 대선배님들 계시고 연륜도 많으신데 제가 초선으로서 부족하지만 간사를 맡게 돼서 부담도 사실 큽니다. 제가 모시는 마음으로 우리 국방위원회의 원활한 운영을 위해서 최선을 다하겠다라는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-6">&nbsp;대단히 감사합니다.</span><br/></div></div></div><div id="spk_25" class="item2 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;지난 첫 회의 때 더불어민주당 위원님들은 인사를 하셨기 때문에 생략하도록 하고.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;다만 양당의 의원총회 일정이 조금 변경되었다고 들었습니다. 조금 여유가 있으시지요? 허락해 주시면 김병주 간사위원님의 말씀을 민주당을 대표해서 잠깐 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_26" class="item2 speaker spk_mem" data-mem_id="6592" data-name="김병주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">김병주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMBYUNGJOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3d7108cf7a784f6ea042610f61c3e916.png" alt="김병주"></span><span class="txt"><strong class="name">김병주</strong><span class="position">위원</span><span class="area">(경기 남양주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;더불어민주당 간사 김병주입니다.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;오늘 간사로 선임되신 임종득 간사님 축하드립니다. 그리고 또 국방위에 처음 오신 유영하 위원님 진심으로 환영합니다. 그리고 나머지 국회의원님들은 전반기에 같이 근무를 했는데 같이 근무할 수 있어서 좋습니다.</span><br/><span class="spk_sub" id="spk_sub26-3">&nbsp;민주당에서도 새로 오신 김성회 위원님하고 천준호 위원님 이렇게 같이 합류하셔서 우리 위원회를 이끌 수 있어서 아주 좋다고 봅니다.</span><br/><span class="spk_sub" id="spk_sub26-4">&nbsp;무엇보다 진성준 위원장님이 위원장님으로 임명돼서 우리 위원회를 잘 이끌어 줄 걸로 기대합니다. 진성준 위원장님의 실력은 제가 현역 때, 10년 전에 이미 인정을 했던 아주 특출난 국방위원으로 활동하셨기 때문에 우리 국방위원회를 아주 잘 이끌어 가 줄 거라고 저는 확신을 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub26-5">&nbsp;민주당 간사로서 이재명 정부의 성공과 또 이재명 정부에서의 정예화된 군육성에 같이 동참을 해서 국방위가 제 역할을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub26-6">&nbsp;후반기에는 아마 국방 쪽에도 큰 해결해야 될 것들이 많이 있습니다. 우리 국방부가 정예군으로 다시 거듭나게 하기 위해서 국방위가 법이나 예산 이런 측면에서 적극 지원해야 된다고 생각합니다. 여야 위원님들과 보조를 잘 맞추어서 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub26-7">&nbsp;같이 함께 근무할 수 있어서 감사합니다.</span><br/></div></div></div><div id="spk_27" class="item2 speaker spk_mem" data-mem_id="6623" data-name="진성준" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 진성준 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/6b3400f4040e4d6bb354d1f758717055.jpg" alt="진성준"></span><span class="txt"><span class="position">위원장</span><strong class="name">진성준</strong><span class="area">(서울 강서구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;오늘 예정된 의사일정을 모두 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;다음 회의 때는 우리 위원회의 소위원회를 구성하고자 합니다. 소위원회 구성을 위해서는 양당 간사 간의 협의가 또 필요할 것 같은데 긴밀하게 협의하셔서 소위원회 구성에 차질이 없도록 해 주시길 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;이상으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub27-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(13시39분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(10인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNYOUNG" target="_blank"><span class="name lts3 ">강선영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGJOO" target="_blank"><span class="name lts3 ">김병주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGHOI" target="_blank"><span class="name lts3 ">김성회</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOOYEONGHA" target="_blank"><span class="name lts3 ">유영하</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YUYONGWEON" target="_blank"><span class="name lts3 ">유용원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMJONGDEUK" target="_blank"><span class="name lts3 ">임종득</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JINSUNGJOON" target="_blank"><span class="name lts3 ">진성준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHEONJUNHO" target="_blank"><span class="name lts3 ">천준호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HANKIHO" target="_blank"><span class="name lts3 ">한기호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/HWANGMYEONGSEON" target="_blank"><span class="name lts3 ">황명선</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SUNGILJONG" target="_blank"><span class="name lts3 ">성일종</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(3인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMBYUNGKEE" target="_blank"><span class="name lts3 ">김병기</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MINHONGCHUL" target="_blank"><span class="name lts3 ">민홍철</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNHARAM" target="_blank"><span class="name lts3 ">천하람</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 공춘택</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 문성환</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="25.089260898381543%"><col width="25.089260898381543%"><col width="25.089260898381543%"><col width="24.732217304855364%"></colgroup><thead><tr><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>박홍근<br/></td><td>황명선<br/></td><td>더불어민주당<br/></td><td>2026. 7. 6.<br/></td></tr><tr><td>강대식<br/></td><td>유영하<br/></td><td>국민의힘<br/></td><td>2026. 7. 23.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>군인의 지위 및 복무에 관한 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 17. 박홍근 의원 대표발의)(의안번호 2218399)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군용항공기 비행안전성 인증에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 20. 유용원 의원 대표발의)(의안번호 2218431)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 21일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군사기밀 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 28. 부승찬 의원 대표발의)(의안번호 2218658)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 29일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>예비군법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 29. 임종득 의원 대표발의)(의안번호 2218681)</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 29. 강선영 의원 대표발의)(의안번호 2218711)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 4월 30일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>방위산업 발전 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 30. 유용원 의원 대표발의)(의안번호 2218751)</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 30. 유용원 의원 대표발의)(의안번호 2218753)</div></div><div class="con"><p class="tit_sm"><strong>방위산업기술 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 30. 홍기원 의원 대표발의)(의안번호 2218771)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 5월 4일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군인 재해보상법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 4. 임종득 의원 대표발의)(의안번호 2218791)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 6일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군용항공기 비행안전성 인증에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 7. 강선영 의원 대표발의)(의안번호 2218887)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 8일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>주한미군기지 이전에 따른 평택시 등의 지원 등에 관한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 11. 서왕진 의원 대표발의)(의안번호 2218907)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 12일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군무원인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 15. 강선영 의원 대표발의)(의안번호 2218994)</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 15. 강선영 의원 대표발의)(의안번호 2218995)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 5월 18일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 18. 강선영 의원 대표발의)(의안번호 2219001)</div></div><div class="con"><p class="tit_sm"><strong>군 공항 이전 및 지원에 관한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 18. 주호영 의원 대표발의)(의안번호 2219009)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 5월 19일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>2025회계연도 결산</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 29. 정부 제출)(의안번호 2219079)</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 15. 이만희 의원 대표발의)(의안번호 2219243)</div></div><div class="con"><p class="tit_sm"><strong>예비군법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 15. 이만희 의원 대표발의)(의안번호 2219244)</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 16. 이만희 의원 대표발의)(의안번호 2219268)</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 19. 강선영 의원 대표발의)(의안번호 2219380)</div></div><div class="con"><p class="tit_sm"><strong>군무원인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 19. 강선영 의원 대표발의)(의안번호 2219387)</div></div><div class="con"><p class="tit_sm"><strong>군보건의료에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 23. 백선희 의원 대표발의)(의안번호 2219421)</div></div><div class="con"><p class="tit_sm"><strong>국군포로의 송환 및 대우 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 24. 한기호 의원 대표발의)(의안번호 2219471)</div></div><div class="con"><p class="tit_sm"><strong>국군포로의 송환 및 대우 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 25. 한지아 의원 대표발의)(의안번호 2219493)</div></div><div class="con"><p class="tit_sm"><strong>군무원인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 29. 강선영 의원 대표발의)(의안번호 2219600)</div></div><div class="con"><p class="tit_sm"><strong>방위사업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 30. 유용원 의원 대표발의)(의안번호 2219629)</div></div><div class="con"><p class="tit_sm"><strong>군용비행장·군사격장 소음 방지 및 피해 보상에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 30. 김용태 의원 대표발의)(의안번호 2219645)</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 30. 김선교 의원 대표발의)(의안번호 2219653)</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 30. 김선교 의원 대표발의)(의안번호 2219654)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 14건 7월 1일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군인의 지위 및 복무에 관한 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 2. 정부 제출)(의안번호 2219703)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>방위사업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 8. 강선영 의원 대표발의)(의안번호 2219838)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 9일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군인공제회법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 15. 백선희 의원 대표발의)(의안번호 2219956)</div></div><div class="con"><p class="tit_sm"><strong>군사경찰의 직무수행에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 15. 백선희 의원 대표발의)(의안번호 2219958)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 7월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군수품관리법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 16. 유용원 의원 대표발의)(의안번호 2219999)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 20일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 20. 한기호 의원 대표발의)(의안번호 2220042)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 21일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군용비행장·군사격장 소음 방지 및 피해 보상에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 22. 이재강 의원 대표발의)(의안번호 2220091)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 23일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군 공항 이전 및 지원에 관한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 23. 박형수 의원 대표발의)(의안번호 2220116)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 24일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>군용항공기 운용 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 28. 김병주 의원 대표발의)(의안번호 2220202)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 29일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>경남부산통합특별시 설치 및 경제·산업수도 조성을 위한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 14. 이성권 의원 대표발의)(의안번호 2218332)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 15일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>하구 복원 및 관리에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 21. 박수현 의원 대표발의)(의안번호 2218472)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">4월 22일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>항공안전법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 7. 강선영 의원 대표발의)(의안번호 2218889)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 8일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>단양 곡계굴사건 희생자의 명예회복 및 보상 등에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 11. 엄태영 의원 대표발의)(의안번호 2218915)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 13일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>재생에너지자립도시 조성 및 지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 14. 전종덕 의원 대표발의)(의안번호 2218971)</div></div><div class="con"><p class="tit_sm"><strong>주한미군 반환공여구역 개발 촉진에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 14. 박지혜 의원 대표발의)(의안번호 2218974)</div></div><div class="con"><p class="tit_sm"><strong>미디어교육 활성화 및 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 14. 김우영 의원 대표발의)(의안번호 2218982)</div></div><div class="con"><p class="tit_sm"><strong>북한의 헌법 개정을 통한 적대적 ‘두 국가론’ 명문화 규탄 및 대한민국 헌법 평화통일 원칙 수호에 관한 결의안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 14. 윤상현 의원 등 26인 발의)(의안번호 2218983)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 5월 15일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>대구경북통합신공항 건설을 위한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 18. 주호영 의원 대표발의)(의안번호 2219008)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">5월 19일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가재정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 11. 윤영석 의원 대표발의)(의안번호 2219195)</div></div><div class="con"><p class="tit_sm"><strong>공중방역수의사에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 30. 김선교 의원 대표발의)(의안번호 2219652)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 7월 1일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 2. 배준영 의원 대표발의)(의안번호 2219688)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 3일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>재생에너지자립도시 조성 및 지원에 관한 특별법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 20. 박지원 의원 대표발의)(의안번호 2220036)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 23일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯예비심사기간 지정</strong></p><div class="con"><p class="tit_sm"><strong>2025회계연도 결산</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 29. 정부 제출)(의안번호 2219079)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 1일 예비심사기간이 예산결산특별위원회의 상정 30분 전까지로 지정됨</div></div><p class="tit"><span class="num"></span><strong>◯청원 회부</strong></p><div class="con"><p class="tit_sm"><strong>육군사관학교 통폐합 및 지방 이전 추진 중단 촉구에 관한 청원</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 6. 21. 윤00 외 53,971인 국민동의로 제출)(청원번호 2200308)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국군방첩사령부의 폐지 철회 촉구에 관한 청원</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 26. 박민우 외 54,462인 국민동의로 제출)(청원번호 2200323)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">7월 28일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="12.130310764149527%"><col width="13.369935874064383%"><col width="46.56100542604071%"><col width="13.981169708537971%"><col width="13.957578227207412%"></colgroup><thead><tr><th scope="col">구분</th><th scope="col">공포번호</th><th scope="col">행정입법명</th><th scope="col">소관부처</th><th scope="col">제출일</th></tr></thead><tr><td>국방부령<br/></td><td>제1211호<br/></td><td>방위사업법 시행규칙 일부개정규칙<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 05. 19.<br/></td></tr><tr><td>국방부령<br/></td><td>제1212호<br/></td><td>방위산업 발전 및 지원에 관한 법률 시행규칙 일부개정규칙<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 05. 19.<br/></td></tr><tr><td>국방부령<br/></td><td>제1213호<br/></td><td>방위산업에 관한 착수금 및 중도금 지급규칙 일부개정규칙<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 05. 15.<br/></td></tr><tr><td>국방부령<br/></td><td>제1214호<br/></td><td>방위사업법 시행규칙 일부개정규칙<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 06. 30.<br/></td></tr><tr><td>대통령령<br/></td><td>제36331호<br/></td><td>방위산업 발전 및 지원에 관한 법률 시행령 일부개정령<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 05. 19.<br/></td></tr><tr><td>대통령령<br/></td><td>제36332호<br/></td><td>방위사업법 시행령 일부개정령<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 05. 19.<br/></td></tr><tr><td>대통령령<br/></td><td>제36408호<br/></td><td>계엄법 시행령 일부개정령<br/></td><td>국방부<br/></td><td>2026. 06. 17.<br/></td></tr><tr><td>대통령령<br/></td><td>제36453호<br/></td><td>국방과학기술혁신 촉진법 시행령 일부개정령<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 06. 30.<br/></td></tr><tr><td>대통령령<br/></td><td>제36454호<br/></td><td>방위사업법 시행령 일부개정령<br/></td><td>국방부<br/>방위사업청<br/></td><td>2026. 06. 30.<br/></td></tr><tr><td>대통령령<br/></td><td>제36526호<br/></td><td>국군방첩사령부령 폐지령<br/></td><td>국방부<br/></td><td>2026. 07. 28.<br/></td></tr><tr><td>대통령령<br/></td><td>제36527호<br/></td><td>국방방첩본부령 제정령<br/></td><td>국방부<br/></td><td>2026. 07. 28.<br/></td></tr><tr><td>대통령령<br/></td><td>제36528호<br/></td><td>국방보안지원단령 제정령<br/></td><td>국방부<br/></td><td>2026. 07. 28.<br/></td></tr><tr><td>대통령령<br/></td><td>제36529호<br/></td><td>국방부조사본부령 전부개정령<br/></td><td>국방부<br/></td><td>2026. 07. 28.<br/></td></tr><tr><td>대통령령<br/></td><td>제36530호<br/></td><td>계엄사령부직제 일부개정령<br/></td><td>국방부<br/></td><td>2026. 07. 28.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯보고서 제출</strong></p><div class="con"><p class="tit_sm"><strong>2025년도 병무청 자체평가 결과보고서 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 15. 병무청장 제출)</div></div><div class="con"><p class="tit_sm"><strong>신속소요 결정 현황 보고</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 15. 함동참모본부장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2025년도 국방부 자체평가 결과보고서 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 17. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>법률 공포 통지</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 22. 정부 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026년도 1분기 세출예산 이·전용 내역 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 29. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026년도 성과관리 시행계획 및 2025년도 자체평가 결과보고서 보고</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 29. 방위사업청장 제출)</div></div><div class="con"><p class="tit_sm"><strong>병무청 소속 위원회 현황 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 29. 병무청장 제출)</div></div><div class="con"><p class="tit_sm"><strong>’26~’30 방위산업발전 기본계획 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 30. 방위사업청장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2025년또 국정감사결과 시정 및 처리요구사항에 대한 처리 결과보고서 송부</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 4. 30. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>헌법소원심판결정서(2026.4.29.) 송부</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 7. 헌법재판소장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026년도 성과관리시행계획 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 7. 병무청장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026년 군인복지기금 자산운용지침 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 12. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>법률 공포 통지</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 20. 정부 제출)</div></div><div class="con"><p class="tit_sm"><strong>26-1차 방위력개선사업 획득단계 분석평가 및 정책반영 결과 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 22. 방위사업청장 제출)</div></div><div class="con"><p class="tit_sm"><strong>국방·군사시설이전 특별회계 및 기부 대 양여 사업 추진현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 5. 22. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>법률 공포 통지</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 1. 정부 제출)</div></div><div class="con"><p class="tit_sm"><strong>26-’30 군 책임운영기관 중기관리계획 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 22. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>취약지역(격오지등) 근무 군무원 주거권·의료권 강화를 위한 권고 및 의견 표명 결정문 송부</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 23. 국가인권위원장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026년도 2분기 세출예산 이·전용 내역 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 27. 국방부장관 제출)</div></div><div class="con"><p class="tit_sm"><strong>헌법소원심판결정서(2026.7.23.) 송부</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 7. 29. 헌법재판소장 제출)</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57028;
+			const class_id = 2;
+			const confer_num = "N054347";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1785774691440" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1785774691440"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1785774691440"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1785774691440"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
