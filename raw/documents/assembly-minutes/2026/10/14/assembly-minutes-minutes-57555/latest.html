@@ -1,0 +1,575 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57555" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제439회 (정기회) 제3차 성평등가족위원회</strong><span class="date">(2026.10.14.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2026년도 국정감사계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2026년도 국정감사 보고 및 서류제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 2026년도 국정감사 증인·참고인 등 출석 요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김정재 위원장 (경북 포항시북구)"> 
+							김정재 위원장 (경북 포항시북구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이주희 위원 (비례대표)"> 
+							이주희 위원 (비례대표)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(2명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6606" data-name="김정재" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">김정재</span>
+												<span class="position">위원장</span>
+												<span class="area">(경북 포항시북구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6876" data-name="이주희" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">이주희</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57555&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제439회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>성평등가족위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 10월 14일(수)</p></li><li><div class="sbj lts2">장소</div><p class="con">성평등가족위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2026년도 국정감사계획서 채택의 건</li><li><span class="num">2.</span> 2026년도 국정감사 보고 및 서류제출 요구의 건</li><li><span class="num">3.</span> 2026년도 국정감사 증인·참고인 등 출석 요구의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2026년도 국정감사계획서 채택의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2026년도 국정감사 보고 및 서류제출 요구의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 2026년도 국정감사 증인·참고인 등 출석 요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시04분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 김정재 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><span class="position">위원장</span><strong class="name">김정재</strong><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제439회 국회(정기회) 제3차 성평등가족위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;의안 회부 등 보고사항은 노트북 단말기의 자료를 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 회의에서는 2026년도 국정감사계획서 채택의 건 등 국정감사 관련 안건을 처리하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 2026년도 국정감사계획서 채택의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시05분)</p><br/><div id="spk_4" class="item1 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 김정재 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><span class="position">위원장</span><strong class="name">김정재</strong><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항 2026년도 국정감사계획서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;간사위원님들과 2026년도 국정감사계획을 협의한 결과 배부해 드린 자료와 같이 국정감사계획서(안)을 작성하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;주요 내용을 간략히 말씀드리면 올해 국정감사는 10월 28일 수요일 오전 10시에 성평등가족위원회 회의실에서 실시하고 10월 29일 목요일에는 한국여성인권진흥원 및 중앙디지털성범죄피해자지원센터에 방문하여 정부 정책의 추진 상황을 현장 중심으로 살펴보기로 했습니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;국정감사 대상기관은 성평등가족부 및 그 산하기관 등 총 7개 기관으로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;국정감사계획서에 일부 조정이 필요한 경우에는 위원장이 간사위원과 협의하여 변경할 수 있도록 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;보다 자세한 사항은 배부해 드린 국정감사계획서를 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;그러면 배부해 드린 유인물의 내용과 같이 우리 위원회의 2026년도 국정감사계획서를 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub4-9">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 2026년도 국정감사 보고 및 서류제출 요구의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시06분)</p><br/><div id="spk_6" class="item2 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 김정재 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><span class="position">위원장</span><strong class="name">김정재</strong><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;다음은 의사일정 제2항 2026년도 국정감사 보고 및 서류제출 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;이 안건은 국회법 제128조와 국정감사 및 조사에 관한 법률 제10조에 따라 국정감사 대상기관으로부터 소관 업무를 보고받고 감사에 필요한 서류 등 관련 자료제출을 요구하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;지금까지 취합한 서류제출 요구 현황은 배부해 드린 유인물을 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;오늘 의결 이후에 자료제출을 요구하실 위원님들께서는 재적위원 3분의 1 이상의 연서로 감사 실시일 7일 전까지 행정실에 제출해 주시면 위원장 명의로 해당 기관에 제출을 요구하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;자료제출의 기한은 오늘 의결한 건에 대하여는 10월 21일 수요일 오후 4시까지로 그 외에는 불가피한 사유가 없는 한 요구받은 날로부터 7일 이내로 각각 지정하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;그러면 지금까지 말씀드린 바와 같이 의사일정 제2항 2026년도 국정감사 보고 및 서류제출 요구의 건을 의결하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub6-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub6-9">&nbsp;이의 없으시면 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">3. 2026년도 국정감사 증인·참고인 등 출석 요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시07분)</p><br/><div id="spk_8" class="item3 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 김정재 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><span class="position">위원장</span><strong class="name">김정재</strong><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;다음으로 의사일정 제3항 2026년도 국정감사 증인·참고인 등 출석 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub8-2">&nbsp;이 안건은 국회법 제129조와 국정감사 및 조사에 관한 법률 제10조에 따라 국정감사에 관련된 증인 및 참고인의 출석을 요구하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub8-3">&nbsp;위원장이 간사위원님들과 협의한 결과 감사 대상기관의 기관증인은 성평등가족부장관 등 14명 및 6개 공공기관의 각 기관장으로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub8-4">&nbsp;오늘 출석 요구된 기관증인과 관련하여 해당 기관의 조직개편이나 인사이동 등이 있는 경우에는 별도의 위원회 의결이나 간사위원 간의 협의가 없더라도 새로 임명된 보직자가 증인 지위를 승계하는 것으로 하고 공석일 경우에는 부서 내 차상위 직급에 있는 자가 증인으로 출석 요구된 것으로 보도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub8-5">&nbsp;일반증인 및 참고인의 경우에는 일반증인 2명, 참고인 4명에 대하여 출석을 요구하고자 합니다.</span><br/><span class="spk_sub" id="spk_sub8-6">&nbsp;자세한 내용은 배부하여 드린 유인물을 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub8-7">&nbsp;그러면 지금까지 말씀드린 바와 같이 의사일정 제3항 2026년도 국정감사 증인·참고인 등 출석 요구의 건을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub8-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub8-9">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub8-10">&nbsp;이상으로 오늘 회의를 모두 마치겠습니다.</span><br/></div></div></div><div id="spk_9" class="item3 speaker spk_mem" data-mem_id="6876" data-name="이주희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">이주희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LeeJuhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/RBM5454A.jpg" alt="이주희"></span><span class="txt"><strong class="name">이주희</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;위원장님, 저 의사진행발언 하나 하겠습니다.</span><br/></div></div></div><div id="spk_10" class="item3 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 김정재 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><span class="position">위원장</span><strong class="name">김정재</strong><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;예, 의사진행발언해 주십시오.</span><br/></div></div></div><div id="spk_11" class="item3 speaker spk_mem" data-mem_id="6876" data-name="이주희" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">이주희 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LeeJuhee" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/RBM5454A.jpg" alt="이주희"></span><span class="txt"><strong class="name">이주희</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;성평등위와 관계된 중요한 사안이 있어서요.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;위원님들 바쁘시겠지만 짧게 한말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;다들 언론 보셔서 아실 것입니다. 지난 11일 송파에서 가정폭력으로 수사받던 남성이 피신한 아내의 친정까지 찾아가서 장모 살해하고 아내를 납치한 사건 발생했습니다. 그리고 바로 다음 날에도 제주에서 네 차례나 신고했던 여성이 전 연인에게 목숨을 잃었습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;올해만 해도 3월 남양주를 시작으로 해서 성남, 서귀포, 경기 광주에서 같은 비극이 이어지고 있습니다. 피해자들이 모두 위험을 알리고 보호를 요청했지만 국가가 끝끝내 이들을 지키지 못했습니다. 접근금지 조치도 있었고 스마트워치도 있었지만 이것도 다 지키지 못했습니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;2023년부터 올해 6월까지 가정폭력과 교제폭력, 스토킹 등으로 입건된 가해자가 피해자를 상대로 살인이나 살인미수 저지른 사건 무려 500건이 넘고 있는 상황입니다. 이런 비극 더 이상 반복돼서는 안 되고요. 개별 사건에 대한 대응을 넘어서서 고위험 가해자에 대해서 신속한 격리하고 그리고 접근금지, 보호조치 실효성 높이고 가해자에 대한 처벌 강화하는 이런 법안들 신속하게 추진해야 되고요.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;저는 그 과정에서 어제 남인순 국회부의장께서 제안하신 친밀관계폭력대책 특별위원회 구성결의안 너무 시의적절하게 발의하셨다는 생각이 듭니다. 여러 상임위에 흩어진 이 관계 법령들, 법안들 신속하게 처리하고 심도 깊게 논의할 수 있도록 여야가 공동의 마음을 모아서 이 특위 구성에 나서야 한다고 생각하고요. 특히 우리 위원회와 같이 정말 주무 상임위가 이 특위 구성에 적극적으로 참여해 주실 것을 호소드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_12" class="item3 speaker spk_mem" data-mem_id="6606" data-name="김정재" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 김정재 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/82a52130b3cd42949f08c91c95b1bd54.png" alt="김정재"></span><span class="txt"><span class="position">위원장</span><strong class="name">김정재</strong><span class="area">(경북 포항시북구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;이주희 위원님 감사합니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;어제 그렇지 않아도 남인순 부의장님과 따로 여야 여성 위원님들 몇 분 뵀었어요. 그래서 뵙고 이 문제 논의하고 특위 구성에 함께 하자고 그렇게 얘기를 했기 때문에, 아무튼 이 내용은 아마 모든 타 상임위원회 위원님들도 거의 공감을 하실 겁니다. 그래서 우리 국회 차원에서 준비를 좀 급하게 해야 될 내용이 아닌가 싶습니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;그다음 다른 의사진행발언이나 특별히 발언 있으십니까?</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;그러면 여러 일정으로 오늘 바쁘신 가운데도 회의에 참석해 주신 위원님들께 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;수석전문위원을 비롯한 위원회 직원과 보좌관 여러분들께도 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub12-7">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시11분 산회)</p><br/></div><div class="minutes_footer"><p class="tit"><strong>일반증인 및 참고인 명단</strong></p>증인(2인)<div class="table_wrap2"><table class="normal"><caption>일반증인 및 참고인 명단</caption><colgroup><col width="11.372011312023309%"><col width="24.852172422658324%"><col width="18.184934441683094%"><col width="45.59088182363527%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업(소속 및 직위)</th><th scope="col">감사대상기관</th><th scope="col">신문요지 및 신청이유(국정감사와의 관련성 포함)</th></tr></thead><tr><td>윤구<br/></td><td>구글코리아 사장<br/></td><td>성평등가족부<br/></td><td>구글 불법촬영 삭제요청 피해자 신상정보 유출 관련<br/></td></tr><tr><td>박수경<br/></td><td>결혼정보회사 듀오 대표<br/></td><td>성평등가족부<br/></td><td>개인정보 42만건 유출 관련<br/></td></tr></table></div><br/>참고인(4인)<div class="table_wrap2"><table class="normal"><caption>일반증인 및 참고인 명단</caption><colgroup><col width="11.978318621989887%"><col width="22.426943182792016%"><col width="18.184934441683094%"><col width="47.40980375353501%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업(소속 및 직위)</th><th scope="col">감사대상기관</th><th scope="col">신문요지 및 신청이유(국정감사와의 관련성 포함)</th></tr></thead><tr><td>김소원<br/></td><td>전환기정의워킹 그룹 연구원<br/></td><td>성평등가족부<br/></td><td>북한 여성 인권 실태 관련<br/></td></tr><tr><td>정윤서<br/></td><td>브릿지유스 대표<br/></td><td>성평등가족부<br/></td><td>청소년쉼터 지원 정책 관련<br/></td></tr><tr><td>김여진<br/></td><td>한국사이버성폭력피해대응센터 대표<br/></td><td>성평등가족부<br/></td><td>구글 불법촬영 삭제요청 피해자 신상정보 <br/>유출 관련 디지털 성범죄 피해 사건의 심각성 및 개선 방향<br/></td></tr><tr><td>백영숙<br/></td><td>아이돌봄사<br/></td><td>성평등가족부<br/></td><td>아이돌봄사 처우개선 및 예산 확보 필요<br/></td></tr></table></div><br/><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(15인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNYOUNG" target="_blank"><span class="name lts3 ">강선영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KWAKSANGEON" target="_blank"><span class="name lts3 ">곽상언</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMGEUN" target="_blank"><span class="name lts3 ">김남근</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSOHEE" target="_blank"><span class="name lts3 ">김소희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMJUNGJAE" target="_blank"><span class="name lts3 ">김정재</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJEEHYE" target="_blank"><span class="name lts3 ">박지혜</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BACKHYERYUN" target="_blank"><span class="name lts3 ">백혜련</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONSOL" target="_blank"><span class="name lts2 ">손솔</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEGOANGHEE" target="_blank"><span class="name lts3 ">이광희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESOOJIN" target="_blank"><span class="name lts3 ">이수진</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYEONHEE" target="_blank"><span class="name lts3 ">이연희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LeeJuhee" target="_blank"><span class="name lts3 ">이주희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JEONEUNSU" target="_blank"><span class="name lts3 ">전은수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHUNGCHOONSAENG" target="_blank"><span class="name lts3 ">정춘생</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOJIYEON" target="_blank"><span class="name lts3 ">조지연</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(2인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMGUNN" target="_blank"><span class="name lts2 ">김건</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMJONGDEUK" target="_blank"><span class="name lts3 ">임종득</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 박철호</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>청소년 보호법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 14. 김재섭 의원 대표발의)(의안번호 2221362)</div></div><div class="con"><p class="tit_sm"><strong>양성평등기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 14. 이주희 의원 대표발의)(의안번호 2221371)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 15일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>성폭력방지 및 피해자보호 등에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 15. 이주희 의원 대표발의)(의안번호 2221382)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 17. 김미애 의원 대표발의)(의안번호 2221414)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 18일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>다문화가족지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 21. 이수진 의원 대표발의)(의안번호 2221489)</div></div><div class="con"><p class="tit_sm"><strong>건강가정기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 21. 이수진 의원 대표발의)(의안번호 2221490)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 22일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>아동·청소년의 성보호에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 23. 서지영 의원 대표발의)(의안번호 2221559)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>한부모가족지원법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 10. 2. 전은수 의원 대표발의)(의안번호 2221781)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">10월 6일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>양육비 이행확보 및 지원에 관한 법룰 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 10. 6. 이주희 의원 대표발의)(의안번호 2221791)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">10월 7일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>돌봄기본법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 16. 남인순 의원 대표발의)(의안번호 2221408)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 17일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="13.950844985845414%"><col width="52.82019387492494%"><col width="17.427296903148324%"><col width="15.801664236081326%"></colgroup><thead><tr><th scope="col">공포번호</th><th scope="col">행정입법명</th><th scope="col">공포일자</th><th scope="col">구분</th></tr></thead><tr><td>제36695호<br/></td><td>청소년 보호법 시행령 일부개정령<br/></td><td>2026. 9. 22.<br/></td><td>시행령<br/></td></tr><tr><td>제16호<br/></td><td>성평등가족부 직제 시행규칙 일부개정령<br/></td><td>2026. 9. 29.<br/></td><td>시행규칙<br/></td></tr><tr><td>제17호<br/></td><td>「공소청법」 및 「중대범죄수사청 조직 및 운영에 관한 법률」의 제정과 「형사소송법」 개정에 따른 관계 법령의 정비를 위한 3개 법령의 일부개정에 관한 성평등가족부령<br/></td><td>2026. 10. 2.<br/></td><td>시행규칙<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯보고서 제출</strong></p><div class="con"><p class="tit_sm"><strong>2026년도 법률안 국회 제출계획에 대한 주요 변경사항</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 21. 법제처장 제출)</div></div><div class="con"><p class="tit_sm"><strong>가습기살균제사건과 4.16세월호참사 특별조사위원회 권고 이행 현황</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 22. 국무조정실장 제출)</div></div><div class="con"><p class="tit_sm"><strong>2026 회계연도 3분기 세출예산 전용 명세서 제출</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 10. 7. 성평등가족부장관 제출)</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57555;
+			const class_id = 2;
+			const confer_num = "N054677";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1792683580193" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1792683580194"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1792683580194"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1792683580194"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
