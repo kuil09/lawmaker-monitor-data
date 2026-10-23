@@ -1,0 +1,1336 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57235" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제439회 (정기회) 제1차 농림축산식품해양수산위원회</strong><span class="date">(2026.09.02.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2025회계연도 결산(의안번호 2219079)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">  가. 농림축산식품부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">  나. 농촌진흥청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">  다. 산림청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">  라. 해양수산부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">  마. 해양경찰청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">2. 2025회계연도 예비비지출 승인의 건(의안번호 2219080)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">  가. 농림축산식품부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">  나. 해양수산부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">3. 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200730)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">4. 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200790)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">5. 동물보호법 일부개정법률안(주호영 의원 대표발의)(의안번호 2200849)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">6. 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2202940)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">7. 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2203700)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">8. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2205353)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">9. 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2205993)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">10. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2205998)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">11. 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2206655)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">12. 동물보호법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2208230)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">13. 동물보호법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208323)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">14. 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2208372)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">15. 동물보호법 일부개정법률안(정부 제출)(의안번호 2209140)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">16. 동물보호법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209166)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">17. 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209246)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">18. 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209320)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">19. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2209377)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">20. 동물보호법 일부개정법률안(임호선 의원 대표발의)(의안번호 2209898)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">21. 동물보호법 일부개정법률안(이수진 의원 대표발의)(의안번호 2210643)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">22. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2210699)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">23. 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210827)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">24. 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210845)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">25. 동물보호법 일부개정법률안(박정하 의원 대표발의)(의안번호 2210887)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">26. 동물보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210920)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">27. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210962)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">28. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2211008)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">29. 동물보호법 일부개정법률안(송재봉 의원 대표발의)(의안번호 2211235)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">30. 동물보호법 일부개정법률안(진성준 의원 대표발의)(의안번호 2211368)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">31. 동물보호법 일부개정법률안(차규근 의원 대표발의)(의안번호 2211670)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">32. 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2211721)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">33. 동물보호법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2211753)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">34. 동물보호법 일부개정법률안(김예지 의원 대표발의)(의안번호 2212073)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">35. 동물보호법 일부개정법률안(조경태 의원 대표발의)(의안번호 2212639)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">36. 동물보호법 일부개정법률안(정부 제출)(의안번호 2213428)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">37. 동물보호법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2214337)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">38. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2214338)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">39. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214892)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">40. 동물보호법 일부개정법률안(임종득 의원 대표발의)(의안번호 2215030)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">41. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215275)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">42. 동물보호법 일부개정법률안(박정 의원 대표발의)(의안번호 2215684)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">43. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2215832)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">44. 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2215876)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">45. 동물보호법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216002)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">46. 동물보호법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216014)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">47. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216191)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">48. 동물보호법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216685)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">49. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216706)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">50. 동물보호법 일부개정법률안(김건 의원 대표발의)(의안번호 2217186)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">51. 동물보호법 일부개정법률안(김동아 의원 대표발의)(의안번호 2217237)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">52. 동물보호법 일부개정법률안(이광희 의원 대표발의)(의안번호 2218001)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">53. 동물보호법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2218302)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">54. 동물보호법 일부개정법률안(한지아 의원 대표발의)(의안번호 2220168)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">55. 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220457)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">56. 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220471)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">57. 동물보호법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item65">58. 가축전염병 예방법 일부개정법률안(정희용 의원 대표발의)(의안번호 2209498)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item66">59. 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210046)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item67">60. 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210081)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item68">61. 가축전염병 예방법 일부개정법률안(김선교 의원 대표발의)(의안번호 2214130)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item69">62. 가축전염병 예방법 일부개정법률안(임호선 의원 대표발의)(의안번호 2214756)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item70">63. 가축전염병 예방법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item71">64. 수의사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2201814)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item72">65. 수의사법 일부개정법률안(조경태 의원 대표발의)(의안번호 2202092)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item73">66. 수의사법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2207734)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item74">67. 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208664)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item75">68. 수의사법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2208887)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item76">69. 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2209229)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item77">70. 수의사법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2209958)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item78">71. 수의사법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2210794)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item79">72. 수의사법 일부개정법률안(문금주 의원 대표발의)(의안번호 2216664)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item80">73. 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2220205)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item81">74. 수의사법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item82">75. 청원 심사기간 연장 요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서삼석 위원장 (전남 영암군무안군신안군)"> 
+							서삼석 위원장 (전남 영암군무안군신안군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조승환 위원 (부산 중구영도구)"> 
+							조승환 위원 (부산 중구영도구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="강승규 위원 (충남 홍성군예산군)"> 
+							강승규 위원 (충남 홍성군예산군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤준병 위원 (전북 정읍시고창군)"> 
+							윤준병 위원 (전북 정읍시고창군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이개호 위원 (전남 담양군함평군영광군장성군)"> 
+							이개호 위원 (전남 담양군함평군영광군장성군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="문금주 위원 (전남 고흥군보성군장흥군강진군)"> 
+							문금주 위원 (전남 고흥군보성군장흥군강진군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="송옥주 위원 (경기 화성시갑)"> 
+							송옥주 위원 (경기 화성시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김선교 위원 (경기 여주시양평군)"> 
+							김선교 위원 (경기 여주시양평군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="주철현 위원 (전남 여수시갑)"> 
+							주철현 위원 (전남 여수시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이양수 위원 (강원 속초시인제군고성군양양군)"> 
+							이양수 위원 (강원 속초시인제군고성군양양군)
+						</option>
+					
+					
+						<option value="송미령 농림축산식품부장관">송미령 농림축산식품부장관</option>
+					
+						<option value="황종우 해양수산부장관">황종우 해양수산부장관</option>
+					
+						<option value="이승돈 농촌진흥청장">이승돈 농촌진흥청장</option>
+					
+						<option value="박은식 산림청장">박은식 산림청장</option>
+					
+						<option value="임명길 해양경찰청기획조정관">임명길 해양경찰청기획조정관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(10명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6710" data-name="서삼석" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">서삼석</span>
+												<span class="position">위원장</span>
+												<span class="area">(전남 영암군무안군신안군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6841" data-name="조승환" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">조승환</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 중구영도구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6739" data-name="강승규" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">강승규</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 홍성군예산군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6677" data-name="윤준병" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">윤준병</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 정읍시고창군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6670" data-name="이개호" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">이개호</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 담양군함평군영광군장성군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6565" data-name="문금주" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">문금주</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 고흥군보성군장흥군강진군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6716" data-name="송옥주" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">송옥주</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 화성시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6758" data-name="김선교" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">김선교</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 여주시양평군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6626" data-name="주철현" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">주철현</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 여수시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6662" data-name="이양수" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">이양수</span>
+												<span class="position">위원</span>
+												<span class="area">(강원 속초시인제군고성군양양군)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(5명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"> 
+											<label for="spk_attend0">
+												<span class="name">송미령</span>
+												<span class="position">농림축산식품부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="황종우" data-pos="해양수산부장관"> 
+											<label for="spk_attend1">
+												<span class="name">황종우</span>
+												<span class="position">해양수산부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="이승돈" data-pos="농촌진흥청장"> 
+											<label for="spk_attend2">
+												<span class="name">이승돈</span>
+												<span class="position">농촌진흥청장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend3"  data-mem_id="0" data-name="박은식" data-pos="산림청장"> 
+											<label for="spk_attend3">
+												<span class="name">박은식</span>
+												<span class="position">산림청장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend4"  data-mem_id="0" data-name="임명길" data-pos="해양경찰청기획조정관"> 
+											<label for="spk_attend4">
+												<span class="name">임명길</span>
+												<span class="position">해양경찰청기획조정관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57235&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제439회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>농림축산식품해양수산위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제1호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 9월 2일(수)</p></li><li><div class="sbj lts2">장소</div><p class="con">농림축산식품해양수산위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2025회계연도 결산(의안번호 2219079)</li><li class="pl20">  가. 농림축산식품부 소관</li><li class="pl20">  나. 농촌진흥청 소관</li><li class="pl20">  다. 산림청 소관</li><li class="pl20">  라. 해양수산부 소관</li><li class="pl20">  마. 해양경찰청 소관</li><li><span class="num">2.</span> 2025회계연도 예비비지출 승인의 건(의안번호 2219080)</li><li class="pl20">  가. 농림축산식품부 소관</li><li class="pl20">  나. 해양수산부 소관</li><li><span class="num">3.</span> 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200730)</li><li><span class="num">4.</span> 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200790)</li><li><span class="num">5.</span> 동물보호법 일부개정법률안(주호영 의원 대표발의)(의안번호 2200849)</li><li><span class="num">6.</span> 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2202940)</li><li><span class="num">7.</span> 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2203700)</li><li><span class="num">8.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2205353)</li><li><span class="num">9.</span> 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2205993)</li><li><span class="num">10.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2205998)</li><li><span class="num">11.</span> 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2206655)</li><li><span class="num">12.</span> 동물보호법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2208230)</li><li><span class="num">13.</span> 동물보호법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208323)</li><li><span class="num">14.</span> 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2208372)</li><li><span class="num">15.</span> 동물보호법 일부개정법률안(정부 제출)(의안번호 2209140)</li><li><span class="num">16.</span> 동물보호법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209166)</li><li><span class="num">17.</span> 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209246)</li><li><span class="num">18.</span> 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209320)</li><li><span class="num">19.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2209377)</li><li><span class="num">20.</span> 동물보호법 일부개정법률안(임호선 의원 대표발의)(의안번호 2209898)</li><li><span class="num">21.</span> 동물보호법 일부개정법률안(이수진 의원 대표발의)(의안번호 2210643)</li><li><span class="num">22.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2210699)</li><li><span class="num">23.</span> 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210827)</li><li><span class="num">24.</span> 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210845)</li><li><span class="num">25.</span> 동물보호법 일부개정법률안(박정하 의원 대표발의)(의안번호 2210887)</li><li><span class="num">26.</span> 동물보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210920)</li><li><span class="num">27.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210962)</li><li><span class="num">28.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2211008)</li><li><span class="num">29.</span> 동물보호법 일부개정법률안(송재봉 의원 대표발의)(의안번호 2211235)</li><li><span class="num">30.</span> 동물보호법 일부개정법률안(진성준 의원 대표발의)(의안번호 2211368)</li><li><span class="num">31.</span> 동물보호법 일부개정법률안(차규근 의원 대표발의)(의안번호 2211670)</li><li><span class="num">32.</span> 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2211721)</li><li><span class="num">33.</span> 동물보호법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2211753)</li><li><span class="num">34.</span> 동물보호법 일부개정법률안(김예지 의원 대표발의)(의안번호 2212073)</li><li><span class="num">35.</span> 동물보호법 일부개정법률안(조경태 의원 대표발의)(의안번호 2212639)</li><li><span class="num">36.</span> 동물보호법 일부개정법률안(정부 제출)(의안번호 2213428)</li><li><span class="num">37.</span> 동물보호법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2214337)</li><li><span class="num">38.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2214338)</li><li><span class="num">39.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214892)</li><li><span class="num">40.</span> 동물보호법 일부개정법률안(임종득 의원 대표발의)(의안번호 2215030)</li><li><span class="num">41.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215275)</li><li><span class="num">42.</span> 동물보호법 일부개정법률안(박정 의원 대표발의)(의안번호 2215684)</li><li><span class="num">43.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2215832)</li><li><span class="num">44.</span> 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2215876)</li><li><span class="num">45.</span> 동물보호법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216002)</li><li><span class="num">46.</span> 동물보호법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216014)</li><li><span class="num">47.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216191)</li><li><span class="num">48.</span> 동물보호법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216685)</li><li><span class="num">49.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216706)</li><li><span class="num">50.</span> 동물보호법 일부개정법률안(김건 의원 대표발의)(의안번호 2217186)</li><li><span class="num">51.</span> 동물보호법 일부개정법률안(김동아 의원 대표발의)(의안번호 2217237)</li><li><span class="num">52.</span> 동물보호법 일부개정법률안(이광희 의원 대표발의)(의안번호 2218001)</li><li><span class="num">53.</span> 동물보호법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2218302)</li><li><span class="num">54.</span> 동물보호법 일부개정법률안(한지아 의원 대표발의)(의안번호 2220168)</li><li><span class="num">55.</span> 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220457)</li><li><span class="num">56.</span> 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220471)</li><li><span class="num">57.</span> 동물보호법 일부개정법률안(대안)</li><li><span class="num">58.</span> 가축전염병 예방법 일부개정법률안(정희용 의원 대표발의)(의안번호 2209498)</li><li><span class="num">59.</span> 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210046)</li><li><span class="num">60.</span> 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210081)</li><li><span class="num">61.</span> 가축전염병 예방법 일부개정법률안(김선교 의원 대표발의)(의안번호 2214130)</li><li><span class="num">62.</span> 가축전염병 예방법 일부개정법률안(임호선 의원 대표발의)(의안번호 2214756)</li><li><span class="num">63.</span> 가축전염병 예방법 일부개정법률안(대안)</li><li><span class="num">64.</span> 수의사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2201814)</li><li><span class="num">65.</span> 수의사법 일부개정법률안(조경태 의원 대표발의)(의안번호 2202092)</li><li><span class="num">66.</span> 수의사법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2207734)</li><li><span class="num">67.</span> 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208664)</li><li><span class="num">68.</span> 수의사법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2208887)</li><li><span class="num">69.</span> 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2209229)</li><li><span class="num">70.</span> 수의사법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2209958)</li><li><span class="num">71.</span> 수의사법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2210794)</li><li><span class="num">72.</span> 수의사법 일부개정법률안(문금주 의원 대표발의)(의안번호 2216664)</li><li><span class="num">73.</span> 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2220205)</li><li><span class="num">74.</span> 수의사법 일부개정법률안(대안)</li><li><span class="num">75.</span> 청원 심사기간 연장 요구의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2025회계연도 결산(의안번호 2219079)</a></li><li id="head_item2" class="pl20"><a href="#" class="move" data-target="#item2">  가. 농림축산식품부 소관</a></li><li id="head_item3" class="pl20"><a href="#" class="move" data-target="#item3">  나. 농촌진흥청 소관</a></li><li id="head_item4" class="pl20"><a href="#" class="move" data-target="#item4">  다. 산림청 소관</a></li><li id="head_item5" class="pl20"><a href="#" class="move" data-target="#item5">  라. 해양수산부 소관</a></li><li id="head_item6" class="pl20"><a href="#" class="move" data-target="#item6">  마. 해양경찰청 소관</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">2.</span> 2025회계연도 예비비지출 승인의 건(의안번호 2219080)</a></li><li id="head_item8" class="pl20"><a href="#" class="move" data-target="#item8">  가. 농림축산식품부 소관</a></li><li id="head_item9" class="pl20"><a href="#" class="move" data-target="#item9">  나. 해양수산부 소관</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">3.</span> 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200730)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">4.</span> 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200790)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">5.</span> 동물보호법 일부개정법률안(주호영 의원 대표발의)(의안번호 2200849)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">6.</span> 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2202940)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">7.</span> 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2203700)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">8.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2205353)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">9.</span> 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2205993)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">10.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2205998)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">11.</span> 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2206655)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">12.</span> 동물보호법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2208230)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">13.</span> 동물보호법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208323)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">14.</span> 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2208372)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">15.</span> 동물보호법 일부개정법률안(정부 제출)(의안번호 2209140)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">16.</span> 동물보호법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209166)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">17.</span> 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209246)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">18.</span> 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209320)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">19.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2209377)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">20.</span> 동물보호법 일부개정법률안(임호선 의원 대표발의)(의안번호 2209898)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">21.</span> 동물보호법 일부개정법률안(이수진 의원 대표발의)(의안번호 2210643)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">22.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2210699)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">23.</span> 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210827)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">24.</span> 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210845)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">25.</span> 동물보호법 일부개정법률안(박정하 의원 대표발의)(의안번호 2210887)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">26.</span> 동물보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210920)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">27.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210962)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">28.</span> 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2211008)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">29.</span> 동물보호법 일부개정법률안(송재봉 의원 대표발의)(의안번호 2211235)</a></li><li id="head_item37"><a href="#" class="move" data-target="#item37"><span class="num">30.</span> 동물보호법 일부개정법률안(진성준 의원 대표발의)(의안번호 2211368)</a></li><li id="head_item38"><a href="#" class="move" data-target="#item38"><span class="num">31.</span> 동물보호법 일부개정법률안(차규근 의원 대표발의)(의안번호 2211670)</a></li><li id="head_item39"><a href="#" class="move" data-target="#item39"><span class="num">32.</span> 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2211721)</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">33.</span> 동물보호법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2211753)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">34.</span> 동물보호법 일부개정법률안(김예지 의원 대표발의)(의안번호 2212073)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">35.</span> 동물보호법 일부개정법률안(조경태 의원 대표발의)(의안번호 2212639)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">36.</span> 동물보호법 일부개정법률안(정부 제출)(의안번호 2213428)</a></li><li id="head_item44"><a href="#" class="move" data-target="#item44"><span class="num">37.</span> 동물보호법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2214337)</a></li><li id="head_item45"><a href="#" class="move" data-target="#item45"><span class="num">38.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2214338)</a></li><li id="head_item46"><a href="#" class="move" data-target="#item46"><span class="num">39.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214892)</a></li><li id="head_item47"><a href="#" class="move" data-target="#item47"><span class="num">40.</span> 동물보호법 일부개정법률안(임종득 의원 대표발의)(의안번호 2215030)</a></li><li id="head_item48"><a href="#" class="move" data-target="#item48"><span class="num">41.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215275)</a></li><li id="head_item49"><a href="#" class="move" data-target="#item49"><span class="num">42.</span> 동물보호법 일부개정법률안(박정 의원 대표발의)(의안번호 2215684)</a></li><li id="head_item50"><a href="#" class="move" data-target="#item50"><span class="num">43.</span> 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2215832)</a></li><li id="head_item51"><a href="#" class="move" data-target="#item51"><span class="num">44.</span> 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2215876)</a></li><li id="head_item52"><a href="#" class="move" data-target="#item52"><span class="num">45.</span> 동물보호법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216002)</a></li><li id="head_item53"><a href="#" class="move" data-target="#item53"><span class="num">46.</span> 동물보호법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216014)</a></li><li id="head_item54"><a href="#" class="move" data-target="#item54"><span class="num">47.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216191)</a></li><li id="head_item55"><a href="#" class="move" data-target="#item55"><span class="num">48.</span> 동물보호법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216685)</a></li><li id="head_item56"><a href="#" class="move" data-target="#item56"><span class="num">49.</span> 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216706)</a></li><li id="head_item57"><a href="#" class="move" data-target="#item57"><span class="num">50.</span> 동물보호법 일부개정법률안(김건 의원 대표발의)(의안번호 2217186)</a></li><li id="head_item58"><a href="#" class="move" data-target="#item58"><span class="num">51.</span> 동물보호법 일부개정법률안(김동아 의원 대표발의)(의안번호 2217237)</a></li><li id="head_item59"><a href="#" class="move" data-target="#item59"><span class="num">52.</span> 동물보호법 일부개정법률안(이광희 의원 대표발의)(의안번호 2218001)</a></li><li id="head_item60"><a href="#" class="move" data-target="#item60"><span class="num">53.</span> 동물보호법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2218302)</a></li><li id="head_item61"><a href="#" class="move" data-target="#item61"><span class="num">54.</span> 동물보호법 일부개정법률안(한지아 의원 대표발의)(의안번호 2220168)</a></li><li id="head_item62"><a href="#" class="move" data-target="#item62"><span class="num">55.</span> 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220457)</a></li><li id="head_item63"><a href="#" class="move" data-target="#item63"><span class="num">56.</span> 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220471)</a></li><li id="head_item64"><a href="#" class="move" data-target="#item64"><span class="num">57.</span> 동물보호법 일부개정법률안(대안)</a></li><li id="head_item65"><a href="#" class="move" data-target="#item65"><span class="num">58.</span> 가축전염병 예방법 일부개정법률안(정희용 의원 대표발의)(의안번호 2209498)</a></li><li id="head_item66"><a href="#" class="move" data-target="#item66"><span class="num">59.</span> 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210046)</a></li><li id="head_item67"><a href="#" class="move" data-target="#item67"><span class="num">60.</span> 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210081)</a></li><li id="head_item68"><a href="#" class="move" data-target="#item68"><span class="num">61.</span> 가축전염병 예방법 일부개정법률안(김선교 의원 대표발의)(의안번호 2214130)</a></li><li id="head_item69"><a href="#" class="move" data-target="#item69"><span class="num">62.</span> 가축전염병 예방법 일부개정법률안(임호선 의원 대표발의)(의안번호 2214756)</a></li><li id="head_item70"><a href="#" class="move" data-target="#item70"><span class="num">63.</span> 가축전염병 예방법 일부개정법률안(대안)</a></li><li id="head_item71"><a href="#" class="move" data-target="#item71"><span class="num">64.</span> 수의사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2201814)</a></li><li id="head_item72"><a href="#" class="move" data-target="#item72"><span class="num">65.</span> 수의사법 일부개정법률안(조경태 의원 대표발의)(의안번호 2202092)</a></li><li id="head_item73"><a href="#" class="move" data-target="#item73"><span class="num">66.</span> 수의사법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2207734)</a></li><li id="head_item74"><a href="#" class="move" data-target="#item74"><span class="num">67.</span> 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208664)</a></li><li id="head_item75"><a href="#" class="move" data-target="#item75"><span class="num">68.</span> 수의사법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2208887)</a></li><li id="head_item76"><a href="#" class="move" data-target="#item76"><span class="num">69.</span> 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2209229)</a></li><li id="head_item77"><a href="#" class="move" data-target="#item77"><span class="num">70.</span> 수의사법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2209958)</a></li><li id="head_item78"><a href="#" class="move" data-target="#item78"><span class="num">71.</span> 수의사법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2210794)</a></li><li id="head_item79"><a href="#" class="move" data-target="#item79"><span class="num">72.</span> 수의사법 일부개정법률안(문금주 의원 대표발의)(의안번호 2216664)</a></li><li id="head_item80"><a href="#" class="move" data-target="#item80"><span class="num">73.</span> 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2220205)</a></li><li id="head_item81"><a href="#" class="move" data-target="#item81"><span class="num">74.</span> 수의사법 일부개정법률안(대안)</a></li><li id="head_item82"><a href="#" class="move" data-target="#item82"><span class="num">75.</span> 청원 심사기간 연장 요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(15시11분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제439회 국회(정기회) 제1차 농림축산식품해양수산위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;법률안 회부 등 보고사항은 배부해 드린 유인물을 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;참고로 오늘 회의는 유튜브 국회방송을 통해 생중계 중임을 알려드립니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;오늘 회의에서는 예산결산심사소위원회에서 심사한 2025회계연도 결산 관련 안건과 법안심사소위원회에서 심사한 법률안 및 청원 심사 연장 요구의 건을 심사하여 의결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;양해의 말씀을 드립니다. 해양수산부 남재헌 차관은 국무총리 주재 제1회 해상풍력발전위원회 회의 참석을 이유로, 해양경찰청 장인식 차장은 오늘 오후 발생한 부산 앞바다 예인선 전복 사고에 따른 현장 출장으로 위원장과 양당 간사의 양해 하에 불출석하였다는 점을 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub2-8">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6841" data-name="조승환" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">조승환 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c4da5dd92ac649af8262ead37610dc29.jpg" alt="조승환"></span><span class="txt"><strong class="name">조승환</strong><span class="position">위원</span><span class="area">(부산 중구영도구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;위원장님, 의사진행발언……</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;조승환 위원님.</span><br/></div></div></div><div id="spk_5" class="item0 speaker spk_mem" data-mem_id="6841" data-name="조승환" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">조승환 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c4da5dd92ac649af8262ead37610dc29.jpg" alt="조승환"></span><span class="txt"><strong class="name">조승환</strong><span class="position">위원</span><span class="area">(부산 중구영도구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;부산 중구영도구 국민의힘 조성환 위원입니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;지난 8월 26일 업무보고에서 송미령 농림축산식품부장관의 답변과 관련해서 짚고 넘어가고자 합니다.</span><br/><span class="spk_sub" id="spk_sub5-3">&nbsp;당시 저는 김종구 차관이 9월 중 마사회 이전 부지를 확정하겠다라고 밝힌 데 대해 이미 8월 말인데 어떤 절차로 가능한지 장관께 질의했습니다. 장관께서는 처음에 ‘마사회에서 공모한 것으로 알고 있다’고 답했습니다. 제가 다시 공모 여부를 확인하자 ‘공모를 금주 중에 하는 것으로 알고 있다’라고 답했고 우희종 마사회장도 ‘금주 내 임시 이사회를 통해 결정될 것으로 예상한다’라고 밝혔습니다. 속기록에 남은 이 답변만 보면 정부와 마사회 이전 협의가 원만하게 신속히 이루어지고 이전 부지 선정과 공공주택 공급도 빠르게 진행되는 것으로 이해될 수밖에 없습니다.</span><br/><span class="spk_sub" id="spk_sub5-4">&nbsp;그러나 확인 결과는 달랐습니다. 질의 당일까지 농식품부와 마사회 사이에는 이전 공모와 관련돼 어떠한 결정된 내용도 없었고 이사회에 올라갈 예정도 없었습니다. 다음 날 예정인 제9차 마사회 이사회 개최 계획에도 이전 관련 안건은 일체 포함되지 않았습니다. 오히려 제 질의가 있었던 다음 날 농식품부가 급히 마사회를 방문해 관련 내용을 보고한 것으로 확인되었습니다. 그리고 이때 역시 이전 재원과 재정지원 방안 등 핵심 계획은 마련되지 않았던 것으로 보입니다.</span><br/><span class="spk_sub" id="spk_sub5-5">&nbsp;단순한 표현상의 착오로 보기 어렵습니다. 장관이 국회에서 확인되지 않은 내용을 마치 확정된 절차인 것처럼 답변함으로써 국회와 국민에게 잘못된 정보를 전달한 것입니다. 과천 서울경마공원 이전은 단순한 기관 이전의 문제가 아닙니다. 대규모 공공부지의 활용, 막대한 이전 재원, 지역 간 유치 경쟁, 말산업 종사자, 지역 주민의 생계가 걸린 중대한 정책 사안입니다. 장관의 발언은 지자체와 주민, 산업 종사자에게 이전 절차가 이사회 의결만 남았다라는 잘못된 신호를 줄 수 있습니다. 사실과 다른 내용을 국회에서 답변하는 것은 국회의 대정부 견제 기능을 훼손하고 국민의 신뢰를 저버리는 일입니다.</span><br/><span class="spk_sub" id="spk_sub5-6">&nbsp;이에 위원장님께 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub5-7">&nbsp;첫 번째로 송미령 장관의 공식 사과와 정확한 사실관계에 따른 재답변을 요구해 주시기 바랍니다. 위원회 차원에서 장관의 거짓 답변에 대해 공식 경고하고 재발 방지 대책을 마련해 주실 것을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub5-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_6" class="item0 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;위원장이 회의 운영을 잘못해서 생긴 문제는 아니지요?</span><br/></div></div></div><div id="spk_7" class="item0 speaker spk_mem" data-mem_id="6841" data-name="조승환" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">조승환 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c4da5dd92ac649af8262ead37610dc29.jpg" alt="조승환"></span><span class="txt"><strong class="name">조승환</strong><span class="position">위원</span><span class="area">(부산 중구영도구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;예.</span><br/></div></div></div><div id="spk_8" class="item0 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;열심히 또 의사진행발언을 하셨는데 장관께 발언 기회를 드리면 발언이 또 이렇게 되풀이될 것 같고 그렇다고 제가 또 특별히 드릴 말씀을 이 자리에서 결정하기도 그렇고, 이 문제는 정식으로 의사진행발언이 있었으니까 이 내용과 관련해서 사과와 재답변, 경고, 재발 방지를 요구하셨는데 1차적으로 양당 간사님께서 상의를 해 주시면 제가 결정토록 하겠습니다. 그렇게 이해를 해 주시기 바랍니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2R6R0P8E0C4X1Y1M1T7K2A6F6J3X9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 2025회계연도 결산(의안번호 2219079)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item2" class="tit">  가. 농림축산식품부 소관</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item3" class="tit">  나. 농촌진흥청 소관</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item4" class="tit">  다. 산림청 소관</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item5" class="tit">  라. 해양수산부 소관</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item6" class="tit">  마. 해양경찰청 소관</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2O6F0T8O0G4Y1D1L3W1Y0T0A9Y9I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 2025회계연도 예비비지출 승인의 건(의안번호 2219080)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item8" class="tit">  가. 농림축산식품부 소관</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item9" class="tit">  나. 해양수산부 소관</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시16분)</p><br/><div id="spk_10" class="item9 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;먼저 의사일정 제1항 및 제2항 2025회계연도 결산 및 예비비지출 승인의 건을 계속하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;강승규 예산결산심사소위원장님 나오셔서 소위원회 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item9 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">소위원장 강승규 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><span class="position">소위원장</span><strong class="name">강승규</strong><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;예산결산심사소위원장 강승규 위원입니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;2025회계연도 우리 위원회 소관 결산 및 예비비지출 승인의 건에 대하여 소위원회 심사 결과를 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;우리 소위원회는 2025회계연도 농림축산식품부, 해양수산부, 농촌진흥청, 산림청 및 해양경찰청 소관의 결산과 농림축산식품부 및 해양수산부 소관 예비비지출 승인의 건에 대해 심도 있게 심사한 결과 각각 정부 원안대로 의결하되 총 184건의 시정요구사항과 28건의 부대의견을 채택하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;먼저 농림축산식품부에 대해서는 국회에서 심의·의결한 취지와 다르게 내역사업 전 예산을 변경하여 과도한 홍보비 예산을 집행하는 사례가 재발되지 않도록 주의를 요구하는 등 57건의 시정요구사항과 14건의 부대의견을 채택하기로 하였고, 해양수산부에 대해서는 대규모 이월금 누적 시 차기 보조금 교부 및 2월 승인을 제한하여 연례적인 이월·재이월을 방지하도록 주의를 요구하는 등 76건의 시정요구사항과 5건의 부대의견을 채택하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;또한 농촌진흥청에 대해서는 사업 추진여건을 사전에 검토하여 집행이 어려운 공사비를 과다 편성하거나 당초 목적과 다르게 대규모 전용하는 사례가 반복되지 않도록 주의를 요구하는 등 9건의 시정요구사항과 3건의 부대의견을, 산림청에 대해서는 신규 특수장비 도입 등을 위한 추경예산 편성 시 집행가능성을 충분히 검토하고 사전 절차를 강화하여 예산의 불용을 최소화하도록 제도개선을 요구하는 등 29건의 시정요구사항과 1건의 부대의견을 채택하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;마지막으로 해양경찰청에 대해서는 대규모 건설사업 추진 시 관급자재 미반영 등 계약 법령 위반사항이 발생하지 않도록 제도개선을 요구하는 등 13건의 시정요구사항과 5건의 부대의견을 채택하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;각각의 시정요구사항과 부대의견의 상세한 내용은 배부하여 드린 유인물을 참조하여 주시고, 아무쪼록 소위원회에서 심사보고한 대로 의결해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub11-8">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_12" class="item9 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;바쁘신 일정에도 불구하고 결산을 심도 있게 심사해 주신 강승규 소위원장님을 비롯한 예산결산심사소위원회의 위원님들께 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;예산결산심사소위원회에서 심사보고한 결산에 대해 발언하실 위원님 계신가요?</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;더 이상 말씀하실 위원님이 안 계십니까?</span><br/><span class="spk_sub" id="spk_sub12-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub12-5">&nbsp;그러면 결산에 대해 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub12-6">&nbsp;의사일정 제1항 농림축산식품부·해양수산부·농촌진흥청·산림청·해양경찰청 소관 2025회계연도 결산과 의사일정 제2항 농림축산식품부 및 해양수산부 소관 2025회계연도 예비비지출 승인의 건은 소위원회에서 심사보고한 시정요구사항과 부대의견을 첨부해서 정부 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub12-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub12-8">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G4E0F6N0N7M1K6L5J3K1S7S1R7P6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200730)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2X4F0F6E0C7D1B6C5K4K0I4J8I9G7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 동물보호법 일부개정법률안(신영대 의원 대표발의)(의안번호 2200790)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2D4E0C5B3A1I1J6H3G7F4N4L5M2L4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 동물보호법 일부개정법률안(주호영 의원 대표발의)(의안번호 2200849)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q4O0O8N1N2M1M1U0T6T5R9S0R9R1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2202940)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2K4L0J6J1S1Q1Q9P3P2O1W9W1V6V9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2203700)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V4C1B0A1Y8H1G0F5D6A1Y2X2X6F2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2205353)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E4C1D1C2C6K1I4J1H3I1G3H9P5N5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2205993)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2C4D1R1Q2R0P1P3O3P6W4X3V6U1U4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2205998)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2H4I0H7H1F7G0F9A1B4Z4Z9Y0Z7E0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 동물보호법 일부개정법률안(박홍근 의원 대표발의)(의안번호 2206655)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2R5R0P2Q1O0P0U8V1T2U1C2C4A8Z3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 동물보호법 일부개정법률안(이상휘 의원 대표발의)(의안번호 2208230)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2A5Z0A2Y0Y6W1Y3F2G4E3D2D7B4C9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 동물보호법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208323)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2U5V0T2T1S0O1O0M2N5L4M3K4L5T7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 동물보호법 일부개정법률안(이춘석 의원 대표발의)(의안번호 2208372)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_D2N5K0Q3H1Z9H2V1H1T2H2H1P4Y3G7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 동물보호법 일부개정법률안(정부 제출)(의안번호 2209140)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2N5T0S3Q1Z7Y1X7V1E9D2C7B4X8W7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 동물보호법 일부개정법률안(김태선 의원 대표발의)(의안번호 2209166)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2C5K0L3J1J3I1G1H2W4X1W9W6U4V9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209246)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2Q5O0P3X1Y3W1W1V2T5U0C3D1B8B7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 동물보호법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2209320)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2F5E0F3D2L0K1L3J5I9Q2R3P7O8M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2209377)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2Q5Y0X3W1A7W1F5E5D1C4K6J3I9H5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 동물보호법 일부개정법률안(임호선 의원 대표발의)(의안번호 2209898)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2A5I0J5H0F2G1E3F4M3N1M6M0K5J1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 동물보호법 일부개정법률안(이수진 의원 대표발의)(의안번호 2210643)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F5F0E5E0M8N1L0M3K8I1J3R1S4Q5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2210699)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2Q5R0Q6Q0O5P1N6V2W9U3V2T6U9S4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210827)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2D5D0B5C1K5L1J1J0I3G5H8D6D5C0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2210845)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2R5Z0Z6Y0W9X1V4V3D7E0C1D3B2C8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 동물보호법 일부개정법률안(박정하 의원 대표발의)(의안번호 2210887)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2I5Q0Q4O0Q3O1O1M5V8V3R1N3O8M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 동물보호법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2210920)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E5E0D6E1M3M0K9J3J4H4I2Q9R4P0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210962)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z5Z0Y6Y1W3X0F9G3E5D2D7B1C2K0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 동물보호법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2211008)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2D5C0X6Y2W6X1V2W2U7U5D7B0B2A7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 동물보호법 일부개정법률안(송재봉 의원 대표발의)(의안번호 2211235)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item37" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2L5J0K7I0J1H1I1P2Q8O5N0N1M9M3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 동물보호법 일부개정법률안(진성준 의원 대표발의)(의안번호 2211368)</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item38" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2H5G0G7E1F6N1O4M1L6L1J3K7S0T1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 동물보호법 일부개정법률안(차규근 의원 대표발의)(의안번호 2211670)</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item39" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2S5T0R7S1Q4Y1Z7X1X1W2W3V9R1R4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 동물보호법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2211721)</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2A5Y0Z7H1I7G0G9F1F7D2Z1A7Y6Z4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 동물보호법 일부개정법률안(권향엽 의원 대표발의)(의안번호 2211753)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2O5M0N7L0M9K0K9S5T6R5S2Q4Q7P2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 동물보호법 일부개정법률안(김예지 의원 대표발의)(의안번호 2212073)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Q5Q0O4P1O5O1W7W2U1V0U3S0S9A7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 동물보호법 일부개정법률안(조경태 의원 대표발의)(의안번호 2212639)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_P2J5V1N0T0G1G1R5G5O7Y3F9C5W4H2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 동물보호법 일부개정법률안(정부 제출)(의안번호 2213428)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item44" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2Y5Z0Y9G1F0E1F0D3L7K2I5J6O4M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">37. 동물보호법 일부개정법률안(위성곤 의원 대표발의)(의안번호 2214337)</a><a class="btn_move move" data-target="#head_item44" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item45" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T5T1S0Z2A3Y1Z6X0Y4W3E1F1D0D2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">38. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2214338)</a><a class="btn_move move" data-target="#head_item45" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item46" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2L5L1J2K0J3J1R4S1Q4Q0P3N8O8J7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">39. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214892)</a><a class="btn_move move" data-target="#head_item46" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item47" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2L5M1K2K0S3R1R1P0Q7O3P7W9X9W2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">40. 동물보호법 일부개정법률안(임종득 의원 대표발의)(의안번호 2215030)</a><a class="btn_move move" data-target="#head_item47" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item48" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2K5J1J2H0I2E1E3C2B6C3A7A4I9J2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">41. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2215275)</a><a class="btn_move move" data-target="#head_item48" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item49" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2R5P1Q2P1N5N1V4W3U8V0T8R3S7O2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">42. 동물보호법 일부개정법률안(박정 의원 대표발의)(의안번호 2215684)</a><a class="btn_move move" data-target="#head_item49" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item50" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2D5D1C2C1A8B1Z6A1I1J1H1H0F6E3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">43. 동물보호법 일부개정법률안(한정애 의원 대표발의)(의안번호 2215832)</a><a class="btn_move move" data-target="#head_item50" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item51" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2N6L0M1K0L6J1F3G2E7E3D7D9C8C6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">44. 동물보호법 일부개정법률안(김선교 의원 대표발의)(의안번호 2215876)</a><a class="btn_move move" data-target="#head_item51" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item52" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2W6W0V1R0R8P1Q0P2P9N4O8W1U7V7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">45. 동물보호법 일부개정법률안(박성훈 의원 대표발의)(의안번호 2216002)</a><a class="btn_move move" data-target="#head_item52" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item53" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S6Q0R1P1P2X1Y3W3U3V5T4U4J1K2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">46. 동물보호법 일부개정법률안(복기왕 의원 대표발의)(의안번호 2216014)</a><a class="btn_move move" data-target="#head_item53" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item54" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2U6T0U1S1S5R1R2Z3A7Y3Z5X0X9W2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">47. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216191)</a><a class="btn_move move" data-target="#head_item54" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item55" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2X6Y0W2X0F2D1E0C4D7B3C9X3Y7W9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">48. 동물보호법 일부개정법률안(조은희 의원 대표발의)(의안번호 2216685)</a><a class="btn_move move" data-target="#head_item55" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item56" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2Y6Y0W2X0W4U1U1C0D0B3C2A0A0Z6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">49. 동물보호법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2216706)</a><a class="btn_move move" data-target="#head_item56" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item57" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2K6I0J2H2I7Q1O0P3N6O1M0N0J7H2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">50. 동물보호법 일부개정법률안(김건 의원 대표발의)(의안번호 2217186)</a><a class="btn_move move" data-target="#head_item57" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item58" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F6F0D2E2D3D1Z6Z1X1Y2X3V4V9E2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">51. 동물보호법 일부개정법률안(김동아 의원 대표발의)(의안번호 2217237)</a><a class="btn_move move" data-target="#head_item58" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item59" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2Y6X0E3D1B9K1J6H0G9H3C4B5A8Y5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">52. 동물보호법 일부개정법률안(이광희 의원 대표발의)(의안번호 2218001)</a><a class="btn_move move" data-target="#head_item59" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item60" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2D6B0C3K1K2J1J0H5G1H5O6P1O6O6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">53. 동물보호법 일부개정법률안(이훈기 의원 대표발의)(의안번호 2218302)</a><a class="btn_move move" data-target="#head_item60" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item61" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2R6R0P3Q1P6P1X3X3W2U1V9T0U7Q4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">54. 동물보호법 일부개정법률안(한지아 의원 대표발의)(의안번호 2220168)</a><a class="btn_move move" data-target="#head_item61" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item62" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2H6F0G7E3F1D1D5M5K3K1J5J5H2Q5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">55. 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220457)</a><a class="btn_move move" data-target="#head_item62" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item63" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2Q6R0N7N3M1K1L5J5R2S3Q4Q7P5Q7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">56. 동물보호법 일부개정법률안(이재관 의원 대표발의)(의안번호 2220471)</a><a class="btn_move move" data-target="#head_item63" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item64" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2N6S0Q8E2R8I2D3D3K1P4P6U4W0B8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">57. 동물보호법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item64" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item65" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2B5B0A3B3Z1Z1H4G0G7E2F2E2E0M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">58. 가축전염병 예방법 일부개정법률안(정희용 의원 대표발의)(의안번호 2209498)</a><a class="btn_move move" data-target="#head_item65" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item66" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2N5M0N4L1L1J1K0G1E7F0D9E7C0K4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">59. 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210046)</a><a class="btn_move move" data-target="#head_item66" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item67" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E5F0N4N1M1K1K0J1J6R4S2Q6R0P6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">60. 가축전염병 예방법 일부개정법률안(이만희 의원 대표발의)(의안번호 2210081)</a><a class="btn_move move" data-target="#head_item67" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item68" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2N5M1N1L1L1K1S0S4Q6R0Q2Q5O6K3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">61. 가축전염병 예방법 일부개정법률안(김선교 의원 대표발의)(의안번호 2214130)</a><a class="btn_move move" data-target="#head_item68" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item69" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Z5A1Y1Z2X0Y1W0S0T8R1R0Q3R6P6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">62. 가축전염병 예방법 일부개정법률안(임호선 의원 대표발의)(의안번호 2214756)</a><a class="btn_move move" data-target="#head_item69" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item70" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2O6D0D8M2L8V2J3A2O3M5I1H5M1Z7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">63. 가축전염병 예방법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item70" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item71" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Q4P0Q6P0N3V1U7S1T0S4B4Z2X4W5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">64. 수의사법 일부개정법률안(정청래 의원 대표발의)(의안번호 2201814)</a><a class="btn_move move" data-target="#head_item71" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item72" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2G4F0F7L1J8J0H9Q5M7L0K9S9Q6P8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">65. 수의사법 일부개정법률안(조경태 의원 대표발의)(의안번호 2202092)</a><a class="btn_move move" data-target="#head_item72" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item73" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2S5R0R1Q2L0M1K3L2J8K5I0Q8R9P8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">66. 수의사법 일부개정법률안(서왕진 의원 대표발의)(의안번호 2207734)</a><a class="btn_move move" data-target="#head_item73" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item74" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2O4M1M2U2T7T1R3S3R2R1N6N2M4K4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">67. 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208664)</a><a class="btn_move move" data-target="#head_item74" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item75" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2M4U0S6Z0Y3Z1Y4G5E6D5D1C8Y6X3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">68. 수의사법 일부개정법률안(윤건영 의원 대표발의)(의안번호 2208887)</a><a class="btn_move move" data-target="#head_item75" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item76" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2K4J1I1G0P4P1O4N4L3H2G1H3G7E5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">69. 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2209229)</a><a class="btn_move move" data-target="#head_item76" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item77" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2N5O0M4M1K4L0T9U3S0T4R3R1Q4M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">70. 수의사법 일부개정법률안(김도읍 의원 대표발의)(의안번호 2209958)</a><a class="btn_move move" data-target="#head_item77" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item78" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2J5I0J6Q0R9Q1O3O4M5N4V5W4U7U4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">71. 수의사법 일부개정법률안(이헌승 의원 대표발의)(의안번호 2210794)</a><a class="btn_move move" data-target="#head_item78" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item79" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I6P0Q2O0P6N0O9M0N4I3H1H1G6G2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">72. 수의사법 일부개정법률안(문금주 의원 대표발의)(의안번호 2216664)</a><a class="btn_move move" data-target="#head_item79" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item80" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I6H0H7F0E6F0M9N2L9M1K7J5J9Y8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">73. 수의사법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2220205)</a><a class="btn_move move" data-target="#head_item80" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item81" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2O6J0P8H2W8Q2S3B3J4C2E9D8X5U2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">74. 수의사법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item81" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시21분)</p><br/><div id="spk_14" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;다음은 의사일정 제3항부터 제74항까지 72건의 법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;이들 안건에 대해서는 농림축산식품법안심사소위원회 위원님들께서 심도 있는 심사를 해 주셨습니다. 심사를 위해 수고해 주신 윤준병 소위원장님과 소위원회 위원님들께 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;농림축산식품법안심사소위원장 윤준병 위원님 나오셔서 소위원회의 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_15" class="item81 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;농림축산식품법안심사소위원회 위원장 윤준병입니다.</span><br/><span class="spk_sub" id="spk_sub15-2">&nbsp;우리 소위원회는 지난 8월 11일, 8월 25일, 총 두 차례에 걸쳐 농림축산식품부 소관 93건의 법률안에 대하여 심도 있게 심사한 결과 그중 69건의 법률안에 대해서는 각각 본회의에 부의하지 아니하고 각 법률안의 내용을 통합한 3건의 대안을 제안하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-3">&nbsp;이하 주요 내용을 중심으로 간략히 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub15-4">&nbsp;먼저 본 의원과 김선교 의원, 송옥주 의원, 이상휘 의원, 이재관 의원 등이 각각 대표발의한 동물보호법 일부개정법률안 54건을 통합·조정한 대안은 동물학대 재범 위험성이 있는 사람에 대하여 일정 기간 동물의 사육 등을 금지할 수 있도록 하는 동물사육금지명령 제도를 도입하는 한편 동물학대 전력이 있는 사람에 대한 동물의 기증·분양을 제한하는 등 동물학대의 재발을 방지하기 위한 제도적 장치를 마련하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-5">&nbsp;또한 맹견사육허가 시 교육 이수를 의무화하고 3년마다 허가를 갱신하도록 하는 등 제도를 정비하고 봉사동물 및 은퇴 봉사동물에 대한 지원 근거 등을 마련하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-6">&nbsp;다음으로 김선교 의원, 이만희 의원, 임호선 의원, 정희용 의원이 각각 대표발의한 가축전염병 예방법 일부개정법률안 5건을 통합·조정한 대안은 가축전염병 발생국 체류·경유 후 출입국 시 신고 및 소독·검역 의무 대상에 축산물위생관리법상 검사원을 명시하고 국가·지자체가 가축위생방역지원본부의 운영에 필요한 경비를 지원할 수 있도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-7">&nbsp;또한 감액된 살처분 보상금의 지급 상한을 가축평가액의 80%에서 90%로 상향하며 주요 가축전염병을 최초 신고한 농가에 대해서는 최대 100%까지 지급할 수 있도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-8">&nbsp;마지막으로 김도읍 의원, 서삼석 의원, 서왕진 의원, 윤건영 의원, 이헌승 의원, 정청래 의원, 조경태 의원, 문금주 의원이 각각 대표발의한 수의사법 일부개정법률안 10건을 통합·조정한 대안은 공공동물병원의 설치·지정 및 운영에 관한 근거와 취약계층의 반려동물 진료비 부담을 완화하기 위한 공익형 수가제의 근거를 마련하고 동물소유자 등의 분쟁해결 또는 권리구제를 위하여 진료받은 동물에 관한 기록을 열람하거나 그 사본을 발급받을 수 있는 근거를 규정하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-9">&nbsp;또한 동물병원의 시설 등을 파괴·손상하거나 진료행위를 하는 수의사 또는 동물보건사를 폭행·협박하는 행위를 금지하여 안전한 진료환경을 조성하는 내용 등을 마련하였습니다.</span><br/><span class="spk_sub" id="spk_sub15-10">&nbsp;기타 법률안 심사 결과의 보다 자세한 내용은 유인물을 참조하여 주시고 소위원회에서 심사보고한 대로 의결하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub15-11">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_16" class="item81 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;위원장님.</span><br/></div></div></div><div id="spk_17" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;이개호 위원님.</span><br/></div></div></div><div id="spk_18" class="item81 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;74번 안건 수의사법 개정안(대안)에 대해서 일부 수정의견을 내고자 합니다.</span><br/></div></div></div><div id="spk_19" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;그것은 조금 이따가 하세요, 제가 회의 진행하는 중간에.</span><br/></div></div></div><div id="spk_20" class="item81 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;알겠습니다.</span><br/></div></div></div><div id="spk_21" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;‘위원장님 의사진행발언 있습니다’라고 말씀하시면 제가 드리겠습니다.</span><br/></div></div></div><div id="spk_22" class="item81 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;아니, 의사진행발언이 아니고 수정의견.</span><br/></div></div></div><div id="spk_23" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;수정의견요? 그것도 좀 이따가 하셔도 된답니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;윤준병 위원님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;법안심사소위원회에서 심사보고한 법률안에 대해 발언하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;이제 하시면 된답니다.</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;이개호 위원님 하십시오.</span><br/></div></div></div><div id="spk_24" class="item81 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;죄송합니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;74번 안건 수의사법 개정안(대안)에 대해서 일부 수정의견을 내도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub24-3">&nbsp;진료기록 공개대상을 13조의3에 명정을 해 놨습니다만, ‘분쟁해결 또는 권리구제를 위한 목적으로’ 이렇게 돼 있는데 소위에서 이렇게 의결을 한 것으로 파악을 하고 있습니다. 그런데 이렇게 되면 권리구제의 범위가 사법적 또 준사법적·행정적 절차가 모두 가능하게 되어서 지나치게 범위가 넓습니다. 그래서 그 앞에 ‘소송수행 등 권리구제를 위한 목적으로’ 이렇게 한정해서 수정 의결해 주실 것을 위원장님께 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub24-4">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_25" class="item81 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;여기 의견 있습니다.</span><br/></div></div></div><div id="spk_26" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;강승규 위원님.</span><br/></div></div></div><div id="spk_27" class="item81 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;지난 8월 25일 농해수위 법안소위에서 수의사법 제13조의3 권리구제의 목적으로 한정한 수의사법 개정법률안을 의결한 바 있습니다. 이 당시에 제가 이 법안 조항에 대해서 문제 제기를 했지만 정부는 이에 대해서 문제가 없고 그동안 여러 차례 반려견주 등으로부터 개정에 대한 강력한 요구가 있었고 심지어 위헌 소지가 있어서 헌재에 이것이 계류 중이다 등으로 이에 대해서 적극 찬성했습니다. 그래서 저도 더 이상 진행하지 못했는데.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;실제 이것이 통과되고 수의사께서 강력한 문제 제기를 해 왔습니다. 동물의 진료기록이 자유롭게 발급될 경우 동물약품의 오남용과 동물의료체계에 심대한 영향을 줄 수 있어 진료기록을 한정적으로 공개하라는 취지로 판단했다 하지만 실제 법률안에 그 내용이 아주 모호하게 돼 있어서, ‘분쟁해결 또는 권리구제를 위한 목적’이라는 것이 너무 광범위하고 이럴 경우 오히려 또 다른 분쟁거리가 될 가능성이 있다, 그래서 동물소유자 등이 다양한 이유 등으로 진료기록을 요구하면 수의사 업계에서는 이것이 분쟁해결의 전쟁터가 될 것이다 이렇게 우려를 하고 있고. 또 이렇게 발급받은 진료기록을 오남용에 사용할 수 있다, 그래서 동물복지 차원에서도 문제가 된다, 현재도 진료기록을 발급받아서 인터넷 사이트 등에 업로드해 가지고 자가 진단으로 약을 구입하는 것이 횡행하고 있다 이런 측면에서 이 부분에 대해서 수정 요구를 했습니다.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;지금 존경하는 이개호 위원님이 요청한 것처럼 저희들도 이에 대해서 수정안을 제의합니다.</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;13조의3의 지금 법안심사에서 결의사항은 ‘분쟁해결 또는 권리구제를 위한 목적으로’ 이렇게 돼 있는데 이 부분을 ‘분쟁해결을 위한 목적을 증명하여 대통령령으로 정하는 바에 따라’ 이래서 구체적인 범위를 대통령령에서 정할 수 있도록 수정 의결해 주실 것을 요청드립니다.</span><br/></div></div></div><div id="spk_28" class="item81 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;위원장님.</span><br/></div></div></div><div id="spk_29" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;문금주 위원님.</span><br/></div></div></div><div id="spk_30" class="item81 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;어찌 됐든 법안소위를 통과한 안에 대해서 수정의견들이 나왔는데요, 이왕 수정하는 김에 좀 더 정확한 구체적인 내용으로 들어갔으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub30-2">&nbsp;지금 존경하는 강승규 위원님도 말씀을 주셨는데 저는 열람할 때 열람 요청에 대해서는 대통령령으로 정하는 절차와 방법의 기준을 여기다 넣어 주면 좀 더 구체적으로 되지 않을까 싶거든요.</span><br/><span class="spk_sub" id="spk_sub30-3">&nbsp;그래서 위원장님, ‘대통령령으로 정하는 열람 요청 등 절차와 방법에 따라’ 이 부분을 삽입해 주면 좋을 것 같습니다.</span><br/></div></div></div><div id="spk_31" class="item81 speaker spk_mem" data-mem_id="6716" data-name="송옥주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">송옥주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SONGOKJOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/93e541edffd440d6b5ee9a683b5342ae.jpg" alt="송옥주"></span><span class="txt"><strong class="name">송옥주</strong><span class="position">위원</span><span class="area">(경기 화성시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;위원장님, 저도 한말씀드리겠습니다.</span><br/></div></div></div><div id="spk_32" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;송옥주 위원님.</span><br/></div></div></div><div id="spk_33" class="item81 speaker spk_mem" data-mem_id="6716" data-name="송옥주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">송옥주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SONGOKJOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/93e541edffd440d6b5ee9a683b5342ae.jpg" alt="송옥주"></span><span class="txt"><strong class="name">송옥주</strong><span class="position">위원</span><span class="area">(경기 화성시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;앞서 여러 위원님께서 말씀하신 보완 취지에 동의를 하고요.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;여기 어느 위원님께서 제출하셨는데 부칙 조항에 시행일 사항이 있습니다. 현재 수의업계에 여러 가지 규제가 많은 것 같습니다. 지원 없는 진료비를 게시하거나 공개하는 등 여러 가지 규제가 있고 또 현장에 혼란이 많기 때문에 이를 최소화하기 위해서 기존에 소위에서 통과시킨 것은 시행일이 법 공포 후 6개월이 경과한 날인데 이것을 1년 경과한 날로 수정해 줬으면 어떨까 하는 요청 사항입니다.</span><br/></div></div></div><div id="spk_34" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;김선교 간사 위원님.</span><br/></div></div></div><div id="spk_35" class="item81 speaker spk_mem" data-mem_id="6758" data-name="김선교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">김선교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c46ff6eaebc3441393b42d4e36d7a8c6.jpg" alt="김선교"></span><span class="txt"><strong class="name">김선교</strong><span class="position">위원</span><span class="area">(경기 여주시양평군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;존경하는 강승규 위원님, 이개호 위원님, 송옥주 위원님, 문금주 위원님이 좋은 말씀 해 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;시행일은 1년으로 연장하는 것으로 수정할 것을 제안드리고요.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;그리고 강승규 위원이 수정안을 냈습니다. 이 부분대로 좀 수정을 해 주셨으면 제안을 드립니다.</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;(「동의합니다」 하는 위원 있음)</span><br/></div></div></div><div id="spk_36" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;또 말씀하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;윤준병 간사 위원님.</span><br/></div></div></div><div id="spk_37" class="item81 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;위원님들 대안에 주신 의견 존중하고요. 그래서 주신 내용을 받들어서 문언을 이렇게 정리하면 어떨까 제안을 드립니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;13조의3 제1항 ‘동물소유자 등은 수의사, 동물병원 개설자 및 동물병원 종사자(이하 ‘수의사 등’이라 한다)에게 분쟁조정 또는 소송의 수행 등 권리구제의 목적으로 대통령령으로 정하는 열람 요청 등의 방법 및 절차에 따라 진료받은 동물에 관한 기록(추가기재·수정된 경우 추가기재·수정된 기록 및 추가기재·수정 전의 원본을 모두 포함한다. 이하 같다)의 전부 또는 일부에 대하여 열람 또는 그 사본의 발급 등 내용의 확인을 요청할 수 있다. 이 경우 수의사 등은 정당한 사유가 없으면 이를 거부하여서는 아니 된다’ 이렇게 수정하고.</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;부칙도 제1조(시행일) ‘이 법은 공포 후 1년이 경과한 날부터 시행한다’ 이렇게 수정해서 의결하면 좋겠다……</span><br/><span class="spk_sub" id="spk_sub37-4">&nbsp;(「동의합니다」 하는 위원 있음)</span><br/></div></div></div><div id="spk_38" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;위원장님.</span><br/></div></div></div><div id="spk_39" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;주철현 위원님.</span><br/></div></div></div><div id="spk_40" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;법안 내용에 좀 의문이 있어서 여쭤보려고 합니다, 제가 소위가 달라 관여를 안 해서.</span><br/><span class="spk_sub" id="spk_sub40-2">&nbsp;사람들에 대한 진료기록은 환자가 아무 제한 없이 열람·등사할 수 있게 돼 있더라고요. 그런데 동물에 관해서 이렇게 제한을 하는 이유를 잘 모르겠고요.</span><br/><span class="spk_sub" id="spk_sub40-3">&nbsp;둘째로는 분쟁해결 또는 권리구제 이외의 목적으로 사용할 수 없다고 돼 있는데 보통 사람도 그렇고 개도 그렇고 병원 또는 어디 수의사한테 가서 진료를 받고 치료를 해도 안 될 때 다른 데 가서 또 진료를 받아 볼 수 있는 것 아니겠어요? 그렇게 되면 진료기록 떼 오라고 하면 떼서 갖고 가서 보여 주는 게 맞는데 지금 이 규정대로 한다면 그런 경우에 진료기록을 못 쓴다는 이야기입니다. 그렇게 돼도 되는 것인지……</span><br/><span class="spk_sub" id="spk_sub40-4">&nbsp;어떻습니까? 농식품부에서는 이런 우려를 어떻게 해소할 수 있는 건지…… 이런 것들이 사실상은 제가 보기에 수의사를 위한 이익이 될지는 모르겠는데 동물복지라든지 동물을 소유하고 돌보는 더 많은 사람들에 대한 것과 상충되는 것은 아닌지 이런 걱정이 돼서…… 어떻게 되는 거예요?</span><br/></div></div></div><div id="spk_41" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;정부 측 의견을 듣고 소위원장님 의견을 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_42" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;위원님 잘 아시는 것처럼 약물을 오남용할 여지가 있다 이 부분 때문에 좀 우려가 있는 듯합니다. 그래서 목적을 좀 제한적으로 설정하는 것이 좋겠다 이런 의견들을 받아들였습니다.</span><br/></div></div></div><div id="spk_43" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;아니, 그러니까 지금 이 법안 개정안대로 한다면 다른 수의사한테 진료받을 때 그 기록을 못 쓰게 되잖아요.</span><br/></div></div></div><div id="spk_44" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;예.</span><br/></div></div></div><div id="spk_45" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;그건 말이 안 되는 것 아닙니까?</span><br/></div></div></div><div id="spk_46" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;그럼에도 불구하고 지금도……</span><br/></div></div></div><div id="spk_47" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;아니, 그럼에도 불구하고가 아니라 도대체 어떤 게 주예요? 동물들이 제대로 진료받아서 건강하게 만드는 게 주목적이에요, 아니면 수의사의 권익보호가 주목적이에요? 그건 아니잖아요. 이렇게 분쟁해결 또는 권리구제만 제한하게 되면 다른 수의사는 못 본다는 얘기 아닙니까? 그걸 그렇게 막아도 되는 겁니까?</span><br/></div></div></div><div id="spk_48" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;그러면 소위원장님 의견을 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_49" class="item81 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;존경하는 주철현 위원님 지적이 원래 소비자 보호를 강화하기 위한 취지의 좋은 발언이라고 저는 생각합니다. 다만 현재 주어져 있는 진료동물에 대한 진료체계, 이게 지금 사람에 대한 진료체계와 같은 수준으로 발전돼 있지 않기 때문에 진료체계를 확대하고 또 그걸 개선하기 위한 절차를 진행하고 있고 그 진료 환경 자체가 아직 완벽하지 않기 때문에 지금보다는 조금 더 열람이나 사본 발급을 확대해 나가는 과정에 있지만 사람과 같은 수준의 진료체계까지 인정하기에는 아직은 좀 빠르다. 그래서 오남용이나 이런 내용들을 감안해서 이렇게 잠정적인 내용이지만 제한적인 내용으로 열람하고 기록 복사나 이런 게 이루어지고 있게끔 입법이 돼 있다 이렇게 이해를 해 주시면 좋겠습니다.</span><br/></div></div></div><div id="spk_50" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;제가 약간 보완해서 말씀드리면 지금도 진료부를 열람할 수 있는데요 사람한테 직접 진료부를 제공하는 것이 아니라 예를 들면 다른 병원에 또 가 봐야 되겠다라고 했을 때 병원에서 병원으로는 진료부를 보내 준다고 합니다.</span><br/></div></div></div><div id="spk_51" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;그게 어디에 규정이 있어요?</span><br/></div></div></div><div id="spk_52" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;지금 현재 그렇게 하고 있는데 이것은 제출을 의무화하는 것이기 때문에 그 경우는 목적을 이렇게 제한한다라고 하는 것입니다. 지금도 병원에서 병원으로는 그 진료기록을 보내 주고 있다고 합니다.</span><br/></div></div></div><div id="spk_53" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;그러니까 그게 법에 규정이 돼 있습니까?</span><br/></div></div></div><div id="spk_54" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;이 법에 규정이 되어 있는 것은 아닌데 지금도……</span><br/></div></div></div><div id="spk_55" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;사실상 병원은 하고 있는데……</span><br/></div></div></div><div id="spk_56" class="item81 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;예, 하고 있는데 말하자면 반려인이 제출을 해 달라고 했을 때 그 의무에 관한 것을 약물 오남용의 우려 때문에 제한한다 이 말씀입니다.</span><br/></div></div></div><div id="spk_57" class="item81 speaker spk_mem" data-mem_id="6662" data-name="이양수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">이양수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEYANGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1496a4de2b2e4a4fb86597cef973a4a3.jpg" alt="이양수"></span><span class="txt"><strong class="name">이양수</strong><span class="position">위원</span><span class="area">(강원 속초시인제군고성군양양군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;장관님이 보충설명을 안 하는 게 더 나을 뻔했어요.</span><br/></div></div></div><div id="spk_58" class="item81 speaker spk_mem" data-mem_id="6626" data-name="주철현" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">주철현 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/7a6b0d6426f6474e9e2ec55ff6f18045.jpg" alt="주철현"></span><span class="txt"><strong class="name">주철현</strong><span class="position">위원</span><span class="area">(전남 여수시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;좀 그렇습니다, 솔직한 이야기로.</span><br/></div></div></div><div id="spk_59" class="item81 speaker spk_mem" data-mem_id="6662" data-name="이양수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">이양수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEYANGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/1496a4de2b2e4a4fb86597cef973a4a3.jpg" alt="이양수"></span><span class="txt"><strong class="name">이양수</strong><span class="position">위원</span><span class="area">(강원 속초시인제군고성군양양군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;알고서 넘어가야 되는 상황인 것 같습니다.</span><br/></div></div></div><div id="spk_60" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;주철현 위원님 발언에 어느 정도 공감대는 형성이 돼 있는 것 같습니다. 가능하다면 자구수정의 기회가 있을지는 모르는데 소위원장님과 협의해서 보완을 할 수 있으면 하도록 하겠고.</span><br/><span class="spk_sub" id="spk_sub60-2">&nbsp;이개호 위원님, 이어서 말씀하시렵니까?</span><br/></div></div></div><div id="spk_61" class="item81 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;짧게……</span><br/><span class="spk_sub" id="spk_sub61-2">&nbsp;의료법에 의료 진료기록을 공개하도록 돼 있습니다. 그런데 환자 본인의 동의를 전제로 하거든요. 그런데 이 경우는 동물한테 동의받을 수는 없잖아요. 그래서 불가피하게 일정한 정도 유보 조항을 두어서 기록을 공개하는 것으로 그렇게 제가 파악을 하고 있습니다. 그런 점을 유념해 주셨으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub61-3">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_62" class="item81 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;일곱 분의 위원님들께서 수정의견을 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub62-2">&nbsp;더 이상 말씀하실 위원님이 안 계실 걸로 생각하는데 없으시지요?</span><br/><span class="spk_sub" id="spk_sub62-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub62-4">&nbsp;그러면 방금 논의된 사항을 포함하여 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub62-5">&nbsp;개별 안건에 대한 의결 전에 오늘 의결할 일부개정법률안에 대해서는 소위원회에서 조문별로 축조심사를 심도 있게 진행하였으므로 국회법 제58조제5항에 따라 축조심사를 생략하고자 하는데 이의 없으시지요?</span><br/><span class="spk_sub" id="spk_sub62-6">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub62-7">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub62-8">&nbsp;다음은 비용추계 생략을 위한 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub62-9">&nbsp;오늘 의결할 대안들은 국회법 제66조제3항 단서 등에 따라 국회예산정책처 비용추계서 첨부를 생략하도록 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub62-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub62-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub62-12">&nbsp;그러면 법률안별로 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub62-13">&nbsp;의사일정 제3항부터 제56항까지 이상 54건의 법률안은 소위원회에서 심사보고한 대로 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정·통합한 의사일정 제57항 동물보호법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub62-14">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub62-15">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub62-16">&nbsp;다음은 의사일정 제58항부터 제62항까지 5건의 법률안은 소위원회에서 심사보고한 대로 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정·통합한 의사일정 제63항 가축전염병 예방법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub62-17">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub62-18">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub62-19">&nbsp;다음, 의사일정 제64항부터 제73항까지 이상 10건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 보고한 내용에 방금 우리 위원회에서 수정하기로 한 부분을 포함하여 의사일정 제74항 수의사법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub62-20">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub62-21">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item82" class="tit">75. 청원 심사기간 연장 요구의 건</a><a class="btn_move move" data-target="#head_item82" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(15시41분)</p><br/><div id="spk_64" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;다음, 의사일정 제75항 청원 심사기간 연장 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub64-2">&nbsp;이 안건은 국회법 제125조제6항에 따라 청원의 심사기간을 연장하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub64-3">&nbsp;배부해 드린 자료와 같이 우리 위원회에 계류 중인 해경72정 선체인양 후 유해수습과 침몰사고 진상규명 및 순직자 예우를 위한 특별법 제정에 관한 청원과 농어업 경영체 육성 및 지원에 관한 법률 시행령 개정에 관한 청원의 심사기간을 관례에 따라 2028년 5월 29일까지로 연장하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub64-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub64-5">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub64-6">&nbsp;오늘 의결한 결산 시정요구사항의 자구 정리 및 심사보고서 등 작성과 법률안에 대한 체계 및 자구 정리는 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub64-7">&nbsp;다음은 의결된 결산 및 법률안과 관련하여 정부 측으로부터 인사말씀을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub64-8">&nbsp;송미령 장관님 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_65" class="item82 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;존경하는 서삼석 위원장님 그리고 농림축산식품해양수산위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub65-2">&nbsp;2025회계연도 농림축산식품부 소관 세입세출 및 기금 결산과 예비비지출 승인의 건, 동물보호법 일부개정법률안 등 법률안 3건에 대하여 심의 의결해 주신 것에 대해 깊은 감사의 말씀을 드립니다. 결산안과 법안들을 심도 있는 토의를 거쳐 심사하여 주시고 미진한 부분을 보완하여 주신 강승규 예산결산심사소위원회 위원장님, 윤준병 법안심사소위원회 위원장님과 위원님들께도 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub65-3">&nbsp;심의 과정에서 여러 위원님들께서 지적해 주신 사항들은 추후 예산을 편성하고 집행하는 과정에서 충실히 반영하여 농림축산식품산업 발전에 이바지하고 농어민에게 도움이 되도록 최선의 노력을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub65-4">&nbsp;앞으로도 우리 농업·농촌 발전에 대한 각별한 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub65-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_66" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;송미령 장관님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub66-2">&nbsp;다음은 황종우 해양수산부장관 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_67" class="item82 speaker spk_mem" data-mem_id="0" data-name="황종우" data-pos="해양수산부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_67"><label for="spk_cnt_chk_67">해양수산부장관 황종우 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="황종우"></span><span class="txt"><span class="position">해양수산부장관</span><strong class="name">황종우</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub67-1">&nbsp;존경하는 농림축산식품해양수산위원회 서삼석 위원장님 그리고 예산결산심사소위원회 강승규 소위원장님을 비롯한 여러 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub67-2">&nbsp;바쁘신 일정 속에서도 2025회계연도 해양수산부 소관 예산 및 기금 결산, 예비비지출 승인의 건을 심사 의결하여 주신 데 대하여 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub67-3">&nbsp;결산심사 과정에서 여러 위원님들께서 지적해 주신 사항과 염려의 말씀을 무겁게 받아들이고 개선이 필요한 부분은 향후 예산편성과 집행 과정에 충실히 반영하겠습니다.</span><br/><span class="spk_sub" id="spk_sub67-4">&nbsp;이번 결산심사를 통해 위원님들께서 주신 애정 어린 충고와 격려에 거듭 감사드리며 앞으로도 해양수산 분야 발전을 위해 변함없는 성원과 아낌없는 조언을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub67-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_68" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;황종우 해양수산부장관 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub68-2">&nbsp;다음은 이승돈 농촌진흥청장 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_69" class="item82 speaker spk_mem" data-mem_id="0" data-name="이승돈" data-pos="농촌진흥청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">농촌진흥청장 이승돈 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이승돈"></span><span class="txt"><span class="position">농촌진흥청장</span><strong class="name">이승돈</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;존경하는 서삼석 위원장님 그리고 농림축산식품해양수산위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub69-2">&nbsp;농촌진흥청 소관 2025회계연도 세입세출 결산을 심의 의결하여 주신 데 대하여 깊은 감사의 말씀을 드립니다. 특히 심도 있는 심사를 해 주신 예산결산심사소위원회 강승규 위원장님과 위원님께도 감사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub69-3">&nbsp;이번 결산 심의 과정에서 위원님들께서 지적해 주신 사항은 향후 농촌진흥 사업 추진 과정뿐만 아니라 예산편성과 집행 과정에도 적극 반영하고 개편해나가겠습니다.</span><br/><span class="spk_sub" id="spk_sub69-4">&nbsp;앞으로도 위원님들의 아낌없는 지도와 성원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub69-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_70" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_70"><label for="spk_cnt_chk_70">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub70-1">&nbsp;이승돈 청장님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub70-2">&nbsp;다음은 박은식 산림청장님 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_71" class="item82 speaker spk_mem" data-mem_id="0" data-name="박은식" data-pos="산림청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">산림청장 박은식 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박은식"></span><span class="txt"><span class="position">산림청장</span><strong class="name">박은식</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;존경하는 서삼석 위원장님 그리고 농림축산식품해양수산위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub71-2">&nbsp;2025회계연도 산림청 소관 세입세출 결산을 심의 의결하여 주신 데 대하여 깊이 감사드립니다. 특히 심도 있는 심사를 통해 고견을 주신 예산결산심사소위원회 강승규 위원장님과 위원님들께도 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub71-3">&nbsp;결산 심의 과정에서 여러 위원님께서 지적해 주신 사항은 예산편성과 집행 과정에 적극 반영하여 예산이 보다 효율적이고 내실 있게 운영되도록 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub71-4">&nbsp;앞으로도 임업과 산림정책 발전에 위원님의 아낌없는 성원과 지도를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub71-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_72" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;박은식 청장님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub72-2">&nbsp;끝으로 임명길 해양경찰청 기획조정관 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_73" class="item82 speaker spk_mem" data-mem_id="0" data-name="임명길" data-pos="해양경찰청기획조정관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">해양경찰청기획조정관 임명길 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="임명길"></span><span class="txt"><span class="position">해양경찰청기획조정관</span><strong class="name">임명길</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;존경하는 서삼석 위원장님 그리고 예산결산심사소위원회 강승규 소위원장님을 비롯한 여러 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub73-2">&nbsp;2025년도 해양경찰청 세입세출 결산을 심도 있게 심의 의결하여 주신 데 대하여 깊은 감사의 인사를 드립니다.</span><br/><span class="spk_sub" id="spk_sub73-3">&nbsp;결산 심의 과정에서 위원님들께서 주신 여러 고견은 예산편성에 적극 반영하여 보다 투명한 예산집행을 위해 더욱 노력하겠습니다.</span><br/><span class="spk_sub" id="spk_sub73-4">&nbsp;앞으로도 여러 위원님들의 변함없는 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub73-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_74" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;임명길 청장님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub74-2">&nbsp;정정하겠습니다. 기획조정관님이십니다.</span><br/><span class="spk_sub" id="spk_sub74-3">&nbsp;회의를 마치기 전에 여야 위원님들 공통 사안일 수도 있을 것 같아서 원활한 회의 진행을 위해 구두 질문은 지양하고 본 위원장이 기본소득 관련 서면질의서를 요청했습니다.</span><br/><span class="spk_sub" id="spk_sub74-4">&nbsp;해당 기관장께서는 서면질의에 대한 답변서를 성실히 작성해서 일주일 이내에 제출해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub74-5">&nbsp;서면질의와 서면답변은 회의록에 게재토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub74-6">&nbsp;장관님 다 아시는 내용입니다.</span><br/></div></div></div><div id="spk_75" class="item82 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;예, 위원장님.</span><br/></div></div></div><div id="spk_76" class="item82 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_76"><label for="spk_cnt_chk_76">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub76-1">&nbsp;이상으로 오늘의 의사일정을 모두 마쳤습니다.</span><br/><span class="spk_sub" id="spk_sub76-2">&nbsp;여야 위원님 여러분 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub76-3">&nbsp;관계 직원 여러분, 위원회·사무처·경호과 직원을 비롯한 의원실 보좌진 여러분 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub76-4">&nbsp;언론인과 방송 관계자 여러분께서도 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub76-5">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(15시48분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(16인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGYO" target="_blank"><span class="name lts3 ">김선교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGBUM" target="_blank"><span class="name lts3 ">김성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank"><span class="name lts3 ">서삼석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGOKJOO" target="_blank"><span class="name lts3 ">송옥주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGHWI" target="_blank"><span class="name lts3 ">이상휘</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYANGSOO" target="_blank"><span class="name lts3 ">이양수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEKWAN" target="_blank"><span class="name lts3 ">이재관</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank"><span class="name lts3 ">조승환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank"><span class="name lts3 ">주철현</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(3인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONDAELIM" target="_blank"><span class="name lts3 ">문대림</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원 및 입법심의관</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 정대영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 윤성민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 이현종</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>농림축산식품부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 송미령</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 김종구</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 박순연</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 홍인기</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">동물복지정책국장직무대리</span></span><span class="name lts3"> 이연숙</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">방역정책국장</span></span><span class="name lts3"> 이동식</span></a></li><p>농촌진흥청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 이승돈</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 이상호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">연구정책국장</span></span><span class="name lts3"> 방혜선</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">농촌지원국장</span></span><span class="name lts3"> 노형일</span></a></li><p>산림청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 박은식</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 임영석</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">산림산업정책국장</span></span><span class="name lts3"> 이상익</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">산림복지국장</span></span><span class="name lts3"> 조영희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">산림복지국장</span></span><span class="name lts3"> 이광호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">산림재난통제관</span></span><span class="name lts3"> 이용권</span></a></li><p>해양수산부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 황종우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김재철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 이상호</span></a></li><p>해양경찰청</p><li><a class="in_nm"><span class="pos"><span class="lts6">청장직무대행</span></span><span class="name lts3"> 장인식</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 임명길</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">경비국장</span></span><span class="name lts3"> 임재수</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">구조안전국장전담직무대리</span></span><span class="name lts3"> 정욱한</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">수사국장</span></span><span class="name lts3"> 조윤만</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">정보외사국장</span></span><span class="name lts3"> 김시범</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">해양오염방제국장</span></span><span class="name lts3"> 김한규</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">장비기술국장</span></span><span class="name lts3"> 이원재</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>농업협동조합법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 25. 이상휘 의원 대표발의)(의안번호 2220768)</div></div><div class="con"><p class="tit_sm"><strong>해운법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 25. 이상휘 의원 대표발의)(의안번호 2220769)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 8월 26일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>농업협동조합법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 26. 이상휘 의원 대표발의)(의안번호 2220788)</div></div><div class="con"><p class="tit_sm"><strong>양식산업발전법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 26. 문금주 의원 대표발의)(의안번호 2220825)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 8월 27일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>해수욕장의 이용 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 27. 이상휘 의원 대표발의)(의안번호 2220839)</div></div><div class="con"><p class="tit_sm"><strong>해녀어업 보전 및 지원에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 27. 정희용 의원 대표발의)(의안번호 2220850)</div></div><div class="con"><p class="tit_sm"><strong>농어촌정비법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 27. 문대림 의원 대표발의)(의안번호 2220860)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 8월 28일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>농어업인의 안전보험 및 안전재해예방에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 31. 송옥주 의원 대표발의)(의안번호 2220949)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 1일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57235;
+			const class_id = 2;
+			const confer_num = "N054430";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1792770083965" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1792770083965"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1792770083965"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1792770083965"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
