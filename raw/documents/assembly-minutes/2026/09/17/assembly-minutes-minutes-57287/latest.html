@@ -1,0 +1,888 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57287" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제439회 (정기회) 제2차 농림축산식품해양수산위원회</strong><span class="date">(2026.09.17.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(주철현 의원 대표발의)(의안번호 2211831)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(이원택 의원 대표발의)(의안번호 2215360)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2217816)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(임종득 의원 대표발의)(의안번호 2219719)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214898)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217331)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(김용태 의원 대표발의)(의안번호 2219381)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 농어촌구조개선 특별회계법 일부개정법률안(이개호 의원 대표발의)(의안번호 2215678)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 농어촌정비법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2203855)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 농어촌정비법 일부개정법률안(신성범 의원 대표발의)(의안번호 2203930)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 농어촌정비법 일부개정법률안(정부 제출)(의안번호 2207371)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 농어촌정비법 일부개정법률안(서명옥 의원 대표발의)(의안번호 2209131)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 농어촌정비법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2219977)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 농어촌정비법 일부개정법률안(문대림 의원 대표발의)(의안번호 2220860)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2205633)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 농어촌정비법 일부개정법률안(위원회안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 식물방역법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2211719)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 식물방역법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219924)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 식물방역법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(문대림 의원 대표발의)(의안번호 2204871)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2205786)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">25. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2209201)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">26. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(송옥주 의원 대표발의)(의안번호 2214559)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">27. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2216569)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">28. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">29. 수상레저안전법 일부개정법률안(조경태 의원 대표발의)(의안번호 2208910)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">30. 수상레저안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211478)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">31. 수상레저안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218142)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">32. 수상레저안전법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">33. 해운법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218778)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">34. 해상교통안전법 일부개정법률안(정부 제출)(의안번호 2205331)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">35. 해상교통안전법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2208816)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">36. 해상교통안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211476)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">37. 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2215479)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">38. 해상교통안전법 일부개정법률안(문대림 의원 대표발의)(의안번호 2217365)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">39. 해상교통안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218139)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">40. 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2219960)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">41. 해상교통안전법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">42. 선원법 일부개정법률안(어기구 의원 대표발의)(의안번호 2215753)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">43. 선원법 일부개정법률안(주철현 의원 대표발의)(의안번호 2219049)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item44">44. 선원법 일부개정법률안(조경태 의원 대표발의)(의안번호 2219744)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item45">45. 선원법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item46">46. 도선법 일부개정법률안(문대림 의원 대표발의)(의안번호 2209784)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item47">47. 항만운송사업법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218701)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item48">48. 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219523)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item49">49. 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219574)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item50">50. 수산업협동조합법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item51">51. 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217334)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item52">52. 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217342)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item53">53. 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item54">54. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(정부 제출)(의안번호 2204707)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item55">55. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(박성훈 의원 대표발의)(의안번호 2206145)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item56">56. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208657)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item57">57. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item58">58. 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205062)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item59">59. 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205524)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item60">60. 항만법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item61">61. 수산종자산업육성법 일부개정법률안(정부 제출)(의안번호 2212193)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item62">62. 수산종자산업육성법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2214143)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item63">63. 수산종자산업육성법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item64">64. 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안(조경태 의원 대표발의)(의안번호 2217726)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item65">65. 굴 산업 진흥 및 지원에 관한 법률안(정점식 의원 대표발의)(의안번호 2208310)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item66">66. 굴산업 진흥에 관한 법률안(주철현 의원 대표발의)(의안번호 2211883)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item67">67. 굴산업 진흥 및 지원에 관한 법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item68">68. 청원심사 연장의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item69">69. 2026년도 국정감사계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item70">70. 2026년도 국정감사 보고 및 서류제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item71">71. 2026년도 국정감사 증인 등 출석요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서삼석 위원장 (전남 영암군무안군신안군)"> 
+							서삼석 위원장 (전남 영암군무안군신안군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="윤준병 위원 (전북 정읍시고창군)"> 
+							윤준병 위원 (전북 정읍시고창군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김선교 위원 (경기 여주시양평군)"> 
+							김선교 위원 (경기 여주시양평군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="강승규 위원 (충남 홍성군예산군)"> 
+							강승규 위원 (충남 홍성군예산군)
+						</option>
+					
+					
+						<option value="송미령 농림축산식품부장관">송미령 농림축산식품부장관</option>
+					
+						<option value="황종우 해양수산부장관">황종우 해양수산부장관</option>
+					
+						<option value="장인식 해양경찰청장직무대행">장인식 해양경찰청장직무대행</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(4명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6710" data-name="서삼석" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">서삼석</span>
+												<span class="position">위원장</span>
+												<span class="area">(전남 영암군무안군신안군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6677" data-name="윤준병" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">윤준병</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 정읍시고창군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6758" data-name="김선교" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김선교</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 여주시양평군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6739" data-name="강승규" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">강승규</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 홍성군예산군)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"> 
+											<label for="spk_attend0">
+												<span class="name">송미령</span>
+												<span class="position">농림축산식품부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="황종우" data-pos="해양수산부장관"> 
+											<label for="spk_attend1">
+												<span class="name">황종우</span>
+												<span class="position">해양수산부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="장인식" data-pos="해양경찰청장직무대행"> 
+											<label for="spk_attend2">
+												<span class="name">장인식</span>
+												<span class="position">해양경찰청장직무대행</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57287&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제439회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>농림축산식품해양수산위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제2호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 9월 17일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">농림축산식품해양수산위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(주철현 의원 대표발의)(의안번호 2211831)</li><li><span class="num">2.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(이원택 의원 대표발의)(의안번호 2215360)</li><li><span class="num">3.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2217816)</li><li><span class="num">4.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(임종득 의원 대표발의)(의안번호 2219719)</li><li><span class="num">5.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(대안)</li><li><span class="num">6.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214898)</li><li><span class="num">7.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217331)</li><li><span class="num">8.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(김용태 의원 대표발의)(의안번호 2219381)</li><li><span class="num">9.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(대안)</li><li><span class="num">10.</span> 농어촌구조개선 특별회계법 일부개정법률안(이개호 의원 대표발의)(의안번호 2215678)</li><li><span class="num">11.</span> 농어촌정비법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2203855)</li><li><span class="num">12.</span> 농어촌정비법 일부개정법률안(신성범 의원 대표발의)(의안번호 2203930)</li><li><span class="num">13.</span> 농어촌정비법 일부개정법률안(정부 제출)(의안번호 2207371)</li><li><span class="num">14.</span> 농어촌정비법 일부개정법률안(서명옥 의원 대표발의)(의안번호 2209131)</li><li><span class="num">15.</span> 농어촌정비법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2219977)</li><li><span class="num">16.</span> 농어촌정비법 일부개정법률안(문대림 의원 대표발의)(의안번호 2220860)</li><li><span class="num">17.</span> 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2205633)</li><li><span class="num">18.</span> 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(대안)</li><li><span class="num">19.</span> 농어촌정비법 일부개정법률안(위원회안)</li><li><span class="num">20.</span> 식물방역법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2211719)</li><li><span class="num">21.</span> 식물방역법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219924)</li><li><span class="num">22.</span> 식물방역법 일부개정법률안(대안)</li><li><span class="num">23.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(문대림 의원 대표발의)(의안번호 2204871)</li><li><span class="num">24.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2205786)</li><li><span class="num">25.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2209201)</li><li><span class="num">26.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(송옥주 의원 대표발의)(의안번호 2214559)</li><li><span class="num">27.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2216569)</li><li><span class="num">28.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(대안)</li><li><span class="num">29.</span> 수상레저안전법 일부개정법률안(조경태 의원 대표발의)(의안번호 2208910)</li><li><span class="num">30.</span> 수상레저안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211478)</li><li><span class="num">31.</span> 수상레저안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218142)</li><li><span class="num">32.</span> 수상레저안전법 일부개정법률안(대안)</li><li><span class="num">33.</span> 해운법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218778)</li><li><span class="num">34.</span> 해상교통안전법 일부개정법률안(정부 제출)(의안번호 2205331)</li><li><span class="num">35.</span> 해상교통안전법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2208816)</li><li><span class="num">36.</span> 해상교통안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211476)</li><li><span class="num">37.</span> 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2215479)</li><li><span class="num">38.</span> 해상교통안전법 일부개정법률안(문대림 의원 대표발의)(의안번호 2217365)</li><li><span class="num">39.</span> 해상교통안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218139)</li><li><span class="num">40.</span> 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2219960)</li><li><span class="num">41.</span> 해상교통안전법 일부개정법률안(대안)</li><li><span class="num">42.</span> 선원법 일부개정법률안(어기구 의원 대표발의)(의안번호 2215753)</li><li><span class="num">43.</span> 선원법 일부개정법률안(주철현 의원 대표발의)(의안번호 2219049)</li><li><span class="num">44.</span> 선원법 일부개정법률안(조경태 의원 대표발의)(의안번호 2219744)</li><li><span class="num">45.</span> 선원법 일부개정법률안(대안)</li><li><span class="num">46.</span> 도선법 일부개정법률안(문대림 의원 대표발의)(의안번호 2209784)</li><li><span class="num">47.</span> 항만운송사업법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218701)</li><li><span class="num">48.</span> 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219523)</li><li><span class="num">49.</span> 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219574)</li><li><span class="num">50.</span> 수산업협동조합법 일부개정법률안(대안)</li><li><span class="num">51.</span> 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217334)</li><li><span class="num">52.</span> 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217342)</li><li><span class="num">53.</span> 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(대안)</li><li><span class="num">54.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(정부 제출)(의안번호 2204707)</li><li><span class="num">55.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(박성훈 의원 대표발의)(의안번호 2206145)</li><li><span class="num">56.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208657)</li><li><span class="num">57.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(대안)</li><li><span class="num">58.</span> 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205062)</li><li><span class="num">59.</span> 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205524)</li><li><span class="num">60.</span> 항만법 일부개정법률안(대안)</li><li><span class="num">61.</span> 수산종자산업육성법 일부개정법률안(정부 제출)(의안번호 2212193)</li><li><span class="num">62.</span> 수산종자산업육성법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2214143)</li><li><span class="num">63.</span> 수산종자산업육성법 일부개정법률안(대안)</li><li><span class="num">64.</span> 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안(조경태 의원 대표발의)(의안번호 2217726)</li><li><span class="num">65.</span> 굴 산업 진흥 및 지원에 관한 법률안(정점식 의원 대표발의)(의안번호 2208310)</li><li><span class="num">66.</span> 굴산업 진흥에 관한 법률안(주철현 의원 대표발의)(의안번호 2211883)</li><li><span class="num">67.</span> 굴산업 진흥 및 지원에 관한 법률안(대안)</li><li><span class="num">68.</span> 청원심사 연장의 건</li><li><span class="num">69.</span> 2026년도 국정감사계획서 채택의 건</li><li><span class="num">70.</span> 2026년도 국정감사 보고 및 서류제출 요구의 건</li><li><span class="num">71.</span> 2026년도 국정감사 증인 등 출석요구의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(주철현 의원 대표발의)(의안번호 2211831)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(이원택 의원 대표발의)(의안번호 2215360)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2217816)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(임종득 의원 대표발의)(의안번호 2219719)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214898)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217331)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(김용태 의원 대표발의)(의안번호 2219381)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(대안)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 농어촌구조개선 특별회계법 일부개정법률안(이개호 의원 대표발의)(의안번호 2215678)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 농어촌정비법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2203855)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 농어촌정비법 일부개정법률안(신성범 의원 대표발의)(의안번호 2203930)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 농어촌정비법 일부개정법률안(정부 제출)(의안번호 2207371)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 농어촌정비법 일부개정법률안(서명옥 의원 대표발의)(의안번호 2209131)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 농어촌정비법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2219977)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 농어촌정비법 일부개정법률안(문대림 의원 대표발의)(의안번호 2220860)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2205633)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 농어촌정비법 일부개정법률안(위원회안)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 식물방역법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2211719)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 식물방역법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219924)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 식물방역법 일부개정법률안(대안)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(문대림 의원 대표발의)(의안번호 2204871)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2205786)</a></li><li id="head_item25"><a href="#" class="move" data-target="#item25"><span class="num">25.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2209201)</a></li><li id="head_item26"><a href="#" class="move" data-target="#item26"><span class="num">26.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(송옥주 의원 대표발의)(의안번호 2214559)</a></li><li id="head_item27"><a href="#" class="move" data-target="#item27"><span class="num">27.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2216569)</a></li><li id="head_item28"><a href="#" class="move" data-target="#item28"><span class="num">28.</span> 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item29"><a href="#" class="move" data-target="#item29"><span class="num">29.</span> 수상레저안전법 일부개정법률안(조경태 의원 대표발의)(의안번호 2208910)</a></li><li id="head_item30"><a href="#" class="move" data-target="#item30"><span class="num">30.</span> 수상레저안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211478)</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">31.</span> 수상레저안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218142)</a></li><li id="head_item32"><a href="#" class="move" data-target="#item32"><span class="num">32.</span> 수상레저안전법 일부개정법률안(대안)</a></li><li id="head_item33"><a href="#" class="move" data-target="#item33"><span class="num">33.</span> 해운법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218778)</a></li><li id="head_item34"><a href="#" class="move" data-target="#item34"><span class="num">34.</span> 해상교통안전법 일부개정법률안(정부 제출)(의안번호 2205331)</a></li><li id="head_item35"><a href="#" class="move" data-target="#item35"><span class="num">35.</span> 해상교통안전법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2208816)</a></li><li id="head_item36"><a href="#" class="move" data-target="#item36"><span class="num">36.</span> 해상교통안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211476)</a></li><li id="head_item37"><a href="#" class="move" data-target="#item37"><span class="num">37.</span> 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2215479)</a></li><li id="head_item38"><a href="#" class="move" data-target="#item38"><span class="num">38.</span> 해상교통안전법 일부개정법률안(문대림 의원 대표발의)(의안번호 2217365)</a></li><li id="head_item39"><a href="#" class="move" data-target="#item39"><span class="num">39.</span> 해상교통안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218139)</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">40.</span> 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2219960)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">41.</span> 해상교통안전법 일부개정법률안(대안)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">42.</span> 선원법 일부개정법률안(어기구 의원 대표발의)(의안번호 2215753)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">43.</span> 선원법 일부개정법률안(주철현 의원 대표발의)(의안번호 2219049)</a></li><li id="head_item44"><a href="#" class="move" data-target="#item44"><span class="num">44.</span> 선원법 일부개정법률안(조경태 의원 대표발의)(의안번호 2219744)</a></li><li id="head_item45"><a href="#" class="move" data-target="#item45"><span class="num">45.</span> 선원법 일부개정법률안(대안)</a></li><li id="head_item46"><a href="#" class="move" data-target="#item46"><span class="num">46.</span> 도선법 일부개정법률안(문대림 의원 대표발의)(의안번호 2209784)</a></li><li id="head_item47"><a href="#" class="move" data-target="#item47"><span class="num">47.</span> 항만운송사업법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218701)</a></li><li id="head_item48"><a href="#" class="move" data-target="#item48"><span class="num">48.</span> 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219523)</a></li><li id="head_item49"><a href="#" class="move" data-target="#item49"><span class="num">49.</span> 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219574)</a></li><li id="head_item50"><a href="#" class="move" data-target="#item50"><span class="num">50.</span> 수산업협동조합법 일부개정법률안(대안)</a></li><li id="head_item51"><a href="#" class="move" data-target="#item51"><span class="num">51.</span> 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217334)</a></li><li id="head_item52"><a href="#" class="move" data-target="#item52"><span class="num">52.</span> 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217342)</a></li><li id="head_item53"><a href="#" class="move" data-target="#item53"><span class="num">53.</span> 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item54"><a href="#" class="move" data-target="#item54"><span class="num">54.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(정부 제출)(의안번호 2204707)</a></li><li id="head_item55"><a href="#" class="move" data-target="#item55"><span class="num">55.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(박성훈 의원 대표발의)(의안번호 2206145)</a></li><li id="head_item56"><a href="#" class="move" data-target="#item56"><span class="num">56.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208657)</a></li><li id="head_item57"><a href="#" class="move" data-target="#item57"><span class="num">57.</span> 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(대안)</a></li><li id="head_item58"><a href="#" class="move" data-target="#item58"><span class="num">58.</span> 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205062)</a></li><li id="head_item59"><a href="#" class="move" data-target="#item59"><span class="num">59.</span> 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205524)</a></li><li id="head_item60"><a href="#" class="move" data-target="#item60"><span class="num">60.</span> 항만법 일부개정법률안(대안)</a></li><li id="head_item61"><a href="#" class="move" data-target="#item61"><span class="num">61.</span> 수산종자산업육성법 일부개정법률안(정부 제출)(의안번호 2212193)</a></li><li id="head_item62"><a href="#" class="move" data-target="#item62"><span class="num">62.</span> 수산종자산업육성법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2214143)</a></li><li id="head_item63"><a href="#" class="move" data-target="#item63"><span class="num">63.</span> 수산종자산업육성법 일부개정법률안(대안)</a></li><li id="head_item64"><a href="#" class="move" data-target="#item64"><span class="num">64.</span> 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안(조경태 의원 대표발의)(의안번호 2217726)</a></li><li id="head_item65"><a href="#" class="move" data-target="#item65"><span class="num">65.</span> 굴 산업 진흥 및 지원에 관한 법률안(정점식 의원 대표발의)(의안번호 2208310)</a></li><li id="head_item66"><a href="#" class="move" data-target="#item66"><span class="num">66.</span> 굴산업 진흥에 관한 법률안(주철현 의원 대표발의)(의안번호 2211883)</a></li><li id="head_item67"><a href="#" class="move" data-target="#item67"><span class="num">67.</span> 굴산업 진흥 및 지원에 관한 법률안(대안)</a></li><li id="head_item68"><a href="#" class="move" data-target="#item68"><span class="num">68.</span> 청원심사 연장의 건</a></li><li id="head_item69"><a href="#" class="move" data-target="#item69"><span class="num">69.</span> 2026년도 국정감사계획서 채택의 건</a></li><li id="head_item70"><a href="#" class="move" data-target="#item70"><span class="num">70.</span> 2026년도 국정감사 보고 및 서류제출 요구의 건</a></li><li id="head_item71"><a href="#" class="move" data-target="#item71"><span class="num">71.</span> 2026년도 국정감사 증인 등 출석요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시12분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제439회 국회(정기회) 제2차 농림축산식품해양수산위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;법률안 회부 등 보고사항은 배부해 드린 유인물을 참조해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-4"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-5">&nbsp;참고로 오늘 회의는 국회 인터넷의사중계시스템에서 생중계 중임을 알려 드립니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;오늘 회의에서는 법안심사소위원회에서 심사 완료한 법률안과 청원심사 연장의 건을 의결하고, 2026년도 국정감사 계획서, 국정감사 증인·참고인 등을 채택하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Y5Z0X7F2G5E1F5D0D8C5C5L7J7J4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(주철현 의원 대표발의)(의안번호 2211831)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2L5L1J2K1S5T1R2R4Q1Q0O5X0X3V2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(이원택 의원 대표발의)(의안번호 2215360)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E6D0C3C2K5J1H1G1H9P1O6M4N3M2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(김용태 의원 대표발의)(의안번호 2217816)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2O6W0V6S1P5O1C1B2A2N1N0M3U2R1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(임종득 의원 대표발의)(의안번호 2219719)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2K6K0R9Y0M9X1Q0P2Q3D2J0T2I6S0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2A5B1Z2A0V3W1U4U1T2R3S3A0A6Y4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2214898)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2R6P0Q3P0N5N1V6W4U9V3T8S8S7A8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217331)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P6O0M6M1L8M1T0U1S3R4R2P9Q0M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(김용태 의원 대표발의)(의안번호 2219381)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2Q6V0G9P0I9I1H0I2S5L1P7H3T7T7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2D5E1C2C2K4L1J0K4I7I3H7P3Q8O9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 농어촌구조개선 특별회계법 일부개정법률안(이개호 의원 대표발의)(의안번호 2215678)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2I4H0G8F2Z7Y1X8E2D3C4K3J9G9O7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 농어촌정비법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2203855)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I4J0H8I2Q7Q0O9P1O0M3M9U3U2T3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 농어촌정비법 일부개정법률안(신성범 의원 대표발의)(의안번호 2203930)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_R2U5V0I1C0Z9I1B0X3P0Y2J3H3M9P0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 농어촌정비법 일부개정법률안(정부 제출)(의안번호 2207371)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2C5A0I3J1I9G1F4G0O1N2L1J5K0H0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 농어촌정비법 일부개정법률안(서명옥 의원 대표발의)(의안번호 2209131)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2A6A0Z7A0Y6G0H9F2F8E2E2D9L0L1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 농어촌정비법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2219977)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2L6S0T8R2S0Q2P0P5X1X3W1X2V7V0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 농어촌정비법 일부개정법률안(문대림 의원 대표발의)(의안번호 2220860)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2Y4X1X1W1W4E0C7D5C2C0A7B3X4V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2205633)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2P6P0P9S0J9E1T0Q2N7I5G9P1W6L9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2A6Y0I9N0L9F1Z0N2P8J2U4D1L4K8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 농어촌정비법 일부개정법률안(위원회안)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2Q5O0O7M1N5J1K7I3I3H3F7G0N6P0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 식물방역법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2211719)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2N6O0N7U1V3U1U6S2T4R0Z5A6Y7Z3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 식물방역법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219924)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2Y6W0U9H0P9B1N0G2M9B5G3M9M3X2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 식물방역법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2L4U1T0Q2B1Y1X0G2D8C3K0K2H2D9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(문대림 의원 대표발의)(의안번호 2204871)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2N4M1S0R2R3Q1M4L5H2Q2P6N2N5V4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(윤준병 의원 대표발의)(의안번호 2205786)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item25" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2L5K0G3F1D7C1L7K3J2H2Q3O2O6U1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(김태선 의원 대표발의)(의안번호 2209201)</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item26" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2L5M1U1V1T4R1S1Q0R6Y4Z1Y7Y8W0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(송옥주 의원 대표발의)(의안번호 2214559)</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item27" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2N6M0T2U0S3T1R3S4Q6R1Z1X6X5W5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2216569)</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item28" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2B6N0X9B1U1R1G0Q3W8U4E4H5D7K9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item29" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2Q5P0Q3X0Y5W1V5V5T1U1C8D5B2C5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 수상레저안전법 일부개정법률안(조경태 의원 대표발의)(의안번호 2208910)</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item30" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2N5I0J4H2I9G1H5F1N6O0M0M1L3M5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">30. 수상레저안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211478)</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2E6N0L3J2I5S1Q3P4X7W2X9V5U4Q1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">31. 수상레저안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218142)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item32" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2N6V0X9G1X6A1Y3P3Q7C3G1V0D4V3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">32. 수상레저안전법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item33" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F6F0D4E2C8Y1Y1X1Y1W4X6V5D4D8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">33. 해운법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218778)</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item34" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_L2D4H1F1L0U7S0S9H5P0N0I0C8U4B3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">34. 해상교통안전법 일부개정법률안(정부 제출)(의안번호 2205331)</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item35" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2R5R0Q2O2P6K1L0J1K6I1J5H6P8Q1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">35. 해상교통안전법 일부개정법률안(김상훈 의원 대표발의)(의안번호 2208816)</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item36" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2N5O0M4N2L9T1U5S1S6Q5R3Q8Q9M6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">36. 해상교통안전법 일부개정법률안(임호선 의원 대표발의)(의안번호 2211476)</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item37" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2U5C1C2B1B1Z1Y5Z2G7H1F0G3E0E0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">37. 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2215479)</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item38" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2S6S0R1P0Q5O1P1X3X4W0W6U8T9B4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">38. 해상교통안전법 일부개정법률안(문대림 의원 대표발의)(의안번호 2217365)</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item39" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Y2X6T0U3S2R5Q1Y3Y4X8W4U9C2D5C1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">39. 해상교통안전법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218139)</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I6H0I7Q0P1N1M6N3J0I2G3H1G3O6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">40. 해상교통안전법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2219960)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2F6M0Q9B1N6M1N3S3I8M2Y5V2S0L7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">41. 해상교통안전법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2K5R1S2R2R9P1Q6O3K9L0J7J2I1I6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">42. 선원법 일부개정법률안(어기구 의원 대표발의)(의안번호 2215753)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2X6W0H5G2F0E1N0L4I0R1P2L6K1T4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">43. 선원법 일부개정법률안(주철현 의원 대표발의)(의안번호 2219049)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item44" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T6B0C6A2Z3Y1U1S1T4S5R9Z3F3B8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">44. 선원법 일부개정법률안(조경태 의원 대표발의)(의안번호 2219744)</a><a class="btn_move move" data-target="#head_item44" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item45" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2G6K0Q9A1W6Q1G3R3G9B1S9P4U4V1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">45. 선원법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item45" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item46" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2Y5F0G4E0D2D1B5C2M4L1M7H2I1G6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">46. 도선법 일부개정법률안(문대림 의원 대표발의)(의안번호 2209784)</a><a class="btn_move move" data-target="#head_item46" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item47" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2H6H0Q4Q2O8P1N5M5M8U4V0T6U2S6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">47. 항만운송사업법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218701)</a><a class="btn_move move" data-target="#head_item47" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item48" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2M6M0L6L2J4G1G7E5F4E0E1C1D1L6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">48. 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219523)</a><a class="btn_move move" data-target="#head_item48" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item49" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2D6L0M6L2J4I1E7D5C4P2L6K8J9J3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">49. 수산업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2219574)</a><a class="btn_move move" data-target="#head_item49" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item50" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2Q6F0Y9B1U6B1E3M4K0I2N9J6I3U2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">50. 수산업협동조합법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item50" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item51" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2Y6Y0X3T0T5R1S6R4R7P1Q2Y7W9X8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">51. 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217334)</a><a class="btn_move move" data-target="#head_item51" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item52" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2R6S0Q3R0P5O1O6W4X7V3V8T4V0T8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">52. 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2217342)</a><a class="btn_move move" data-target="#head_item52" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item53" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2M6I0A9G1H6G1I3Q4I2T0L8N3V3D0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">53. 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item53" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item54" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_F2U4T1X0O1R6E0A9O5J6P5J5Y5M4L5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">54. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(정부 제출)(의안번호 2204707)</a><a class="btn_move move" data-target="#head_item54" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item55" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2L4H1I1G2G6F1D5E5L4M0L2L0J5I2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">55. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(박성훈 의원 대표발의)(의안번호 2206145)</a><a class="btn_move move" data-target="#head_item55" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item56" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2C5D0Z1X2Y2W1X0V3V2E0C4C4A6C3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">56. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(서삼석 의원 대표발의)(의안번호 2208657)</a><a class="btn_move move" data-target="#head_item56" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item57" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2X6E0M9P1J6Z1N3K4X2Y4K1N1G4G3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">57. 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item57" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item58" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Q4P0Q7Z2X3Y1X3F2E8C2D0C7K0I6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">58. 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205062)</a><a class="btn_move move" data-target="#head_item58" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item59" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2G4E1E1D1Z1Z0X9Y2X0X3V4W6E6C6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">59. 항만법 일부개정법률안(이양수 의원 대표발의)(의안번호 2205524)</a><a class="btn_move move" data-target="#head_item59" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item60" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2B6G0G9Q1Y6Z1P3G4E3T2M4C0O6B0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">60. 항만법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item60" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item61" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=ARC_J2M5G0P8Y1O4P1G6G3T4H5S6G2H6N6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">61. 수산종자산업육성법 일부개정법률안(정부 제출)(의안번호 2212193)</a><a class="btn_move move" data-target="#head_item61" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item62" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2L5J0K6I0I4H1I6P0Q2O1P2N0M0N0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">62. 수산종자산업육성법 일부개정법률안(서삼석 의원 대표발의)(의안번호 2214143)</a><a class="btn_move move" data-target="#head_item62" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item63" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2A6N0P9C1V6P1U3J4Z4W1U3K4V2Q8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">63. 수산종자산업육성법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item63" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item64" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_L2L6K0K3I0J6I1P4Q4O8P4N2O9M2N5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">64. 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안(조경태 의원 대표발의)(의안번호 2217726)</a><a class="btn_move move" data-target="#head_item64" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item65" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2Q5R0P2X1Y9W1W7V0V0U0U7C4B8B9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">65. 굴 산업 진흥 및 지원에 관한 법률안(정점식 의원 대표발의)(의안번호 2208310)</a><a class="btn_move move" data-target="#head_item65" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item66" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2G5G0O7N2N2L0M9K2L7T0T5R6Q5R5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">66. 굴산업 진흥에 관한 법률안(주철현 의원 대표발의)(의안번호 2211883)</a><a class="btn_move move" data-target="#head_item66" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item67" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2G6I0B9A1Q6V1Q3X4O5X2Y9S5L6T5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">67. 굴산업 진흥 및 지원에 관한 법률안(대안)</a><a class="btn_move move" data-target="#head_item67" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item67 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;그러면 의사일정 제1항부터 제67항까지, 67건의 법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;이들 안건에 대해서는 농림축산식품 및 해양수산법안심사소위원회 위원님들께서 심도 있는 심사를 해 주셨습니다.</span><br/><span class="spk_sub" id="spk_sub3-3">&nbsp;심사를 위해 수고해 주신 윤준병·김선교 소위원장님과 소위원회 위원님들께 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub3-4">&nbsp;먼저 농림축산식품법안심사소위원장 윤준병 위원님 나오셔서 소위원회의 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item67 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;농림축산식품법안심사소위원회 위원장 윤준병 위원입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;우리 소위원회는 지난 9월 8일 농림축산식품부 소관 44건의 법률안에 대하여 심도 있게 심사한 결과 22건의 법률안에 대해서는 각각 본회의에 부의하지 아니하고 각 법률안의 내용을 통합하여 5건의 대안과 1건의 위원회안을 제안하기로 하고, 1건의 법률안에 대해서는 수정의결하였으며 22건의 법률안은 소위원회에서 계속해서 심사하기로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;이하에서는 주요 내용을 중심으로 간략히 보고드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;먼저 주철현 의원, 이원택 의원, 김용태 의원, 임종득 의원이 각각 대표발의한 농업경영체 육성 및 지원에 관한 법률 일부개정법률안 4건을 통합 조정한 대안은 농어업에 종사하는 경영주의 배우자가 공동경영주로 등록할 수 있는 법적 근거를 마련하고 등록정보의 확인을 위하여 농어업경영정보 등을 관계 기관 등에 제공할 수 있는 요건 및 절차를 규정하며 농어업법인의 사업유형·출자·인력 및 경영 등에 관한 통계조사의 근거를 마련하는 한편 고령농업인 및 청년농업인의 공동농업경영체의 참여를 촉진하기 위한 시책을 수립·시행하고 지원할 수 있도록 하는 등의 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;다음은 서삼석 의원, 김용태 의원과 본 의원이 각각 대표발의한 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안 3건을 통합 조정한 대안은 농어업인 삶의 질 향상 및 농어촌 지역개발위원회의 정원을 현행 25인에서 30인으로 확대하고 위원 구성에 지방자치법에 따른 전국적 협의체가 추천하는 사람과 농어업인의 삶에 관련된 부처의 장을 포함하는 한편 국가 및 지방자치단체로 하여금 농어촌학교 학생의 방과 후 교육활동에 대한 시책을 마련하도록 하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;다음은 이개호 의원이 대표발의한 농어촌구조개선 특별회계법 일부개정법률안은 농어촌구조개선 특별회계 농어촌특별세사업계정의 전출 범위를 지역균형발전특별회계 지역자율계정에서 지역균형발전특별회계 전체로 확대하려는 것으로 일부 체계·자구를 정리하여 수정의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;다음은 신성범 의원, 서명옥 의원, 서삼석 의원, 임미애 의원과 본 의원이 각각 대표발의하고 정부가 제출한 6건의 농어촌정비법 일부개정법률안과 이만희 의원이 대표발의한 도시와 농어촌 간의 교류 촉진에 관한 법률 일부개정법률안을 통합 조정한 도시와 농어촌 간의 교류 촉진에 관한 법률 일부개정법률안(대안)은 농어촌민박에 대한 사항을 농어촌정비법에서 도시 및 농어촌 간의 교류 촉진에 관한 법률로 이관하고 농어촌민박을 신고제에서 등록제로 전환하는 한편 등록 요건을 완화하며 빈집을 활용한 농어촌민박을 허용하는 등 농어촌민박의 체계적인 관리와 활성화를 위하여 제도 전반을 개선하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;아울러 개정안 중 농어촌관광휴양지사업자의 신고확인증 반납 의무 신설 등 농어촌정비법에 규정할 필요가 있는 사항에 대해서는 위원회안으로 농어촌정비법 일부개정법률안을 제안하였습니다.</span><br/><span class="spk_sub" id="spk_sub4-9">&nbsp;다음은 서삼석 의원과 김선교 의원이 각각 대표발의한 식물방역법 일부개정법률안 2건을 통합 조정한 대안은 농림축산식품부장관의 허가를 받아 시험연구, 방제약제 제조 등의 목적으로 방제 대상 병해충을 이용할 수 있는 근거를 신설하고 방제 대상 병해충을 유출·반출하거나 방제 대상 병해충의 이용을 종료하였음에도 이를 폐기하지 않는 자에 대한 제재수단 및 의무이행수단을 규정하는 등의 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-10">&nbsp;마지막으로 문대림 의원, 김태선 의원, 송옥주 의원, 임미애 의원과 본 의원이 각각 대표발의한 5건의 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안을 통합 조정한 대안은 국가와 지방자치단체가 친환경농어업 관련 민간단체를 육성하기 위해 예산의 범위에서 필요한 지원을 할 수 있도록 하고 친환경농어업 육성계획 등을 심의하기 위한 위원회의 설치근거를 마련하는 한편 인증을 받지 아니한 제품을 인증품으로 잘못 인식할 수 있도록 광고하는 행위에 대한 시정명령 근거 및 시정명령 불이행 시 처벌 근거를 신설하는 등의 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-11">&nbsp;보다 자세한 내용은 의석 단말기의 자료를 참조해 주시고, 이상 7건의 법률안에 대하여 소위원회에서 심사보고한 대로 의결하여 주시기를 바랍니다.</span><br/><span class="spk_sub" id="spk_sub4-12">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_5" class="item67 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;윤준병 위원님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub5-2">&nbsp;다음은 해양수산법안심사소위원장 김선교 위원님 나오셔서 소위원회의 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_6" class="item67 speaker spk_mem" data-mem_id="6758" data-name="김선교" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">소위원장 김선교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c46ff6eaebc3441393b42d4e36d7a8c6.jpg" alt="김선교"></span><span class="txt"><span class="position">소위원장</span><strong class="name">김선교</strong><span class="area">(경기 여주시양평군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;해양수산법안심사소위원장 김선교 위원입니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;우리 소위원회는 9월 16일 해양수산부 소관 27건의 법률안과 해양경찰청 소관 3건의 법률안에 대하여 심도 있게 심사한 결과 26건의 법률안에 대해서는 본회의에 부의하지 아니하고 각 법률안의 내용을 통합하여 9건의 대안을 제안하기로 하고 4건의 법률안에 대해서는 수정 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;이하 주요 내용을 중심으로 하여 간략히 보고드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;먼저 조경태 의원, 임호선 의원, 윤준병 의원이 각각 대표발의한 수상레저안전법 일부개정법률안 3건을 통합 조정한 대안은 수상레저기구 조정 시 마약류 복용 여부를 측정할 수 있도록 하고 음주 조종에 대한 벌칙을 세분화하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;다음으로 윤준병 의원이 대표발의한 해운법 일부개정법률안은 자원안보위기 경보 발령 시 내항화물운송사업자에 대한 유류비 보조 근거를 마련하는 것으로 2026년 5월 29일 이후 유료구매 비용부터 지원받을 수 있도록 적용례를 규정하는 등 일부 내용을 수정 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;다음으로 정부가 제출하고 김상훈 의원, 임호선 의원, 송옥주 의원, 문대림 의원, 윤준병 의원이 각각 대표발의안 해상교통안전법 일부개정법률안 7건을 통합 조정한 대안은 해상풍력발전시설 주변 해역의 안전관리 체계를 마련하고 해양사고 위험행위에 대한 관리 감독을 강화하는 등 현행 제도 운영상의 미비점을 개선하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;다음으로 어기구 의원, 주철현 의원, 조경태 의원이 각각 대표발의한 선원법 일부개정법률안 3건을 통합 조정한 대안은 선원의 근로·보호 기준과 승무기준을 국제협약에 맞게 정비하는 한편 근로기준 명시의무 위반에 대한 형벌을 과태료로 전환하려는 내용 등입니다.</span><br/><span class="spk_sub" id="spk_sub6-8">&nbsp;다음으로 문대림 의원이 대표발의한 도선법 일부개정법률안은 도선구 통합 운영의 근거와 통합 후 도선훈련·면허발급 절차를 규정하려는 것으로 존속 도선구의 도선사가 통합된 새로운 수역에서 도선업무를 수행하는 경우를 포괄하도록 일부 내용을 보완하여 수정 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-9">&nbsp;다음은 본 의원이 대표발의한 항만운송사업법 일부개정법률안은 항만운송 관련 사업 등록의 직권말소 근거를 마련하고 연료공급차량을 장비로 등록한 선박연료공급업에 대해 영업구역 제한 예외를 적용하려는 내용으로 일부 자구를 정리하여 수정 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-10">&nbsp;다음으로 본 의원이 각각 대표발의한 수산업협동조합법 일부개정법률안 2건을 통합 조정한 대안은 등기사항에서 총 출자계좌 수 및 납입출자금 총액을 삭제하여 행정 부담을 완화하고 수협 공제사에 실손보험청구 간소화 서비스 적용 근거를 마련하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-11">&nbsp;다음으로 서삼석 의원이 각각 대표발의한 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안 2건을 통합 조정한 대안은 경영이양 직불제 신청 연령조건의 상한을 만 85세 미만까지 확대하고 어선원 직불제 승선 요건을 ‘1년 중 선원으로 승선하여 근로를 제공한 날의 합이 60일 이상’으로 개정하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-12">&nbsp;다음으로 정부가 제출하고 박성훈 의원, 서삼석 의원이 각각 대표발의한 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안 2건을 통합 조정한 대안은 음주 운항 등을 등록취소 및 영업정지 사유에 추가하고 마리나 이용자의 구명조끼 착용의무를 규정하는 등 안전 운항을 위한 제도를 정비하려는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub6-13">&nbsp;다음으로 이양수 의원이 각각 대표발의한 항만법 일부개정법률안 2건을 통합 조정한 대안은 항만시설의 범위와 용어를 정비하고 대형 시설장비에 대한 정밀안전진단 등 제도를 도입하여 시설장비 사용의 일시 정지·재개 절차를 마련하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-14">&nbsp;다음으로 정부가 제출하고 서삼석 의원이 각각 대표발의한 수산종자산업육성법 일부개정법률안 2건을 통합 조정한 대안은 중간육성을 수산종자의 정의에 포함하여 육성 종자 범주를 명확히 하고 허가취소 사유에 미신고 수산식물종자를 소지·유통한 경우를 추가하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub6-15">&nbsp;다음으로 조경태 의원이 대표발의한 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안은 어선위치통지 미이행 시 과태료 부과 상한액을 현행 500만 원에서 1000만 원으로 상향하고 어업허가 정지 규정을 신설하려는 것으로 일부 자구를 정리하여 수정 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-16">&nbsp;다음으로 정점식 의원과 주철현 의원이 각각 대표발의한 굴 산업 진흥 및 지원에 관한 법률안 및 굴산업 진흥에 관한 법률안을 통합 조정한 대안은 굴산업을 국가적으로 진흥하기 위한 제도적 기반을 마련하려는 것으로 기본계획 수립, 경영안정, 품질향상 지원 등 굴산업의 육성에 필요한 사항을 규정하였습니다.</span><br/><span class="spk_sub" id="spk_sub6-17">&nbsp;보다 자세한 내용은 의석 단말기의 자료를 참조해 주시고, 아무쪼록 소위원회에서 심사보고한 대로 의결하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub6-18">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_7" class="item67 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;김선교 위원님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;법안심사소위원회에서 심사보고한 법률안에 대해 발언하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;안 계시지요?</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;그러면 법률안에 대해 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;개별 안건에 대한 의결 전에 오늘 의결할 일부개정법률안에 대해서는 소위원회에서 조문별로 축조심사를 심도 있게 진행하였으므로 국회법 제58조제5항에 따라 축조심사를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-9">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-10">&nbsp;다음은 비용추계 생략을 위한 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-11">&nbsp;오늘 의결할 대안들은 국회법 제66조제3항 단서 등에 따라 국회예산정책처의 비용추계서 첨부를 생략하도록 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-12">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-13">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-14">&nbsp;다음은 공청회 생략을 위한 의결을 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-15">&nbsp;오늘 의결할 법안 중 굴 산업 진흥 및 지원에 관한 법률안과 굴산업 진흥에 관한 법률안은 국회법 제58조제6항 단서에 따라 공청회를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-16">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-17">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-18">&nbsp;그러면 법률안별로 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-19">&nbsp;의사일정 제1항부터 제4항까지 이상 4건의 법률안은 소위원회에서 심사보고한 대로 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제5항 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-20">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-21">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-22">&nbsp;다음은 의사일정 제6항부터 제8항까지 이상 3건의 법률안은 소위원회에서 심사보고한 대로 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제9항 농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-23">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-24">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-25">&nbsp;다음은 의사일정 제10항 농어촌구조개선 특별회계법 일부개정법률안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-26">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-27">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-28">&nbsp;다음은 의사일정 제11항부터 제17항까지 이상 7건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제18항 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-29">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-30">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-31">&nbsp;다음은 의사일정 제19항 농어촌정비법 일부개정법률안을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-32">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-33">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-34">&nbsp;다음은 의사일정 제20항과 제21항의 법률안은 소위원회에서 심사보고한 대로 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제22항 식물방역법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-35">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-36">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-37">&nbsp;다음은 의사일정 제23항부터 제27항까지 이상 5건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제28항 친환경농어업 육성 및 유기식품 등의 관리·지원에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-38">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-39">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-40">&nbsp;다음은 의사일정 제29항부터 제31항까지 이상 3건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제32항 수상레저안전법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-41">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-42">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-43">&nbsp;다음은 의사일정 제33항 해운법 일부개정법률안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-44">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-45">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-46">&nbsp;다음은 의사일정 제34항부터 제40항까지 이상 7건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제41항 해상교통안전법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-47">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-48">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-49">&nbsp;다음은 의사일정 제42항부터 제44항까지 이상 3건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제45항 선원법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-50">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-51">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-52">&nbsp;다음은 의사일정 제46항 도선법 일부개정법률안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-53">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-54">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-55">&nbsp;다음은 의사일정 제47항 항만운송사업법 일부개정법률안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 기타 부분은 원안 대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-56">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-57">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-58">&nbsp;다음은 의사일정 제48항과 제49항은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제50항 수산업협동조합법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-59">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-60">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-61">&nbsp;다음은 의사일정 제51항과 제52항은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제53항 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-62">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-63">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-64">&nbsp;다음은 의사일정 제54항부터 제56항까지 이상 3건의 법률안은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제57항 마리나항만의 조성 및 관리 등에 관한 법률 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-65">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-66">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-67">&nbsp;다음은 의사일정 제58항과 제59항은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제60항 항만법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-68">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-69">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-70">&nbsp;다음, 의사일정 제61항과 제62항은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제63항 수산종자산업육성법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-71">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-72">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-73">&nbsp;다음, 의사일정 제64항 어선안전조업 및 어선원의 안전·보건 증진 등에 관한 법률 일부개정법률안은 소위원회에서는 심사보고한 바와 같이 수정한 부분은 수정한 대로 기타 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-74">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-75">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub7-76">&nbsp;다음은 소위원회에서 심사보고한 굴산업 진흥 및 지원에 관한 법률안(대안)은 제정법률안으로서 국회법 제58조제5항 단서 규정에 따라 축조심사를 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-77">&nbsp;제정법률안 대안을 봐 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-78">&nbsp;먼저 법안 제명과 제1장 총칙 제1조 목적 규정부터 제3조 다른 법률과의 관계 규정까지에 대해서 의견 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-79">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-80">&nbsp;다음은 제2장 제4조 기본계획의 수립 규정부터 제10조 굴산업 전문기관 규정까지에 대해서 의견 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-81">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-82">&nbsp;마지막으로 제3장 제11조 경영안정 및 경영개선 지원 규정부터 제24조 굴산업 집적화단지에 대한 평가 규정까지 및 부칙에 대해서 의견 있으시면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-83">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-84">&nbsp;그러면 이상으로 축조심사를 마치고 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub7-85">&nbsp;의사일정 제65항과 제66항은 각각 본회의에 부의하지 아니하기로 하고 소위원회에서 그 내용을 수정 통합한 의사일정 제67항 굴산업 진흥 및 지원에 관한 법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub7-86">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub7-87">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item68" class="tit">68. 청원심사 연장의 건</a><a class="btn_move move" data-target="#head_item68" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시38분)</p><br/><div id="spk_9" class="item68 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;존경하는 서삼석 위원장님 그리고 농림축산식품해양수산위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;바쁘신 일정 중에도 도시와 농어촌 간의 교류촉진에 관한 법률 일부개정법률안, 농어업경영체 육성 및 지원에 관한 법률 일부개정법률안 등 7건의 법률안을 심의 의결하여 주신 데 대해 감사말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;법안을 심도 있게 심사해 주신 농림축산식품법안심사소위원회 윤준병 소위원장님과 위원님들께도 다시 한번 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;농림축산식품부는 오늘 의결해 주신 법률안을 바탕으로 농어촌 민박을 활성화해 농촌 활력을 높이고 농업경영체 등록정보 관리체계를 개선해서 농업인의 편의를 제고하는 등 국민과 농업인이 체감할 수 있는 변화를 만드는 데 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;정부는 이번 심사 과정에서 위원님들께서 주신 고견을 바탕으로 제도의 효과적 시행을 뒷받침할 수 있는 재원 확보 및 하위법령 마련 등에 만전을 기하겠습니다.</span><br/><span class="spk_sub" id="spk_sub9-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_10" class="item68 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;송미령 장관님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;다음은 황종우 해양수산부장관님 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_11" class="item68 speaker spk_mem" data-mem_id="0" data-name="황종우" data-pos="해양수산부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">해양수산부장관 황종우 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="황종우"></span><span class="txt"><span class="position">해양수산부장관</span><strong class="name">황종우</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;존경하는 농림축산식품해양수산위원회 서삼석 위원장님과 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;바쁘신 일정 속에서도 해운법 일부개정법률안, 해상교통안전법 일부개정법률안, 수산업·어촌 공익기능 증진을 위한 직접지불제도 운영에 관한 법률 일부개정법률안 등 12개 법률안을 의결해 주신 데 대해 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;해양수산부는 오늘 의결해 주신 법률안을 바탕으로 중동 전쟁 장기화와 유류비 인상에 따른 연안 화물선사의 부담을 완화하여 안정적인 해상물류 공급망을 구축하고 해상풍력발전 사업자와 선박운항자들의 안전 의무와 책임을 강화하여 해양사고 예방 및 해상교통 안전을 확보하는 한편 수산직불금의 수급 요건을 현실화하여 어업인과 어선원의 소득 안정은 물론 지속가능한 수산업과 어촌의 토대를 강화해 나가는 등 법률안의 취지가 해양수산 현장에서 제대로 발현될 수 있도록 관련 정책을 적극 추진해 가겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;법률안을 심도 있게 검토해 주신 김선교 법안소위 위원장님을 비롯한 위원님들께 깊이 감사드리며 법안 심의 과정에서 말씀해 주신 사항은 하위법령을 마련하고 법령을 시행하는 과정에서 충분히 반영될 수 있도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_12" class="item68 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;황종우 장관님 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;마지막, 장인식 해양경찰청장직무대행 나오셔서 인사해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_13" class="item68 speaker spk_mem" data-mem_id="0" data-name="장인식" data-pos="해양경찰청장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">해양경찰청장직무대행 장인식 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="장인식"></span><span class="txt"><span class="position">해양경찰청장직무대행</span><strong class="name">장인식</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;존경하는 서삼석 위원장님 그리고 여러 위원님!</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;바쁘신 일정 중에도 수상레저안전법을 의결하여 주신 것에 대해 깊은 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;또한 법안을 심도 있게 심사해 주신 김선교 법안소위 위원장님을 비롯한 위원님들께도 다시 한번 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub13-4">&nbsp;오늘 의결해 주신 법률안을 통해 안전한 수상레저 활동 환경을 조성하여 국민의 신체와 생명 보호에 기여할 것으로 생각합니다.</span><br/><span class="spk_sub" id="spk_sub13-5">&nbsp;해양경찰은 이번 심의 과정에서 위원님들께서 주신 고견을 바탕으로 깨끗하고 안전한 바다 만들기에 최선을 다하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-6">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_14" class="item68 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;장인식 해양경찰청장직무대행님 수고하셨습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item69" class="tit">69. 2026년도 국정감사계획서 채택의 건</a><a class="btn_move move" data-target="#head_item69" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시42분)</p><br/><div id="spk_16" class="item69 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;다음, 의사일정 제69항 2026년도 국정감사계획서 채택의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;이 안건은 우리 위원회가 2026년도 국정감사를 실시하기 위하여 일정 및 대상기관 등 필요한 사항을 정하는 계획서를 채택하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub16-3">&nbsp;위원님들께 배부해 드린 국정감사계획서(안)은 간사님들과 협의를 거쳐 마련되었다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub16-4">&nbsp;주요내용을 말씀드리면 국정감사는 10월 7일 수요일 농림축산식품부를 시작으로 해서 10월 23일 금요일에 해양수산부 종합감사를 마지막으로 실시하기로 하였고 감사대상기관은 농림축산식품부 등 51개 기관을 선정하였습니다.</span><br/><span class="spk_sub" id="spk_sub16-5">&nbsp;기관별 감사 일시와 장소 등 세부적인 내용은 배부된 계획서를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub16-6">&nbsp;그리고 오늘 의결한 국정감사계획서에 대하여 세부적인 일정 등의 변경이 필요한 경우 위원장이 간사 위원들과 협의하여 조정할 수 있도록 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub16-7">&nbsp;그렇게 해 주시겠습니까?</span><br/><span class="spk_sub" id="spk_sub16-8">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-9">&nbsp;그러면 배부해 드린 계획서(안)과 같이 2026년도 국정감사계획서를 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub16-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub16-11">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item70" class="tit">70. 2026년도 국정감사 보고 및 서류제출 요구의 건</a><a class="btn_move move" data-target="#head_item70" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시43분)</p><br/><div id="spk_18" class="item70 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;이어서 의사일정 제70항 2026년도 국정감사 보고 및 서류제출 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub18-2">&nbsp;이 안건은 국정감사계획서에 따라 감사대상기관으로 하여금 소관 업무에 대해서 보고할 것과 위원님들의 서류제출 요구서에 따라 관련 자료제출을 요구하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub18-3">&nbsp;국정감사와 관련한 서류제출 요구는 국회법 제128조와 국정감사 및 조사에 관한 법률 제10조에 따라 위원회의 의결 또는 재적위원 3분의 1 이상의 요구로 할 수 있습니다.</span><br/><span class="spk_sub" id="spk_sub18-4">&nbsp;지금까지 위원님들의 서류제출 요구서를 접수한 현황은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub18-5">&nbsp;효율적인 국정감사 서류제출 요구를 위해서 추후 위원님들께서 요구하시는 경우에는 서류제출 요구일 7일 전까지 수감기관에 도달이 가능한 서류제출 요구에 대해서는 의결된 것으로 보아 해당 기관에 송부하도록 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub18-6">&nbsp;그러면 이상 말씀드린 바와 같이 국정감사 대상 기관에 대한 보고 및 서류제출 요구의 건을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub18-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub18-8">&nbsp;이의가 없으므로 가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item71" class="tit">71. 2026년도 국정감사 증인 등 출석요구의 건</a><a class="btn_move move" data-target="#head_item71" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시45분)</p><br/><div id="spk_20" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;이어서 의사일정 제71항 국정감사 증인 등 출석요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;이 안건은 국회법 제129조에 따라 국정감사에 출석할 증인 및 참고인을 채택하고자 하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;피감기관의 기관증인은 감사 대상 기관장과 관계부서장 등으로 하였습니다. 그리고 일반증인과 참고인은 교섭단체 간사님들께서 협의한 내용입니다.</span><br/><span class="spk_sub" id="spk_sub20-4">&nbsp;증인 및 참고인에 대한 보다 구체적인 내용은 배부해 드린 유인물을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub20-5">&nbsp;그러면 이상 말씀드린 바와 같이 2026년도 국정감사 증인 등 출석요구의 건을 의결하고자 하는데 이의 없으십니까?</span><br/></div></div></div><div id="spk_21" class="item71 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;이의 있습니다.</span><br/></div></div></div><div id="spk_22" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;협의가 잘 안 됐나요?</span><br/></div></div></div><div id="spk_23" class="item71 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;이의 있습니다.</span><br/></div></div></div><div id="spk_24" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;강승규 위원님.</span><br/></div></div></div><div id="spk_25" class="item71 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;지금 농촌 현장은 무차별적인 농지 전수조사로 극심한 혼란과 불안에 휩싸이고 있습니다. 평생 흙을 일궈 온 선량한 농민들이 지금 범죄자 취급을 받고 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;87년 헌법에 도입된 경자유전 원칙은 농민들을 보호하기 위해서 도입한 제도입니다. 그러나 지금은 많은 농업 환경 상황이 바뀌었습니다. 농산물 수입이 확대되고 있고 쌀 등 많은 농작물들이 소비 감소 등으로 잉여 농산물이 증가하고 있고요 농업인구도 감소하고 또 고령농이 급격히 증가하고 있습니다. 이들에 대한 은퇴 대책도 필요합니다.</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;또 비옥토지역 농지 지역에 대해서 여러 가지 관리 방안이 필요합니다. 그런데 이런 대책도 없습니다. 특히 AI, 드론, 기계화 등으로 그리고 기후변화 등으로 농업 환경은 정말 기존에 10년, 20년 전과도 아주 비교할 수 없을 정도로 많은 변화가 있었지요.</span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;그런데 경자유전 원칙만을 강조해서 농민들을 잠재적 범죄자로 모는 이런 농지 전수조사, 지금의 정부 대책에 대해서 많은 우려와 혼란이 계속되고 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-5">&nbsp;이 사태의 책임자가 여럿 있을 수 있지만 최소한 전 청와대 정책실장 김용범 그리고 현 농림축산비서관 이영수는 증인으로 채택되어서 지금의 농업 현장의 혼란을 국정감사에서 제대로 따져 봐야 되지 않겠습니까? 그리고 우리가 대책을 마련해야 되는데 이에 대해서 증인이 지금 요구되었는데도 불구하고 채택되지 않았습니다.</span><br/><span class="spk_sub" id="spk_sub25-6">&nbsp;김 전 실장은 지난 5월 농지 전수조사와 매각명령 입법을 공언한 분이고 또 정책 설계자입니다. 이영수 비서관은 현장 혼란이 계속되는데도 이거를 밀어붙인 실무 책임자 아닙니까?</span><br/><span class="spk_sub" id="spk_sub25-7">&nbsp;농촌 고령화 등 불가피한 사유, 여러 가지 농업 환경의 변화 등을 무시하고 모든 것을 투기로 모는 이런 지금의 상황에 대해서는 분명히 저희가 국감장에서 제대로 짚어야 되기 때문에 이 두 분의 국감 증인 출석을 추가로 저는, 여야 간사와 또 존경하는 민주당 위원님들도 다 현장에서 듣고 있지 않습니까? 이것은 여야의 문제가 아니라 농업 현장에서 정책이 괴리가 됐을 때는 바로잡아야 되고 그 원인을 따져봐야 되기 때문에 두 증인을 채택해야 된다고 다시 한번 강력히 요청드립니다.</span><br/></div></div></div><div id="spk_26" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;말씀 잘 들었습니다, 강승규 위원님,</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;또 발언하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub26-3">&nbsp;윤준병 위원님.</span><br/></div></div></div><div id="spk_27" class="item71 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;강승규 위원님 말씀 잘 들었습니다.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;농식품부장관 계신데 지금 농지 전수조사하는 내용이 경자유전 원칙을 확립하기 위해서 경자유전이 아니면 모두 투기다 이렇게 상정하고 추진하는 겁니까?</span><br/></div></div></div><div id="spk_28" class="item71 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;그렇지 않습니다, 위원님. 처음부터 밝혔듯이 농지의 투기적 목적의 소유 등은 저희들이 찾아내겠지만 현장에서 빈번하게 일어나는 관행과는 구분한다라는 것을 누누이 말씀을 드렸고요. 그래서 현장에 계시는 농업인들은 처벌이나 단속 이런 것들, 이행강제금까지 포함해서 우려할 필요가 전혀 없다라는 말씀을 계속 드리고 있습니다. 임차농 보호 대책도 마련을 하였다는 말씀을 함께 드리겠습니다.</span><br/></div></div></div><div id="spk_29" class="item71 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;그런데 원래 정부 의도는 농지 실태조사를 제대로 해서 현황을 제대로 알고 강승규 위원님이 지적하신 것처럼 농촌의 상황이 많이 변화된 것, 특히 농촌 고령화라든지 여기에 따른 은퇴 대책 또 휴경과 관련돼 있는 효율적인 관리 방안 또 기계화된 농업 현황이 바뀌었기 때문에 그런 내용을 내실 있게 뒷받침하기 위해서 농촌 현황을 제대로 점검하고 거기에 맞는 맞춤형 농촌 대책 또 이재명 정부의 농정 대전환을 뒷받침하기 위한 일환으로 지금 실시되고 있는데 이런 내용들이 현장에 전달이 제대로 안 된 것 같아요.</span><br/></div></div></div><div id="spk_30" class="item71 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;예, 그렇습니다.</span><br/></div></div></div><div id="spk_31" class="item71 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;그래서 이 부분에 대해서는 실제 뜻은 좋은 의미로 추진했지만 현장에서 여러 가지 오해도 있고 혼란이 있다고 지적을 하니 이 부분에 대해서는 세밀하게 점검을 하시고 본래의 취지가 농민들에게, 국민들에게 잘 전달될 수 있도록 점검도 하고 조치를 해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub31-2">&nbsp;그냥 ‘좋은 뜻이에요. 아무 문제 없습니다.’ 이런 내용보다는 문제가 제기되고 있는 내용들을 점검하고 그 문제가 왜 발현됐는지 이런 내용을 확인해서 거기에 맞는 효율적인 대책이 뒷받침될 수 있도록 정부 당국에서도, 특히 농식품부가 주관이 돼서 추진해 주시기를 바라고요.</span><br/></div></div></div><div id="spk_32" class="item71 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;예, 그렇게 하겠습니다.</span><br/></div></div></div><div id="spk_33" class="item71 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">윤준병 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><strong class="name">윤준병</strong><span class="position">위원</span><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;강승규 위원님 주신 증인 채택 건은 사실은 간사들 간에 협의를 이미 해서 그런 내용들이 정리가 됐다는 점을 다시 한번 말씀을 드립니다.</span><br/></div></div></div><div id="spk_34" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;강승규 위원님, 윤준병 위원님 말씀 잘 들었고요.</span><br/><span class="spk_sub" id="spk_sub34-2">&nbsp;강승규 위원님 발언에 대해서 저는 일리가 있다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub34-3">&nbsp;또 말씀 필요하십니까?</span><br/><span class="spk_sub" id="spk_sub34-4">&nbsp;김선교 위원님.</span><br/></div></div></div><div id="spk_35" class="item71 speaker spk_mem" data-mem_id="6758" data-name="김선교" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">김선교 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c46ff6eaebc3441393b42d4e36d7a8c6.jpg" alt="김선교"></span><span class="txt"><strong class="name">김선교</strong><span class="position">위원</span><span class="area">(경기 여주시양평군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;다름이 아니고 존경하는 강승규 위원님이나 윤준병 위원님 다 좋습니다.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;그런데 왜 이 문제점을, 문제점이 졸속적이고 실질적으로 취지는 그렇지 않은데 현장에서 괴리감이 생기기 때문에, 그 당시에 2월 달에 국무회의에서 나왔던 전수조사 언급이 있었거든요.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;그래서 여기에 따른 김용범 정책실장과 이영수 농림축산비서관을 증인으로 채택을 한 건데 이 부분에 대해서 존경하는 윤준병 간사께서 협의를 봤다 그러는데 이 부분에 대해서 이게 실질적으로 취지는 그렇지 않은데 현장에 피부로 느끼는 것은 또 다르기 때문에 그것을 한번 들어 보고 언론에 노출시켜 가지고 전 국민한테 알리자 이 뜻이에요. 다른 게 아니고 잘해 나가자, 지금 현행 단계가 이런 단계인데 앞으로 개선을 해 가지고 이렇게 가겠다 이런 부분을 알려 달라 이런 건데 그냥 증인 채택 안 해 주는 것만이 전부는 아니다 이 뜻이에요, 다른 건 아니고.</span><br/></div></div></div><div id="spk_36" class="item71 speaker spk_mem" data-mem_id="0" data-name="송미령" data-pos="농림축산식품부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">농림축산식품부장관 송미령 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="송미령"></span><span class="txt"><span class="position">농림축산식품부장관</span><strong class="name">송미령</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;위원님, 그 부분 관련해서는 저희가 설명을 열심히 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;그리고 원래 농지조사를 한 것은 현실과 맞지 않는 제도개선을 하기 위한 목적도 있었습니다. 그래서 처음부터 저희가 농지 전수조사를 왜 하는가라고 했을 때 데이터베이스를 구축한다 그리고 투기를 근절하겠다 그러나 현장의 불편은 최소화하면서 농지법이 96년 들어온 다음에 그동안 현실하고 맞지 않는 대목들이 많기 때문에 오히려 제도개선의 기회로 삼겠다라는 설명을 드렸습니다.</span><br/><span class="spk_sub" id="spk_sub36-3">&nbsp;그런데 현장에서는 어느 순간에 다소 악의적 프레임 같은 것들이, 우리 그런대, 나라가 땅을 빼앗아 간대 이런 류의 이야기가 돌기 시작하면서 사실과 다른 이야기들이 많이 회자가 되고 있습니다. 그래서 이 부분에 대해서는 저희가 적극적으로 현장과 소통하면서 좀 더 세세하게 설명을 드리도록 하겠습니다.</span><br/></div></div></div><div id="spk_37" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;이 정도 하시지요.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;또 회의를 통해서 따질 건 따지고 답변할 건 또 해야 되고 그러니까 오늘은 출석요구 건과 관련된 내용을 의결하는 시간이기 때문에 국회법 절차에 따라서 필요한 증인이나 참고인은 얼마든지 양당 간사의 협의 내지는 합의하에 이루어질 수 있다는 말씀을 강승규 위원님께 드립니다.</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;또 발언하실 위원님 안 계시지요?</span><br/></div></div></div><div id="spk_38" class="item71 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;위원장님, 그러면 추가 협의를 하시라고 좀……</span><br/></div></div></div><div id="spk_39" class="item71 speaker spk_mem" data-mem_id="6710" data-name="서삼석" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">위원장 서삼석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3733addd041f4802ade12300546171b1.jpg" alt="서삼석"></span><span class="txt"><span class="position">위원장</span><strong class="name">서삼석</strong><span class="area">(전남 영암군무안군신안군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;그건 얼마든지 하시라고, 명령은 아닙니다만 하십시오. 강승규 위원님 발언 내용이 해소될 때까지 하십시오.</span><br/><span class="spk_sub" id="spk_sub39-2">&nbsp;그러면 이의가 없으므로 증인 및 참고인 출석요구의 건은 가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub39-3"><div class="taR">(일반증인 및 참고인 명단은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub39-4">&nbsp;효율적인 국정감사를 위하여 신청 위원께서 사정 변경 등으로 증인·참고인 철회를 요구하거나 출석일을 변경 요청하는 경우에는 별도의 의결 없이 위원장이 간사 위원님들과 협의하여 철회 또는 변경할 수 있도록 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub39-5">&nbsp;회의를 마치기 전에, 추석 명절을 앞두고 있는데 농림부나 해수부 또 관계기관 관련된 분야에서 혹시 체불임금 사태 같은 것은 없는 건지 또 정부나 지자체가 지급해야 할 돈을 못 주거나 안 주고 있는 것은 없는 건지 이런 것도 부처에서 잘 살펴봤으면 좋겠어요. 그리고 항만 등 안전점검도 철저히 하시고 특히 섬 지역 교통 편의를 위해서 노력들 많이 해 주시고.</span><br/><span class="spk_sub" id="spk_sub39-6">&nbsp;정말 가슴 아픈 아침 뉴스를 제가 또 봤는데 어제오늘 일은 아닙니다마는 농림부나 해수부가 농어촌에 계시는 산모들, 임산부들, 특히 출산에 불편을 겪는 산모들 위해서 유관 부처하고 빡세게 협의를 해 가지고 그런 문제들이 좀 해소될 수 있도록 노력해 달라는 말씀을 특별히 드립니다. 꼭 그렇게 하셔야 됩니다.</span><br/><span class="spk_sub" id="spk_sub39-7">&nbsp;이상으로 오늘 회의를 모두 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub39-8">&nbsp;위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub39-9">&nbsp;오늘 출석해 주신 기관장 및 관계 직원 여러분, 위원회·사무처·경호과 직원을 비롯한 의원실 보좌진 여러분 또 언론인과 방송 관계자 여러분 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub39-10">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시57분 산회)</p><br/></div><div class="minutes_footer"><p class="tit"><strong>일반증인 및 참고인 명단</strong></p>증인(10인)<div class="table_wrap2"><table class="normal"><caption>일반증인 및 참고인 명단</caption><colgroup><col width="16.793876809270305%"><col width="29.636756248262884%"><col width="17.398926731233832%"><col width="23.900540910354266%"><col width="12.207897718769376%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업</th><th scope="col">요구 위원</th><th scope="col">출석일 및 관련 피감기관</th><th scope="col">비고</th></tr></thead><tr><td>김재기<br/></td><td>농민신문사 대표이사<br/></td><td>문금주<br/></td><td rowspan=8>10. 7.<br/>농림축산식품부<br/></td><td rowspan=10><br/></td></tr><tr><td>조영식<br/></td><td>CJ제일제당 부사장<br/></td><td rowspan=6>윤준병<br/></td></tr><tr><td>이운익<br/></td><td>삼양사 대표<br/></td></tr><tr><td>박윤기<br/></td><td>롯데칠성 대표<br/></td></tr><tr><td>이강만<br/></td><td>한화그룹 사장<br/></td></tr><tr><td>이희근<br/></td><td>포스코 사장<br/></td></tr><tr><td>변태섭<br/></td><td>대·중소기업·농어업협력재단 사무총장<br/></td></tr><tr><td>김창한<br/></td><td>한국영농형태양광협회회장<br/></td><td>조승환<br/></td></tr><tr><td>김진철<br/></td><td>농민신문 경영지원국장<br/></td><td rowspan=2>윤준병<br/></td><td>10. 16.<br/>농업협동조합중앙회<br/></td></tr><tr><td>김종현<br/></td><td>국민권익위원회팀장<br/></td><td>10. 23.<br/>해양수산부<br/></td></tr></table></div><br/>참고인(8인)<div class="table_wrap2"><table class="normal"><caption>일반증인 및 참고인 명단</caption><colgroup><col width="16.793876809270305%"><col width="29.636756248262884%"><col width="17.398926731233832%"><col width="23.900540910354266%"><col width="12.207897718769376%"></colgroup><thead><tr><th scope="col">성명</th><th scope="col">직업</th><th scope="col">요구 위원</th><th scope="col">출석일 및 관련 피감기관</th><th scope="col">비고</th></tr></thead><tr><td>권익섭<br/></td><td>식용란선별포장업협회이사<br/></td><td>송옥주<br/></td><td rowspan=2>10. 7.<br/>농림축산식품부<br/></td><td rowspan=8><br/></td></tr><tr><td>이연원<br/></td><td>농민<br/></td><td>강승규<br/></td></tr><tr><td>최정훈<br/></td><td>웨어비㈜ 대표<br/></td><td>송옥주<br/></td><td rowspan=2>10. 12.<br/>해양수산부<br/></td></tr><tr><td>김영철<br/></td><td>전국어민총연맹 대표<br/></td><td>신장식<br/></td></tr><tr><td>강마야<br/></td><td>충남연구원경제산업연구실 연구위원<br/></td><td>송옥주<br/></td><td rowspan=3>10. 22.<br/>농림축산식품부<br/></td></tr><tr><td>양유미<br/></td><td>청년창업농2기<br/></td><td rowspan=2>신장식<br/></td></tr><tr><td>안두영<br/></td><td>(사)대한산란계협회 회장<br/></td></tr><tr><td>차종업<br/></td><td>경인선단연합회회장<br/></td><td>송옥주<br/></td><td>10. 23.<br/>해양수산부<br/></td></tr></table></div><br/><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(16인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGYO" target="_blank"><span class="name lts3 ">김선교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONDAELIM" target="_blank"><span class="name lts3 ">문대림</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOSAMSEOK" target="_blank"><span class="name lts3 ">서삼석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONGOKJOO" target="_blank"><span class="name lts3 ">송옥주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEYANGSOO" target="_blank"><span class="name lts3 ">이양수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEKWAN" target="_blank"><span class="name lts3 ">이재관</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/CHOSEUNGHWAN" target="_blank"><span class="name lts3 ">조승환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUCHEOLHYEON" target="_blank"><span class="name lts3 ">주철현</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(3인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGSUNWOO" target="_blank"><span class="name lts3 ">강선우</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGBUM" target="_blank"><span class="name lts3 ">김성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESANGHWI" target="_blank"><span class="name lts3 ">이상휘</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 정대영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 윤성민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 이현종</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부 측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>농림축산식품부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 송미령</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 김종구</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 박순연</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 홍인기</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">농촌정책국장</span></span><span class="name lts3"> 전한영</span></a></li><p>해양수산부</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 황종우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 남재헌</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김재철</span></a></li><p>해양경찰청</p><li><a class="in_nm"><span class="pos"><span class="lts6">청장직무대행</span></span><span class="name lts3"> 장인식</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 임명길</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts12">구조안전국장전담직무대리</span></span><span class="name lts3"> 정욱한</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>말산업 육성법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 1. 문대림 의원 대표발의)(의안번호 2220965)</div></div><div class="con"><p class="tit_sm"><strong>해양경비법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 1. 서삼석 의원 대표발의)(의안번호 2220995)</div></div><div class="con"><p class="tit_sm"><strong>농어촌정비법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 1. 송옥주 의원 대표발의)(의안번호 2221002)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 9월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>해수욕장의 이용 및 관리에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 2. 윤준병 의원 대표발의)(의안번호 2221009)</div></div><div class="con"><p class="tit_sm"><strong>농업협동조합법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 2. 주철현 의원 대표발의)(의안번호 2221027)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 3일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>2027년도 예산안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 정부 제출)(의안번호 2221032)</div></div><div class="con"><p class="tit_sm"><strong>2027년도 기금운용계획안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 정부 제출)(의안번호 2221033)</div></div><div class="con"><p class="tit_sm"><strong>공중방역수의사에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 이광희 의원 대표발의)(의안번호 2221060)</div></div><div class="con"><p class="tit_sm"><strong>산림재난방지법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 김용태 의원 대표발의)(의안번호 2221085)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 9월 4일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>항만운송사업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 4. 김선교 의원 대표발의)(의안번호 2221116)</div></div><div class="con"><p class="tit_sm"><strong>항만법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 4. 김선교 의원 대표발의)(의안번호 2221118)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 7일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>농어촌정비법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 7. 엄태영 의원 대표발의)(의안번호 2221133)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 8일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>농업발전기금법안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 8. 윤준병 의원 대표발의)(의안번호 2221142)</div></div><div class="con"><p class="tit_sm"><strong>종자산업법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 8. 엄태영 의원 대표발의)(의안번호 2221152)</div></div><div class="con"><p class="tit_sm"><strong>공중방역수의사에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 8. 임종득 의원 대표발의)(의안번호 2221170)</div></div><div class="con"><p class="tit_sm"><strong>스마트농업 육성 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 8. 서삼석 의원 대표발의)(의안번호 2221176)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 9월 9일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>농어업인 삶의 질 향상 및 농어촌지역 개발촉진에 관한 특별법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 9. 박성훈 의원 대표발의)(의안번호 2221256)</div></div><div class="con"><p class="tit_sm"><strong>농업·농촌 및 식품산업 기본법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 9. 박성훈 의원 대표발의)(의안번호 2221257)</div></div><div class="con"><p class="tit_sm"><strong>스마트농업 육성 및 지원에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 9. 박성훈 의원 대표발의)(의안번호 2221261)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 9월 10일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>축산자조금의 조성 및 운용에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 14. 송옥주 의원 대표발의)(의안번호 2221372)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 15일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯관련의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>국유재산법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 1. 송옥주 의원 대표발의)(의안번호 2220980)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 2일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 이광희 의원 대표발의)(의안번호 2221062)</div></div><div class="con"><p class="tit_sm"><strong>농어촌 등 보건의료를 위한 특별조치법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 이광희 의원 대표발의)(의안번호 2221064)</div></div><div class="con"><p class="tit_sm"><strong>공익법무관에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 이광희 의원 대표발의)(의안번호 2221065)</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 3. 이광희 의원 대표발의)(의안번호 2221066)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 9월 4일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>병역법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 8. 임종득 의원 대표발의)(의안번호 2221167)</div></div><div class="con"><p class="tit_sm"><strong>군인사법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 8. 임종득 의원 대표발의)(의안번호 2221168)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 9월 9일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><div class="con"><p class="tit_sm"><strong>고독사 예방 및 관리에 관한 법률 전부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 10. 김선민 의원 대표발의)(의안번호 2221298)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 11일 의견제시기간을 소관위원회의 심사의결일 전일까지로 정하여 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯소위원회 직접 회부</strong></p><div class="con"><p class="tit_sm"><strong>농어촌정비법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 8. 27. 문대림 의원 대표발의)(의안번호 2220860)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">8월 28일 소위원회에 직접 회부함</div></div><div class="con"><p class="tit_sm"><strong>농업협동조합법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 2. 주철현 의원 대표발의)(의안번호 2221027)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 3일 소위원회에 직접 회부함</div></div><p class="tit"><span class="num"></span><strong>◯청원 회부</strong></p><div class="con"><p class="tit_sm"><strong>재개발·재건축 지역 길고양이 구조 및 안전 이소 의무화를 위한 특별법 제정에 관한 청원</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 2. 최근호 외 55,645인 국민동의로 제출)(청원번호 2200342)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 2일 회부됨</div></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57287;
+			const class_id = 2;
+			const confer_num = "N054486";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1792942581001" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1792942581002"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1792942581002"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1792942581002"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
