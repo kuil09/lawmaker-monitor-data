@@ -1,0 +1,843 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57293" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제439회 (정기회) 제7차 법제사법위원회</strong><span class="date">(2026.09.21.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 2026년도 국정감사계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 2026년도 국정감사 보고 및 서류제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 2026년도 국정감사 증인·참고인 출석 요구의 건</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="서영교 위원장 (서울 중랑구갑)"> 
+							서영교 위원장 (서울 중랑구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박형수 위원 (경북 의성군청송군영덕군울진군)"> 
+							박형수 위원 (경북 의성군청송군영덕군울진군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김의겸 위원 (전북 군산시김제시부안군갑)"> 
+							김의겸 위원 (전북 군산시김제시부안군갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박지원 위원 (전남 해남군완도군진도군)"> 
+							박지원 위원 (전남 해남군완도군진도군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이성윤 위원 (전북 전주시을)"> 
+							이성윤 위원 (전북 전주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김기표 위원 (경기 부천시을)"> 
+							김기표 위원 (경기 부천시을)
+						</option>
+					
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(6명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6711" data-name="서영교" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">서영교</span>
+												<span class="position">위원장</span>
+												<span class="area">(서울 중랑구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6695" data-name="박형수" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">박형수</span>
+												<span class="position">위원</span>
+												<span class="area">(경북 의성군청송군영덕군울진군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="7222" data-name="김의겸" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김의겸</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 군산시김제시부안군갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6735" data-name="박지원" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">박지원</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 해남군완도군진도군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6788" data-name="이성윤" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">이성윤</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 전주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6562" data-name="김기표" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">김기표</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 부천시을)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(0명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57293&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제439회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>법제사법위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제7호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 9월 21일(월)</p></li><li><div class="sbj lts2">장소</div><p class="con">법제사법위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 2026년도 국정감사계획서 채택의 건</li><li><span class="num">2.</span> 2026년도 국정감사 보고 및 서류제출 요구의 건</li><li><span class="num">3.</span> 2026년도 국정감사 증인·참고인 출석 요구의 건</li><li><span class="num">4.</span> 특별감찰관후보자(최길수) 인사청문요청안</li><li><span class="num">5.</span> 특별감찰관후보자(최길수) 인사청문경과보고서 채택의 건</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 2026년도 국정감사계획서 채택의 건</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 2026년도 국정감사 보고 및 서류제출 요구의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 2026년도 국정감사 증인·참고인 출석 요구의 건</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(14시21분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;제439회 국회(정기회) 제7차 법제사법위원회 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;보고사항은 노트북에 게재된 자료를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-5"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-6">&nbsp;오늘 회의에서는 먼저 2026년도 국정감사계획서, 국정감사 보고 및 서류제출 요구, 증인·참고인 출석 요구의 건을 심사한 후 특별감찰관후보자 최길수 인사청문경과보고서 채택의 건을 심사하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-7">&nbsp;그러면 의사일정에 들어가겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" class="tit">1. 2026년도 국정감사계획서 채택의 건</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 2026년도 국정감사 보고 및 서류제출 요구의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" class="tit">3. 2026년도 국정감사 증인·참고인 출석 요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(14시22분)</p><br/><div id="spk_4" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;의사일정 제1항입니다. 2026년도 국정감사계획서 채택의 건, 의사일정 제2항 2026년도 국정감사 보고 및 서류제출 요구의 건, 의사일정 제3항 2026년도 국정감사 증인·참고인 출석 요구의 건을 일괄하여 상정합니다.</span><br/></div></div></div><div id="spk_5" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;위원장님, 전체적으로 의사진행발언 신청하겠습니다.</span><br/></div></div></div><div id="spk_6" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;중요한 안건들이라 제가 상정하고 의사진행발언하시면 좋겠는데 간사 간에 이야기가, 논의가 있었던 것으로 압니다. 그래서 박형수 간사께서 의사진행발언을 하시겠다고 하셔서 저희가 그러면 양당 간사 의사진행발언하는 것으로 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;박형수 위원님 의사진행발언 해 주십시오.</span><br/></div></div></div><div id="spk_7" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;국민의힘 간사 박형수 위원입니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;오늘 우리 당 위원님들께서 전체회의에 전원 불참하셨습니다. 저만 나왔습니다. 그 이유는 뭐냐 하면 증인 협의에서 대법원장과 대법관들의 출석을 요구하는 그 증인들을 민주당에서 신청을 했습니다. 이 증인들을 두고 민주당의 김의겸 간사와 어제도 협의를 하고 오늘도 협의를 했습니다. 어제까지 협의한 상황에서는 이 대법원장과 대법관들을 증인으로 꼭 출석시켜야 되겠다라는 입장이었습니다.</span><br/><span class="spk_sub" id="spk_sub7-3">&nbsp;국민의힘은 대법원장을 증인으로 출석시키는 것에 대해서 결단코 반대합니다. 왜냐하면 그것은 삼권분립을 형해화시키는 것이고 사법부의 독립을, 사법부의 정치적 중립성을 완전히 허물어뜨리는 것이기 때문입니다.</span><br/><span class="spk_sub" id="spk_sub7-4">&nbsp;지금까지 관례는 대법원장은 국정감사에서 인사말씀을 하시고 퇴장하셨다가 마지막 마무리 인사말씀 하시는 걸로 그렇게 수십 년간 운영을 해 왔습니다. 그런데 지난해에 민주당이 대법원장의 이석을 허락하지 않았습니다. 이러한 상황들이 벌어지고 난 이후에 이번 국감에서는 아예 증인으로 지금 신청하겠다고 합니다.</span><br/><span class="spk_sub" id="spk_sub7-5">&nbsp;대법원장을 증인으로 하지 않는 이유는 방금 말씀드린 바와 같이 사법부의 독립성 때문입니다. 수십 년간 해 오던 관행을 어그러뜨리는 것 그 자체가 이미 사법부의 독립을 허물어뜨리는 한 행위입니다. 저희들은 그것에 대해서 결코 동의할 수 없다라는 점을 분명히 밝힙니다.</span><br/><span class="spk_sub" id="spk_sub7-6">&nbsp;민주당이 지금 국정감사에 굳이 대법원장을 증인으로, 대법관들을 증인으로, 천대엽 대법관과 박영재 대법관을 증인으로 부르려고 합니다. 이 이유가 뭘까요? 대법관 재제청 요구 그것 때문이라고요? 저는 그렇게 생각하지 않습니다. 그것도 이유가 되겠지요.</span><br/><span class="spk_sub" id="spk_sub7-7">&nbsp;첫 번째 이유는 공선법 파기환송했다라는 이유로 인한 정치적 보복입니다. 대법원장 망신 주겠다는 겁니다.</span><br/><span class="spk_sub" id="spk_sub7-8">&nbsp;두 번째는 앞으로 임명할―이제 21명 남아 있지요―21명의 대법관을 청와대의 입맛대로, 대통령의 입맛대로 마음대로 고르겠다는 겁니다. 그것을 하지 않으면 불러서 망신 주고 이렇게 하겠다는 것을 보여 주는 겁니다. 그것 때문에 저는 민주당이 굳이 대법원장을, 대법관들을 증인으로 지금 요청하는 거라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub7-9">&nbsp;법률에 규정이 있다고 해서 그것을 마음대로 행사하면 결과가 어떻게 되겠습니까? 민주주의를 지탱하는 가장 중요한 두 가지는 상호 존중과 제도적 자제입니다. 법률에 규정되어 있다고 마음껏 권한을 행사해서 어떤 결과가 초래됩니까?</span><br/><span class="spk_sub" id="spk_sub7-10">&nbsp;1분만 더 주십시오.</span><br/></div></div></div><div id="spk_8" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;1분 더 드리세요.</span><br/></div></div></div><div id="spk_9" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;그 결과는 민주주의가 파괴되는 것이라는 것을 우리가 이미 경험으로도 알고 있고 교과서에도 그렇게 써져 있습니다. 그런데 이것을 왜 민주당이 굳이 이렇게 하겠다고 하는 것입니까?</span><br/><span class="spk_sub" id="spk_sub9-2">&nbsp;정치적으로 보면 국민의힘은 그다지 나쁘지 않습니다. 민주당이 이렇게 일방적으로 몰아붙이면, 밀어붙이면 결국 그것이 오만한 권력, 무소불위의 권력. 국민들께서는 가장 싫어하는 부분이 그 부분입니다. 그래서 정치적으로 저희들한테 불리하지 않습니다.</span><br/><span class="spk_sub" id="spk_sub9-3">&nbsp;또 이번 청문회 사태에서도 김승원 후보자 인사청문경과보고서를 여러분들께서, 민주당 위원들이 강행으로 밀어붙였지 않습니까? 그 결과가 어땠습니까? 김민석 대표가 보면 볼수록 잘된 인사라고 그랬고 서영교 위원장님도 보증한다고 그랬습니다, 김승원 후보자에 대해서. 결과가 어땠습니까?</span><br/><span class="spk_sub" id="spk_sub9-4">&nbsp;저는 이것을 반면교사로 삼아야 된다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub9-5">&nbsp;(발언시간 초과로 마이크 중단)</span><br/><div class="line_dot">&nbsp;</div><span class="spk_sub" id="spk_sub9-6">&nbsp;(마이크 중단 이후 계속 발언한 부분)</span><br/><span class="spk_sub" id="spk_sub9-7">&nbsp;제가, 국민의힘이 대법원장, 대법관들을 청문회 증인으로 부르는 것에 반대하는 이유는 정치적으로 우리한테 불리해서가 아닙니다. 대한민국의 국격이 문제되기 때문입니다. 수십 년 동안 쌓아 온 민주주의와 법치주의가 이걸로 다 무너지는 것입니다.</span><br/><span class="spk_sub" id="spk_sub9-8">&nbsp;다시 한번 말씀드리지만 우리는 대법원장과 대법관들을 국정감사의 증인으로 부르는 것에 대해서 결단코 반대합니다.</span><br/><span class="spk_sub" id="spk_sub9-9">&nbsp;앞으로 민주당의 간사와 협의를 하면서 이 점을 분명히 할 것이고 28일 날 또 전체회의가 열리겠지만 그 전까지 민주당의 전향적인 태도를 기대합니다.</span><br/><span class="spk_sub" id="spk_sub9-10">&nbsp;이상입니다.</span><br/><div class="line_dot">&nbsp;</div></div></div></div><div id="spk_10" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;의사진행발언, 김의겸 간사님.</span><br/></div></div></div><div id="spk_11" class="item3 speaker spk_mem" data-mem_id="7222" data-name="김의겸" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">김의겸 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMEUIKYEOM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/896b23bb0a5d40b59f42f996e7973575.jpg" alt="김의겸"></span><span class="txt"><strong class="name">김의겸</strong><span class="position">위원</span><span class="area">(전북 군산시김제시부안군갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;민주당 간사 김의겸입니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;박형수 간사님 말씀 잘 들었습니다.</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;박 간사님 말씀대로 사법부의 독립 중요하고요 그리고 수십 년 동안 지켜 온 관례도 중요하다고 생각을 합니다. 하지만 조희대 대법원장의 현재 사법부가 과연 그러한 사법부의 독립을 지켜 오고 또 관례를 존중받을 만큼의 행동을 했는지에 대해서는 의문입니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;조희대 대법원장 시절에 대선을 앞두고 선거법 위반으로 파기환송을 했다든지 또 최근에 대법관 제청 과정에서 일방적으로 제청을 한 문제는 사법부의 독립이나 중립을 벗어난 행위이고 또 관례에서도 완전히 어긋난 그런 행위였기 때문에 국회라고 하는 민의의 전당에서 저희들이 이런 내용을 국민들의 수준에서 이야기를 들을 수 있는 권리는 당연히 있다라고 생각을 하고 오히려 그게 국민들이 저희에게 요구하는 책무다 이렇게 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;그리고 하나 더 말씀을, 김승원 후보자 문제에 대해서 밀어붙였다 또 서영교 위원장께서 보증한다 이렇게 말씀했던 문제에 대해서 야당에서 의혹이나 문제를 제기하시는데, 17일에 저희 법사위원회에서 통과를 시켰습니다. 땅땅땅 이렇게 서영교 위원장이 통과를 시켰는데, 추가로 제기된 문제, 그 문제에 대해서는 이 자리를 빌려서 분명히 말씀드립니다. 서영교 위원장을 비롯해서 저희 법사위원 그 누구도 이른바 제보자가 제기했다는 제보 내용에 대해서 전혀 알지 못한 상태로 저희들이 통과를 시켰다. 그 점에 있어서만은 분명하게 이 자리를 빌려서 말씀을 드리겠습니다.</span><br/></div></div></div><div id="spk_12" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;국정감사에서 그걸 한번 따져 봅시다, 진짜로 그랬는지, 진짜로 몰랐는지.</span><br/></div></div></div><div id="spk_13" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;이제 의사진행발언을 다 하셨으니까 위원장이 답변하겠습니다.</span><br/><span class="spk_sub" id="spk_sub13-2">&nbsp;중요한 것은 국회법 37조입니다. 국회법 37조, 입법부의 소관 기관…… 법사위 상임위원회 소관 사항으로 대법원의 사무행정이 소관 사항입니다.</span><br/><span class="spk_sub" id="spk_sub13-3">&nbsp;사법부의 독립, 이것은 사무행정과 관련한 내용들입니다. 사무행정과 관련해서 대법원 법원행정처장이 대법관후보자들에게 전화를 했습니다. 이게 있을 수 있는 일입니까?</span><br/></div></div></div><div id="spk_14" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;그것은 법원행정처장한테 물으면 되잖아요.</span><br/></div></div></div><div id="spk_15" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;잠깐, 위원장에게 의사진행발언하셨으니까 위원장이 이 부분에 대해서 국민들께 소상히 보고를 드립니다.</span><br/></div></div></div><div id="spk_16" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;법원행정처장이 나오는데 무슨……</span><br/></div></div></div><div id="spk_17" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;대법원 법원행정처장 노경필 그 사람은 대법관입니다. 이 대법관이 대법관후보자들에게 일일이 전화를 했습니다. 사퇴하신다면 다시 추천위원회를 꾸릴 수 있는데 그럴 의향이 있느냐고. 이게 있을 수 있는 일입니까, 국민 여러분?</span><br/><span class="spk_sub" id="spk_sub17-2">&nbsp;노경필이라고 하는 법원행정처장이 독자적으로 그런 전화를 했을까요? 그것을 대법원장이 모를까요? 대법원장이 사법부의 독립이라고 이야기하는 것은 허울이지요.</span><br/><span class="spk_sub" id="spk_sub17-3">&nbsp;대통령과 협의해서 대법관을 제청하기로 되어 있음에도 불구하고 그 제청을 209일까지 미뤄 오다가 12시에 처음으로 그 이름을 얘기하고 2시에 그것도 인사혁신처로 자료를 보냅니다. 그사이에 아마 대한민국 국민은 아무도 몰랐을 겁니다. 그러나 진실은 드러나기 마련이지요.</span><br/><span class="spk_sub" id="spk_sub17-4">&nbsp;노경필 법원행정처장이 일일이 전화를 해서 대법관후보직을 사퇴하라고, 이 부분을 놓고 어떻게 대법원장에 질의를 안 할 수가 있습니까? 이 이야기를 하는데 재판의 독립, 사법부의 독립을 이야기할 부분이 아닌 겁니다.</span><br/><span class="spk_sub" id="spk_sub17-5">&nbsp;저는 이 부분에 대해서 나와서 이야기해야 된다. 이것이 최근에 가장 중요한 일이고 그 전에 중요한 일은 이제 윤석열이 불법 비상……</span><br/></div></div></div><div id="spk_18" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;아니, 당사자가 노경필 법원행정처장인데……</span><br/></div></div></div><div id="spk_19" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;아까 제가 얘기 다 들어 드렸으니까 잠깐 계세요.</span><br/></div></div></div><div id="spk_20" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;위원장님, 시간을 지켜서 하세요.</span><br/></div></div></div><div id="spk_21" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;윤석열이 불법 비상계엄을 해서 무기징역 받았습니다. 불법 비상계엄 한 날 딱 2개 기관이 긴급회의를 합니다, 대책회의. 하나가 법무부, 법무부장관 그 대책회의로 감옥에 가 있습니다.</span><br/></div></div></div><div id="spk_22" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;또 시작이네, 또 시작. 레퍼토리 좀 바꾸세요. 몇 번을 하는 거야, 진짜.</span><br/></div></div></div><div id="spk_23" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;이것은 온 국민이 또다시 잊기 전에 말씀드리는 겁니다.</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;그리고 또 하나가 대법원입니다. 대법원의 재판 내용을 계엄사령부로 넘기기로 했다고 합니다. 누구의 지시에 의해서? 대법원장의 지시에 의해서라고 보도에 다 나와 있습니다. 그렇다면 세상은 공평해야 되는 것 아닙니까? 그 내용을 대법원장이 나와서 이야기해야 합니다. 보도에 ‘대법원장 지시로 긴급대책회의 열려, 재판관할을 계엄사령부로 넘기려 해’ 이렇게 나와 있는데 이 내용을 어떻게 안 짚고 갑니까?</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;이것만이 아니라 여러 가지가 있지만 이 부분에 대해서 위원님들이 묻고자 하는 것이고 오늘은 기관증인만 우선 하는 거고 증인 협상은 아직 다 이루어지지 않았기 때문에 협의 더 하시기를 바라고요.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;저는 중간중간에 자꾸 이게 왜곡되는 것 같아서…… 어떻게 대법원장을 불러? 그렇지 않습니다. 국회법 121조에 따라 이 국정감사 등의 기관증인으로도 또한 일반증인으로도 대법원장은 나올 수 있고 나와야 하는 상황이다라고 하는 말씀을 드리고. 이 국회법 안에 들어 있는 법사위 소관 기관의 내용으로……</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;(책을 들어 보이며)</span><br/><span class="spk_sub" id="spk_sub23-6">&nbsp;국회법 37조입니다. 제가 줄을 쳐 놨고요. 대법원의 사무행정, 이것이 바로 국회 법사위가 질의하고 답을 받아야 되는 내용이다라는 말씀을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-7">&nbsp;그리고 두 번째, 김승원 후보는……</span><br/></div></div></div><div id="spk_24" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;그걸 지금까지 수십 년 동안 법원행정처장한테 해 왔는데 지금 갑자기 대법원장한테 한다는 게 말이 됩니까?</span><br/></div></div></div><div id="spk_25" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;자, 이렇게 말씀드릴게요. 그러면 계엄이 수십 년 동안 있어 왔습니까?</span><br/></div></div></div><div id="spk_26" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;뭔 소립니까, 무슨 계엄이 수십 년 동안 있어 왔어요?</span><br/></div></div></div><div id="spk_27" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;불법 계엄이 있었고 그때 대법원장 지시가 있었다는 내용 아닙니까?</span><br/></div></div></div><div id="spk_28" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;뭔 소리예요? 불법 계엄에 왜 대법원장 지시로 해요?</span><br/></div></div></div><div id="spk_29" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;그리고 대법관후보에게 전화를 한 그런 사례가 있습니까? 이런 것은 누구에게 물어야 합니까? 대법원장에게 물어야 하고 대법원장이 그에 대한 답을 해야 합니다. 그리고 왜 대법관 제청을 하지 않는지도 물어야 합니다.</span><br/><span class="spk_sub" id="spk_sub29-2">&nbsp;두 번째, 김승원 법무부장관후보 관련해서 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub29-3">&nbsp;온갖 의혹이 나왔습니다. 있지도 않은 것 가지고 짜깁기한 인간들까지 있었습니다.</span><br/></div></div></div><div id="spk_30" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;그러면 왜 사퇴했어요? 말도 안 되는 소리 자꾸 하고 있네, 진짜.</span><br/></div></div></div><div id="spk_31" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;그리고 불법으로 기사를 유출한 사람들도 있었습니다. 그리고 이 내용이 모두 다 나왔는데, 그것이 팩트가 확인되고 그리고 김승원 후보자 가족이 함께 일하고 있는 그 발달장애인 올리브 협동조합에 관해서도 온갖 음해와 이런 내용들이 사실 아닌 게 나오지 않았습니까? 이에 대해서는 여러분 다 보셨습니다.</span><br/><span class="spk_sub" id="spk_sub31-2">&nbsp;그런 과정이 있었고 그 과정 속에서 우리는 적격이라고 통과시켰습니다. 이것이 다입니다.</span><br/></div></div></div><div id="spk_32" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;아니, 이 사퇴한 상황을 보고도 그런 얘기가 나옵니까, 지금? 국민들께 머리 숙여 사과를 해야지요.</span><br/></div></div></div><div id="spk_33" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;사퇴는 후보자가 대통령에게 부담 주지 않기 위해서 사퇴한 것 아닙니까?</span><br/></div></div></div><div id="spk_34" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;잘했습니다, 그래서!</span><br/></div></div></div><div id="spk_35" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">박지원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><strong class="name">박지원</strong><span class="position">위원</span><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;위원장, 지금 위원하고 무슨 일문일답 하는 거예요?</span><br/></div></div></div><div id="spk_36" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;이상으로……</span><br/><span class="spk_sub" id="spk_sub36-2">&nbsp;아니, 의사진행발언을 하셨으면 저도 답변을 해야지요.</span><br/><span class="spk_sub" id="spk_sub36-3">&nbsp;저는 제가 같이 일한 김승원 후보자에 대해서 여러 가지 일을 같이 보고 일정도 같이 해 왔고 그리고 그에 대해서 음해가 온갖 것이 난무하는 것을 보고 그것이 다시 제자리를 잡았던 것들까지 보면서 대한민국 국민을 위해서 후보자가 법무부장관으로 일하기를 바랐습니다. 그러나 후보자가 대통령께 부담을 드리지 않기 위해서 사퇴한 부분에 대해서는 그것은 그것대로 존중하는 바입니다.</span><br/><span class="spk_sub" id="spk_sub36-4">&nbsp;이상입니다.</span><br/><span class="spk_sub" id="spk_sub36-5">&nbsp;그리고 이것 관련해서 알았느니 몰랐느니, 뭐 탄원 내용 알지도 못할뿐더러 그것과 상관도 없이 저희는 그날 오전에 인사청문보고서를 채택하게 된 것이고 그 채택을 한 이유는 인사청문요구서가 오고 그리고 인사청문회가 끝나고 3일이 되어서 그렇게 채택하게 된 것이고, 그 부분에 대해서 이렇게 답변드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub36-6">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_37" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;그렇게 하세요.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;그런데 증인 협의는 해 보나 마나네요, 위원장님이 그렇게 얘기하시니까.</span><br/></div></div></div><div id="spk_38" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;오늘은……</span><br/></div></div></div><div id="spk_39" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;위원장님은 대법원장 꼭 나와야 된다고 얘기하시는데 뭐 하려고 28일까지 협의합니까?</span><br/></div></div></div><div id="spk_40" class="item3 speaker spk_mem" data-mem_id="6788" data-name="이성윤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">이성윤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESUNGYOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/31ee06a90e3e4064bc93690c998a9e78.jpg" alt="이성윤"></span><span class="txt"><strong class="name">이성윤</strong><span class="position">위원</span><span class="area">(전북 전주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;그만하세요, 이제.</span><br/></div></div></div><div id="spk_41" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">박지원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><strong class="name">박지원</strong><span class="position">위원</span><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;박형수 간사!</span><br/></div></div></div><div id="spk_42" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;오늘은 그렇게 사법부의 독립을 침해한다 그런 일이 절대 아니다라고 하는 말씀을 정리해서 드리는 겁니다.</span><br/></div></div></div><div id="spk_43" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;그러면 협의 뭐 하려고 합니까, 28일까지? 그냥 오늘 마음대로 하세요.</span><br/></div></div></div><div id="spk_44" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">박지원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><strong class="name">박지원</strong><span class="position">위원</span><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;국민의힘 위원들 다 오라고 해서 얘기해, 왜 혼자 와서……</span><br/></div></div></div><div id="spk_45" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;오늘은 더 요구할 증인이 많아요.</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;조작수사·조작기소에 대해서도 요구하고 여러분과 협의해서 통과시킬 증인이 많습니다.</span><br/><span class="spk_sub" id="spk_sub45-3">&nbsp;그러면 이제 들어가도록 하겠습니다.</span><br/></div></div></div><div id="spk_46" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;아니, 김의겸 간사, 뭐 하려고 협의하자고 합니까? 위원장님이 그냥 대법원장 불러야 된다고 이렇게 얘기하시는데 하나 마나 한 것 아닙니까?</span><br/></div></div></div><div id="spk_47" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;제가 말씀드리는 것은 대법원장 그 난은 제가 쓴 것도 아니지만 위원님들 선에서 증인 요구로 그런 요구가 왔고, 그걸 놓고 다른 얘기를 하시니까 그것에 대해서 제가 팩트 체크를 한 것입니다.</span><br/></div></div></div><div id="spk_48" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;꼭 필요하다면서요, 대법원장 나와야 된다면서요. 지금 그 얘기 안 했습니까?</span><br/></div></div></div><div id="spk_49" class="item3 speaker spk_mem" data-mem_id="6735" data-name="박지원" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">박지원 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d56ba73af8fc481bbad0165c9ed6fbe2.png" alt="박지원"></span><span class="txt"><strong class="name">박지원</strong><span class="position">위원</span><span class="area">(전남 해남군완도군진도군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;박 간사 이제 너무…… 그만 말해라. 그만해.</span><br/></div></div></div><div id="spk_50" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;그만하세요.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;그리고 지난번에 증인으로 요구하면서 우리가 다 했던 이야기 아닙니까?</span><br/></div></div></div><div id="spk_51" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;뭐 언제 다 얘기했어요?</span><br/></div></div></div><div id="spk_52" class="item3 speaker spk_mem" data-mem_id="6788" data-name="이성윤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">이성윤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESUNGYOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/31ee06a90e3e4064bc93690c998a9e78.jpg" alt="이성윤"></span><span class="txt"><strong class="name">이성윤</strong><span class="position">위원</span><span class="area">(전북 전주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;회의를 진행해 주세요.</span><br/></div></div></div><div id="spk_53" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;아니, 노경필 법원행정처장이 대법관후보자들에게 사퇴하라고 전화하는 게 말이 됩니까, 안 됩니까?</span><br/></div></div></div><div id="spk_54" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;그것 노경필 행정처장이 다 대답했잖아요. 본인이 했다고 그러는데 뭘……</span><br/></div></div></div><div id="spk_55" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;그것 관련해서 누구의 지시, 대법원장의 책임과 지시가 없이 가능합니까?</span><br/></div></div></div><div id="spk_56" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;아니, 노경필 법원행정처장이 본인이 했다고 얘기를 했잖아요.</span><br/></div></div></div><div id="spk_57" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;그래서 대법원장을 불러야 되는데 그렇지 않습니까?</span><br/></div></div></div><div id="spk_58" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;어떤 방법으로 밝혀낼 거예요, 그걸?</span><br/></div></div></div><div id="spk_59" class="item3 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;그게 상식적인 답변이 아니지 않습니까? 그러니까 본인을 불러 봐야지요.</span><br/></div></div></div><div id="spk_60" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;다시 한번 묻지만……</span><br/></div></div></div><div id="spk_61" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;아니, 대법원장 나온다고 해결되는가, 그게?</span><br/></div></div></div><div id="spk_62" class="item3 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;대법원장한테 직접 물어봐야지요.</span><br/></div></div></div><div id="spk_63" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;그러면 해결돼요? 그렇다고 대답할 것 같아요? 답답한 얘기 하네, 진짜.</span><br/></div></div></div><div id="spk_64" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;비상계엄이 있던 날 대법원장의 지시로 긴급대책회의는 왜 있었는지 그것을 노경필 법원행정처장께 묻습니까?</span><br/></div></div></div><div id="spk_65" class="item3 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;그 정도 하시지요. 당연히 불러 봐야지요.</span><br/></div></div></div><div id="spk_66" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;아니, 그러니까 당연히 불러 봐야 되면 증인 협의는 뭐 하려고 하냐고. 그냥 오늘 결의해 버리세요.</span><br/></div></div></div><div id="spk_67" class="item3 speaker spk_mem" data-mem_id="6562" data-name="김기표" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_67"><label for="spk_cnt_chk_67">김기표 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3ce78ac9f853436f8cb5c01e08c567be.jpg" alt="김기표"></span><span class="txt"><strong class="name">김기표</strong><span class="position">위원</span><span class="area">(경기 부천시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub67-1">&nbsp;저는 그렇게 생각합니다, 당연히 불러 봐야 된다고.</span><br/></div></div></div><div id="spk_68" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;의결해요, 그냥, 그러면.</span><br/></div></div></div><div id="spk_69" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;다음 사항으로 들어가겠습니다.</span><br/><span class="spk_sub" id="spk_sub69-2">&nbsp;우리는 여야 협의를 거쳤고 국정감사계획서 채택의 건을 상정하려고 합니다.</span><br/><span class="spk_sub" id="spk_sub69-3">&nbsp;먼저……</span><br/></div></div></div><div id="spk_70" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_70"><label for="spk_cnt_chk_70">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub70-1">&nbsp;민주당이 마음대로 하세요. 저는 가겠습니다.</span><br/><span class="spk_sub" id="spk_sub70-2">&nbsp;협의 해 봤자 할 것도 없는데 뭐 하려고 협의하자고 그러는데?</span><br/></div></div></div><div id="spk_71" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;국민의힘이 학업의 뜻이 없는 것 아닙니까? 왜 다 안 들어오시고 그러십니까?</span><br/></div></div></div><div id="spk_72" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;아니, 증인 협의 때문에 그렇다고 제가 아까 충분히 의사진행발언할 때 얘기했잖아요.</span><br/></div></div></div><div id="spk_73" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;증인 협의는, 오늘은 기관증인만 결정하지 않습니까?</span><br/></div></div></div><div id="spk_74" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;어젯밤까지는……</span><br/></div></div></div><div id="spk_75" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;남은 일반증인은 28일까지 저희가 결정 시한을 연기해 놓았습니다. 그런데 왜 오늘 나간다고 이렇게 얘기를 하지요? 그것 지난주에도 얘기한 내용이잖아요.</span><br/></div></div></div><div id="spk_76" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_76"><label for="spk_cnt_chk_76">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub76-1">&nbsp;그것은 오늘 1시 반에 얘기한 거예요. 오늘 1시 반에 얘기한 거고 어젯밤까지는 김의겸 간사가 오늘 증인을 다 한다고 얘기를 해서 그런 거잖아요. 그냥 마음대로 하세요.</span><br/></div></div></div><div id="spk_77" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_77"><label for="spk_cnt_chk_77">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub77-1">&nbsp;아니, 지난주 금요일 날 우선 기관증인을 오늘 하고 28일 날 또 하자고 했는데 자꾸 그러시면 됩니까?</span><br/></div></div></div><div id="spk_78" class="item3 speaker spk_mem" data-mem_id="6788" data-name="이성윤" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_78"><label for="spk_cnt_chk_78">이성윤 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEESUNGYOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/31ee06a90e3e4064bc93690c998a9e78.jpg" alt="이성윤"></span><span class="txt"><strong class="name">이성윤</strong><span class="position">위원</span><span class="area">(전북 전주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub78-1">&nbsp;위원장님, 회의 진행해 주십시오.</span><br/></div></div></div><div id="spk_79" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_79"><label for="spk_cnt_chk_79">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub79-1">&nbsp;그것은 내가 먼저 얘기를 했어요. 그런데 안 된다고 그래 놓고 뭔 소리야, 지금.</span><br/></div></div></div><div id="spk_80" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_80"><label for="spk_cnt_chk_80">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub80-1">&nbsp;제가 그날 이야기했잖아요, 금요일 날. 금요일 날 28일 날 한 번 더 하자고 얘기했잖아요.</span><br/></div></div></div><div id="spk_81" class="item3 speaker spk_mem" data-mem_id="6695" data-name="박형수" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_81"><label for="spk_cnt_chk_81">박형수 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/45a932e98e3545108741802f7193bf09.jpg" alt="박형수"></span><span class="txt"><strong class="name">박형수</strong><span class="position">위원</span><span class="area">(경북 의성군청송군영덕군울진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub81-1">&nbsp;무슨 소리야, 지금. 내가 28일 날 해 준다는데 김의겸 간사는 안 된다면서요. 6일하고 8일 것은 오늘 해야 된다면서요.</span><br/></div></div></div><div id="spk_82" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_82"><label for="spk_cnt_chk_82">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub82-1">&nbsp;6일 것 28일 날 해도 되는데……</span><br/><span class="spk_sub" id="spk_sub82-2">&nbsp;(일부 위원 퇴장)</span><br/><span class="spk_sub" id="spk_sub82-3">&nbsp;아니, 다른 증인들은 오늘 해야 되는 것 아닌가요?</span><br/><span class="spk_sub" id="spk_sub82-4">&nbsp;다시 한번 말씀드리지만 대법관후보자들에게 대법원 법원행정처장이 사퇴를 전화해도 되는 겁니까? 자꾸 잊어버리게 물을 타고 있는데요. 그렇지 않습니다. 대법관후보자들에게, 어떻게 4명에게 일일이 전화를 해서 사퇴하라고 합니까?</span><br/><span class="spk_sub" id="spk_sub82-5">&nbsp;그리고 오늘 같은 날 왜 안 나옵니까, 국민의힘은? 나와서 같이 회의를 해야지요. 아예 들어올 생각이 처음부터 없었던 것 같습니다. 그것에 대해서 지적합니다.</span><br/><span class="spk_sub" id="spk_sub82-6">&nbsp;제1항 국정감사계획서 채택의 건입니다.</span><br/><span class="spk_sub" id="spk_sub82-7">&nbsp;먼저 제1항 2026년도 국정감사의 주요 내용을 말씀드리면 10월 6일부터 27일까지 22일간 법무부 등 82개 기관에 대해 감사를 실시하되 10월 26일에는 전체 소관기관을 대상으로 종합감사를 실시하겠습니다. 지방에 소재한 각급 법원 및 검찰청에 대한 국정감사 시 지방감사 1반과 2반을 구성하여 감사를 실시하되 반별 위원 배정은 위원장이 간사님들과 협의하여 정할 수 있도록 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub82-8">&nbsp;참고로 현재 국정감사계획서에는 검찰청에 대한 국정감사 일정이 포함되어 있습니다만 10월 2일 공소청 출범 이후 대검찰청 및 각급 검찰청에 대한 국정감사 일정, 그에 상응하는 공소청 및 광역·지방 공소청 등에 대한 국정감사를 실시하는 것으로 하고 추후 이러한 사항을 반영하여 국정감사계획서를 변경하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-9">&nbsp;기관별 감사 일시와 장소 등 세부 일정은 배부해 드린 계획서(안)을 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub82-10">&nbsp;다음, 제2항 보고 및 서류제출 요구의 건은 우리 위원회가 채택하는 국정감사계획서에 따라 피감기관의 해당 감사일에 업무 전반에 대해 보고하고 위원의 국정감사 준비에 필요한 서류 등의 제출을 위원회의 의결로서 요구하려고 하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub82-11">&nbsp;국정감사와 관련된 서류제출 요구는 국회법 제128조 및 국정감사 및 조사에 관한 법률 제10조에 따라 위원회의 의결이나 재적위원 3분의 1 이상의 요구로 할 수 있습니다. 또한 국회에서의 증언·감정 등에 관한 법률 제5조에 따라 서류제출 요구서는 제출요구일 7일 전에 해당 기관에 송달되어야 합니다.</span><br/><span class="spk_sub" id="spk_sub82-12">&nbsp;따라서 현재 위원님들께서 제출해 주신 서류제출 요구는 오늘 의결하기로 하고 추가로 자료 요구하실 위원님들은 재적위원 3분의 1 이상의 연서로 해당 기관의 감사실시일 7일 전까지 행정실에 제출해 주시면 위원장이 해당 기관에 요구하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-13">&nbsp;현재까지 각 의원실로부터 접수된 서류제출 요구 현황은 배부해 드린 자료를 참고해 주시고 자료는 9월 29일까지 제출하도록 요구하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-14">&nbsp;참고로 10월 2일 공소청 출범 이후 대검찰청 및 각급 검찰청에 대한 국정감사 일정에 대해, 일정에 그에 상응하는 공소청 및 각급 공소청으로부터 보고를 받는 것으로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-15">&nbsp;제3항 증인·참고인 출석 요구의 건입니다. 기관증인만 채택하는 경우입니다.</span><br/><span class="spk_sub" id="spk_sub82-16">&nbsp;다음, 제3항 증인·참고인 출석 요구의 건은 국회법 제129조 및 국정감사 및 조사에 관한 법률 제10조에 따라 2026년도 국정감사를 위해 82개 피감기관의 기관장, 부서장 등 기관증인에 대한 출석을 요구하기 위한 것입니다.</span><br/><span class="spk_sub" id="spk_sub82-17">&nbsp;참고로 대검찰청 및 각급 검찰청의 기관증인은 오늘 채택하지 않고 10월 2일 공소청 출범 이후 공소청 및 각급 공소청의 기관증인을 채택하는 증인 출석 요구의 건을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-18">&nbsp;기관증인의 구체적인 명단은 배부해 드린 자료를 참고해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub82-19">&nbsp;일반증인 및 참고인 채택과 관련하여 아직 교섭단체 간사님들 간 협의가 진행 중입니다. 협의 진행 상황을 고려하여 일반증인 및 참고인 채택은 추후 다음 의사일정을 작성하여 심사하도록 하겠습니다. 또한 대법원장과 헌법재판소장은 국회법 제121조 5항에 따라 조희대 대법원장은 10월 6일에, 김상환 헌법재판소장은 10월 13일에 출석을 요구하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-20">&nbsp;그러면 지금까지 말씀드린 의사일정 제1항부터 제3항까지의 2026년도 국정감사 관련 안건들에 대해 의견 있으신 분 계십니까?</span><br/><span class="spk_sub" id="spk_sub82-21">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub82-22">&nbsp;없으십니까?</span><br/><span class="spk_sub" id="spk_sub82-23">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub82-24">&nbsp;더 이상 토론하실 위원님 안 계시면 토론을 종결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-25">&nbsp;참고로 언론인분들이 계신데 조희대 대법원장과 헌법재판소장은 지금은 국회법 121조에 대한 출석 요구입니다. 그래서 이 부분과 일반증인 출석 요구는 오늘은 하지 않는 것으로 하고 필요시 28일에, 간사 간 협의가 더 있을 예정이다라고 하는 말씀을 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-26">&nbsp;그러면 의결하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-27">&nbsp;먼저 의사일정 제1항 2026년도 국정감사계획서 채택의 건을 배부해 드린 자료와 말씀드린 바와 같이 의결하고자 하는데 이의가 없으십니까?</span><br/><span class="spk_sub" id="spk_sub82-28">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub82-29">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub82-30">&nbsp;의사일정 제2항 2026년도 국정감사 보고 및 서류제출 요구의 건을 배부해 드린 자료와 같이, 말씀드린 바와 같이 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub82-31">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub82-32">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub82-33">&nbsp;의사일정 제3항……</span><br/><span class="spk_sub" id="spk_sub82-34">&nbsp;다시 한번 말씀드리지만 대법원장과 헌법재판소장에 관한 출석은 기존의 관례에 따라, 국회법 121조에 따라 출석을 요구할 수 있다로 출석을 요구하고요. 아직 협의가 완료되지 않아서 일반증인으로 출석을 요구하는 내용은 다음 회의에서 그 내용을 협의에 따라 하도록 하겠습니다. 그래서 지금 의결하는 내용은 기존 국정감사 때와 똑같은 의결이라는 말씀을 한 번 더 드립니다.</span><br/><span class="spk_sub" id="spk_sub82-35">&nbsp;다음, 의사일정 제3항 2026년도 국정감사 증인·참고인 출석 요구의 건을 배부해 드린 명단과 같이, 말씀드린 바와 같이 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub82-36">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub82-37">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub82-38">&nbsp;다음은 의사일정 제4항입니다.</span><br/><span class="spk_sub" id="spk_sub82-39">&nbsp;특별감찰관후보자 인사청문요청안 및 의사일정 제5항 특별감찰관후보자 인사청문경과보고서 채택의 건 관련해서는 국민의힘에서 의견들을 제시하고 있고 또 이와 관련해서 동의하지 못하겠다고 하는 지난 의견도 있었습니다. 그래서 오늘은, 이 부분에 대해서는 다음 회의에서 다시 한번 논의하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub82-40">&nbsp;간사님, 그렇게 하면 될까요?</span><br/></div></div></div><div id="spk_83" class="item3 speaker spk_mem" data-mem_id="7222" data-name="김의겸" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_83"><label for="spk_cnt_chk_83">김의겸 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMEUIKYEOM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/896b23bb0a5d40b59f42f996e7973575.jpg" alt="김의겸"></span><span class="txt"><strong class="name">김의겸</strong><span class="position">위원</span><span class="area">(전북 군산시김제시부안군갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub83-1">&nbsp;예.</span><br/></div></div></div><div id="spk_84" class="item3 speaker spk_mem" data-mem_id="6711" data-name="서영교" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_84"><label for="spk_cnt_chk_84">위원장 서영교 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c061e90cf359465fa1408c443a4a7857.jpg" alt="서영교"></span><span class="txt"><span class="position">위원장</span><strong class="name">서영교</strong><span class="area">(서울 중랑구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub84-1">&nbsp;그러면 의사일정 제4항으로 특별감찰관후보자(최길수) 인사청문요청안 및 의사일정 제5항 특별감찰관후보자 인사청문경과보고서(안)도 같이 협의하였으나 이에 대해서도 오늘 의사일정들을 동의하지 못하겠다라고 하면서 의사진행발언 그리고 모두 다 들어오지 않은 관계로 저희가 이 부분에 대해서는 좀 더 협의를 거쳐서 다음 회의에서 채택하는 방안을 논의하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub84-2">&nbsp;혹시 의견 있으십니까?</span><br/><span class="spk_sub" id="spk_sub84-3">&nbsp;(「없습니다」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub84-4">&nbsp;이번 국정감사에서는, 그동안 국가의 권력을 가지고 조작수사하고 조작기소하고 그 과정에서 감사원이 국토부 직원들에 대한 강제 감사, 위압적인 감사 등을 모두 다 보고 보도자료를 냈습니다. 그와 관련해서 해임도 요구하고 파면도 하고 그리고 법적 조치도 했다고 합니다. 이와 관련한 내용들도 다 살펴 내겠습니다. 서해공무원 사건 관련해서도 조작수사, 조작기소로 일관되었기 때문에 모두 재판에서 무죄가 확정되었습니다. 그와 관련한 것도 마찬가지입니다.</span><br/><span class="spk_sub" id="spk_sub84-5">&nbsp;그동안 국정조사, 국정감사에서 모두 나왔던 부분들 관련해서도 다 밝혀내도록 하겠습니다. 그리고 한동훈 등 국가기관의 서류 그리고 수사기밀 등을 유출하는 과정 속에서 연관되었던 모든 것과 관련한 불법을 또한 다 찾아내서 처벌하도록, 그렇게 국정감사로 파헤쳐 보도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub84-6">&nbsp;이상으로 오늘 회의를 마치겠습니다.</span><br/><span class="spk_sub" id="spk_sub84-7">&nbsp;위원님들 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub84-8">&nbsp;보좌진, 수석전문위원을 비롯한 위원회 직원, 경위, 속기사 및 언론인 여러분도 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub84-9">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(14시50분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(13인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMGIPYO" target="_blank"><span class="name lts3 ">김기표</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMHEE" target="_blank"><span class="name lts3 ">김남희</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMDONGAH" target="_blank"><span class="name lts3 ">김동아</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYONGMIN" target="_blank"><span class="name lts3 ">김용민</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMEUIKYEOM" target="_blank"><span class="name lts3 ">김의겸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMHANKYU" target="_blank"><span class="name lts3 ">김한규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKKYOONTAEK" target="_blank"><span class="name lts3 ">박균택</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKEUNJUNG" target="_blank"><span class="name lts3 ">박은정</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKJIEWON" target="_blank"><span class="name lts3 ">박지원</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKHYEUNGSOO" target="_blank"><span class="name lts3 ">박형수</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SEOYOUNGKYO" target="_blank"><span class="name lts3 ">서영교</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SONSOL" target="_blank"><span class="name lts2 ">손솔</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESUNGYOON" target="_blank"><span class="name lts3 ">이성윤</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 심정희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 윤상열</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 최기도</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 이세진</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>성매매알선 등 행위의 처벌에 관한 법률 전부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 9. 17. 전진숙 의원 대표발의)(의안번호 2221415)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">9월 18일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="12.130310764149527%"><col width="14.583824822527719%"><col width="47.167949900272376%"><col width="12.160336285842966%"><col width="13.957578227207412%"></colgroup><thead><tr><th scope="col">구분</th><th scope="col">공포번호</th><th scope="col">행정입법명</th><th scope="col">소관부처</th><th scope="col">공포일자</th></tr></thead><tr><td>대통령령<br/></td><td>제36673호<br/></td><td>출입국관리법 시행령<br/></td><td>법무부<br/></td><td>2026.9.15.<br/></td></tr><tr><td rowspan=2>부령<br/></td><td>제1124호<br/></td><td>재외동포법 시행규칙<br/></td><td>법무부<br/></td><td>2026.9.15.<br/></td></tr><tr><td>제1125호<br/></td><td>출입국관리법 시행규칙<br/></td><td>법무부<br/></td><td>2026.9.15.<br/></td></tr></table></div><br/></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57293;
+			const class_id = 2;
+			const confer_num = "N054498";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1793029845985" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1793029845985"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1793029845985"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1793029845985"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
