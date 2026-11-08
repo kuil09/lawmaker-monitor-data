@@ -1,0 +1,979 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57670" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제439회 (정기회) 제3차 농림축산식품해양수산위원회(농림축산식품법안심사소위원회)</strong><span class="date">(2026.11.03.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">13. 농업·농촌 및 식품산업 기본법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210344)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">14. 농업·농촌 및 식품산업 기본법 일부개정법률안(서천호 의원 대표발의)(의안번호 2213533)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">15. 농업·농촌 및 식품산업 기본법 일부개정법률안(박균택 의원 대표발의)(의안번호 2215691)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">16. 농업·농촌 및 식품산업 기본법 일부개정법률안(김선교 의원 대표발의)(의안번호 2216642)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">17. 농업·농촌 및 식품산업 기본법 일부개정법률안(어기구 의원 대표발의)(의안번호 2216805)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">18. 농업·농촌 및 식품산업 기본법 일부개정법률안(임종득 의원 대표발의)(의안번호 2219452)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">1. 농업협동조합법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2209214)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">2. 농업협동조합법 일부개정법률안(임호선 의원 대표발의)(의안번호 2215586)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">3. 농업협동조합법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216819)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">4. 농업협동조합법 일부개정법률안(임미애 의원 대표발의)(의안번호 2217243)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">5. 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2217360)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">6. 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218013)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">7. 농업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218247)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">8. 농업협동조합법 일부개정법률안(문금주 의원 대표발의)(의안번호 2218297)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">9. 농업협동조합법 일부개정법률안(전종덕 의원 대표발의)(의안번호 2218476)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">10. 농업협동조합법 일부개정법률안(강승규 의원 대표발의)(의안번호 2220695)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">11. 농업협동조합법 일부개정법률안(김용태 의원 대표발의)(의안번호 2220706)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">12. 농업협동조합법 일부개정법률안(주철현 의원 대표발의)(의안번호 2221027)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="윤준병 소위원장 (전북 정읍시고창군)"> 
+							윤준병 소위원장 (전북 정읍시고창군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="강승규 위원 (충남 홍성군예산군)"> 
+							강승규 위원 (충남 홍성군예산군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김성범 위원 (제주 서귀포시)"> 
+							김성범 위원 (제주 서귀포시)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="김용태 위원 (경기 포천시가평군)"> 
+							김용태 위원 (경기 포천시가평군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="신장식 위원 (비례대표)"> 
+							신장식 위원 (비례대표)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="문금주 위원 (전남 고흥군보성군장흥군강진군)"> 
+							문금주 위원 (전남 고흥군보성군장흥군강진군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+											
+										
+										
+									
+								
+								
+								
+							
+							<option value="이개호 위원 (전남 담양군함평군영광군장성군)"> 
+							이개호 위원 (전남 담양군함평군영광군장성군)
+						</option>
+					
+					
+						<option value="정대영 수석전문위원">정대영 수석전문위원</option>
+					
+						<option value="김종구 농림축산식품부차관">김종구 농림축산식품부차관</option>
+					
+						<option value="윤원습 농림축산식품부농업정책관">윤원습 농림축산식품부농업정책관</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(7명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">윤준병</span>
+												<span class="position">소위원장</span>
+												<span class="area">(전북 정읍시고창군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6739" data-name="강승규" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">강승규</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 홍성군예산군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="7224" data-name="김성범" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">김성범</span>
+												<span class="position">위원</span>
+												<span class="area">(제주 서귀포시)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6784" data-name="김용태" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">김용태</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 포천시가평군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6858" data-name="신장식" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">신장식</span>
+												<span class="position">위원</span>
+												<span class="area">(비례대표)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6565" data-name="문금주" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">문금주</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 고흥군보성군장흥군강진군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+													
+												
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6670" data-name="이개호" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">이개호</span>
+												<span class="position">위원</span>
+												<span class="area">(전남 담양군함평군영광군장성군)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(3명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="정대영" data-pos="수석전문위원"> 
+											<label for="spk_attend0">
+												<span class="name">정대영</span>
+												<span class="position">수석전문위원</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"> 
+											<label for="spk_attend1">
+												<span class="name">김종구</span>
+												<span class="position">농림축산식품부차관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="윤원습" data-pos="농림축산식품부농업정책관"> 
+											<label for="spk_attend2">
+												<span class="name">윤원습</span>
+												<span class="position">농림축산식품부농업정책관</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57670&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제439회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>농림축산식품해양수산위원회회의록</h1><p class="tit_sm">(농림축산식품법안심사소위원회)</p></div><p class="tmp">(임시회의록)</p></div><p class="num">제3호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 11월 3일(화)</p></li><li><div class="sbj lts2">장소</div><p class="con">농림축산식품해양수산위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 농업협동조합법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2209214)</li><li><span class="num">2.</span> 농업협동조합법 일부개정법률안(임호선 의원 대표발의)(의안번호 2215586)</li><li><span class="num">3.</span> 농업협동조합법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216819)</li><li><span class="num">4.</span> 농업협동조합법 일부개정법률안(임미애 의원 대표발의)(의안번호 2217243)</li><li><span class="num">5.</span> 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2217360)</li><li><span class="num">6.</span> 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218013)</li><li><span class="num">7.</span> 농업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218247)</li><li><span class="num">8.</span> 농업협동조합법 일부개정법률안(문금주 의원 대표발의)(의안번호 2218297)</li><li><span class="num">9.</span> 농업협동조합법 일부개정법률안(전종덕 의원 대표발의)(의안번호 2218476)</li><li><span class="num">10.</span> 농업협동조합법 일부개정법률안(강승규 의원 대표발의)(의안번호 2220695)</li><li><span class="num">11.</span> 농업협동조합법 일부개정법률안(김용태 의원 대표발의)(의안번호 2220706)</li><li><span class="num">12.</span> 농업협동조합법 일부개정법률안(주철현 의원 대표발의)(의안번호 2221027)</li><li><span class="num">13.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210344)</li><li><span class="num">14.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(서천호 의원 대표발의)(의안번호 2213533)</li><li><span class="num">15.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(박균택 의원 대표발의)(의안번호 2215691)</li><li><span class="num">16.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(김선교 의원 대표발의)(의안번호 2216642)</li><li><span class="num">17.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(어기구 의원 대표발의)(의안번호 2216805)</li><li><span class="num">18.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(임종득 의원 대표발의)(의안번호 2219452)</li><li><span class="num">19.</span> 축산자조금의 조성 및 운용에 관한 법률 일부개정법률안(이만희 의원 대표발의)(의안번호 2206676)</li><li><span class="num">20.</span> 축산자조금의 조성 및 운용에 관한 법률 일부개정법률안(어기구 의원 대표발의)(의안번호 2214395)</li><li><span class="num">21.</span> 축산자조금의 조성 및 운용에 관한 법률 일부개정법률안(송옥주 의원 대표발의)(의안번호 2221372)</li><li><span class="num">22.</span> 축산자조금의 조성 및 운용에 관한 법률 일부개정법률안(임미애 의원 대표발의)(의안번호 2221970)</li><li><span class="num">23.</span> 축산물 유통 및 가축거래의 관리·지원에 관한 법률안(정부 제출)(의안번호 2201793)</li><li><span class="num">24.</span> 축산물 유통 및 가축거래의 관리·지원에 관한 법률안(윤준병 의원 대표발의)(의안번호 2217560)</li><li><span class="num">25.</span> 축산물의 유통 및 가격관리에 관한 법률안(문대림 의원 대표발의)(의안번호 2214081)</li><li><span class="num">26.</span> 축산법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2220518)</li><li><span class="num">27.</span> 동물대체시험법의 개발 보급 및 이용 활성화에 관한 법률안(한정애 의원 대표발의)(의안번호 2212248)</li><li><span class="num">28.</span> 동물대체시험법의 개발·보급 및 이용 활성화에 관한 법률안(송옥주 의원 대표발의)(의안번호 2215262)</li><li><span class="num">29.</span> 동물대체시험법의 개발·보급 및 이용 촉진에 관한 법률안(남인순 의원 대표발의)(의안번호 2216624)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">13.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210344)</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">14.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(서천호 의원 대표발의)(의안번호 2213533)</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">15.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(박균택 의원 대표발의)(의안번호 2215691)</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">16.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(김선교 의원 대표발의)(의안번호 2216642)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">17.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(어기구 의원 대표발의)(의안번호 2216805)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">18.</span> 농업·농촌 및 식품산업 기본법 일부개정법률안(임종득 의원 대표발의)(의안번호 2219452)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">1.</span> 농업협동조합법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2209214)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">2.</span> 농업협동조합법 일부개정법률안(임호선 의원 대표발의)(의안번호 2215586)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">3.</span> 농업협동조합법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216819)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">4.</span> 농업협동조합법 일부개정법률안(임미애 의원 대표발의)(의안번호 2217243)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">5.</span> 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2217360)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">6.</span> 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218013)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">7.</span> 농업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218247)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">8.</span> 농업협동조합법 일부개정법률안(문금주 의원 대표발의)(의안번호 2218297)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">9.</span> 농업협동조합법 일부개정법률안(전종덕 의원 대표발의)(의안번호 2218476)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">10.</span> 농업협동조합법 일부개정법률안(강승규 의원 대표발의)(의안번호 2220695)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">11.</span> 농업협동조합법 일부개정법률안(김용태 의원 대표발의)(의안번호 2220706)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">12.</span> 농업협동조합법 일부개정법률안(주철현 의원 대표발의)(의안번호 2221027)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(10시05분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;의석을 정돈해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;성원이 되었으므로 제439회 국회(정기회) 제3차 농림축산식품법안심사소위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3">&nbsp;오늘 회의는 지난 소위에 이어서 농림축산식품부 소관 법률을 중심으로 심사를 진행하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-4">&nbsp;안건 심사 방법은 전문위원실에서 작성한 심사자료를 바탕으로 전문위원의 보고와 정부 측 의견을 들은 후 위원님들 간의 논의를 거쳐 정리하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-5">&nbsp;오늘 심사할 안건은 배부해 드린 의사일정을 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub2-6">&nbsp;그러면 안건 심사를 하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2R5P0O4O2M9O0J9K5I8G2H3F9G5N2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 농업·농촌 및 식품산업 기본법 일부개정법률안(송옥주 의원 대표발의)(의안번호 2210344)</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_E2F5N0L6M2K5K1J6K4R8S3Q1R1P0O8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 농업·농촌 및 식품산업 기본법 일부개정법률안(서천호 의원 대표발의)(의안번호 2213533)</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item3" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_A2A5Y1Z2V2T6U1S0T4R5S0Z7A9Y6X8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 농업·농촌 및 식품산업 기본법 일부개정법률안(박균택 의원 대표발의)(의안번호 2215691)</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2R6P0Q2O0O5N1O8J0K0I1H7H8F8G2" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 농업·농촌 및 식품산업 기본법 일부개정법률안(김선교 의원 대표발의)(의안번호 2216642)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2D6F0M2N0L2L1K0I2J8R4R2P2R8P5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 농업·농촌 및 식품산업 기본법 일부개정법률안(어기구 의원 대표발의)(의안번호 2216805)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2S6S0G6V1S5R1A0Z5W1E5E2D7Z3Y8" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 농업·농촌 및 식품산업 기본법 일부개정법률안(임종득 의원 대표발의)(의안번호 2219452)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><div id="spk_3" class="item6 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;먼저 의사일정 제13항부터 제18항까지 이상 6건의 농업·농촌 및 식품산업 기본법 일부개정법률안을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub3-2">&nbsp;먼저 수석전문위원께서 주요 사항을 설명해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_4" class="item6 speaker spk_mem" data-mem_id="0" data-name="정대영" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">수석전문위원 정대영 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정대영"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">정대영</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;수석전문위원입니다.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;소위 심사자료 2권입니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;농업·농촌 및 식품산업 기본법 일부개정법률안입니다.</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;2페이지입니다.</span><br/><span class="spk_sub" id="spk_sub4-5">&nbsp;농촌의 범위에 농식품부령으로 정하는 광역시 자치구의 동 지역을 포함하는 내용입니다.</span><br/><span class="spk_sub" id="spk_sub4-6">&nbsp;박균택 의원안은 광역시 자치구 동 지역에서 상업지역 및 공업지역을 제외한 지역 중 농림축산식품부령으로 정하는 지역을 농촌의 범위에 포함하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-7">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub4-8">&nbsp;광역시 자치구 중 농촌에 준한 환경임에도 농촌으로 지정되지 않아 지원 정책에서 배제되는 상황을 개선하는 취지입니다만 한정된 재원의 범위 내에서 광역시 자치구에 비해 재정자립도가 저조한 지역을 우선 지원할 필요성이 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-9">&nbsp;다음, 4쪽입니다.</span><br/><span class="spk_sub" id="spk_sub4-10">&nbsp;농업·농촌디자인의 정의 신설 및 지원시책 등 수립·추진입니다.</span><br/><span class="spk_sub" id="spk_sub4-11">&nbsp;어기구 의원안은 농업·농촌디자인의 정의를 신설하고 국가와 지방자치단체가 농업·농촌디자인 지원시책 등을 수립·추진하도록 하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-12">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub4-13">&nbsp;농업·농촌디자인의 개념을 신설하고 농식품부장관이 지원시책을 수립하도록 함으로써 농식품부가 주도적으로 농업·농촌 분야에 특화된 디자인 시책을 추진할 계기가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-14">&nbsp;다만 개정안의 내용이 관련 법률안 체계와 일부 중첩되어 관계 부처의 이견이 있다는 측면을 심사 시 고려할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-15">&nbsp;다음, 8쪽입니다.</span><br/><span class="spk_sub" id="spk_sub4-16">&nbsp;공급망 위험에 따른 농업경영체의 경영안정 정책 수립입니다.</span><br/><span class="spk_sub" id="spk_sub4-17">&nbsp;임종득 의원안은 국가와 지방자치단체로 하여금 공급망 위험에 따른 필수농자재 가격 상승으로 인한 농업경영체의 경영비 부담 완화를 위하여 필수농자재 가격 등 현황에 대한 실태조사를 실시하고, 경영안정에 필요한 정책을 수립·시행하도록 하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-18">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub4-19">&nbsp;공급망 위험에 따른 지원체계를 구체화하려는 개별법인 공급망 위험 대응을 위한 필수농자재 등 지원에 관한 법률이 제정됨에 따라 기본법인 농업·농촌 및 식품산업 기본법에 관련 책무 규정을 선언적으로 규정하는 취지로 타당한 입법조치로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-20">&nbsp;다만 일부 자구정리가 필요한 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-21">&nbsp;다음, 10쪽입니다.</span><br/><span class="spk_sub" id="spk_sub4-22">&nbsp;국가먹거리종합계획의 수립 근거 마련입니다.</span><br/><span class="spk_sub" id="spk_sub4-23">&nbsp;송옥주 의원안은 국가가 10년마다 국가먹거리종합계획을 수립하도록 하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-24">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub4-25">&nbsp;국가가 10년마다 국가먹거리종합계획을 수립할 의무를 신설하여 정부 부처 간 협력을 강화하고 지역먹거리계획과 연계·지원을 도모하려는 취지로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-26">&nbsp;다만 부처 간 소관 중복 우려로 인한 복지부 및 식약처의 이견을 고려할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-27">&nbsp;다음, 13쪽입니다.</span><br/><span class="spk_sub" id="spk_sub4-28">&nbsp;신지식농업인의 지원·육성 근거 마련입니다.</span><br/><span class="spk_sub" id="spk_sub4-29">&nbsp;김선교 의원안은 신지식농업인의 지원 및 육성에 필요한 근거를 법률에 명시하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-30">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub4-31">&nbsp;1999년부터 훈령에 따라 운영하고 있는 신지식농업인의 지원·육성에 필요한 근거를 법률에 명시하는 제도로서 필요한 것으로 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-32">&nbsp;다음, 15쪽입니다.</span><br/><span class="spk_sub" id="spk_sub4-33">&nbsp;저탄소 농축산물 인증제의 근거 마련입니다.</span><br/><span class="spk_sub" id="spk_sub4-34">&nbsp;서천호 의원안은 저탄소 농축산물 산업의 육성과 소비 촉진을 위하여 농림축산식품부장관이 저탄소 농축산물 인증제 등의 정책을 수립·시행할 수 있도록 법률상 근거를 신설하려는 것입니다.</span><br/><span class="spk_sub" id="spk_sub4-35">&nbsp;검토의견입니다.</span><br/><span class="spk_sub" id="spk_sub4-36">&nbsp;2012년부터 훈령에 따라 운영되고 있는 저탄소 농축산물 인증제의 법적 근거를 명확히 하여 제도 활성화를 도모하는 취지로 이해했습니다.</span><br/><span class="spk_sub" id="spk_sub4-37">&nbsp;다만 같은 조 제1항에 유사 취지의 규정이 존재하므로 입법경제성을 고려하여 개정안 내용을 통합하여 규정하는 방안을 고려할 필요가 있다고 보았습니다.</span><br/><span class="spk_sub" id="spk_sub4-38">&nbsp;다음 17쪽, 부칙입니다.</span><br/><span class="spk_sub" id="spk_sub4-39">&nbsp;6건의 개정안은 시행일이 공포 후 6개월이 경과한 날로 동일합니다.</span><br/><span class="spk_sub" id="spk_sub4-40">&nbsp;이상 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_5" class="item6 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;다음 정부 측 의견 말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_6" class="item6 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;2쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-2">&nbsp;농촌의 범위에 농식품부령으로 정하는 광역시 자치구의 동 지역 포함 조항에 대해서는 수용이 어렵습니다. 광역시 자치구 동 지역 중 주거지역까지 농촌으로 보게 될 경우 도시보다 열악한 농촌 생활여건 개선 등을 위해 추진 중인 농촌 지원정책의 취지를 고려하여야 한다고 판단하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub6-3">&nbsp;다음, 4쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-4">&nbsp;2. 농업·농촌디자인의 정의 신설 및 지원시책 등 수립·추진 조항입니다.</span><br/><span class="spk_sub" id="spk_sub6-5">&nbsp;전문위원 수정의견을 수용합니다.</span><br/><span class="spk_sub" id="spk_sub6-6">&nbsp;농식품부는 농촌 경관 보존 등에 관한 업무를 수행하고 있습니다. 농업·농촌의 가치 증진과 경쟁력 강화를 위한 농업·농촌디자인 지원 필요성에 공감합니다.</span><br/><span class="spk_sub" id="spk_sub6-7">&nbsp;다음, 8쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-8">&nbsp;3. 공급망 위험에 따른 농업경영체의 경영안정 정책 수립 조항입니다.</span><br/><span class="spk_sub" id="spk_sub6-9">&nbsp;전문위원 수정의견을 수용합니다.</span><br/><span class="spk_sub" id="spk_sub6-10">&nbsp;공급망 위험으로 인한 필수농자재와 농업용에너지의 가격 상승에 따른 농업경영비 부담 완화를 위하여 국가와 지방정부의 실태조사 및 경영안정 정책 수립·시행 책무를 규정한 개정안 취지에 동의합니다.</span><br/><span class="spk_sub" id="spk_sub6-11">&nbsp;다음, 10쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-12">&nbsp;4. 국가먹거리종합계획의 수립 근거 마련 조항입니다.</span><br/><span class="spk_sub" id="spk_sub6-13">&nbsp;전문위원 수정의견을 수용합니다.</span><br/><span class="spk_sub" id="spk_sub6-14">&nbsp;국가먹거리종합계획이 체계적으로 수립될 수 있도록 근거 규정을 마련하는 것에 동의합니다.</span><br/><span class="spk_sub" id="spk_sub6-15">&nbsp;다음, 13쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-16">&nbsp;5. 신지식농업인의 지원·육성 근거 마련입니다.</span><br/><span class="spk_sub" id="spk_sub6-17">&nbsp;수용합니다. 신지식농업인의 지원·육성에 대한 근거를 법률에 명시하는 것에 동의합니다.</span><br/><span class="spk_sub" id="spk_sub6-18">&nbsp;다음, 15쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-19">&nbsp;6. 저탄소 농축산물 인증제의 근거 마련에 대해서는 전문위원 수정의견을 수용합니다. 개정 취지에 공감하면서 저탄소 농축산물 인증제의 정부 정책 추진 근거 마련에 동의합니다.</span><br/><span class="spk_sub" id="spk_sub6-20">&nbsp;다음, 17쪽입니다.</span><br/><span class="spk_sub" id="spk_sub6-21">&nbsp;부칙입니다.</span><br/><span class="spk_sub" id="spk_sub6-22">&nbsp;전문위원 수정의견에 동의합니다.</span><br/><span class="spk_sub" id="spk_sub6-23">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_7" class="item6 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;위원님들 의견 있으면 말씀해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub7-2">&nbsp;의견 없습니까?</span><br/></div></div></div><div id="spk_8" class="item6 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;정부 의견에 동의합니다.</span><br/></div></div></div><div id="spk_9" class="item6 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;김성범 위원님.</span><br/></div></div></div><div id="spk_10" class="item6 speaker spk_mem" data-mem_id="7224" data-name="김성범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">김성범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/DOZ1588B.jpg" alt="김성범"></span><span class="txt"><strong class="name">김성범</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;10페이지 4번, 먹거리종합계획 관련해서요. 우선 먹거리가 어디까지를 포함하는지 다른 규정이 있어서 그게 명확한지, 농수축산물을 다 포함한다는 개념인지 설명이 필요할 것 같고요.</span><br/><span class="spk_sub" id="spk_sub10-2">&nbsp;그다음에 10년짜리 계획이면 보통 관계 부처 협의라든지 의견 절차 등을 보통은 법에 본문에 두는 게 상례이긴 한데, 여기에 대통령령으로 위임할 수 있도록 하는 규정은 있습니다만 관련 부처와 협의라든지 이런 부분들에 대한 것들을 거쳐서 수립할 수 있어야 되지 않겠나 하는 생각입니다.</span><br/><span class="spk_sub" id="spk_sub10-3">&nbsp;우선은 먹거리가 어디까지 포함되는지는 누가 설명했으면 좋겠는데요.</span><br/></div></div></div><div id="spk_11" class="item6 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;차관 설명……</span><br/></div></div></div><div id="spk_12" class="item6 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;위원님 말씀 주신 먹거리에는 우리가 먹을 수 있는 모든 식품이 다 포함돼 있습니다. 신선식품뿐만 아니라 가공식품도 포함되고 있고요.</span><br/><span class="spk_sub" id="spk_sub12-2">&nbsp;다만 검토의견을 보시면 복지부하고 식약처에서는 영양 부분과 안전 부분에 대해서는 그 부처의 고유 권한이기 때문에 빼 줬으면 좋겠다는 의견을 주었습니다. 그래서 그 부분을 빼고 저희들은 먹거리 생산부터 공급·소비 전반을 아우르는 부분에 대해서 계획에 포함시킬 내용으로 있습니다.</span><br/><span class="spk_sub" id="spk_sub12-3">&nbsp;그리고 보시면, 위원님 말씀하신 구체적으로 어떻게 할 건지 부분은 대통령령으로 정하고자 합니다. 그리고 지금 현재 먹거리기본법과 관련되는 개별 법률도 발의돼 있다는 말씀도 드리겠습니다.</span><br/></div></div></div><div id="spk_13" class="item6 speaker spk_mem" data-mem_id="7224" data-name="김성범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">김성범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/DOZ1588B.jpg" alt="김성범"></span><span class="txt"><strong class="name">김성범</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;범위가 조금 모호한 점이 없지 않은 것 같은데 그런 상황이니 만큼 관계 부처하고 협의 잘해서 수립할 수 있도록 하위법령에 명백하게 규정하는 걸 전제로 저는 동의하겠습니다.</span><br/></div></div></div><div id="spk_14" class="item6 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;그러면 의사일정 제13항과 제14항, 제16항부터 제18항까지 이상 5건의 법률안은 각각 본회의에 부의하지 아니하고 이들 법률안의 내용과 위원님들의 의견을 조정·통합하여 정리한 농업·농촌 및 식품산업 기본법 일부개정안법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub14-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub14-3">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub14-4">&nbsp;나머지 안건은 계속 심사하는 것으로 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2P5N0O3N1V9U1W4V5U3C5A8B5A6Y1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 농업협동조합법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2209214)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2E5C1D2B0C5Y1Y1W1X4V1U8U1C3D1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">2. 농업협동조합법 일부개정법률안(임호선 의원 대표발의)(의안번호 2215586)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V5W1U2C0D8B1B0Z1A0Y2Z9H3H7G3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">3. 농업협동조합법 일부개정법률안(신장식 의원 대표발의)(의안번호 2216819)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_W2E6F0D2D1B9C1B1J1J9H2I7G7H1F4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 농업협동조합법 일부개정법률안(임미애 의원 대표발의)(의안번호 2217243)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2U6S0T3A0B5A1Y4Y1W7X0F9G5E1F7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2217360)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_C2O6M0A4Y0X1E0F9O3Q3T3H8K2O1M7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 농업협동조합법 일부개정법률안(윤준병 의원 대표발의)(의안번호 2218013)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2T6S0Q4R0Z8A1Y7Y0X6V2W5E4E7C9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 농업협동조합법 일부개정법률안(김선교 의원 대표발의)(의안번호 2218247)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_X2V6V0E4C0C9B1C7A3W1W4U4V3U9U7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 농업협동조합법 일부개정법률안(문금주 의원 대표발의)(의안번호 2218297)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_R2S6Q0Y4Z1X7X1W4X0V4V5D0C3C3A4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 농업협동조합법 일부개정법률안(전종덕 의원 대표발의)(의안번호 2218476)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2U6T0T8S2Q1Q1Z0Z4X1W2W2U5W9D3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 농업협동조합법 일부개정법률안(강승규 의원 대표발의)(의안번호 2220695)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2P6P0O8O2W1X1V1U0U9S2T6P2P4O9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 농업협동조합법 일부개정법률안(김용태 의원 대표발의)(의안번호 2220706)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_J2K6S0Q8R2P8Q1O4O2K6L2J3K5I1H1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 농업협동조합법 일부개정법률안(주철현 의원 대표발의)(의안번호 2221027)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(10시15분)</p><br/><div id="spk_16" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;다음은 의사일정 제1항부터 제12항까지 이상 12건의 농업협동조합법 일부개정법률안을 일괄하여 계속 상정합니다.</span><br/><span class="spk_sub" id="spk_sub16-2">&nbsp;수석전문위원은 추가 설명할 게 있습니까?</span><br/></div></div></div><div id="spk_17" class="item18 speaker spk_mem" data-mem_id="0" data-name="정대영" data-pos="수석전문위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">수석전문위원 정대영 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="정대영"></span><span class="txt"><span class="position">수석전문위원</span><strong class="name">정대영</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;없습니다.</span><br/></div></div></div><div id="spk_18" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;그동안 우리 소위에서 축조심의 해서 우리가 정리한 내용 외에 농식품부가 농협중앙회하고 협의를 거쳐서 일부 수정된 내용 위주로 보고를 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_19" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;소위원회 심사자료 농업협동조합법 일부개정법률안을 가지고 설명드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;종전 대안에서 수정된 정부 대안의 주요 내용에 대해서 보고를 드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;지난 9월 8일 법안소위에서 농협중앙회의 의견을 반영하여 수정된 대안을 보고드린 바 있습니다. 추가적인 검토 과정에서 수정된 사항에 대해서 다시 말씀드리도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;먼저 7페이지입니다.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;11번, 중앙회장·회원조합장 이사 선출 방법의 변경 사안입니다.</span><br/><span class="spk_sub" id="spk_sub19-6">&nbsp;종전 대안으로는 조합장 직선제를 반영하였으나 농협의 정치화 우려 등을 고려하여 정관으로 정하는 일정기간 이상 조합원 자격을 유지하고 일정 규모 이상 경제사업 등을 이용하며 3년 전부터 정당의 당원이 아닐 것으로 요건을 강화하는 대안을 마련하였습니다. 아울러 현재 당적이 있는 자의 피선거권 보호 차원에서 28년 선거에서는 당적 요건을 1년으로 하고 31년 선거부터는 3년을 적용하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-7">&nbsp;다음, 8쪽입니다.</span><br/><span class="spk_sub" id="spk_sub19-8">&nbsp;12번, 회장의 겸직 제한 관련 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-9">&nbsp;종전 대안은 중앙회장이 농민신문사 등 직무 관련 다른 업무 또는 직위에 종사할 수 없도록 하였습니다만 중앙회의 설립 목적 달성에 필요한 범위 내에서 정관으로 정하는 업무 또는 직위를 허용하도록 단서를 신설하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-10">&nbsp;21번입니다.</span><br/><span class="spk_sub" id="spk_sub19-11">&nbsp;유죄판결 임직원의 직무 정지와 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-12">&nbsp;종전 대안은 횡령 등 범죄 시 1심 유죄판결만으로 직무 정지가 가능하도록 하였습니다만 현행 정부 감독권에 따라 임직원 직무 정지가 가능한 점, 무죄추정의 원칙에 반할 우려가 있다는 지적 등을 고려하여 현행 유지토록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-13">&nbsp;22번, 선거범죄의 공소시효를 연장하도록 하는 대안을 검토하였습니다만 회장·조합장선거의 공소시효는 위탁선거법 개정이 전제되어야 하는 점을 고려하여 위탁선거법 개정이 필요하므로 이와 연계하여 추후에 개정하는 것이 필요하다고 판단하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-14">&nbsp;다음, 9페이지입니다.</span><br/><span class="spk_sub" id="spk_sub19-15">&nbsp;4번, 조합의 회계장부 공개 요건 완화와 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-16">&nbsp;종전에는 지역조합에 대한 회계장부 열람 청구권을 조합원 20인 이상의 동의로 규정하였으나 요건 완화에 따른 남용 우려, 조합의 업무 부담 증가 등을 고려하여 조합원 30인 이상의 동의로 수정하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-17">&nbsp;8번, 인사추천위원회 구성 및 운영 개선 관련 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-18">&nbsp;종전 대안은 중앙회 및 경제지주 인사임원추천위원회 구성에 농식품부장관 1명을 포함하였으나 이를 농식품부장관이 회장과 협의를 거쳐 추천하는 1명으로 수정하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-19">&nbsp;16번, 중앙회 정보 공개 강화와 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-20">&nbsp;종전에는 조합원 20인 이상의 동의 시 중앙회 회계장부 열람 청구권을 부여하도록 하였습니다만 남용 우려, 업무 부담 증가 등을 고려하여 조합원 100인 이상의 동의 시 청구권을 부여하도록 수정하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-21">&nbsp;다음, 10쪽입니다.</span><br/><span class="spk_sub" id="spk_sub19-22">&nbsp;7번, 준법감시 기능 강화와 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-23">&nbsp;종전 대안은 중앙회의 준법감시인으로 중앙회, 조합 등의 임직원 임명을 금지토록 하였습니다만 준법감시인이 조직 내부적으로 자기점검 기능을 수행하는 업무 성과를 고려하여 임직원의 임명은 허용하고 이들에 대한 인사상 불이익 금지 규정을 신설하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-24">&nbsp;다음 15번, 회원조합지원자금 통제 강화와 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-25">&nbsp;종전에는 자금계획에 관하여 농식품부장관과 사전협의 절차를 의무화하였으나 사전협의 의무는 삭제하고 자금계획 수립 시 재무건전성 확보 방안을 의무토록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-26">&nbsp;다음 17번, 조합감사위원회 폐지와 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-27">&nbsp;농협감사위원회 설립에 필요한 이행기간을 감안하여 이 법 공포 후 1년 이내에 독립성을 강화한 조합감사위원회를 구성하고 공포 후 2년 이내에 독립된 농협감사위원회를 설립 및 조감위를 폐지토록 하는 내용의 대안을 반영하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-28">&nbsp;18번, 농협감사위원회 설립 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-29">&nbsp;범농협 체계 내에서 농협중앙회와 별도 법인으로 농협감사위원회를 신설토록 하였으며 조직 설계, 인력·전산 이관 절차 등을 고려하여 공포 후 2년이 경과한 날 시행토록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-30">&nbsp;19번, 20번, 중앙회 자회사 감독권과 감사기구 관련된 내용입니다.</span><br/><span class="spk_sub" id="spk_sub19-31">&nbsp;종전 대안은 중앙회의 지주·자회사에 대한 농식품부 감독권을 신설하며 중앙회의 자회사 감독권을 삭제하고 감사위원회를 1인 감사 체계로 변경하는 안이었습니다. 이에 중앙회 내부 통제 확보와 자회사에 대한 최소한의 지도·감독 필요성 등을 고려하여 중앙회의 자회사 감독권을 유지하고 중앙회의 감사위원회는 유지하되 농식품부의 지주·자회사에 대한 직접 감독권을 삭제하고 농협감사위원회를 통한 감사 요구와 공동감사권을 신설하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-32">&nbsp;11쪽입니다.</span><br/><span class="spk_sub" id="spk_sub19-33">&nbsp;농협감사위원회 운영 관련 추가로 수정된 사항입니다.</span><br/><span class="spk_sub" id="spk_sub19-34">&nbsp;지배구조 관련 종전 대안은 중앙회를 농협감사위원회 1인 회원으로 총회를 구성하도록 하고 총회를 통해 임원 선임 및 해임, 예산·결산 관련 의결을 수행토록 하였습니다만 총회 운영의 투명성을 확보하고 1인 회원 구조에 대한 견제기능 강화를 위해 회원조합을 총회의 회원으로 할 수 있도록 하였습니다. 또한 감사 대상과 관련하여 종전 대안은 사회적 물의 등 요건에 해당되고 장관이 요구하는 경우 농협감사위원회가 중앙회를 감사할 수 있도록 하였으나 중앙회에 대해 농협감사위원회의 감사권을 포괄적으로 규정하고 농식품부 감독권의 일부를 농협감사위원회에 위탁하도록 하여 감사를 수행할 수 있도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub19-35">&nbsp;이상 보고를 마치겠습니다.</span><br/></div></div></div><div id="spk_20" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;수고하셨습니다. 정부 측 의견 잘 들었습니다.</span><br/><span class="spk_sub" id="spk_sub20-2">&nbsp;위원님들 말씀 주시기 전에 이 건과 관련해서 소위에서 그동안 여섯 차례에 걸쳐서 소위도 했고 그 기간이 한 6개월 정도 소요된 점, 우리 소위에서 각 위원님들이 가지고 계시는 의견을 나름대로 충분히 들었다 이렇게 생각합니다. 그래서 예전에 논의됐던 내용들이 반복되지 않도록 해서 가능하면 오늘 소위에서 의결될 수 있도록 우리 위원님들께서 협조해 주시면 감사하겠다 이렇게 말씀을 드립니다. 참고하셔서 말씀 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub20-3">&nbsp;강승규 위원님.</span><br/></div></div></div><div id="spk_21" class="item18 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;농협법을 급기야 강행 처리하겠다는 의지를 지금 보이고 계시는 것 같은데 그동안 법안소위는 물론 국정감사 과정에서도 수없이 지적을 했습니다. 소위원장님께서 6번의 법안소위를 열었다고 하지만 6번 여는 것이 문제가 아니라 이 법안의 문제점 그리고 여러 가지 그에 대한 야당 측의 대안 이런 부분들에 대해서 전혀 들으려고 하지 않고 결국 기승전 농협마저도 관치농협으로 날치기 강행 처리하겠다라는 의지로밖에 보이지 않습니다.</span><br/><span class="spk_sub" id="spk_sub21-2">&nbsp;누누이 얘기했지만 농협중앙회장을 회원조합인 1100개의 조합장선거를 무력화시키고 회원도 아닌 일반 조합원의 직선제로 한다는 것은 법률전문가들마저도 누구나 이것은 협동조합의 취지에 어긋난다.</span><br/><span class="spk_sub" id="spk_sub21-3">&nbsp;김용태 위원께서 법무법인 태평양과 율촌에 의견을 구했는데 분명히 이것은 정합성에 문제가 있다라고 지적했고. 저희들이 수도 없이 지적했음에도 이에 대해서 강행처리하겠다는 의지를 보이고 있습니다.</span><br/><span class="spk_sub" id="spk_sub21-4">&nbsp;두 번째, 농협의 감사기구 인사위원회에 대해서 협동조합의 감사를 외부에 독립시켜서 농협을 정부가 또는 정부가 주도하는 여러 단체 등에 의해서 이 부분을 장악하겠다 하는 것으로 이해가 될 수밖에 없습니다. 인사도 농림부장관이 인사에 직접 개입한다는 것으로 이것은 협동조합의 원칙에 전혀 타당치 않습니다.</span><br/><span class="spk_sub" id="spk_sub21-5">&nbsp;농지 전수조사로 농민의 농심을 들끓게 해 놓더니 이제 농협의, 농민의 자치조직인 농협마저도 정부가 정부의 손아귀에 넣겠다는 의지로밖에 보이지 않습니다. 이 법을 지금까지 야당의 줄기찬 요구에도 불구하고 오늘 강행처리하겠다고 하면 저희는 법안소위에 더 이상 참여할 수가 없음을 밝힙니다.</span><br/></div></div></div><div id="spk_22" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;김용태 위원님.</span><br/></div></div></div><div id="spk_23" class="item18 speaker spk_mem" data-mem_id="6784" data-name="김용태" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">김용태 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ef99cb0a6cee471bb9769a46bc62c459.jpg" alt="김용태"></span><span class="txt"><strong class="name">김용태</strong><span class="position">위원</span><span class="area">(경기 포천시가평군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;존경하는 윤준병 소위원장님 그리고 선배·동료 위원 여러분!</span><br/><span class="spk_sub" id="spk_sub23-2">&nbsp;오늘 법안소위에서 농협 법안이 강행처리되어서는 안 된다는 점을 분명히 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub23-3">&nbsp;제가 지난 국정감사에서부터 일관되게 지적해 왔듯이 지금 정부와 여당이 밀어붙이는 조합원 직선제 법안은 협동조합의 근간과 단체법의 기본원리를 무너뜨리고 헌법이 보장한 기본권을 정면으로 침해하는 위헌적 입법이라는 말씀을 다시 한번 드립니다.</span><br/><span class="spk_sub" id="spk_sub23-4">&nbsp;만약 오늘 이 자리에서 다수의 힘으로 이 법안을 강행처리한다면 농해수위는 위헌법률을 일방적으로 통과시켰다는 오명을 역사에 남기게 될 것이고 대한민국 농정은 큰 혼란에 빠질 것입니다.</span><br/><span class="spk_sub" id="spk_sub23-5">&nbsp;위원님들께서도 받아 보셨겠지만 법무법인 태평양과 법무법인 율촌이 내놓은 법률검토의견서 역시 제가 지적해 온 문제의식과 토씨 하나 다르지 않게 일치된 결론을 내리고 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-6">&nbsp;정부와 여당은 과거 헌법재판소 결정을 들면서 회장 선출 방식은 입법재량이라고 하지만 이는 판례의 취지를 완전히 오독한 것입니다. 당시 헌재 결정은 농협과 산림조합 모두 회원인 조합의 선거권을 보장하는 전제하에 구체적인 선거운동방법 등을 달리 정한 것이 입법재량이라는 취지였습니다.</span><br/><span class="spk_sub" id="spk_sub23-7">&nbsp;공직선거에서 선거운동방식을 제한하는 것은 입법재량으로 가능하지만 법률로 특정 국민의 선거권 자체를 박탈하거나 국민이 아닌 자에게 선거권을 부여하는 것이 불가능한 것과 같은 이치입니다.</span><br/><span class="spk_sub" id="spk_sub23-8">&nbsp;정식 회원인 조합의 선거권을 원천 박탈하는 것은 입법재량의 한계를 명백히 일탈한 위헌적 처사입니다. 이 법안이 강행처리되는 순간 하루아침에 대표자 선출권을 강탈당한 전국의 단위조합들이 가만히 있겠습니까? 즉각 헌법재판소에 헌법소원심판을 청구하고 효력정지 가처분신청을 제기할 것입니다.</span><br/><span class="spk_sub" id="spk_sub23-9">&nbsp;이 법안은 헌법상 과잉금지원칙 중 침해의 최소성과 법익의 균형성을 명백히 위반했기 때문에 헌법재판소가 가처분을 인용하고 위헌 결정을 내릴 가능성도 높습니다. 위헌 결정이 예고된 법안을 국회 스스로 통과시켜서야 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub23-10">&nbsp;헌법재판소에서 법안효력이 정지되고 위헌 판결이 내려지면 농해수위는 기본적인 법리조차 검토하지 않고 위헌법률을 강행한 무능한 상임위라는 오명을 뒤집어쓸 것이며 국회의 권위는 땅에 떨어져서 국민의 매서운 지탄을 피할 수 없을 것입니다.</span><br/><span class="spk_sub" id="spk_sub23-11">&nbsp;저는 이러한 위헌 논란과 농정 대혼란을 막으면서도 개혁의 취지를 살리기 위해 이미 합리적인 대안법안을 발의해 두었습니다. 바로 중앙회장은 법적 회원인 단위조합이 선출하되 각 단위조합이 행사하는 투표권은 소속 조합원들의 뜻을 물어서 그 결과에 따라 행사하도록 하는 방안입니다.</span><br/><span class="spk_sub" id="spk_sub23-12">&nbsp;다시 말씀드리면 조합원이 회원인 조합을 통해 의사를 실현하는 방식입니다. 회원인 조합의 선거권을 보존하여 단체법적 정합성과 결사의 자유를 지키면서도 개별 조합원들이 중앙회장 선출에 관여한 민주적 정당성과 선거의 공정성을 확보할 수 있기 때문입니다.</span><br/><span class="spk_sub" id="spk_sub23-13">&nbsp;태평양과 율촌의 법률의견서에서도 위헌성을 피하면서 농민 조합원의 의사를 온전히 반영할 수 있는 최적의 대안으로 제가 발의한 법안과 똑같은 방식을 제시한 바 있습니다. 이렇게 기본권 침해를 최소화하면서 입법 목적을 달성할 수 있는 합헌적 대안이 엄연히 존재하는데도 굳이 위헌적인 직선제를 강행하는 것은 헌법상 침해의 최소성 원칙을 정면으로 위배하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub23-14">&nbsp;정부와 민주당 위원님들께도 호소합니다. 농민의 뜻도 살리고 법적 정합성도 지키며 국회의 권위도 세울 수 있는 합헌적 대안이 우리 앞에 있습니다. 위헌 소지가 큰 조합원 직선제 법안의 일방처리를 중단하고 제가 발의한 대안을 중심으로 여야가 머리를 맞대어 부끄럽지 않은 입법을 완수해 주시기를 간곡히 요청드립니다.</span><br/><span class="spk_sub" id="spk_sub23-15">&nbsp;끝으로 정부에도 한말씀 간곡히 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-16">&nbsp;우리가 지난 역사에서 아픈 역사 중의 하나가 계엄이 있었습니다. 그 당시에 군인들이 잘못된 지시에 이행했던 군인들도 있고 그 과정에서 부당한 지시에 관료로서 또 군인으로서 입장을 밝히는 것이 얼마나 중요한 것인지를 우리 사회에서 지금 목도하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub23-17">&nbsp;농림부 직원분들도 지금 정부 여당이 밀어붙이려고 하는 이 법안에 대해서 소신 있게, 그게 종국에 힘에 의해서 밀어붙여진다고 하더라도 관료분들의 소신과 반대의견을 명확히 기록에 남겨 놓으셔야 합니다. 그래야만 여러분들 다치지 않습니다.</span><br/><span class="spk_sub" id="spk_sub23-18">&nbsp;여기저기 정관에 눈치 보고 여기에 대해서 반대의견이나 소신의견 말씀하지 않으시면 과거에 있었던 여러 가지 일들, 잘못된 일들과 크게 다르지 않을 거라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub23-19">&nbsp;간곡히 정부관료분들께도 요청드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub23-20">&nbsp;입장을 꼭 내 주시기를 부탁드리겠습니다.</span><br/></div></div></div><div id="spk_24" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;또 의견 있으시면 말씀 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub24-2">&nbsp;신장식 위원님.</span><br/></div></div></div><div id="spk_25" class="item18 speaker spk_mem" data-mem_id="6858" data-name="신장식" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">신장식 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/dccbeab8212e4f469f0cb90b4430cb97.png" alt="신장식"></span><span class="txt"><strong class="name">신장식</strong><span class="position">위원</span><span class="area">(비례대표)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;이게 오랫동안 얘기가 돼 왔던 건이고요. 존경하는 김용태 위원님이 제출하셨던 태평양과 율촌의 의견, 법제처의 의견을 잘 검토를 해 봤습니다.</span><br/><span class="spk_sub" id="spk_sub25-2">&nbsp;결과적으로 입법재량의 범위, 비례원칙에 어긋나는가 하는 부분이 쟁점인데 저는 목적의 정당성 및 수단의 적합성 측면에서 충분히 3개 협동조합, 국제협동조합연맹이 이야기한 핵심원칙 중 하나인 조합원에 의한 민주적 관리라고 하는 측면에서 직선제가 목적의 정당성 및 수단의 적합성에 아주 부합한다라고 생각을 하고요. 침해의 최소성과 법익의 균형성이라는 측면에서도 조합원 직선제 도입은 회장선거의 공정성 등 중요한 공익을 달성하기 위한 것이라서 공익과 사익의 비교형량 했을 때 법익의 균형성도 충분히 보장이 된다라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub25-3">&nbsp;태평양과 율촌이 굉장히 큰 법무법인이라는 것은 알지만 그곳은 제가 변호사 생활했던 것을 조금 고백해 드리면 법률 의견을 요청하는 분의 의견을 적극적으로 반영하는 것이 민간법률회사 법률로펌의 의견입니다.</span><br/><span class="spk_sub" id="spk_sub25-4">&nbsp;법제처의 의견은 당연히 재량권 범위 안에 있고 합헌적이다라고 하는 의견이 있었고 법제처에서 이러한 법률 의견을 낸 기록은 영원히 남습니다. 그러니까 사적인 이익보다는 본인들의 법제처라는 기관 자체의 명예를 걸고 해석을 한 것이다라고 저는 이해하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub25-5">&nbsp;따라서 관련해서 농해수위 전체를 그렇게 법도 모르는 집단으로 말씀해 주시면 저로서도 굉장히 그것은 받아들이기 어려운 주장이신 것 같고요. 법률상 주장이 갈릴 수는 있으나 저는 개인적으로 법제처의 의견에 합리성이 있고 입법재량권 범위 안에 있는 것으로 판단하고 국제협동조합연맹이 정한 협동조합의 핵심원칙에도 부합한다고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub25-6">&nbsp;법률상의 논쟁을 넘어서서, 위헌이냐 합헌이냐를 넘어서서 이 조합원 직선제가 목적했던 바, 목적의 정당성 및 수단의 적합성에 부합하도록 정착할 수 있는지를 오히려 지금부터……</span><br/><span class="spk_sub" id="spk_sub25-7">&nbsp;우려되는 바가 저도 없는 것이 아니기 때문에 그런 우려점들을 극복해 가는 방향으로 농해수위와 농림부가 함께 잘 협업해 나가야 되는 것이 아닌가라는 의견을 가지고 있고요. 한 여섯 차례 저도 과정을 지켜봤는데요. 숙성이 쿠킹이 될 만큼 된 게 아닌가 하는 생각입니다.</span><br/></div></div></div><div id="spk_26" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;또 다른 위원님.</span><br/><span class="spk_sub" id="spk_sub26-2">&nbsp;문금주 위원님.</span><br/></div></div></div><div id="spk_27" class="item18 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;궁금한 게 있어서, 중앙회장 직선제로 가게 되면 어떻게 보면 상당히 권한과 책임이 강해지는 것 아니겠어요? 그렇지 않습니까? 그런데 지금보다는 더 정당성이 있는 거잖아요. 조합장들 선거로 뽑다가 조합원들 직선제로 가기 때문에 훨씬 더 정당성이 있기 때문에 대의적으로는 상당히 막강한……</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;어떻게 보면 신뢰를, 지금보다는 더 많은 정당성이 부여될 텐데 그렇게 되면 그 책임도 더 강화돼야 되는데 지금은 비상임이잖아요. 이것을 상임으로 전환해야 될 필요성은 검토를 안 해 보셨는가요? 아니면 다음 개혁안에 그게 포함이 되는 건지……</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;또 하나, 제가 농협중앙회 사무소 소재지 관련 개정안도 냈는데 정관으로 한다고, 그것은 검토의 아니면 논의해 볼 일고의 가치도 없나요?</span><br/><span class="spk_sub" id="spk_sub27-4">&nbsp;일단 그 두 가지 궁금해서 말씀을 드려 봅니다.</span><br/></div></div></div><div id="spk_28" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;답변드리겠습니다, 위원님.</span><br/><span class="spk_sub" id="spk_sub28-2">&nbsp;직선제 하면 위원님 말씀하신 바와 같이 충분히 저희들도 그 문제에 대해서 고민을 했습니다. 그런데 저희들이 그동안 농협의 개선·개혁을 여러 차례 시도했는데 그 배경은 이렇습니다. 과거에 지나치게 중앙회장의 권한이 컸다, 그래서 권한을 낮춰야 된다. 그리고 책임은 내부 규제라든가 통제 부분이 강화돼야 된다 이렇게 됐습니다.</span><br/><span class="spk_sub" id="spk_sub28-3">&nbsp;그래서 지금 현재 농협 개혁을 하고자 하는 방향은 농협중앙회장의 대표성은 인정해 주되 지금 현재 가지고 있는 농협중앙회의 권한이 너무나 막강하기 때문에 그것을 상임화하는 것은 어느 정도 이번 개혁을 통해서 농협중앙회장과 건전한 내부 견제·균형이 조화된 이후에 검토해야 되지 않을까 하는 것을 내부적으로 검토한 바가 있고요.</span><br/><span class="spk_sub" id="spk_sub28-4">&nbsp;두 번째, 중앙회 소재지 부분에 대해서는 저희들이 아직 구체적으로 제가 그 부분에 대해서는 검토를 못했습니다, 위원님.</span><br/></div></div></div><div id="spk_29" class="item18 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;지금 공공기관 이전 관련해 가지고 지역에서는 농협을 지역으로 이전해야 된다는 그런 요구들이 많아요. 그런데 그런 요구들이 많음에도 불구하고 이번 개정할 때 저는 포함이 돼서 여지를 두는 것도 나는 필요하다고 보는데 그게 전혀 논의가 안 돼 버리니까 좀 아쉽습니다.</span><br/></div></div></div><div id="spk_30" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;공공기관 이전과 관련해서는 저희들이 내용의 진행 상황도 현재 알지 못하고 있습니다. 아시는 것은, 위원님 아시다시피 국토부에서 하고 지금 지방시대위원회에서 총괄하기 때문에 관련 내용은 저희들이 확인하기는 어렵습니다.</span><br/></div></div></div><div id="spk_31" class="item18 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;아니, 그러니까 소재지를 정관으로 할 수 있게끔…… 지금 다른 협동조합은 어떻게 돼 있나요? 정관으로 돼 있지 않나요?</span><br/></div></div></div><div id="spk_32" class="item18 speaker spk_mem" data-mem_id="0" data-name="윤원습" data-pos="농림축산식품부농업정책관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">농림축산식품부농업정책관 윤원습 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="윤원습"></span><span class="txt"><span class="position">농림축산식품부농업정책관</span><strong class="name">윤원습</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;확인해 보겠습니다.</span><br/></div></div></div><div id="spk_33" class="item18 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;그러면 일단 그것 확인하는 동안 제가 말씀을 드리면, 제가 그런 생각을 해 봐요. 그동안 여러 차례 농협회장, 중앙회장을 직선제로 바꾸는 부분에 대한…… 그래서 이게 과연 우리 농민들한테 어떤 도움이 될까 싶은데 제 개인적으로 답은 못 찾겠더라고. 그게 하나 있고.</span><br/><span class="spk_sub" id="spk_sub33-2">&nbsp;그다음에 최근에 전국농민회에서 위원님들께서 문자 폭탄을 지금 보내고 있어요. 그래서 전화 주신 분한테는 제가 직접 이러이러한 이유로 이렇게 늦어지고는 있지만 결국 법안 개정할 거다 그런 취지로 설명을 하면 다 이해는 하시는데, 마치 그분들이 직선제 쟁취가 농협 계획의 전부인 것처럼 문자 폭탄을 보낸 것에 대해서는 상당히 기분이 안 좋고 불쾌하고, 우리가 마치 거기에 떠밀려서 개정을 하는 것처럼 그렇게 보여져서 이런 상황이 우려스럽고 좀 기분이 그렇다라는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub33-3">&nbsp;나름 충분히 의견을 교환하고 숙고하고 하는 부분들은 그 과정의 일환이기 때문에 저는 필요하다고 보는데 그걸 가지고 마치 우리 법안심사소위원들이 개혁에 반대를 한 것인양 그렇게 문자 보내는 건 아니지요. 그리고 마치 이게 전농이나 진보당 쪽 의견을 받아서 이렇게 하는 것처럼 보여서 하여튼 개정안에 동의는 하면서도 과연 이게 맞냐라고 생각을 해 보면 자신을 못 하겠다는 그런 말씀을 드립니다.</span><br/></div></div></div><div id="spk_34" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;이개호 위원님.</span><br/></div></div></div><div id="spk_35" class="item18 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;차관님, 차기 중앙회장 선거가 지금 2028년 3월입니까?</span><br/></div></div></div><div id="spk_36" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_36"><label for="spk_cnt_chk_36">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub36-1">&nbsp;예, 그렇습니다.</span><br/></div></div></div><div id="spk_37" class="item18 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;그러면 농협 개혁을 한다고 전제하고 그때까지 중앙회장을 직선제를 한다고 가정했을 때 지금 어떻습니까? 물리적으로 판단을 할 때 그때까지 시간은 충분합니까?</span><br/></div></div></div><div id="spk_38" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;예, 저희들이 지금 현재 기준상 1년 전에 선거 인명부라든가 다 정해야 되기 때문에 그전에 준비를 할 수 있다고 판단을 하고 있고요. 직선제와 관련해서는 저희들은 선관위하고 협의도 마쳤습니다. 그래서 선관위에서는 28년도에 총선이 있기 때문에 총선을 이후에 했으면 좋겠다는 실무적인 의견을 받았습니다. 그래서 저희들이 다소 한 두세 달 늦어질 수 있지만 그거 끝나고 할 수 있다고 지금 생각을 하고 있습니다.</span><br/></div></div></div><div id="spk_39" class="item18 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;그러니까 지금 개정이 됐을 경우에 2028년 3월부터 한 두 달 늦어진다면 5월 정도가 되겠는데 그때 선거를 한다고 보면 시간은 가능하다?</span><br/></div></div></div><div id="spk_40" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;예, 그렇게 판단……</span><br/></div></div></div><div id="spk_41" class="item18 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;충분치는 않지만 가능한 정도의 시간이다 이렇게 지금 말씀하시는 거지요, 취지가?</span><br/></div></div></div><div id="spk_42" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;예, 그렇습니다.</span><br/></div></div></div><div id="spk_43" class="item18 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;그러면 지금 안 됐을 경우에, 이 법안이 통과가 안 돼서 조금 늦춰져 가지고 내년 정도에 법안이 개정됐을 경우에는 실질적으로 지금 선거인명부 확정에 소요되는 시간들을 고려할 때 좀 어려움을 겪을 수도 있겠네요?</span><br/></div></div></div><div id="spk_44" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_44"><label for="spk_cnt_chk_44">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub44-1">&nbsp;예, 현행 기준으로 봤을 때는 어려움도 있을 수 있다고 판단하고 있습니다.</span><br/></div></div></div><div id="spk_45" class="item18 speaker spk_mem" data-mem_id="6670" data-name="이개호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">이개호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ece4aba7a7854848b574f9334278b58c.png" alt="이개호"></span><span class="txt"><strong class="name">이개호</strong><span class="position">위원</span><span class="area">(전남 담양군함평군영광군장성군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;지금 그런 점을 고려하면 이 직선제 처리를 하기 위해서는 지금이 적기일 수밖에 없다고 판단을 하는데 직선제와 관련해서 그동안에 많은 논란이 있었고, 이 직선제가 필요하다고 말씀하시는 분들은 그분들대로 또 반대의견을 갖고 계신 분들은 반대의견을 갖고 계신 분들대로 나름 여러 가지 이유와 논리를 들어서 각자 계속 변설을 해 왔거든요. 그런데 지금 양쪽 의견이 어느 의견이 훨씬 더 앞선다 이렇게 보기는 좀 어려울 것 같아요, 내가 보기에.</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;그렇지만 우리가 개혁이라는 입장에서 놓고 볼 때는 결국 직선제를 선택할 수밖에 없지 않느냐는 생각을 지금 하고 있고요. 또 그동안에 많은 논의 과정을 거쳤기 때문에 지금 우리가 선택을 할 때 결국은 가치 판단의 문제라고 생각을 합니다. 어떻게 농민들의 뜻을 중앙회장 선출에 직접적으로 반영을 할 것이냐, 그걸 간접적으로 반영을 할 것이냐의 선택의 기로다 이렇게 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub45-3">&nbsp;그런 면에서 보면 지금 그래도 시대정신에 부합하는 것은 우리가 직선제를 선택할 수밖에 없다, 다소 그 제도가 갖고 있는 문제가 있을 수 있지만 그 문제를 보다 더 큰 시대정신에 부합한다는 그러한 취지에서의 장점이 있다는 점을 우리가 고려해서 여러 가지 시기의 문제 또 의결의 문제를 우리가 결정을 해야 된다면 지금 신속하게 결정할 수밖에 없겠구나 하는 생각을 갖고 있는데, 그런 시기나 또 제 판단에 대해서 차관님은 어떤 생각을 갖고 계신가요? 말씀 한번 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_46" class="item18 speaker spk_mem" data-mem_id="0" data-name="김종구" data-pos="농림축산식품부차관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_46"><label for="spk_cnt_chk_46">농림축산식품부차관 김종구 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="김종구"></span><span class="txt"><span class="position">농림축산식품부차관</span><strong class="name">김종구</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub46-1">&nbsp;예, 결국은 위원님 말씀 주신 것처럼 저희들이 그동안 농협 개혁을 하면서 이 문제는, 작년 국감 시에 여야 위원님들께서 지적하신 사항을 감사하는 과정에서 명확하게 드러난 여러 가지 문제점을 해결하기 위해서 저희가 농협 1차 개혁안을 만들었고 현재 2차 준비를 하고 있습니다. 1차 개혁안에서 했을 때의 가장 중요한 부분이 내부통제, 금권선거 방지 이런 시스템을 마련하는 것이 무엇보다도 농협이 우선적으로 개선할 과제라고 현재 도출을 했고요. 거기에 대해서는 위원님들의 의견을 저는 같이 하고 있다고 생각을 합니다.</span><br/><span class="spk_sub" id="spk_sub46-2">&nbsp;그렇기 때문에 저희들이 좀 신속히 했으면 좋겠다는 생각이고, 그 의견은 비단 저희 정부뿐만 아니라 저희들이 농협조합원을 대상으로 한 설문조사도 한 바가 있습니다. 거기서도 명확하게 직선제라든가 농협 개혁이 필요하다는 의견이 매우 다수였다는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub46-3">&nbsp;그래서 저희들의 생각은, 이번에 위원님들께서 보셨겠지만 저희들이 좀 세부적으로 말씀드리면 조합장, 중앙회장의 피선거권자는 선거권자의 이익을 대변할 수밖에 없는 구도로 저는 짜여져 있다고 봅니다. 그 대표적인 예가 현임 회장의 선거공약을 보면 상당 부분은 조합원의 이익이 아닌 조합장의 이익에 부합하는 공약이 들어 있습니다. 그런 걸로 봤을 때 저희들은 조합원의 이익에 부합되는 방식으로 선거제도가 개편되는 것이 농협의 발전에 도움이 되지 않을까 하는 그런 판단을 현재 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub46-4">&nbsp;그렇기 때문에 좀 조속히 이 법이 통과되어서 농협이 개선되는 데 속도감 있게 했으면 좋겠다는 게 저희들의 생각입니다.</span><br/></div></div></div><div id="spk_47" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;또 의견 없으시지요?</span><br/><span class="spk_sub" id="spk_sub47-2">&nbsp;김성범 위원님.</span><br/></div></div></div><div id="spk_48" class="item18 speaker spk_mem" data-mem_id="7224" data-name="김성범" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">김성범 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSUNGBUM" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/DOZ1588B.jpg" alt="김성범"></span><span class="txt"><strong class="name">김성범</strong><span class="position">위원</span><span class="area">(제주 서귀포시)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;농협 개혁이 왜 이제 화두가 되고 논의가 되는지 지금 방금 차관님께서 좀 간략하게 히스토리를 말씀을 주신 것 같은데 어쨌든 농협이 그동안 농민을 위해서, 조합원을 위해서 얼마나 그 기능을 정상적으로 해 왔느냐 하는 데서 그 문제의식이 출발한다고 보여집니다.</span><br/><span class="spk_sub" id="spk_sub48-2">&nbsp;사실 자율성 인정이 돼야겠지요. 그래서 그렇게 자율적으로 잘 운영이 되고, 조합과 조합원의 이익을 위해서 농협중앙회가 운영이 되고, 농협중앙회장이 그렇게 해 왔다고 그러면 왜 우리가 이 자리에서 이런 논의를 하고 있겠습니까? 그런 차원에서 좀 부득이한 조치라는 측면도 있어 보인다 하는 생각이 우선 들면서 그럼에도 불구하고 우리가 이 자리에서 이런 논의를 하는 것은 농협이 갖고 있는 중요성, 농업·농촌 정책 수행과정에서의 기능, 그 과정에서 보유하고 있는 공공성 이런 부분들이 있기 때문에 우리 국회에서도 이런 논의를 하고 있는 것으로 저는 이해를 하고 있습니다.</span><br/><span class="spk_sub" id="spk_sub48-3">&nbsp;최종적으로 농협의 주인이 누구냐 하는 질문으로 저는 귀결이 된다고 보여집니다. 우선 외견적으로 보기에 체계상으로, 법체계상에 보면 농협중앙회의 주인은 회원 조합인 것처럼 보이지만, 그래서 조합장에게 선거권을 현행 법령에서는 부여하고 있지만 조합장도 결국은 개개 농민 조합원의 이익에 부합하도록 행동을 해야 되는 것이고 또 조합장도 개별 조합원들이 투표로 선정하는 그런 절차인 점 등을 종합적으로 보면 결국 농협의 주인은 농민이어야 한다, 조합원이어야 한다라고 하는 점에서 저는 이 사안을 보고 있습니다.</span><br/><span class="spk_sub" id="spk_sub48-4">&nbsp;또한 법률을 우리가 논의하고 제정을 해야 되는 기구이기 때문에 위헌법률을 당연히 만들어서는 안 되지요. 그래서 결국은 이러저러한 논의들이, 입법 재량 속에 포함되느냐, 그 한계를 넘어서느냐 하는 논의들의 법률 검토라든지 이런 게 그간에 있었는데 저는 당연히 입법재량 범위 내에 있는 입법조치다 그렇게 판단이 돼서 결론을 내기는 내야 되는 그런 시점이 왔다 하는 생각이 듭니다.</span><br/><span class="spk_sub" id="spk_sub48-5">&nbsp;물론 시행 과정에서 여러 가지 구체적으로 들어가면 아직도 농협 측에서 걱정하는 목소리들이 좀 있는 것 같아요. 그런 부분들은 구체적인 시행계획을 수립을 하거나 후속 입법을 하는 과정에서 좀 더 수렴을 해서 미세하게 조정을 해야 될 점들이 있다면 그런 조치를 해야 되겠다는 점도 함께 말씀을 드리고, 그런 내용 중에 저는 대표적인 게 중앙회장 직선제로 했을 때 선거비용 제한을 둘 거냐 아니면 완전하게 자율에 맡겨 둘 거냐, 제한을 둔다면 어떤 수준으로 할 거냐 하는 부분도 오늘 이 자리에서는 깊이 있는 논의가 안 되고 있습니다만 저는 직선제가 일단 입법이 되면 신속하게 그 부분에 대한 논의도 하고, 필요하다면 후속적인 입법조치도 필요하다고 보여집니다. 그러한 점들을 종합적으로 봐야 될 것 같고요.</span><br/><span class="spk_sub" id="spk_sub48-6">&nbsp;마지막으로 존경하는 문금주 위원님 말씀 주셨습니다만, 소위 문자 폭탄에 대해서 저도 한말씀드리지 않을 수 없습니다.</span><br/><span class="spk_sub" id="spk_sub48-7">&nbsp;조직적인 문자 메시지들이, 엄청나게 많은 숫자들이 쇄도를 하고 있습니다. 일정한 조직적인 움직임이라고 보여지는데 매우 유감스럽습니다. 또한 그런 것 때문에 우리가 오늘 이런 의사결정을 하는 것도 아니고 합니다만 정상적인 국회의 기능 또 논의를 그런 식으로 하는 것은 적절치 않다 하는 말씀을 제가 기록으로 남겨 둡니다.</span><br/><span class="spk_sub" id="spk_sub48-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_49" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;강승규 위원님.</span><br/></div></div></div><div id="spk_50" class="item18 speaker spk_mem" data-mem_id="6739" data-name="강승규" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_50"><label for="spk_cnt_chk_50">강승규 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/ec481315df7b49b4b1a0e8761f41ca49.jpg" alt="강승규"></span><span class="txt"><strong class="name">강승규</strong><span class="position">위원</span><span class="area">(충남 홍성군예산군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub50-1">&nbsp;지금 여당 위원님께서도 지적하셨지만 이 농협법을 왜 이렇게 정부·여당이 날치기 강행 처리하는지를 저희들도 느낄 수 있습니다. 문자 폭탄에 대한 유감도 두 위원님께서 표시하셨지만 저희들도 이에 대해서 엄청나게 시달렸습니다.</span><br/><span class="spk_sub" id="spk_sub50-2">&nbsp;마지막 한 가지만 우리 정부 측에 지적하겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-3">&nbsp;아까 차관님께서 지금 1100개의 단위농협 조합장들이, 조합이 조합원의 이익을 위해서 활동하지 않고 조합장 개인의 이익을 위해서 활동하고 있다, 그래서 농협법을 직선제로 개혁해야 된다는 이 당위성, 이에 대한 문제의식에 심히 1100만 조합장들께 고합니다. 이것이 이재명 정부의, 농림정책의 주무 차관께서 가지고 있는 문제의식이고 이 때문에 농협법이 개혁한다고 합니다.</span><br/><span class="spk_sub" id="spk_sub50-4">&nbsp;그러면 대의제는 우리 국회의원을 포함해서 모두 다 국민들, 유권자를 위해서 일하는 것이 아니라 국회의원 또는 각종 대의제 기구 대표자의 개인을 위해서 일한다고 한다면 우리 차관께서는 민주주의를 어떻게 이해하시는지 강력히 문제 제기를 합니다. 이에 대해서는 나중에 상임위에서 따져 묻겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-5">&nbsp;그리고 저희는 더 이상 우리가 농협 관련법 처리하는 법안소위에 참여할 명분이 없어진 만큼 퇴장하겠습니다.</span><br/><span class="spk_sub" id="spk_sub50-6">&nbsp;(일부 위원 퇴장)</span><br/></div></div></div><div id="spk_51" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;그러면 의사일정 제3항부터 제12항까지 이상 10건의 법률안은 각각 본회의에 부의하지 아니하고 이들 법률안의 내용과 위원님들의 의견을 조정·통합하여 정리한 농업협동조합법 일부개정법률안(대안)을 우리 위원회안으로 제안하고자 하는데 이의 없습니까?</span><br/><span class="spk_sub" id="spk_sub51-2">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub51-3">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div id="spk_52" class="item18 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;위원장님, 아까 그것 확인 좀……</span><br/></div></div></div><div id="spk_53" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;답변해 보세요.</span><br/></div></div></div><div id="spk_54" class="item18 speaker spk_mem" data-mem_id="0" data-name="윤원습" data-pos="농림축산식품부농업정책관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">농림축산식품부농업정책관 윤원습 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="윤원습"></span><span class="txt"><span class="position">농림축산식품부농업정책관</span><strong class="name">윤원습</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub54-2">&nbsp;문금주 위원님 말씀 주신 부분과 관련돼서 확인을 했는데요. 수협법, 새마을금고법 그리고 한국은행법에서는 법에 ‘서울시’라고 명시가 되어 있고요. 그다음에 산림조합중앙회라든지 신협 그리고 상호저축은행중앙회 여기는 정관으로 서울시를……</span><br/></div></div></div><div id="spk_55" class="item18 speaker spk_mem" data-mem_id="6565" data-name="문금주" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">문금주 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/e1710b2722c74ea79c98bdc53e0425ad.jpg" alt="문금주"></span><span class="txt"><strong class="name">문금주</strong><span class="position">위원</span><span class="area">(전남 고흥군보성군장흥군강진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;수협은?</span><br/></div></div></div><div id="spk_56" class="item18 speaker spk_mem" data-mem_id="0" data-name="윤원습" data-pos="농림축산식품부농업정책관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">농림축산식품부농업정책관 윤원습 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="윤원습"></span><span class="txt"><span class="position">농림축산식품부농업정책관</span><strong class="name">윤원습</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;수협은 법으로 돼 있습니다, ‘서울시’라고. 그렇게 돼 있습니다.</span><br/></div></div></div><div id="spk_57" class="item18 speaker spk_mem" data-mem_id="6677" data-name="윤준병" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">소위원장 윤준병 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/8a8c40f46a47462ba0708e6c6ee8053f.jpg" alt="윤준병"></span><span class="txt"><span class="position">소위원장</span><strong class="name">윤준병</strong><span class="area">(전북 정읍시고창군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;문금주 위원님 말씀 주셨는데, 하여튼 농협중앙회도 지방으로 이전해야 된다는 데에는 저는 같은 생각이고요. 다만 입법적인 내용이 제가 확인한 내용에 따르면 공공기관 이전과 관련된 부수적인 법안, 그러니까 특히 주사무소 위치와 관련된 법안은 공공기관 이전계획이 발표되면 거기에 부합되는 일괄 법 처리를 하겠다는 게 정부의 기본 입장이더라고요. 그래서 농협중앙회도 포함돼서 이전 대상으로 발표가 되면 포함돼서 입법조치가 될 것으로 기대합니다.</span><br/><span class="spk_sub" id="spk_sub57-2">&nbsp;나머지 문구 사항은 위원장에게 위임해 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub57-3">&nbsp;오늘 회의는 여기까지 하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub57-4">&nbsp;위원님 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub57-5">&nbsp;위원회 직원, 보좌직원 여러분 그리고 정부 측 관계자 여러분 모두도 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub57-6">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(10시56분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(9인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KangSeungKyoo" target="_blank"><span class="name lts3 ">강승규</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGBUM" target="_blank"><span class="name lts3 ">김성범</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YONGTAEKIM" target="_blank"><span class="name lts3 ">김용태</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MUNGEUMJU" target="_blank"><span class="name lts3 ">문금주</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/SHINCHANGSIK" target="_blank"><span class="name lts3 ">신장식</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONJOONBYEONG" target="_blank"><span class="name lts3 ">윤준병</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKAIHO" target="_blank"><span class="name lts3 ">이개호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJAEKWAN" target="_blank"><span class="name lts3 ">이재관</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMMIAE" target="_blank"><span class="name lts3 ">임미애</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEESEONGKWEUN" target="_blank"><span class="name lts3 ">이성권</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 정대영</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부 측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>농림축산식품부</p><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 김종구</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 홍인기</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">농촌정책국장</span></span><span class="name lts3"> 전한영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">농업정책관</span></span><span class="name lts3"> 윤원습</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">동물복지정책국장</span></span><span class="name lts3"> 이용직</span></a></li></ul></div></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57670;
+			const class_id = 2;
+			const confer_num = "N054728";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1794152094985" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1794152094985"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1794152094985"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1794152094985"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
