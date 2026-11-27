@@ -1,0 +1,1404 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>국회회의록 상세보기 팝업창</title>
+<link rel="shortcut icon" href="/assembly/images/view/favicon.ico" />
+<link rel="stylesheet" href="/assembly/css/common.css?20260114" />
+<link rel="stylesheet" href="/assembly/css/view/assembly.css?20260605" />
+
+<script src="/assembly/js/jquery.js"></script>
+<script src="/assembly/js/jquery-ui.min.js"></script>
+<script src="/assembly/js/view/assembly.js?20260428"></script>
+<script src="/assembly/js/kakao.min.js "></script>
+<script src="/assembly/js/assembly/sns.js?20250310"></script>
+</head>
+
+<body>
+<p id="skip-navigation"><a href=#container>본문바로가기</a></p>
+	<script>
+	function loadtiff(filename) {
+		var xhr = new XMLHttpRequest();
+	    xhr.open('GET', filename);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function (e) {
+	      var buffer = xhr.response;
+	      var tiff = new Tiff({buffer: buffer});
+	      var canvas = tiff.toCanvas();
+	      var width = tiff.width();
+	      var height = tiff.height();
+	      if (canvas) {
+	        /* var $elem = $('<div><div><a href="' + filename + '">' +
+	                      filename +
+	                      ' (width: ' + width + ', height:' + height + ')' +
+	                      '</a></div></div>');
+	        $elem.append(canvas); */
+	        $('div#minutes').append(canvas);
+	      }
+	    };
+	    xhr.send();
+	}
+	</script>
+	<div class="wrapper">
+		<!-- header [S] -->
+		
+
+
+
+
+<div id="header">
+	<!-- top [S] -->
+	<div class="top">
+		<div class="util_wrap">
+			<div class="util">
+				
+				<div class="search">
+					<button type="button" class="btn_search">검색 열기</button>
+					<form id="minutes-form">
+						<fieldset>
+							<legend>검색</legend>
+							<label for="topkeyword" class="v_hidden">검색어를 입력해주세요</label>
+							<input type="text" name="sw" id="topkeyword" placeholder="검색어를 입력해 주세요." title="검색어를 입력해 주세요">
+							<div class="btn_wrap">
+								<button type="submit" class="btn_sch">검색</button>
+								<button type="button" class="btn_prev">이전 검색</button>
+								<button type="button" class="btn_next">다음 검색</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				
+				<ul>
+					<li><button type="button" class="btn_down" title="다운로드">다운로드</button>
+						<div class="list file">
+							<ul>
+								
+								<li><button type="button" class="hwp">한글파일 다운로드</button></li>
+								
+								
+								<li><button type="button" class="pdf">PDF파일 다운로드</button></li>
+								
+							</ul>
+						</div>
+					</li>
+					
+					<li><button type="button" class="btn_print" title="인쇄">인쇄</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="btn_print_sel">선택인쇄</button></li>
+								<!-- <li><a href="javascript:void(0);" id="print-minutes" class="btn_print">전체인쇄</a></li> -->
+								<li><a href="/assembly/viewer/minutes/print.do?mnts_id=57765" onclick="window.open(this.href, 'printPage', 'width=1300,height=700,top=100,left=100,scrollbars=yes,resizable=no'); return false;" target="_blank" title="현재페이지를 인쇄합니다.(새창열림)">전체인쇄</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_font" title="글자체 보기">글자체</button>
+						<div class="list">
+							<ul>
+								<li><button type="button" class="change-font gl" data-font="gulim">굴림체</button></li>
+								<li><button type="button" class="change-font du" data-font="dotum">돋움체</button></li>
+								<li><button type="button" class="change-font gs" data-font="gungsuh">궁서체</button></li>
+							</ul>
+							<button type="button" class="change-font btn_origin" data-font="default">글자체 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_size" title="글자크기 조절">글자크기</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-font-size" data-font-size="10">10pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="11">11pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="12">12pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="13">13pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="14">14pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="15">15pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="16">16pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="17">17pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="18">18pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="19">19pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="20">20pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="21">21pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="22">22pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="23">23pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="24">24pt</button></li>
+								<!-- 
+								<li><button type="button" class="change-font-size" data-font-size="25">25pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="26">26pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="27">27pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="28">28pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="29">29pt</button></li>
+								<li><button type="button" class="change-font-size" data-font-size="30">30pt</button></li>
+								 -->
+							</ul>
+							<button type="button" class="change-font-size btn_origin" data-font-size="default">글자크기 초기화</button>
+						</div>
+					</li>
+					<li>
+						<button type="button" class="btn_between" title="줄간격 조절">줄간격</button>
+						<div class="list long">
+							<ul>
+								<li><button type="button" class="change-line-height" data-line-height="100">100%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="110">110%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="120">120%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="130">130%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="140">140%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="150">150%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="160">160%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="170">170%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="180">180%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="190">190%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="200">200%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="210">210%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="220">220%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="230">230%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="240">240%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="250">250%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="260">260%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="270">270%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="280">280%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="290">290%</button></li>
+								<li><button type="button" class="change-line-height" data-line-height="300">300%</button></li>
+							</ul>
+							<button type="button" class="change-line-height btn_origin" data-line-height="default">줄간격 초기화</button>
+						</div>
+					</li>
+					
+					<li>						
+						<button type="button" class="btn_share" title="공유 보기">공유</button>
+						<div class="list sns_share">
+							<ul>
+								<li><button type="button" onclick="fn_sendSns('facebook','국회 스마트 회의록');" title="페이스북으로 공유하기(새창열림)" class="fb">페이스북로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('twitter','국회 스마트 회의록');" title="트위터로 공유하기(새창열림)" class="tw">트위터로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('naverblog','국회 스마트 회의록');" title="네이버 블로그로 공유하기 새창열림" class="bl">네이버 블로그로 공유하기</button></li>
+								<li><button type="button" onclick="fn_sendSns('kakaotalk','국회 스마트 회의록 ');" title="카카오톡으로 공유하기 새창열림" class="kkot">카카오톡으로 공유하기</button></li>
+								<li><button type="button" class="url" title="URL복사">URL</button></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo">
+			<h1>
+				<a href="/assembly/" target="_blank" title="새창열림">
+					<span class="img"><img src="/assembly/images/view/ico_logo.png" alt="국회 마크" /></span>
+					<span class="txt">
+						<strong>국회회의록</strong>
+						<span>NATIONAL ASSEMBLY MINUTES </span>
+					</span>
+				</a>
+			</h1>
+		</div>
+		<button type="button" class="btn_menu">
+			<span class="skip">메뉴 보기</span> 
+			<span class="bar"></span> 
+			<span class="bar"></span> 
+			<span class="bar"></span>
+		</button>
+	</div>
+	<!-- //top [E] -->
+
+	<div class="tit">
+		<h2><strong>제22대국회 제439회 (정기회) 제10차 재정경제기획위원회</strong><span class="date">(2026.11.19.)</span></h2>
+	</div>
+	
+</div>
+		<!-- //header [E] -->
+		<!-- snb [S] -->
+		
+
+
+
+<div class="snb"> 
+	<div class="list_wrap"> 
+		
+			<div class="list list1" id="itemList">
+				<button type="button" class="tit btn_in" title="내용 보기">
+				
+				
+					
+					
+					
+					
+					
+					
+				
+				상정된 안건
+				</button>
+				<div class="txt">
+					<div class="list_tit">
+						상정된 안건<!-- 상정된 안건 -->
+						<button type="button" class="btn_fold">내용 접기</button>
+					</div>
+					<div class="con">
+						<ul class="list_angun">
+							
+								<li><a href="#" class="move" data-target="#item1">1. 국세청장후보자(안덕수) 인사청문요청안</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item2">2. 국세청장후보자(안덕수) 인사청문회 실시계획서 채택의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item3">3. 국세청장후보자(안덕수) 인사청문회 자료제출 요구의 건</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item4">4. 국유재산특례제한법 일부개정법률안(정부 제출)(의안번호 2221640)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item5">5. 국유재산특례제한법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2219673)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item6">6. 국유재산특례제한법 일부개정법률안(최은석 의원 대표발의)(의안번호 2220215)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item7">7. 국유재산특례제한법 일부개정법률안(박희승 의원 대표발의)(의안번호 2201307)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item8">8. 국유재산특례제한법 일부개정법률안(이수진 의원 대표발의)(의안번호 2219045)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item9">9. 국유재산특례제한법 일부개정법률안(임미애 의원 대표발의)(의안번호 2215146)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item10">10. 국유재산특례제한법 일부개정법률안(김석기 의원 대표발의)(의안번호 2218448)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item11">11. 국유재산특례제한법 일부개정법률안(김기현 의원 대표발의)(의안번호 2218655)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item12">12. 국유재산특례제한법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item13">13. 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안(배준영 의원 대표발의)(의안번호 2218356)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item14">14. 국가재정법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2200829)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item15">15. 국가재정법 일부개정법률안(구자근 의원 대표발의)(의안번호 2204529)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item16">16. 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205072)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item17">17. 국가재정법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205107)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item18">18. 국가재정법 일부개정법률안(이종배 의원 대표발의)(의안번호 2207151)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item19">19. 국가재정법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208223)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item20">20. 국가재정법 일부개정법률안(박형수 의원 대표발의)(의안번호 2212650)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item21">21. 국가재정법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2212906)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item22">22. 국가재정법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217563)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item23">23. 국가재정법 일부개정법률안(대안)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item24">24. 2027년도 예산안(의안번호 2221032)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item25">  가. 재정경제부 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item26">  나. 기획예산처 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item27">  다. 국가데이터처 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item28">  라. 국세청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item29">  마. 관세청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item30">  바. 조달청 소관</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item31">25. 2027년도 기금운용계획안(의안번호 2221033)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item32">  가. 공공자금관리기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item33">    나. 국유재산관리기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item34">    다. 대외경제협력기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item35">    라. 외국환평형기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item36">    마. 전략수출금융기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item37">    바. 산업기반신용보증기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item38">    사. 복권기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item39">    아. 공익신고장려기금</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item40">26. 2027년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2221078)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item41">27. 2027년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2221079)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item42">28. 2027년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2221083)</a></li>	
+							
+								<li><a href="#" class="move" data-target="#item43">29. 2027년도에 발행하는 한미전략투자채권에 대한 국가보증동의안(의안번호 2221084)</a></li>	
+							
+						</ul>
+					</div>
+				</div>
+			</div>		
+			<div class="list list2">
+				<a href="#pop_angun" class="tit btn_pop" id="btn_item" title="연관된 회의록을 볼 수 있습니다">안건정보</a>
+			</div>
+		
+		
+		
+			<div class="list list4" id="tab_vod">
+				<a href="#pop_vod" class="tit btn_pop" id="btn_vod">영상회의록</a>
+			</div>
+		
+		<div class="list list5" id="speakerList">
+			<button type="button" class="tit btn_in" title="내용 보기">발언자</button>
+			<div class="txt">
+				<div class="list_tit">
+					발언자
+					<button type="button" class="btn_fold">내용 접기</button>
+				</div>
+				<div class="con">
+					<div class="frm_sch_nm">
+						<form id="spk_search_form">
+							<fieldset>
+								<legend>의원검색</legend>
+								<div class="in_nm">
+									<label for="search_spk" class="v_hidden">발언자를 입력하세요</label>
+									<input type="text" id="search_spk" name="in_nm" list="attender" placeholder="발언자를 입력하세요" title="발언자를 입력하세요">
+									<button type="submit" id="search_spk_btn" class="btn_sch">검색</button>
+								</div>
+								<ul class="rd_spk chk_list">
+									<li><input type="radio" name="rd_con" id="rd_spk_strong" checked="checked" value="emp"><label for="rd_spk_strong">발언자 강조</label></li>
+									<li><input type="radio" name="rd_con" id="rd_spk_view" value="only"><label for="rd_spk_view">발언자만 보기</label></li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<datalist id="attender">
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="조승래 위원장 (대전 유성구갑)"> 
+							조승래 위원장 (대전 유성구갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="배준영 위원 (인천 중구강화군옹진군)"> 
+							배준영 위원 (인천 중구강화군옹진군)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="임이자 위원 (경북 상주시문경시 )"> 
+							임이자 위원 (경북 상주시문경시 )
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이종욱 위원 (경남 창원시진해구)"> 
+							이종욱 위원 (경남 창원시진해구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="오기형 위원 (서울 도봉구을)"> 
+							오기형 위원 (서울 도봉구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="문진석 위원 (충남 천안시갑)"> 
+							문진석 위원 (충남 천안시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="강민국 위원 (경남 진주시을)"> 
+							강민국 위원 (경남 진주시을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="박수영 위원 (부산 남구)"> 
+							박수영 위원 (부산 남구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="김상훈 위원 (대구 서구)"> 
+							김상훈 위원 (대구 서구)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="정태호 위원 (서울 관악구을)"> 
+							정태호 위원 (서울 관악구을)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이춘석 위원 (전북 익산시갑)"> 
+							이춘석 위원 (전북 익산시갑)
+						</option>
+					
+						
+						
+							
+							
+								
+								
+							
+						
+						
+							
+							    
+								
+								
+								
+								
+								
+									
+										
+										
+											
+										
+									
+								
+								
+								
+							
+							<option value="이광재 위원 (경기 하남시갑)"> 
+							이광재 위원 (경기 하남시갑)
+						</option>
+					
+					
+						<option value="이형일 부총리겸재정경제부장관">이형일 부총리겸재정경제부장관</option>
+					
+						<option value="박홍근 기획예산처장관">박홍근 기획예산처장관</option>
+					
+						<option value="안형준 국가데이터처장">안형준 국가데이터처장</option>
+					
+						<option value="박해영 국세청장직무대행">박해영 국세청장직무대행</option>
+					
+						<option value="이종욱 관세청장">이종욱 관세청장</option>
+					
+						<option value="백승보 조달청장">백승보 조달청장</option>
+					
+					</datalist>
+					<ul class="list_member">
+					  
+		              
+						<li>
+							<button type="button" class="tit_s" title="내용 닫기">의원(12명)</button>
+							<ul class="list_name" tabindex="0">
+								
+									<li>
+										<input class="speakerMem" type="checkbox" id="spk_mem_all" value="all"> 
+										<label for="spk_mem_all">
+											전체
+										</label>
+									</li>
+								
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem0" data-mem_id="6630" data-name="조승래" data-pos="위원장"> 
+											<label for="spk_mem0">												
+												<span class="name">조승래</span>
+												<span class="position">위원장</span>
+												<span class="area">(대전 유성구갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem1" data-mem_id="6700" data-name="배준영" data-pos="위원"> 
+											<label for="spk_mem1">												
+												<span class="name">배준영</span>
+												<span class="position">위원</span>
+												<span class="area">(인천 중구강화군옹진군)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem2" data-mem_id="6645" data-name="임이자" data-pos="위원"> 
+											<label for="spk_mem2">												
+												<span class="name">임이자</span>
+												<span class="position">위원</span>
+												<span class="area">(경북 상주시문경시 )</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem3" data-mem_id="6770" data-name="이종욱" data-pos="위원"> 
+											<label for="spk_mem3">												
+												<span class="name">이종욱</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 창원시진해구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem4" data-mem_id="6699" data-name="오기형" data-pos="위원"> 
+											<label for="spk_mem4">												
+												<span class="name">오기형</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 도봉구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem5" data-mem_id="6666" data-name="문진석" data-pos="위원"> 
+											<label for="spk_mem5">												
+												<span class="name">문진석</span>
+												<span class="position">위원</span>
+												<span class="area">(충남 천안시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem6" data-mem_id="6853" data-name="강민국" data-pos="위원"> 
+											<label for="spk_mem6">												
+												<span class="name">강민국</span>
+												<span class="position">위원</span>
+												<span class="area">(경남 진주시을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem7" data-mem_id="6686" data-name="박수영" data-pos="위원"> 
+											<label for="spk_mem7">												
+												<span class="name">박수영</span>
+												<span class="position">위원</span>
+												<span class="area">(부산 남구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem8" data-mem_id="6593" data-name="김상훈" data-pos="위원"> 
+											<label for="spk_mem8">												
+												<span class="name">김상훈</span>
+												<span class="position">위원</span>
+												<span class="area">(대구 서구)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem9" data-mem_id="6633" data-name="정태호" data-pos="위원"> 
+											<label for="spk_mem9">												
+												<span class="name">정태호</span>
+												<span class="position">위원</span>
+												<span class="area">(서울 관악구을)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem10" data-mem_id="6742" data-name="이춘석" data-pos="위원"> 
+											<label for="spk_mem10">												
+												<span class="name">이춘석</span>
+												<span class="position">위원</span>
+												<span class="area">(전북 익산시갑)</span>
+											</label>
+										</div>
+									</li>
+								
+									
+									
+										
+										
+											
+											
+										
+									
+									
+									
+									
+										
+										
+										
+										
+										
+											
+												
+												
+													
+												
+											
+										
+										
+										
+									
+									<li>
+										<div class="list">
+											<input class="speakerMem" type="checkbox" id="spk_mem11" data-mem_id="7219" data-name="이광재" data-pos="위원"> 
+											<label for="spk_mem11">												
+												<span class="name">이광재</span>
+												<span class="position">위원</span>
+												<span class="area">(경기 하남시갑)</span>
+											</label>
+										</div>
+									</li>
+												
+							</ul>
+						</li>
+						
+						<li class="fold">
+						  
+						    
+						    
+						      <button type="button" class="tit_s" title="내용 보기">의원 외(6명)</button>
+						    
+						    
+						  
+							<ul class="list_name" tabindex="0">
+								
+								<li>
+									<input class="speakerAtd" type="checkbox" id="spk_attend_all" value="all"> 
+									<label for="spk_attend_all">
+										전체
+									</label>
+								</li>
+								
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend0"  data-mem_id="0" data-name="이형일" data-pos="부총리겸재정경제부장관"> 
+											<label for="spk_attend0">
+												<span class="name">이형일</span>
+												<span class="position">부총리겸재정경제부장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend1"  data-mem_id="0" data-name="박홍근" data-pos="기획예산처장관"> 
+											<label for="spk_attend1">
+												<span class="name">박홍근</span>
+												<span class="position">기획예산처장관</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend2"  data-mem_id="0" data-name="안형준" data-pos="국가데이터처장"> 
+											<label for="spk_attend2">
+												<span class="name">안형준</span>
+												<span class="position">국가데이터처장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend3"  data-mem_id="0" data-name="박해영" data-pos="국세청장직무대행"> 
+											<label for="spk_attend3">
+												<span class="name">박해영</span>
+												<span class="position">국세청장직무대행</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend4"  data-mem_id="0" data-name="이종욱" data-pos="관세청장"> 
+											<label for="spk_attend4">
+												<span class="name">이종욱</span>
+												<span class="position">관세청장</span>
+											</label>
+										</div>
+									</li>
+								
+									<li>
+										<div class="list etc">
+											<input class="speakerAtd" type="checkbox" id="spk_attend5"  data-mem_id="0" data-name="백승보" data-pos="조달청장"> 
+											<label for="spk_attend5">
+												<span class="name">백승보</span>
+												<span class="position">조달청장</span>
+											</label>
+										</div>
+									</li>
+								
+							</ul>
+						</li>
+					</ul>
+					<a href="#pop_speak" id="btn_speak" class="btn_pop btn_down_nm">선택 발언자 발언 다운로드</a>
+				</div>
+			</div>
+		</div>
+		<div class="list list6">
+			<a href="?id=57765&type=summary" class="tit">회의정보</a>
+		</div>
+		<div class="list list7">
+			<a href="/assembly/viewer/minutes/term.do"  onclick="window.open(this.href, '_blank', 'width=700, height=700'); return false;" title="새창열림" class="tit">국회용어사전</a>
+		</div>
+	</div>
+</div>
+		<!-- // snb [E]-->
+
+		<!-- container [S]-->
+		<div class="container" id="container">
+			
+			<!-- content [S]-->
+			<div class="content">
+				<!-- minutes [S]-->
+				
+
+
+
+<div id="minutes" class="">
+	
+		<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div>
+	
+	
+		
+			<div class="bg_tmp"><img src="/assembly/images/view/bg_temp.png" alt="임시회의록"></div><div class="minutes_header"><div class="tit_wrap"><p class="turn">제439회 국회<br/>(정기회)</p><div class="tit_in"><div class="tit"><h1>재정경제기획위원회회의록</h1></div><p class="tmp">(임시회의록)</p></div><p class="num">제10호</p></div><p class="author">국회사무처</p><div class="place"><ul><li><div class="sbj lts2">일시</div><p class="con">2026년 11월 19일(목)</p></li><li><div class="sbj lts2">장소</div><p class="con">재정경제기획위원회회의실</p></li><li><div class="sbj lts4">의사일정</div><ul class="list_num"><li><span class="num">1.</span> 국세청장후보자(안덕수) 인사청문요청안</li><li><span class="num">2.</span> 국세청장후보자(안덕수) 인사청문회 실시계획서 채택의 건</li><li><span class="num">3.</span> 국세청장후보자(안덕수) 인사청문회 자료제출 요구의 건</li><li><span class="num">4.</span> 국유재산특례제한법 일부개정법률안(정부 제출)(의안번호 2221640)</li><li><span class="num">5.</span> 국유재산특례제한법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2219673)</li><li><span class="num">6.</span> 국유재산특례제한법 일부개정법률안(최은석 의원 대표발의)(의안번호 2220215)</li><li><span class="num">7.</span> 국유재산특례제한법 일부개정법률안(박희승 의원 대표발의)(의안번호 2201307)</li><li><span class="num">8.</span> 국유재산특례제한법 일부개정법률안(이수진 의원 대표발의)(의안번호 2219045)</li><li><span class="num">9.</span> 국유재산특례제한법 일부개정법률안(임미애 의원 대표발의)(의안번호 2215146)</li><li><span class="num">10.</span> 국유재산특례제한법 일부개정법률안(김석기 의원 대표발의)(의안번호 2218448)</li><li><span class="num">11.</span> 국유재산특례제한법 일부개정법률안(김기현 의원 대표발의)(의안번호 2218655)</li><li><span class="num">12.</span> 국유재산특례제한법 일부개정법률안(대안)</li><li><span class="num">13.</span> 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안(배준영 의원 대표발의)(의안번호 2218356)</li><li><span class="num">14.</span> 국가재정법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2200829)</li><li><span class="num">15.</span> 국가재정법 일부개정법률안(구자근 의원 대표발의)(의안번호 2204529)</li><li><span class="num">16.</span> 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205072)</li><li><span class="num">17.</span> 국가재정법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205107)</li><li><span class="num">18.</span> 국가재정법 일부개정법률안(이종배 의원 대표발의)(의안번호 2207151)</li><li><span class="num">19.</span> 국가재정법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208223)</li><li><span class="num">20.</span> 국가재정법 일부개정법률안(박형수 의원 대표발의)(의안번호 2212650)</li><li><span class="num">21.</span> 국가재정법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2212906)</li><li><span class="num">22.</span> 국가재정법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217563)</li><li><span class="num">23.</span> 국가재정법 일부개정법률안(대안)</li><li><span class="num">24.</span> 2027년도 예산안(의안번호 2221032)</li><li class="pl20">  가. 재정경제부 소관</li><li class="pl20">  나. 기획예산처 소관</li><li class="pl20">  다. 국가데이터처 소관</li><li class="pl20">  라. 국세청 소관</li><li class="pl20">  마. 관세청 소관</li><li class="pl20">  바. 조달청 소관</li><li><span class="num">25.</span> 2027년도 기금운용계획안(의안번호 2221033)</li><li class="pl20">  가. 공공자금관리기금</li><li class="pl30">    나. 국유재산관리기금</li><li class="pl30">    다. 대외경제협력기금</li><li class="pl30">    라. 외국환평형기금</li><li class="pl30">    마. 전략수출금융기금</li><li class="pl30">    바. 산업기반신용보증기금</li><li class="pl30">    사. 복권기금</li><li class="pl30">    아. 공익신고장려기금</li><li><span class="num">26.</span> 2027년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2221078)</li><li><span class="num">27.</span> 2027년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2221079)</li><li><span class="num">28.</span> 2027년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2221083)</li><li><span class="num">29.</span> 2027년도에 발행하는 한미전략투자채권에 대한 국가보증동의안(의안번호 2221084)</li></ul></li><li><div class="sbj">상정된 안건</div><ul class="list_num"><li id="head_item1"><a href="#" class="move" data-target="#item1"><span class="num">1.</span> 국세청장후보자(안덕수) 인사청문요청안</a></li><li id="head_item2"><a href="#" class="move" data-target="#item2"><span class="num">2.</span> 국세청장후보자(안덕수) 인사청문회 실시계획서 채택의 건</a></li><li id="head_item3"><a href="#" class="move" data-target="#item3"><span class="num">3.</span> 국세청장후보자(안덕수) 인사청문회 자료제출 요구의 건</a></li><li id="head_item4"><a href="#" class="move" data-target="#item4"><span class="num">4.</span> 국유재산특례제한법 일부개정법률안(정부 제출)(의안번호 2221640)</a></li><li id="head_item5"><a href="#" class="move" data-target="#item5"><span class="num">5.</span> 국유재산특례제한법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2219673)</a></li><li id="head_item6"><a href="#" class="move" data-target="#item6"><span class="num">6.</span> 국유재산특례제한법 일부개정법률안(최은석 의원 대표발의)(의안번호 2220215)</a></li><li id="head_item7"><a href="#" class="move" data-target="#item7"><span class="num">7.</span> 국유재산특례제한법 일부개정법률안(박희승 의원 대표발의)(의안번호 2201307)</a></li><li id="head_item8"><a href="#" class="move" data-target="#item8"><span class="num">8.</span> 국유재산특례제한법 일부개정법률안(이수진 의원 대표발의)(의안번호 2219045)</a></li><li id="head_item9"><a href="#" class="move" data-target="#item9"><span class="num">9.</span> 국유재산특례제한법 일부개정법률안(임미애 의원 대표발의)(의안번호 2215146)</a></li><li id="head_item10"><a href="#" class="move" data-target="#item10"><span class="num">10.</span> 국유재산특례제한법 일부개정법률안(김석기 의원 대표발의)(의안번호 2218448)</a></li><li id="head_item11"><a href="#" class="move" data-target="#item11"><span class="num">11.</span> 국유재산특례제한법 일부개정법률안(김기현 의원 대표발의)(의안번호 2218655)</a></li><li id="head_item12"><a href="#" class="move" data-target="#item12"><span class="num">12.</span> 국유재산특례제한법 일부개정법률안(대안)</a></li><li id="head_item13"><a href="#" class="move" data-target="#item13"><span class="num">13.</span> 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안(배준영 의원 대표발의)(의안번호 2218356)</a></li><li id="head_item14"><a href="#" class="move" data-target="#item14"><span class="num">14.</span> 국가재정법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2200829)</a></li><li id="head_item15"><a href="#" class="move" data-target="#item15"><span class="num">15.</span> 국가재정법 일부개정법률안(구자근 의원 대표발의)(의안번호 2204529)</a></li><li id="head_item16"><a href="#" class="move" data-target="#item16"><span class="num">16.</span> 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205072)</a></li><li id="head_item17"><a href="#" class="move" data-target="#item17"><span class="num">17.</span> 국가재정법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205107)</a></li><li id="head_item18"><a href="#" class="move" data-target="#item18"><span class="num">18.</span> 국가재정법 일부개정법률안(이종배 의원 대표발의)(의안번호 2207151)</a></li><li id="head_item19"><a href="#" class="move" data-target="#item19"><span class="num">19.</span> 국가재정법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208223)</a></li><li id="head_item20"><a href="#" class="move" data-target="#item20"><span class="num">20.</span> 국가재정법 일부개정법률안(박형수 의원 대표발의)(의안번호 2212650)</a></li><li id="head_item21"><a href="#" class="move" data-target="#item21"><span class="num">21.</span> 국가재정법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2212906)</a></li><li id="head_item22"><a href="#" class="move" data-target="#item22"><span class="num">22.</span> 국가재정법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217563)</a></li><li id="head_item23"><a href="#" class="move" data-target="#item23"><span class="num">23.</span> 국가재정법 일부개정법률안(대안)</a></li><li id="head_item24"><a href="#" class="move" data-target="#item24"><span class="num">24.</span> 2027년도 예산안(의안번호 2221032)</a></li><li id="head_item25" class="pl20"><a href="#" class="move" data-target="#item25">  가. 재정경제부 소관</a></li><li id="head_item26" class="pl20"><a href="#" class="move" data-target="#item26">  나. 기획예산처 소관</a></li><li id="head_item27" class="pl20"><a href="#" class="move" data-target="#item27">  다. 국가데이터처 소관</a></li><li id="head_item28" class="pl20"><a href="#" class="move" data-target="#item28">  라. 국세청 소관</a></li><li id="head_item29" class="pl20"><a href="#" class="move" data-target="#item29">  마. 관세청 소관</a></li><li id="head_item30" class="pl20"><a href="#" class="move" data-target="#item30">  바. 조달청 소관</a></li><li id="head_item31"><a href="#" class="move" data-target="#item31"><span class="num">25.</span> 2027년도 기금운용계획안(의안번호 2221033)</a></li><li id="head_item32" class="pl20"><a href="#" class="move" data-target="#item32">  가. 공공자금관리기금</a></li><li id="head_item33" class="pl30"><a href="#" class="move" data-target="#item33">    나. 국유재산관리기금</a></li><li id="head_item34" class="pl30"><a href="#" class="move" data-target="#item34">    다. 대외경제협력기금</a></li><li id="head_item35" class="pl30"><a href="#" class="move" data-target="#item35">    라. 외국환평형기금</a></li><li id="head_item36" class="pl30"><a href="#" class="move" data-target="#item36">    마. 전략수출금융기금</a></li><li id="head_item37" class="pl30"><a href="#" class="move" data-target="#item37">    바. 산업기반신용보증기금</a></li><li id="head_item38" class="pl30"><a href="#" class="move" data-target="#item38">    사. 복권기금</a></li><li id="head_item39" class="pl30"><a href="#" class="move" data-target="#item39">    아. 공익신고장려기금</a></li><li id="head_item40"><a href="#" class="move" data-target="#item40"><span class="num">26.</span> 2027년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2221078)</a></li><li id="head_item41"><a href="#" class="move" data-target="#item41"><span class="num">27.</span> 2027년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2221079)</a></li><li id="head_item42"><a href="#" class="move" data-target="#item42"><span class="num">28.</span> 2027년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2221083)</a></li><li id="head_item43"><a href="#" class="move" data-target="#item43"><span class="num">29.</span> 2027년도에 발행하는 한미전략투자채권에 대한 국가보증동의안(의안번호 2221084)</a></li></ul></ul></div></div><div class="minutes_body"><p class="tit_sm taR">(11시03분 개의)</p><br/><div id="spk_2" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_2"><label for="spk_cnt_chk_2">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub2-1">&nbsp;성원이 되었으므로 제439회 국회(정기회) 제10차 재정경제기획위원회를 개회하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-2">&nbsp;보고사항은 회의록에 게재하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub2-3"><div class="taR">(보고사항은 끝에 실음)</div></span><span class="spk_sub" id="spk_sub2-4">&nbsp;그리고……</span><br/></div></div></div><div id="spk_3" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_3"><label for="spk_cnt_chk_3">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub3-1">&nbsp;위원장님, 의사진행발언 있습니다.</span><br/></div></div></div><div id="spk_4" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_4"><label for="spk_cnt_chk_4">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub4-1">&nbsp;잠시만요, 잠시만요.</span><br/><span class="spk_sub" id="spk_sub4-2">&nbsp;위원장으로서 제가 분명히 말씀드립니다.</span><br/><span class="spk_sub" id="spk_sub4-3">&nbsp;지난번에 우리가 말씀 나눈 것처럼 회의장에 피켓 같은 것들은 부착하지 않는 것으로 하는 게 좋겠다라고 했고, 그래서 그렇게 한 번 한 바도 있지 않습니까?</span><br/><span class="spk_sub" id="spk_sub4-4">&nbsp;제가 위원님들의 발언을 제한한 적도 한 번도 없고 충분히 말씀할 수 있는 시간과 기회를 다 드리고, 의회는 말로 싸우고 말로 설득하고 말로 주장하는 것이지 자꾸 저렇게 현수막이나 피켓이나 이런 걸 가지고 의사 표현하는 것은 저는 적절치 않다고 정말 생각합니다.</span><br/></div></div></div><div id="spk_5" class="item0 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_5"><label for="spk_cnt_chk_5">임이자 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><strong class="name">임이자</strong><span class="position">위원</span><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub5-1">&nbsp;아이고, 야당 때 생각 좀 해 보세요.</span><br/></div></div></div><div id="spk_6" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_6"><label for="spk_cnt_chk_6">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub6-1">&nbsp;그러니까 그런 겁니다. 앞으로 하지 말자는 얘기예요. 그래서 그것을 철거해 주시면 좋겠습니다. 철거해 주시지요.</span><br/></div></div></div><div id="spk_7" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_7"><label for="spk_cnt_chk_7">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub7-1">&nbsp;위원장님, 의사진행발언……</span><br/></div></div></div><div id="spk_8" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_8"><label for="spk_cnt_chk_8">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub8-1">&nbsp;그러면 의사진행발언 한번 하시고 철거해 주세요. 의사진행발언 한번 하시고 철거하는 것으로 하겠습니다.</span><br/></div></div></div><div id="spk_9" class="item0 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_9"><label for="spk_cnt_chk_9">임이자 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><strong class="name">임이자</strong><span class="position">위원</span><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub9-1">&nbsp;야당은 다 이렇게 하는 거지, 뭐.</span><br/></div></div></div><div id="spk_10" class="item0 speaker spk_mem" data-mem_id="6770" data-name="이종욱" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_10"><label for="spk_cnt_chk_10">이종욱 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEJONHWOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/28fa12120325440fbd63d9953bcfa03f.png" alt="이종욱"></span><span class="txt"><strong class="name">이종욱</strong><span class="position">위원</span><span class="area">(경남 창원시진해구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub10-1">&nbsp;그렇지요.</span><br/></div></div></div><div id="spk_11" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_11"><label for="spk_cnt_chk_11">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub11-1">&nbsp;위원장님, 의사진행발언하겠습니다.</span><br/><span class="spk_sub" id="spk_sub11-2">&nbsp;위원장님, 날치기가 민주당의 미래대응기금입니까? 날치기로 부실 심사한 예산안을 의결해 미래를 망칠 생각입니까?</span><br/><span class="spk_sub" id="spk_sub11-3">&nbsp;오늘 의사일정에 여야 간에 합의되지 않은 예산안 의결 안건이 올라왔습니다. 야당이 동의할 수 없는 안건을 올린 위원장의 결정에 깊은 유감을 표합니다.</span><br/><span class="spk_sub" id="spk_sub11-4">&nbsp;어제 예결소위는 여야 합의 없이 민주당이 일방적으로 개최했습니다. 미래대응기금에 대한 심사를 법안처리 이후에 하자는 요구를 묵살하였고 다른 안까지 의결을 강행했습니다. 민주당 단독으로 북 치고 장구 치고 방망이를 두들겼습니다. 의사봉은 망나니 칼춤의 칼이 아닙니다. 국민의 혈세를 집행하는 예산안이 그렇게 우습습니까?</span><br/><span class="spk_sub" id="spk_sub11-5">&nbsp;의결된 안건에는 전략수출금융기금과 공익신고장려기금도 있습니다. 이 안건은 법안소위에서 각각 논의되었지만 논란 속에 아직 통과되지도 않은 기금입니다. 비유하자면 엄마 없이 아이를 낳은 격입니다. 기금 2개를 만들자마자 엄마 없는 아이를 만들어 버린 것입니다. 아무리 이재명 정권의 서슬이 시퍼렇다고 해서 국회가 기본도 지키지 않은 행정부의 졸개나 해서 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub11-6">&nbsp;국민의힘의 요구는 단순합니다. 미래대응기금에 대한 국민의힘의 다섯 가지 요구에 대한 확답이 없으면 앞으로 나아갈 수 없다는 것입니다. 그런데 민주당은 걱정한다고만 하고 구체적인 답변을 전혀 내놓고 있지 않습니다. 미래대응기금은 정부가 8월 21일, 벌써 세 달 전에 발표했습니다. 그간 국민의힘은 이튿날 기자회견을 포함해서 상임위 전체위, 국정감사, 예결위 질의, 공청회 그리고 두 차례의 소위 법안심사를 통해 더 이상 논의할 수 없을 만큼 심도 있는 논의를 이어 왔습니다.</span><br/><span class="spk_sub" id="spk_sub11-7">&nbsp;미래대응기금의 철회를 요구했던 국민의힘은 참고 참다가 드디어 지난 일요일에는 다섯 가지 최소한의 조건을 내놓고 답변을 기다리고 있습니다. 그런데 민주당은 우리 제안에 대해 일체의 답변도 없이 단독으로 예결소위를 열었습니다. 이런 폭거가 어디 있습니까?</span><br/><span class="spk_sub" id="spk_sub11-8">&nbsp;위원장과 민주당에게 촉구합니다.</span><br/><span class="spk_sub" id="spk_sub11-9">&nbsp;이런 졸속 날치기 부실 회의를 국민들께서 보고 계십니다. 오늘 상정된 예산안을 즉각 내려 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub11-10">&nbsp;그리고 예결소위는 미래대응기금법과 국가재정법이 정해질 때까지 미래대응기금의 예결소위 심사를 멈춰야 합니다. 단독 처리한 예산안도 예결소위에서 다시 논의해야 합니다. 그렇지 않으면 이후에 발생하는 모든 불행한 결과는 조승래 위원장과 민주당 위원들의 책임이 될 것입니다.</span><br/><span class="spk_sub" id="spk_sub11-11">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_12" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_12"><label for="spk_cnt_chk_12">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub12-1">&nbsp;말씀 잘 들었고요.</span><br/></div></div></div><div id="spk_13" class="item0 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_13"><label for="spk_cnt_chk_13">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub13-1">&nbsp;저희도 상황 보고를…… 제가 의사진행발언 한번 하겠습니다.</span><br/></div></div></div><div id="spk_14" class="item0 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_14"><label for="spk_cnt_chk_14">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub14-1">&nbsp;(손을 듦)</span><br/></div></div></div><div id="spk_15" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_15"><label for="spk_cnt_chk_15">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub15-1">&nbsp;그러면 오기형 간사가 하시는 게 좋겠지요.</span><br/></div></div></div><div id="spk_16" class="item0 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_16"><label for="spk_cnt_chk_16">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub16-1">&nbsp;먼저 하고 또……</span><br/></div></div></div><div id="spk_17" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_17"><label for="spk_cnt_chk_17">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub17-1">&nbsp;예, 필요하시면.</span><br/></div></div></div><div id="spk_18" class="item0 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_18"><label for="spk_cnt_chk_18">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub18-1">&nbsp;아니, 예산소위에 대해서 말씀하시니까 저도 할 말이 있지요.</span><br/></div></div></div><div id="spk_19" class="item0 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_19"><label for="spk_cnt_chk_19">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub19-1">&nbsp;제가 먼저 하고 문진석 위원장님 하시는 걸로 하시지요.</span><br/><span class="spk_sub" id="spk_sub19-2">&nbsp;중간의 상황 보고를 한번 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub19-3">&nbsp;미래대응기금과 미래대응기금법안에 대해서는 이번 정기회 주요한 쟁점입니다. 그래서 충분히 논쟁할 수 있고 또 입장이 다를 수 있다라고 저는 인정합니다.</span><br/><span class="spk_sub" id="spk_sub19-4">&nbsp;다만 미래대응기금 관련해서 그동안 논의를 보면 먼저 세수 변동에 대한 재정 완충장치가 필요하다는 지적은 이미 지난 수년 동안 있어 왔고 많은 위원님들이 여야 상관없이 공감하는 주제입니다. 그래서 미래대응기금이라고 하는 재정안정화장치 자체를 반대하는 건 아니실 거라고 믿습니다.</span><br/><span class="spk_sub" id="spk_sub19-5">&nbsp;두 번째는 전액 삭감 이야기하시는데 실제 삭감과 증액은 지금 현재 각 상임위별로 논쟁이 혼재하고 있지 않습니까? 이게 여야와 상관없지 않습니까? 그래서 예산은 예산대로 처리하고 협상하고 또는 논쟁하고 법안은 법안대로 해야 된다 이렇게 보는 겁니다.</span><br/><span class="spk_sub" id="spk_sub19-6">&nbsp;그래서 지금 예결특위에서 예산은 예산대로 심사하고 최종 의결할 때까지는 논쟁을 해야 되지 않겠습니까? 그리고 협의를 해야 되지 않겠습니까?</span><br/><span class="spk_sub" id="spk_sub19-7">&nbsp;세 번째, 부채 갚자 이야기하는데 부채 갚자라고 하는 것에 대해서 부채를 어느 정도가 적절하냐고 국감 과정에 논쟁을 했었고 최근에도 논의를 했지 않습니까? 그 적정성에 대한 논쟁을 하는 것이지 그렇다고 해서 모든 걸 다 갚자 그런 건 아니지 않겠습니까?</span><br/><span class="spk_sub" id="spk_sub19-8">&nbsp;그리고 실제 2022년도 윤석열 정부 첫 추경 때 53조 3000억 초과세수 있었을 때 그 당시에 몇 조 갚았습니까? 국회 심사 과정 하면서 나중에 보니까 한 7조 5000억 줄었습니다. 그러니까 실제 초과세수 있으면 모든 걸 다 국채 상환하고 그러지는 않았습니다. 이건 논쟁의 영역이지, 그렇다고 해서 이 입장이 관찰되지 않으면 아무것도 못 하겠다 그럴 수 있는 건 아니지 않습니까?</span><br/><span class="spk_sub" id="spk_sub19-9">&nbsp;또 하나는 미래대응기금에 대해서 보완이 필요합니다. 그래서 여러 가지 논쟁, 안을 갖고 지금 협상하자는 거 아닙니까?</span><br/><span class="spk_sub" id="spk_sub19-10">&nbsp;재경법안심사소위에서 한 번 일독을 했고 그리고 이번 주 초에 한 번 30분 논쟁을 했습니다. 그래서 ‘재경법안소위를 한번 더 잡고 논쟁합시다’라고 저희가 요청을 했는데 재경법안소위 지금 안 잡고 있지 않습니까? 동의 안 해 주고 있지 않습니까? 동의를 하시고 법안심사를 해야 되는데 법안심사는 가로막고 예산안 심사도 안 된다, 이런 모순이 어디 있습니까? 그래서……</span><br/></div></div></div><div id="spk_20" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_20"><label for="spk_cnt_chk_20">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub20-1">&nbsp;아니, 대안 없이 열기만 하자고 그러니까 그렇지 않습니까?</span><br/></div></div></div><div id="spk_21" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_21"><label for="spk_cnt_chk_21">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub21-1">&nbsp;잠시만요, 잠시만요.</span><br/></div></div></div><div id="spk_22" class="item0 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_22"><label for="spk_cnt_chk_22">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub22-1">&nbsp;그래서 제가 5대 조건에 대해서 하나씩 봤습니다. 나랏빚부터 갚자라고 하는 것은 종래 사례에 비춰 봤을 때 논쟁의 영역인 것이지 그것 때문에 발목 잡을 건 아니다, 저희는 그렇게 보고.</span><br/><span class="spk_sub" id="spk_sub22-2">&nbsp;두 번째, 지방과 교육에 관해서 원래대로 해야 된다라는 거니까 그러면 이 부분을 전혀 반대하시는 것처럼 보이지만 교육재정교부금에 대해서 여야가 대부분이 공감하는 의제입니다. 이게 쟁점이 아닙니다.</span><br/><span class="spk_sub" id="spk_sub22-3">&nbsp;지방에 관한 문제는 이것은 미래대응기금 법안의 문제가 아니라 예산안과 관련해서 별도로 예결특위에서 협의하면 될 문제입니다. 그러면 여기서 이걸 이유로 해서 법안 심사를 반대할 이유는 없는 거지요.</span><br/><span class="spk_sub" id="spk_sub22-4">&nbsp;그다음에 미래대응기금 45조 지출 사업에 대해서 항목별로 다툴 수 있습니다. 이건 법안은 법안대로 심사하고 예결특위에서 다루면 될 문제입니다. 그리고 실제 보건복지위나 몇몇 상임위에서 다른 의견 제시하고 있지 않습니까? 이것 국회 차원에서의 건전한 토론의 과정인 거지요.</span><br/><span class="spk_sub" id="spk_sub22-5">&nbsp;그다음에 기금에 대해서 어느 정도의 운신의 폭을 갈 것인가. 이거는 협상하자고 지금 말씀을 드렸고 별도로 저희도 의견을 많이 개진했습니다, 개별적으로. 충분히 논쟁할 수 있다.</span><br/><span class="spk_sub" id="spk_sub22-6">&nbsp;(발언시간 초과로 마이크 중단)</span><br/><div class="line_dot">&nbsp;</div><span class="spk_sub" id="spk_sub22-7">&nbsp;(마이크 중단 이후 계속 발언한 부분)</span><br/><span class="spk_sub" id="spk_sub22-8">&nbsp;그다음에 미래대응기금 관련한 전반적인 논쟁이, 지금 다섯 가지 안건 하나씩 하나씩 저희가 말씀을 드리는 겁니다.</span><br/><span class="spk_sub" id="spk_sub22-9">&nbsp;저희가 법안소위 할 때도 말씀드렸었고 지금 공개적으로도 말씀을 드렸는데 법안은 법안대로 논쟁하십시다. 그리고 조속히 해서 처리를 할 수 있는 데까지 하셔야 되는 것 아닌가요? 그렇지 않으면 지금 상황에서 이걸 계속 방치하고, 법안을 이유로 해서 예산안을 발목 잡고 예산안을 이유로 해서 법안을 발목 잡는 이런 모순을 갖고 있으면 국회가 의사결정을 못 한다, 국회는 책임지고 어떤 식으로든 이번 예산안에 대한 답을 줘야 된다……</span><br/></div></div></div><div id="spk_23" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_23"><label for="spk_cnt_chk_23">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub23-1">&nbsp;마무리해 주십시오.</span><br/></div></div></div><div id="spk_24" class="item0 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_24"><label for="spk_cnt_chk_24">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub24-1">&nbsp;그래서 적극적으로 고려해 주십사 이렇게 부탁을 드립니다.</span><br/><div class="line_dot">&nbsp;</div></div></div></div><div id="spk_25" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_25"><label for="spk_cnt_chk_25">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub25-1">&nbsp;일단 시작 전에 의사진행발언은 이 정도 하시고 우선은……</span><br/></div></div></div><div id="spk_26" class="item0 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_26"><label for="spk_cnt_chk_26">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub26-1">&nbsp;저도 의사진행발언……</span><br/></div></div></div><div id="spk_27" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_27"><label for="spk_cnt_chk_27">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub27-1">&nbsp;잠시만요.</span><br/><span class="spk_sub" id="spk_sub27-2">&nbsp;제가 의사진행을 할 때 우선은 지금 쟁점이 없는 부분들이 인사청문계획서 채택 부분하고 법안 처리는 문제가 없지 않습니까? 일단 그걸 좀 처리를 하시고 예산안 상정하고 토론을 합시다. 그러면 되지 않겠습니까? 그렇게 하시고.</span><br/><span class="spk_sub" id="spk_sub27-3">&nbsp;지금 의사진행을 할 테니까 이제 피켓은 떼 주시지요. 떼 주세요. 지금 빨리 떼 주세요.</span><br/></div></div></div><div id="spk_28" class="item0 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_28"><label for="spk_cnt_chk_28">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub28-1">&nbsp;예산안 상정을 철회해 주면 떼지요. 지금은 뗄 수가 없지.</span><br/></div></div></div><div id="spk_29" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_29"><label for="spk_cnt_chk_29">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub29-1">&nbsp;떼 주세요.</span><br/></div></div></div><div id="spk_30" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_30"><label for="spk_cnt_chk_30">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub30-1">&nbsp;예산안 철회해 주십시오, 그러면.</span><br/></div></div></div><div id="spk_31" class="item0 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_31"><label for="spk_cnt_chk_31">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub31-1">&nbsp;오늘 미래대응기금안은 올라와 있지 않습니다.</span><br/></div></div></div><div id="spk_32" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_32"><label for="spk_cnt_chk_32">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub32-1">&nbsp;아니, 저희가……</span><br/></div></div></div><div id="spk_33" class="item0 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_33"><label for="spk_cnt_chk_33">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub33-1">&nbsp;여야 합의한 거예요.</span><br/></div></div></div><div id="spk_34" class="item0 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_34"><label for="spk_cnt_chk_34">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub34-1">&nbsp;아니, 법안소위에서 통과도 안 된 전략수출금융기금하고 공익 신고장려기금 이거를 예산 먼저 어제 통과시켰는데 그거를 오늘 통과한다는 게……</span><br/></div></div></div><div id="spk_35" class="item0 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_35"><label for="spk_cnt_chk_35">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub35-1">&nbsp;자, 그건 좀 이따가 논쟁하시고.</span><br/><span class="spk_sub" id="spk_sub35-2">&nbsp;진행하겠습니다.</span><br/><span class="spk_sub" id="spk_sub35-3">&nbsp;오늘 회의에서는 국세청장후보자(안덕수) 인사청문과 관련한 안건, 경제재정소위원회에서 심사를 마친 법률안, 2027년도 예산안 및 기금운용계획안 그리고 채권발행에 대한 국가보증동의안을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub35-4">&nbsp;오늘 회의는 국회방송에서 유튜브 생중계 중입니다.</span><br/><span class="spk_sub" id="spk_sub35-5">&nbsp;그러면 의사일정에 들어가도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item1" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_764A4A77D8D84F739FF22ED23EDC3F" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">1. 국세청장후보자(안덕수) 인사청문요청안</a><a class="btn_move move" data-target="#head_item1" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item2" class="tit">2. 국세청장후보자(안덕수) 인사청문회 실시계획서 채택의 건</a><a class="btn_move move" data-target="#head_item2" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시12분)</p><br/><div id="spk_37" class="item2 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_37"><label for="spk_cnt_chk_37">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub37-1">&nbsp;의사일정 제1항 국세청장후보자 인사청문요청안, 의사일정 제2항 국세청장후보자(안덕수) 인사청문회 실시계획서 채택의 건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub37-2">&nbsp;이 안건은 11월 17일 자로 우리 위원회에 회부된 국세청장후보자(안덕수) 인사청문요청안에 따라 해당 공직후보자에 대한 인사청문회 실시계획서를 채택하고자 하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub37-3">&nbsp;주요 내용을 말씀드리면 첫째, 안덕수 국세청장후보자에 대한 인사청문회는 11월 26일 목요일 오전 10시에 실시하고 경과보고서 채택 일정은 인사청문회 종료 후 간사님들과 협의하여 결정하도록 하였습니다.</span><br/><span class="spk_sub" id="spk_sub37-4">&nbsp;둘째, 인사청문회의 구체적인 진행 순서는 공직후보자 선서와 모두발언을 들은 후에 위원님들의 질의 및 답변을 실시하고 공직후보자의 최종 발언을 듣는 것으로 하였습니다.</span><br/><span class="spk_sub" id="spk_sub37-5">&nbsp;보다 자세한 내용은 배부해 드린 유인물을 참고하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub37-6">&nbsp;그러면 의사일정 제2항 국세청장후보자 인사청문회 실시계획서 채택의 건은 배부해 드린 유인물과 같이 의결하고자 하는데 이의 없으십니까?</span><br/></div></div></div><div id="spk_38" class="item2 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_38"><label for="spk_cnt_chk_38">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub38-1">&nbsp;잠깐만요. 발언 있습니다.</span><br/></div></div></div><div id="spk_39" class="item2 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_39"><label for="spk_cnt_chk_39">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub39-1">&nbsp;예, 말씀하십시오.</span><br/></div></div></div><div id="spk_40" class="item2 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_40"><label for="spk_cnt_chk_40">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub40-1">&nbsp;국민의힘 간사입니다.</span><br/><span class="spk_sub" id="spk_sub40-2">&nbsp;국세청장후보자 인사청문회와 관련해서 저희가 증인 신청을 했습니다마는 여당이 받아들일 수 없다고 그래서 저희가 증인 제로, 참고인 제로로 시작하게 됩니다. 유감을 표명하지 않을 수 없고요.</span><br/><span class="spk_sub" id="spk_sub40-3">&nbsp;저희 증인 세 분을 신청했는데 첫 번째, 이문 1구역 재개발 조합장을 증인으로 신청했습니다. 후보자 배우자가 재개발을 통해 아파트를 취득한 과정에서 조합원 자격 및 분양 절차의 적법성을 확인하고 배우자가 2017년 이문 1구역 재개발 관리처분 계획인가 이후 조합원 지위를 매입했다면 당시 투기과열지구의 조합원 지위 양도 제한 규정을 위반해 아파트 분양 자격을 부당하게 취득했을 가능성이 있어 최초 취득 시점과 경위를 확인할 필요가 있고 여러 가지 사항을 확인해야 되는데 안 된다고 했습니다.</span><br/><span class="spk_sub" id="spk_sub40-4">&nbsp;두 번째, 김현지 대통령실 제1부속실장을 증인으로 저희가 신청했었습니다. 배우자의 세무법인 소속 기간 중 개인사업자 등록 유지에 따른 이중 세무사 사무소 운영 의혹과 실제 영업 여부, 세무사법 위반 가능성 확인, 배우자 세무사가 출자한 세무법인 관계자들이 조세심판관과 금융회사 사외이사로 잇따라 선임되게 된 경위 및 인사 개입, 이해충돌 의혹 확인 그리고 임광현 전 국세청장 재임 당시 관련 인사 선임 및 세무사 관리·감독 과정에서 김현지 실장이나 대통령실의 관여, 영향력 행사 여부를 확인하려고 했는데 채택되지 않았습니다.</span><br/><span class="spk_sub" id="spk_sub40-5">&nbsp;이 건에 한해서는 지난 2026년 10월 29일 최은석 의원이 문제 제기를 해서 이번 소관 상임위기 때문에 좀 더 심도 있는 검증을 위해서 증인을 요청했는데 받아들이지 않아서 유감입니다.</span><br/><span class="spk_sub" id="spk_sub40-6">&nbsp;마지막으로 한국세무사회 회장을 증인으로 신청을 했습니다. 요즘 AI 활용 세무사 시험 부정행위 논란과 관련해서 시험 관리 체계의 문제점, 국세청과 세무사회의 역할 및 재발 방지 대책을 확인하려고 했고 김현지 실장 배우자의 이중 세무사 사무소 운영 의혹에 대한 세무사회가 의혹 사실이 없다고 공식 반박한 조사 경위와 확인 자료 및 판단·검증을 하려고 했는데 이것조차 받아들이지 않았습니다.</span><br/><span class="spk_sub" id="spk_sub40-7">&nbsp;이렇게 제대로 된 증인 채택 없이 깡통 청문회를 하려고 하면 도대체 뭐 하러 국세청장 청문회를 합니까? 다시 한번 촉구합니다. 증인 받아들여 주십시오.</span><br/><span class="spk_sub" id="spk_sub40-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_41" class="item2 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_41"><label for="spk_cnt_chk_41">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub41-1">&nbsp;증인 채택 과정에서 오갔던 얘기들을 그러면 오기형 간사님도 설명을 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_42" class="item2 speaker spk_mem" data-mem_id="6699" data-name="오기형" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_42"><label for="spk_cnt_chk_42">오기형 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d1e20e55ce3d4ab3b4fce9b81cbf2989.jpg" alt="오기형"></span><span class="txt"><strong class="name">오기형</strong><span class="position">위원</span><span class="area">(서울 도봉구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub42-1">&nbsp;국민의힘 배준영 위원님께서 세 분의 증인 신청이 있었습니다. 그 제안이 있었지요. 그런데 제안에 대해서 정금식 재개발 조합장의 경우에는 실제 후보자의 공직 수행이나 직무상 권한 행사와 직접적 관련성이 없는 사안입니다. 어떤 의혹이 있을 거라고 추론하고 누구든지 부를 수 있다 그런 건 아니지 않겠습니까? 그러니까 이게 사회적으로 충분히 쟁점이 되고 또 직무에 청렴 그다음에 공정과 직접적 관련이 있으면 모르겠는데 그런 것들의 언급 없이 막 제기된다고 해서 이게 적절하냐에 대한 의문이 있었고요.</span><br/><span class="spk_sub" id="spk_sub42-2">&nbsp;두 번째로 김현지 부속실장, 부속실장 관련된 부분은 운영위 소관 아닙니까? 여기서 모든 것들을 다 할 거냐, 그거는 아닌 것 같고요.</span><br/><span class="spk_sub" id="spk_sub42-3">&nbsp;세 번째로 구재이 한국세무사회장에 관한 문제인데 세무사 시험 관련된 주관 부서가 재경부 또는 산업인력공단입니다. 지금 이 관련돼서 실제 세무사회장의 개인적 의견을 듣고자 하는 것들이 초점은 아닐 겁니다. 그래서 저희가 직접적인 관련성이 없어서 그렇다는 거고.</span><br/><span class="spk_sub" id="spk_sub42-4">&nbsp;또 하나는 2020년 이후에 지금 국세청장 쭉 하는 과정에서 사회적 쟁점이 없이도 이렇게 한 사례들이 있었습니다. 그래서 그 점은 그동안의 관행과 기준에 비추어서 서로 협의하고 있다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub42-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_43" class="item2 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_43"><label for="spk_cnt_chk_43">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub43-1">&nbsp;위원장으로서는 여야 간사들께서 합의를 해 오시면 합의하는 대로 위원회를 합니다. 그러니까 합의를 해 오시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub43-2">&nbsp;그러면 어떻게 뭐, 의결해도 되겠습니까?</span><br/><span class="spk_sub" id="spk_sub43-3">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub43-4">&nbsp;가결되었음을 선포합니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item3" class="tit">3. 국세청장후보자(안덕수) 인사청문회 자료제출 요구의 건</a><a class="btn_move move" data-target="#head_item3" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시18분)</p><br/><div id="spk_45" class="item3 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_45"><label for="spk_cnt_chk_45">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub45-1">&nbsp;다음은 의사일정 제3항 국세청장후보자(안덕수) 인사청문회 자료제출 요구의 건을 상정합니다.</span><br/><span class="spk_sub" id="spk_sub45-2">&nbsp;안덕수 국세청장후보자 인사청문회와 관련하여 위원님들께서 자료제출을 요구한 사항은 배부해 드린 유인물과 같이 총 1784건입니다.</span><br/><span class="spk_sub" id="spk_sub45-3">&nbsp;인사청문회법 제12조에 따르면 위원회의 의결 또는 재적위원 3분의 1 이상의 요구로 해당 기관에 자료제출을 요구할 수 있고 해당 기관은 기간을 따로 정하는 경우를 제외하고는 5일 이내에 자료를 제출해야 합니다.</span><br/><span class="spk_sub" id="spk_sub45-4">&nbsp;이에 오늘 의결하는 자료제출 요구의 건과 관련하여서는 11월 23일 월요일 18시까지 자료를 제출하도록 해당 기관에 요구하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub45-5">&nbsp;그러면 의사일정 제3항 국세청장후보자(안덕수) 인사청문회 자료제출 요구의 건을 배부해 드린 유인물과 같이 요구하는 것으로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub45-6">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub45-7">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub45-8">&nbsp;그리고 인사청문회와 관련해서 안내 사항이 있어 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub45-9">&nbsp;인사청문회법 제7조제6항에 따라 국세청장후보자에 대한 서면질의를 하고자 하시는 위원님들께서는 청문회 5일 전인 11월 21일 토요일 16시까지 위원장에게 서면질의를 제출하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub45-10">&nbsp;그리고 후보자에게 구두질의를 하고자 하는 위원님들께서는 청문회 24시간 전인 11월 25일 수요일 오전 10시까지 인사청문회법 제7조제5항에 따라 질의 요지서를 구체적으로 작성하여 제출하여 주시면 후보자에게 송부하도록 하겠습니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item4" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_67E8E2FACA3247CDA80A77E56A2F75" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">4. 국유재산특례제한법 일부개정법률안(정부 제출)(의안번호 2221640)</a><a class="btn_move move" data-target="#head_item4" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item5" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_O2W6X0V6W3U0T1T0B2C1A0A1Z2X3Y4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">5. 국유재산특례제한법 일부개정법률안(백혜련 의원 대표발의)(의안번호 2219673)</a><a class="btn_move move" data-target="#head_item5" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item6" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2G6G0E7F2E7Z1A4Y1Y2X2Y6W8E3F1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">6. 국유재산특례제한법 일부개정법률안(최은석 의원 대표발의)(의안번호 2220215)</a><a class="btn_move move" data-target="#head_item6" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item7" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2M4U0T6U1T8R1A5Y2W9V1W7S8H4F4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">7. 국유재산특례제한법 일부개정법률안(박희승 의원 대표발의)(의안번호 2201307)</a><a class="btn_move move" data-target="#head_item7" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item8" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_U2T6R0S5Q1R2N1L0L1K2K1J5R8R2Q9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">8. 국유재산특례제한법 일부개정법률안(이수진 의원 대표발의)(의안번호 2219045)</a><a class="btn_move move" data-target="#head_item8" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item9" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_P2P5X1W2W0U9V1T4U2C4C3A3Z4A1Y1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">9. 국유재산특례제한법 일부개정법률안(임미애 의원 대표발의)(의안번호 2215146)</a><a class="btn_move move" data-target="#head_item9" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item10" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_G2F6D0E4C0D7L1L7J1I0J4H9H9Q5Q7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">10. 국유재산특례제한법 일부개정법률안(김석기 의원 대표발의)(의안번호 2218448)</a><a class="btn_move move" data-target="#head_item10" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item11" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2I6G0H4P2Q7O0O9N2N6M2U1U0T6T0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">11. 국유재산특례제한법 일부개정법률안(김기현 의원 대표발의)(의안번호 2218655)</a><a class="btn_move move" data-target="#head_item11" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item12" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_6474A0F7E42640FD8BCFE6374A3A25" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">12. 국유재산특례제한법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item12" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item13" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2S6S0Q4R0Z9X1Y1W2W1V5W8D0C3C1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">13. 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안(배준영 의원 대표발의)(의안번호 2218356)</a><a class="btn_move move" data-target="#head_item13" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item14" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_K2T4R0Q6Y1W8V1W7E5D0B0A1I4J1I0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">14. 국가재정법 일부개정법률안(박덕흠 의원 대표발의)(의안번호 2200829)</a><a class="btn_move move" data-target="#head_item14" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item15" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_H2I4R1P0N0M2N1E1D1Z0Y5W1X8W0E7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">15. 국가재정법 일부개정법률안(구자근 의원 대표발의)(의안번호 2204529)</a><a class="btn_move move" data-target="#head_item15" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item16" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2M4M1L0K0Z7Y1W5V3W2E3D2C1E2C3" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">16. 국가재정법 일부개정법률안(박수영 의원 대표발의)(의안번호 2205072)</a><a class="btn_move move" data-target="#head_item16" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item17" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_M2U4T1R0P2Y9Z1Y5W2U3Q1P7Q5P4O1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">17. 국가재정법 일부개정법률안(송언석 의원 대표발의)(의안번호 2205107)</a><a class="btn_move move" data-target="#head_item17" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item18" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_B2Z4Y1Y2X2X3T1T7S2Q9R2P9Q5X4W4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">18. 국가재정법 일부개정법률안(이종배 의원 대표발의)(의안번호 2207151)</a><a class="btn_move move" data-target="#head_item18" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item19" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_S2S4R1S2Q0Q3P0X9X0W3W0V4T2U6B0" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">19. 국가재정법 일부개정법률안(이만희 의원 대표발의)(의안번호 2208223)</a><a class="btn_move move" data-target="#head_item19" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item20" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_V2W5U0V8T2T9C1A6A4Y4A4Y4Y3G3F5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">20. 국가재정법 일부개정법률안(박형수 의원 대표발의)(의안번호 2212650)</a><a class="btn_move move" data-target="#head_item20" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item21" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2J5Q0P8Q2O7O1M5N5V9W3U7T1T3R4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">21. 국가재정법 일부개정법률안(이성윤 의원 대표발의)(의안번호 2212906)</a><a class="btn_move move" data-target="#head_item21" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item22" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_N2N6L0M3U1V6T0U9S4S8R2N1N3L5M9" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">22. 국가재정법 일부개정법률안(임종득 의원 대표발의)(의안번호 2217563)</a><a class="btn_move move" data-target="#head_item22" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item23" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_2C901F9F14B7403380C433E00393DD" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">23. 국가재정법 일부개정법률안(대안)</a><a class="btn_move move" data-target="#head_item23" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시20분)</p><br/><div id="spk_47" class="item23 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_47"><label for="spk_cnt_chk_47">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub47-1">&nbsp;다음은 의사일정 제4항 국유재산특례제한법 일부개정법률안부터 의사일정 제23항 국가재정법 일부개정법률안(대안)까지 이상 20건의 안건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub47-2">&nbsp;먼저 경제재정소위원회 배준영 소위원장님 나오셔서 소위 심사 결과를 보고하여 주시기 바랍니다.</span><br/></div></div></div><div id="spk_48" class="item23 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_48"><label for="spk_cnt_chk_48">소위원장 배준영 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><span class="position">소위원장</span><strong class="name">배준영</strong><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub48-1">&nbsp;경제재정소위원회 배준영 소위원장입니다.</span><br/><span class="spk_sub" id="spk_sub48-2">&nbsp;우리 소위원회는 각 법안에 대해 심도 있는 심사를 한 결과 1건의 법률안은 수정 의결하고 17건의 법률안은 2건의 대안을 제안하기로 의결했습니다.</span><br/><span class="spk_sub" id="spk_sub48-3">&nbsp;먼저 박희승·이수진·임미애·김석기·김기현·백혜련·최은석 의원이 각각 대표발의하고 정부가 제출한 8건의 국유재산특례제한법 일부개정법률안은 각각 본회의에 부의하지 아니하기로 하고 그 내용을 통합 조정한 대안을 제안하기로 했습니다.</span><br/><span class="spk_sub" id="spk_sub48-4">&nbsp;대안의 주요 내용은 국립의학전문대학원에 대한 국유재산특례 등 3건의 특례를 인정하고 2026년 12월 31일 존속기한이 만료되는 특례 중 특례 목적의 공익성, 효과성이 인정되어 연장의 필요성이 있는 98개 특례의 존속기한을 연장하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub48-5">&nbsp;다음으로 배준영 의원이 대표발의한 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안은 전략 광물의 지정·비축·방출 등 체계적인 관리 및 지원 체계를 마련하는 것으로 수입국가 다변화 및 국내외 생산기반 확충을 위한 금융·투자·보증 등 정부 지원 근거를 보완하고 경제안보품목별 특성을 고려한 비축목표 설정 및 비축 품목 방출 근거를 명확히 하는 내용으로 수정하여 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub48-6">&nbsp;다음으로 박덕흠·구자근·박수영·송언석·이종배·이만희·박형수·이성윤·임종득 의원이 각각 대표발의한 9건의 국가재정법 일부개정법률안은 각각 본회의에 부의하지 아니하기로 하고 그 내용을 통합 조정한 대안으로 제안하기로 했습니다.</span><br/><span class="spk_sub" id="spk_sub48-7">&nbsp;대안의 주요 내용은 예비타당성조사 대상 기준 도입 이후의 재정 규모 확대 및 물가 상승 등을 고려하여 도로·철도·항만 등 SOC 사업 건설사업의 예비타당성조사 대상 기준금액을 총사업비 500억, 국가 재정지원 규모 300억에서 총 사업비 1000억 원, 국가 재정지원 규모 500억 원으로 상향하는 것입니다.</span><br/><span class="spk_sub" id="spk_sub48-8">&nbsp;보다 자세한 내용은 단말기의 자료를 참고해 주시기 바라며 우리 소위원회에서 심사보고한 대로 의결하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub48-9">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_49" class="item23 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_49"><label for="spk_cnt_chk_49">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub49-1">&nbsp;배준영 소위원장님을 비롯한 소위 위원 여러분 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub49-2">&nbsp;특별히 오늘 예타 기준이 상향되는 아주 의미 있는 합의가 있었던 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub49-3">&nbsp;고생하셨습니다.</span><br/><span class="spk_sub" id="spk_sub49-4">&nbsp;방금 보고받으신 소위 심사 결과에 대해서 질의하실 위원님 계십니까?</span><br/><span class="spk_sub" id="spk_sub49-5">&nbsp;없으시지요?</span><br/><span class="spk_sub" id="spk_sub49-6">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub49-7">&nbsp;그러면 질의하실 위원님이 없으시므로 토론을 종결하고 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-8">&nbsp;먼저 축조심사와 비용추계서 첨부를 생략하는 의결을 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-9">&nbsp;오늘 의결할 안건들은 국회법 제58조제5항과 제66조제3항 및 제79조의2제3항에 따라 축조심사와 비용추계서 첨부를 생략하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub49-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub49-11">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub49-12">&nbsp;그러면 안건을 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-13">&nbsp;의사일정 제4항부터 제11항까지 이상 8건의 법률안은 각각 본회의에 부의하 지 아니하고 이를 통합 조정한 의사일정 제12항 국유재산특례제한법 일부개정법률안(대안)을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub49-14">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub49-15">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub49-16">&nbsp;다음은 의사일정 제13항 경제안보를 위한 공급망 안정화 지원 기본법 일부개정법률안은 소위원회의 심사보고와 같이 수정한 부분은 수정한 대로, 그 밖의 부분은 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub49-17">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub49-18">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub49-19">&nbsp;의사일정 제14항부터 제22항까지 이상 9건의 법률안은 각각 본회의에 부의하지 아니하고 이를 통합 조정한 의사일정 제23항 국가재정법 일부개정법률안(대안)을 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub49-20">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub49-21">&nbsp;가결되었음을 선포합니다.</span><br/><span class="spk_sub" id="spk_sub49-22">&nbsp;다음은 예산안 등을 상정할 순서입니다.</span><br/><span class="spk_sub" id="spk_sub49-23">&nbsp;그에 앞서 위원장으로서 한말씀 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-24">&nbsp;미래대응기금에 대한 여야 간 이견이 있습니다. 그래서 예산결산기금심사소위원회의 협의가 원활히 이루어지지 않은 것은 현실이고 일부 심사가 야당의 불참 속에서 진행된 점을 안타깝게 생각합니다.</span><br/><span class="spk_sub" id="spk_sub49-25">&nbsp;그러나 쟁점이 있다는 이유로 논의를 중단할 수는 없습니다. 그리고 한 부분이 쟁점이 있다고 해서 전체가 멈춰서도 곤란합니다. 이견이 있는 사안일수록 충분한 협의와 심사를 통해 합리적인 결론을 도출해야 할 것입니다.</span><br/><span class="spk_sub" id="spk_sub49-26">&nbsp;미래대응기금의 설치 근거가 되는 법률안 심사가 마무리되지 않아서 기금운용계획안 심사도 어렵다는 의견이 있는 것으로 알고 있습니다. 하지만 법률안 심사 역시 좀처럼 진전을 이루지 못하고 있는 만큼 이제는 보다 적극적인 해법을 모색해야 할 시점이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub49-27">&nbsp;이에 저는 위원장으로서 여야 간사 위원께 제안을 드리고 싶습니다.</span><br/><span class="spk_sub" id="spk_sub49-28">&nbsp;여야 간 협의체를 구성하는 등 정말 실질적이고 구체적이고 밀도 있는 논의를 할 수 있는 방안들을 여야 간사님께서 협의해 주셔서 법률안과 기금안에 대해서 동시에 검토하고 논의할 수 있는 그런 협의의 틀을 만드셔서 허심탄회하게 말씀을 해 주시고 아까 배준영 간사께서 말씀하신 다섯 가지 요구사항들에 대해서 같이 머리를 맞대고 검토하면 되지 않겠습니까? 그렇게 하는 논의의 틀을 만들어 주셔서 우리 재경위가 책임감을 가지고 미래대응기금에 대해서 정리할 수 있었으면 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-29">&nbsp;그런데 만약에 이런 상태에서 시간만 허송세월 보내게 되면 어떤 상황이 벌어지겠습니까? 관련 법률안이 세입예산안 부수법률안으로 지정돼 있습니다. 위원회의 충분한 심사 없이 본회의에 바로 부의가 돼서 처리가 되게 된다면 우리 위원회의 심사권은 어떻게 되겠습니까? 이건 결코 바람직한 상황이 아닙니다.</span><br/><span class="spk_sub" id="spk_sub49-30">&nbsp;그래서 아까도 말씀드린 것처럼 위원장으로서 이런 상황을 그대로 방치할 수는 없다고 생각합니다. 여야 간사님들께서 보다 적극적으로 논의할 수 있는 틀에 대해서 상의하셔서 진행을 해 주시기를 정말로 간곡히 부탁을 드리겠습니다. 그리고 여야 위원님들께서도 미래대응기금 법률안과 기금안에 대해서 숙고를 좀 더 해 주시고 다양한 의견들을 제출해 주시기를 부탁드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub49-31">&nbsp;그리고 제가 진행하고자 하는 예산안에 대한 것은 미래대응기금법은 제외가 돼 있고 일반회계와 기타 다른 기금들에 대한 처리입니다. 이 부분에 대해서 왜 법안이 처리되지 않았는데 기금안 처리하느냐라고 말씀을 하시는데 실제로 이런 모든 것들은 다 본회의 가서 만나게 돼 있습니다. 그리고 실제로 우리가 지금 세법 심사를 하고 있습니다만 그 세법에 세입 관련된 부수법안들이 다 지정돼 있는 것 아닙니까? 그런데 그 심사가 되지 않았다고 해서 예산안 심사를 안 하고 그러지는 않습니다.</span><br/><span class="spk_sub" id="spk_sub49-32">&nbsp;다만 미래대응기금은 규모가 워낙 크고 쟁점이 크기 때문에 그 부분에 대해서는 제가 말씀드린 것처럼 오늘 처리하지 않고 우리 위원회에서 숙고하는 과정을 거쳐 보자라는 제안의 말씀을 드리는 겁니다.</span><br/><span class="spk_sub" id="spk_sub49-33">&nbsp;그래서 쟁점이 적은 부분들은 적은 부분대로 우선 정리를 하자라는 취지에서 제가 예산안 상정을 한다는 말씀을 드리는 겁니다.</span><br/></div></div></div><div class="line_solid">&nbsp;</div><br/><p class="tit_sm angun pl10"><a id="item24" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_D2R6A0R9J0O3S1G3G5H3F5M0P9U7P5" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">24. 2027년도 예산안(의안번호 2221032)</a><a class="btn_move move" data-target="#head_item24" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item25" class="tit">  가. 재정경제부 소관</a><a class="btn_move move" data-target="#head_item25" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item26" class="tit">  나. 기획예산처 소관</a><a class="btn_move move" data-target="#head_item26" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item27" class="tit">  다. 국가데이터처 소관</a><a class="btn_move move" data-target="#head_item27" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item28" class="tit">  라. 국세청 소관</a><a class="btn_move move" data-target="#head_item28" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item29" class="tit">  마. 관세청 소관</a><a class="btn_move move" data-target="#head_item29" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item30" class="tit">  바. 조달청 소관</a><a class="btn_move move" data-target="#head_item30" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item31" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_T2T6U0P9O0P3Q1C3Z5D4O4X3H9U7N6" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">25. 2027년도 기금운용계획안(의안번호 2221033)</a><a class="btn_move move" data-target="#head_item31" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl20"><a id="item32" class="tit">  가. 공공자금관리기금</a><a class="btn_move move" data-target="#head_item32" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item33" class="tit">    나. 국유재산관리기금</a><a class="btn_move move" data-target="#head_item33" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item34" class="tit">    다. 대외경제협력기금</a><a class="btn_move move" data-target="#head_item34" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item35" class="tit">    라. 외국환평형기금</a><a class="btn_move move" data-target="#head_item35" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item36" class="tit">    마. 전략수출금융기금</a><a class="btn_move move" data-target="#head_item36" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item37" class="tit">    바. 산업기반신용보증기금</a><a class="btn_move move" data-target="#head_item37" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item38" class="tit">    사. 복권기금</a><a class="btn_move move" data-target="#head_item38" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl30"><a id="item39" class="tit">    아. 공익신고장려기금</a><a class="btn_move move" data-target="#head_item39" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item40" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_I2T6Q0Z9P0O3C1O7E4G3X3I5Z4H8J1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">26. 2027년도에 발행하는 한국장학재단채권에 대한 국가보증동의안(의안번호 2221078)</a><a class="btn_move move" data-target="#head_item40" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item41" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_F2W6C0P9R0J3H1R7E4O4U2A9T1D7A4" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">27. 2027년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안(의안번호 2221079)</a><a class="btn_move move" data-target="#head_item41" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item42" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Z2C6B0E9D0P3L1M8A0J6L5Z8Y3L5N1" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">28. 2027년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안(의안번호 2221083)</a><a class="btn_move move" data-target="#head_item42" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm angun pl10"><a id="item43" href="https://likms.assembly.go.kr/bill/billDetail.do?billId=PRC_Q2K6Q0K9U0P3Z1L8N0J8J0W0L2M5I7" onclick="window.open(this.href,'viewer','width=1930,height=950,scrollbars=no'); return false;" title="새창열림" class="tit">29. 2027년도에 발행하는 한미전략투자채권에 대한 국가보증동의안(의안번호 2221084)</a><a class="btn_move move" data-target="#head_item43" title="해당 안건으로 이동" >상정된 안건</a></p><p class="tit_sm taR">(11시27분)</p><br/><div id="spk_51" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_51"><label for="spk_cnt_chk_51">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub51-1">&nbsp;그러면 의사일정 제24항 2027년도 예산안부터 의사일정 제29항 2027년도에 발행하는 한미전략투자채권에 대한 국가보증동의안까지 이상 6건의 안건을 일괄하여 상정합니다.</span><br/><span class="spk_sub" id="spk_sub51-2">&nbsp;그러면 예산결산기금심사소위원회 문진석 소위원장 나오셔서 소위 심사 결과를 보고해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_52" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_52"><label for="spk_cnt_chk_52">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub52-1">&nbsp;의사진행발언 좀 하고 합시다.</span><br/></div></div></div><div id="spk_53" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_53"><label for="spk_cnt_chk_53">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub53-1">&nbsp;의사진행발언 먼저 좀 해 주세요.</span><br/></div></div></div><div id="spk_54" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_54"><label for="spk_cnt_chk_54">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub54-1">&nbsp;보고 먼저 들으시지요.</span><br/></div></div></div><div id="spk_55" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_55"><label for="spk_cnt_chk_55">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub55-1">&nbsp;의사진행발언 먼저 좀 들어 주십시오.</span><br/></div></div></div><div id="spk_56" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_56"><label for="spk_cnt_chk_56">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub56-1">&nbsp;보고 먼저 해 주시지요.</span><br/><span class="spk_sub" id="spk_sub56-2">&nbsp;문진석 소위원장님 해 주십시오.</span><br/></div></div></div><div id="spk_57" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_57"><label for="spk_cnt_chk_57">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub57-1">&nbsp;보고를 듣고 있을 게 아니고 의사진행발언을 받고 하셔야지요.</span><br/></div></div></div><div id="spk_58" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_58"><label for="spk_cnt_chk_58">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub58-1">&nbsp;제가 의사진행을 먼저 하고 그다음에 듣도록 하겠습니다.</span><br/></div></div></div><div id="spk_59" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_59"><label for="spk_cnt_chk_59">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub59-1">&nbsp;미래대응기금이라는 태어나지 말아야 될 것을 지금 위원장님이나 간사님의 전제조건은, 그것의 통과를 전제로 하는 말씀에 굉장히 저는……</span><br/></div></div></div><div id="spk_60" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_60"><label for="spk_cnt_chk_60">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub60-1">&nbsp;지금 미래대응기금 처리하는 게 아닙니다.</span><br/><span class="spk_sub" id="spk_sub60-2">&nbsp;잠시 소위원장 얘기를 들어 보십시오.</span><br/><span class="spk_sub" id="spk_sub60-3">&nbsp;그 심사 경과도 자세히 설명해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_61" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_61"><label for="spk_cnt_chk_61">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub61-1">&nbsp;의사진행발언 받아 주고 해야 되는 게 기본 아니에요?</span><br/></div></div></div><div id="spk_62" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="소위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_62"><label for="spk_cnt_chk_62">소위원장 문진석 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><span class="position">소위원장</span><strong class="name">문진석</strong><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub62-1">&nbsp;예산결산기금심사소위원회 문진석 위원장입니다.</span><br/><span class="spk_sub" id="spk_sub62-2">&nbsp;지금부터 소위원회가 우리 위원회 소관 2027년도 예산안 및 기금운용계획안과 국가보증동의안에 대해 심사한 결과를 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub62-3">&nbsp;먼저 예산안 등에 대해 심사한 결과를 수정사항 위주로 말씀드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub62-4">&nbsp;재정경제부 소관 예산안 및 기금운용계획안에 대해서는 일반회계 세출 중 일시차입금이자상환 사업 예산안을 최근 금리 증가 추세를 반영하여 733억 원을 증액하고 대외경제협력강화 사업 예산안을 1억 원 증액하여 총 734억 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-5">&nbsp;또한 국유재산관리기금 지출 중 법무부 기타 청사시설 리모델링사업 등 3개 사업에서 120억 7000만 원을 감액하고 비축토지매입 등 30개 사업에서 3580억 9300만 원을 증액하였으며 전략경제 제도기반 조성 사업과 관련하여 시범사업 후 필요한 예산 소요가 중기재정계획에 적절히 반영하도록 하는 등 4개의 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-6">&nbsp;다음으로 기획예산처 소관 예산안 및 기금운용계획안에 대해서는 일반회계 세출 중 협동조합활성화사업 예산안을 사업 준비 미흡 등을 고려하여 100억 원 감액하는 등 2개의 사업에서 100억 1200만 원을 감액하고 재정사업평가 사업 예산안을 51억 2800만 원을 증액하였으며 자발적 탄소시장 활성화 지원 사업 추진 시 기후에너지환경부 사업과의 중복을 방지하도록 하는 등 3개의 부대의견을 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-7">&nbsp;다음으로 국가데이터처 소관 예산안에 대해서는 통계데이터 분석 및 활용 지원 사업 예산안 63억 5300만 원을 증액하는 등 5개 사업에서 134억 2500만 원을 증액하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-8">&nbsp;국세청 소관 예산안에 대해서는 일반회계 세출 중 납세자 세금신고 지원 사업 예산안에 대해 비수도권 세무서 등의 지원인력을 확충하기 위하여 25억 7000만 원을 증액하고 공익신고장려기금 신설 시 해외금융계좌 신고포상금 예산안을 해당 기금으로 이관하여 예산안 편성의 일관성을 제고하도록 하는 부대의견 1개를 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-9">&nbsp;다음으로 관세청 소관 예산안에 대해서는 수출입통관 촉진 및 안전관리 사업 예산안을 마약 등 불법물품 적발 포상금 확대를 위해 2억 9000만 원을 증액하는 등 4개 사업에서 총 40억 2000만 원을 증액하였고 해외 K-브랜드 지식재산권 보호사업 추진 시 관계기관과의 사업 중복을 방지하고 사업의 실효성을 제고하도록 하는 부대의견 1개를 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-10">&nbsp;다음으로 조달청 소관 예산안에 대해서는 스케일업형 R&amp;D 사업의 과제 선정 기준을 보완하고 기술 고도화 성과, 후속 공공구매 연계 실적 등에 대한 사후 검증체계를 마련하여 그 결과를 국회 소관 상임위원회에 보고하도록 하는 부대의견 1개를 채택하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-11">&nbsp;마지막으로 2027년도에 발행하는 한국장학재단채권·공급망안정화기금채권·첨단전략산업기금채권 및 한미전략투자채권 등 4건에 대한 국가보증동의안은 각 기금 등의 사업 수행에 필요한 적정 규모로 산정된 것으로 보아 각각 원안 의결하였습니다.</span><br/><span class="spk_sub" id="spk_sub62-12">&nbsp;한편 미래대응기금에 대해서도 기획예산처 및 소관 사업부처 관계자를 출석시킨 가운데 심사를 진행하였으나 미처 완료하지 못해 오늘 심사보고에서는 제외됐다는 점을 말씀드립니다. 미래대응기금의 향후 심사 방안에 대해서는 계속 협의토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub62-13">&nbsp;이상으로 우리 소위원회의 심사결과를 보고드렸습니다.</span><br/><span class="spk_sub" id="spk_sub62-14">&nbsp;보다 자세한 내용은 배부해 드린 자료를 참고해 주시기 바라며 우리 소위원회에서 심사보고한 대로 심의 의결하여 주시기를 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub62-15">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_63" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_63"><label for="spk_cnt_chk_63">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub63-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub63-2">&nbsp;그러면 보고받은 소위 심사 결과에 대해서 토론하실 위원님이나 의사진행발언 있으신 위원님들은 발언……</span><br/><span class="spk_sub" id="spk_sub63-3">&nbsp;박수영 위원님.</span><br/></div></div></div><div id="spk_64" class="item43 speaker spk_mem" data-mem_id="6686" data-name="박수영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_64"><label for="spk_cnt_chk_64">박수영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/b63472273c424b11a07ccb8083aa9d53.png" alt="박수영"></span><span class="txt"><strong class="name">박수영</strong><span class="position">위원</span><span class="area">(부산 남구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub64-1">&nbsp;위원장님, 기금이라고 하는 것은 수입과 지출로 이루어지게 돼 있는데 법률이 어떻게 되느냐에 따라 수입과 지출이 달라지게 되어 있습니다.</span><br/><span class="spk_sub" id="spk_sub64-2">&nbsp;그래서 전략수출금융기금과 공익신고장려기금에 관해서는 우리가 법안심사를 하면서 이견이 많았고 합의에 이르지 못한 상황입니다. 그런데 법안에 대한 합의가 이루어지지 않은 상태에서 기금운용계획안을 통과시키게 되면 법안의 이견은 아예 없어지고 정부안대로 그냥 통과되는 형태가 되는 것입니까? 법안에 따라서 수입과 지출이, 기금이 달라지게 돼 있는 것인데 그 부분을 고려하지 않고 이견이 있었음에도 불구하고 이렇게 두 가지 기금을 그대로 올리는 것은 적절하지 않다라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub64-3">&nbsp;아까 위원장님 말씀하신 것처럼 우리가 세법을 논의하고 있는 와중에도 예산심의는 한다고 말씀하셨는데 그것하고 이것은 전혀 차원이 다른 문제입니다. 세법은 세입에 관한 것이고 예산심의는 세출에 관한 것인데 기금은 세입과 세출, 즉 수입과 지출이 연결되어 있는 것이기 때문에 법률안이 정리가 되어야 기금의 수입과 지출이 정해지는 것입니다.</span><br/><span class="spk_sub" id="spk_sub64-4">&nbsp;그런데 이견이 있었던 것을 여기 이것 말고 아무것도 없었던 것처럼 그냥 올리면 이 방식 그대로 미래대응기금법안도 하고 미래대응기금도 올릴 것이라고 예측이 가능하지 않습니까? 이것은 적절하지 않다고 생각합니다. 그래서 전략수출금융기금하고 공익신고장려기금은 오늘 올려서는 안 된다고 생각합니다.</span><br/></div></div></div><div id="spk_65" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_65"><label for="spk_cnt_chk_65">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub65-1">&nbsp;그건 합의가 된 거잖아요, 부대조건으로.</span><br/></div></div></div><div id="spk_66" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_66"><label for="spk_cnt_chk_66">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub66-1">&nbsp;잠시만요.</span><br/><span class="spk_sub" id="spk_sub66-2">&nbsp;위원님 상호 간에 토론하지 마시고 이따가 의견을 말씀하시는 걸로 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub66-3">&nbsp;배준영 간사님.</span><br/></div></div></div><div id="spk_67" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_67"><label for="spk_cnt_chk_67">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub67-1">&nbsp;의사진행발언하겠습니다.</span><br/><span class="spk_sub" id="spk_sub67-2">&nbsp;어제 예결소위는 원천 무효입니다. 왜냐하면 여태까지 소위를 운영하고 했을 때 여야 합의로 진행을 해 왔는데 미래대응기금 관련해서 이견도 있고 그것을 해결하기 위해서 논의를 미루자라고 저희가 요청했음에도 불구하고 미래대응기금에 관련해서는 절반씩이나 심의를 해 버리시고 결론을 내시고 또 특히 방금 존경하는 박수영 위원님이 말씀하신 2개 기금에 관련해서는 법도 정해지지 않았습니다. 법도 정해지지 않았는데 기금 먼저, 숫자 먼저 정하자고 그러면 나중에 법이 바뀌면 기금도 다 바꿀 겁니까? 그렇게 졸속으로 하는 게 사실 정도가 아니라는 것은 여기 존경하는 다선 위원님들, 민주당 위원님들 계시지만 아니라는 걸 알고 계실 겁니다.</span><br/><span class="spk_sub" id="spk_sub67-3">&nbsp;그렇기 때문에 어제 있었던 회의가 원천적으로 무효라는 것을 전제로 하고 또 이 2개의 기금이 법안도 정해지지 않았는데 숫자 먼저 정해서 이 모든 것을 혼란스럽게 하는 것은 결국 국민들에게 피해가 가는 거다. 그래서 다시 한번 우리 조승래 위원장님한테 제가 촉구합니다. 오늘 의결하면 안 됩니다, 이것은.</span><br/><span class="spk_sub" id="spk_sub67-4">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_68" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_68"><label for="spk_cnt_chk_68">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub68-1">&nbsp;의견 알겠습니다.</span><br/><span class="spk_sub" id="spk_sub68-2">&nbsp;그러면 문진석 위원님.</span><br/></div></div></div><div id="spk_69" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_69"><label for="spk_cnt_chk_69">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub69-1">&nbsp;예결소위원장 문진석 위원입니다.</span><br/><span class="spk_sub" id="spk_sub69-2">&nbsp;붙이니까 이름이 안 보이네요, 이름이. 잠깐 떼 줘 보세요.</span><br/><span class="spk_sub" id="spk_sub69-3">&nbsp;죄송합니다.</span><br/><span class="spk_sub" id="spk_sub69-4">&nbsp;박수영 위원님 예결소위 같이 했었는데 그것 부대조건으로 달았어요, 부대조건으로. 법이 통과되면 통과된다는 조건으로 이렇게 합의가 된 거고요.</span><br/><span class="spk_sub" id="spk_sub69-5">&nbsp;그다음에 재경위 간사님께서 지금 계속 날치기니 취소해야 되니 이런 말씀 하시는데 그동안 수차례 예결소위 열어 달라, 미래대응기금 열어 달라고 요구를 했는데 다음 주에 하겠다 또는 금요일 날 하겠다 또 월요일 날 하겠다 이렇게 하면서 결국은 계속 미뤄 오지 않았습니까?</span><br/></div></div></div><div id="spk_70" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_70"><label for="spk_cnt_chk_70">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub70-1">&nbsp;정리가 안 되니까 그런 거지요.</span><br/></div></div></div><div id="spk_71" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_71"><label for="spk_cnt_chk_71">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub71-1">&nbsp;그러니까 그런데 지금 야당의 주장이 법이 통과되기 전에는 절대 심사할 수 없다. 이것 억지예요. 사실은 그동안 관행적으로 국회에서 법이 통과되기 전에도 심사는 진행이 됐습니다.</span><br/><span class="spk_sub" id="spk_sub71-2">&nbsp;예를 들자면 배준영 간사님께서도 참여했던, 과거에 2022년이지요, 기후대응기금도 마찬가지예요. 그때 법이 통과되기 전에 기금 심사를 했단 말이지요. 그때 심사를 같이 하셨지 않습니까?</span><br/><span class="spk_sub" id="spk_sub71-3">&nbsp;그런데 이제 와서 국회법에도 문제가 없고 관행적으로도 그렇게 해 왔던 예산심사를 법이 통과되지 않았다는 이유로 이렇게 예산심사를 하지 않는 것은 억지밖에 더 되지 않습니까?</span><br/><span class="spk_sub" id="spk_sub71-4">&nbsp;그동안 여당에서 많이 기다렸습니다, 심사 같이 하자고. 실제로 어제 우리 여당끼리 심사를 했지만 미래대응기금에 대해서 많은 지적사항이 나왔어요. 저희들이 이걸 그대로 원안대로 심의하지도 않았고 많은 지적을 했지만 야당과 함께 같이 해도 되지 않습니까, 참여해서? 그런데 무조건 법이 통과되지 않았으니까 못 하겠다 이것은 어린애 생떼 쓰는 것도 아니고 뭐 하는 겁니까? 국회의원이 예산심사하고 입법심사하는 게 가장 큰 책무 아닙니까?</span><br/></div></div></div><div id="spk_72" class="item43 speaker spk_mem" data-mem_id="6593" data-name="김상훈" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_72"><label for="spk_cnt_chk_72">김상훈 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/3c232b2892bb448f8d66df3661218621.jpg" alt="김상훈"></span><span class="txt"><strong class="name">김상훈</strong><span class="position">위원</span><span class="area">(대구 서구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub72-1">&nbsp;그래도 합의되지 않은 안건을 상정, 처리하면 안 되지요.</span><br/></div></div></div><div id="spk_73" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_73"><label for="spk_cnt_chk_73">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub73-1">&nbsp;아니, 합의되지 않은 게 아니잖아요. 그러면 계속 합의 안 되면 연말까지 가야 됩니까?</span><br/></div></div></div><div id="spk_74" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_74"><label for="spk_cnt_chk_74">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub74-1">&nbsp;그게 날치기지요.</span><br/></div></div></div><div id="spk_75" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_75"><label for="spk_cnt_chk_75">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub75-1">&nbsp;이게 무슨 날치기입니까, 날치기?</span><br/></div></div></div><div id="spk_76" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_76"><label for="spk_cnt_chk_76">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub76-1">&nbsp;잠시만요.</span><br/></div></div></div><div id="spk_77" class="item43 speaker spk_mem" data-mem_id="6666" data-name="문진석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_77"><label for="spk_cnt_chk_77">문진석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/81cfd832d09349ba95e28a111b700bfc.jpg" alt="문진석"></span><span class="txt"><strong class="name">문진석</strong><span class="position">위원</span><span class="area">(충남 천안시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub77-1">&nbsp;저는 예결소위 위원장으로서 내일이라도 다시 예결소위를 잡으려고 합니다. 그래서 참여해 달라 이런 부탁의 말씀 드리겠습니다.</span><br/></div></div></div><div id="spk_78" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_78"><label for="spk_cnt_chk_78">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub78-1">&nbsp;위원님들의 발언이……</span><br/></div></div></div><div id="spk_79" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_79"><label for="spk_cnt_chk_79">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub79-1">&nbsp;그게 억지지요, 그게 억지지.</span><br/></div></div></div><div id="spk_80" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_80"><label for="spk_cnt_chk_80">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub80-1">&nbsp;강민국 위원님, 위원님 발언할 때는 안 하는 게 좋겠습니다.</span><br/><span class="spk_sub" id="spk_sub80-2">&nbsp;그러면 여기 정태호 위원님 먼저 하시지요, 먼저 신청하셨으니까. 그다음에 이종욱 위원님.</span><br/></div></div></div><div id="spk_81" class="item43 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_81"><label for="spk_cnt_chk_81">임이자 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><strong class="name">임이자</strong><span class="position">위원</span><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub81-1">&nbsp;왔다 갔다 해야지.</span><br/></div></div></div><div id="spk_82" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_82"><label for="spk_cnt_chk_82">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub82-1">&nbsp;여기 두 분 하셨으니까 두 분 하는 거예요. 그다음에 이종욱 위원님 하시면 되지요.</span><br/></div></div></div><div id="spk_83" class="item43 speaker spk_mem" data-mem_id="6633" data-name="정태호" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_83"><label for="spk_cnt_chk_83">정태호 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/4102e3f5e32448a890f3f213bc0976ae.png" alt="정태호"></span><span class="txt"><strong class="name">정태호</strong><span class="position">위원</span><span class="area">(서울 관악구을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub83-1">&nbsp;제가 예결위 민주당 간사라서 간절한 마음으로 부탁을 드리는 건데 지난주 정책질의하고 이번 주에 소위를 하고 있습니다. 거의 밤 12시, 새벽 1시까지 하면서 하고 있는데 지금 미래대응기금이 합의가 안 되고 특히 우리 재정경제위원회에서 통과가 안 되고 있어 가지고 지금 예결위 차원에서는 뒤로 미뤄 놨어요. 미래대응기금만 별도로 논의하는 걸로 그렇게 해 놨는데 이번 주에 소위 활동이 끝납니다. 그리고 다음 주부터 소소위에 들어가게 되는데 그러면 소위 활동 마지막에는 미래대응기금을 저희들이 예결위 차원에서 논의를 해야 되거든요. 그런데 그 전제가 재경위에서 빨리 논의를 끝내 주는 게 저희들이 할 수 있는 출발점이 되는 거지요. 그래서 저희 예결위 입장에서 보면 재경위가 빨리 이거를 정리해 주셨으면 좋겠다라는 부탁을 말씀드리고 싶고요.</span><br/><span class="spk_sub" id="spk_sub83-2">&nbsp;또 하나는 제가 볼 때 미래대응기금과 관련해서 미래대응기금이 필요하냐 안 하냐 그다음에 그 내역사업들이 필요하냐 안 하냐 그다음에 또 미래대응기금에 대한 운용 이런 부분에서 여야가 상당히 입장 차이가 있는 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub83-3">&nbsp;그렇다면 이게 합의가 안 되면 어떻게 할 거냐, 그러면 예결위는 또 어떻게 할 거냐 이 고민이 있는 거거든요. 그렇기 때문에 우선 시한이 있기 때문에 재경위는 예결위 시한에 맞춰서 처리를 해 주셔야 되고. 두 번째로는 입장 차이가 있기 때문에 밤을 새서라도 토론을 해 가지고 정리를 해 주셔야 돼요. 그게 제가 볼 때는 국민에 대한 예의라고, 책임이라고 저는 생각하기 때문에 위원장님께 간절히 부탁드리는데 정상적인 예산심의를 위해서 재경위 차원에서 미래대응기금에 대한 논의를 빨리 끝내 주십사 부탁드립니다.</span><br/></div></div></div><div id="spk_84" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_84"><label for="spk_cnt_chk_84">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub84-1">&nbsp;예, 알겠습니다.</span><br/><span class="spk_sub" id="spk_sub84-2">&nbsp;먼저 이종욱 위원님.</span><br/></div></div></div><div id="spk_85" class="item43 speaker spk_mem" data-mem_id="6770" data-name="이종욱" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_85"><label for="spk_cnt_chk_85">이종욱 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEJONHWOOK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/28fa12120325440fbd63d9953bcfa03f.png" alt="이종욱"></span><span class="txt"><strong class="name">이종욱</strong><span class="position">위원</span><span class="area">(경남 창원시진해구)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub85-1">&nbsp;저는 비슷한 취지니까 짧게 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub85-2">&nbsp;조승래 위원장님께서 미래대응기금에 대해서 여러 가지 여야가 입장 차이가 크지만 일단 공식적으로는 계속 협의해 나가겠다 이런 입장이시잖아요. 그런데 지금 공익신고기금이나 전략수출기금 같은 경우에는 여러분, 뭐라고 그래도 일단 법이 우선입니다. 그거는 맞잖아요. 거기에 대해 부정하지는 마시고.</span><br/><span class="spk_sub" id="spk_sub85-3">&nbsp;마지막까지 협상을 해야 된다는 생각이고 그러면 오늘이 마지노선이냐? 저희 재경위에 예결위 정태호 간사님도 계시고 또 이광재 위원장님도 계시잖아요. 그리고 어차피 미래대응기금이 제일 중요한 부분이고 제일 복잡한 부분이기 때문에 뒤로 미뤄 놨지 않습니까?</span><br/><span class="spk_sub" id="spk_sub85-4">&nbsp;그렇기 때문에 제 생각에는 그래도 며칠간 여유는 있다, 빡빡하기는 하지만. 오늘 이렇게 강행 처리할 건 아니다. 그래서 마지막까지 최선을 다하는 모습을 보여 주는 게 국민에 대한 도리다. 원래 이게 또 협상 전략일 수도 있어요. 이게 얼마나 어려운 문제입니까? 간단히 마쳐서 해결될 것 아닙니다. 마지노선까지 몰려야 겨우 대안이 나올 수 있는 것이기 때문에 저는 오늘 이 기금 두 개를 넣어서 하는 거는 존경하는 조승래 위원장님의 훌륭하신 지도력과는 맞지 않는 처사다. 그래서 저희 야당 입장에서는 빼고 그래도 며칠간 더 노력하는 게 맞다 이런 의견을 드립니다.</span><br/><span class="spk_sub" id="spk_sub85-5">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_86" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_86"><label for="spk_cnt_chk_86">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub86-1">&nbsp;예, 알겠습니다.</span><br/><span class="spk_sub" id="spk_sub86-2">&nbsp;감사합니다.</span><br/><span class="spk_sub" id="spk_sub86-3">&nbsp;강민국 위원님.</span><br/></div></div></div><div id="spk_87" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_87"><label for="spk_cnt_chk_87">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub87-1">&nbsp;저는 사실 미래대응기금이라는 용어 자체도 틀렸다. 이게 미래불확실기금, 미래불안기금이 아닌가라는 생각을 가지고 있고요.</span><br/><span class="spk_sub" id="spk_sub87-2">&nbsp;지금 존경하는 몇 분 민주당의 위원님들께서 말씀을…… 저는 굉장히 유감스럽다, 위원장님·간사님을 비롯해서. 마치 축구의 하프타임을 정해 놓고 통과시키기 위한 어떤 프레임을 짜 가지고 이걸 해야 된다. 저는 도저히 이해할 수가 없습니다, 이 말 자체가, 프레임 자체가.</span><br/><span class="spk_sub" id="spk_sub87-3">&nbsp;백 번 천 번 만 번 양보하더라도 그렇게 민주당이나, 민주당의 그건 아니지요. 이게 접때 우리 국정감사 때 박홍근 장관의 생각이라고 하고 자기가 발상하는 것 이것도 얘기한 것 같은데 그렇게 백 번 천 번 만 번 양보해서 이렇게 중요한 기금이다, 그러면 숙성을 해서 내년까지 갑시다. 왜 올해 12월에 통과시킬, 이렇게 프레임을 짜야 될 이유가 뭐가 있어요?</span><br/><span class="spk_sub" id="spk_sub87-4">&nbsp;또 하나, 그렇게 중요한 법안 같은 것 잘하시는 것 있잖아요. 패스트트랙 띄우면 되지. 뭘 그렇게 재경위에서, 소위에서 해야 되니 어떻니 이런 자체가 저는 사실 말장난 같아요. 서로 가슴에 손을 얹고 생각해 보시고.</span><br/><span class="spk_sub" id="spk_sub87-5">&nbsp;저는 미래불안기금, 청년미래파괴기금은 태어나지 말아야 될 기태와 같다. 도대체 이런 발상을 왜 해요? 대한민국정부가 수립되고 78년 동안 미래대응기금이 없어서 대한민국 재정이 잘못된 적 있었나요? 이렇게 프레임을 갖고 통과시키려고 하는 이유가 도대체 없다. 그게 먼저 납득이 되고 설득이 될 때 되는 겁니다.</span><br/><span class="spk_sub" id="spk_sub87-6">&nbsp;다시 한번 말씀드리면 그렇게 급한 것 같으면 패스트트랙 띄우시든지 아니면 진짜 위원장님 말씀대로 여야가 진지한 대화를 통해서 내년에 해도 되잖아요. 이재명 정부가 내년에 끝나요? 이재명 대통령 임기가 내년에 끝나는 게 아니잖아요. 그러면 내년에 숙성시켜서 통과시켜도 되는 건데 하필 올해 이렇게 하려고 하는 이유를 도대체 모르겠다.</span><br/><span class="spk_sub" id="spk_sub87-7">&nbsp;이것 간사님, 답변 한번 해 주시기 바랍니다. 저 도대체 이해가 안 가요. 숙성해서 내년에 해도 되고 아니면 패스트트랙 띄워도 되는 거지. 한번 설명을 좀 해 주십시오. 내가 도저히 이해가 안 가서 여쭤보는 겁니다.</span><br/></div></div></div><div id="spk_88" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_88"><label for="spk_cnt_chk_88">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub88-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub88-2">&nbsp;위원님들 상호 간의 토론은 좀 그렇고……</span><br/></div></div></div><div id="spk_89" class="item43 speaker spk_mem" data-mem_id="6853" data-name="강민국" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_89"><label for="spk_cnt_chk_89">강민국 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/70f21f66d1ea471192858adb6f379299.png" alt="강민국"></span><span class="txt"><strong class="name">강민국</strong><span class="position">위원</span><span class="area">(경남 진주시을)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub89-1">&nbsp;토론시간이니까 그런 거지.</span><br/></div></div></div><div id="spk_90" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_90"><label for="spk_cnt_chk_90">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub90-1">&nbsp;지금 위원님들의 지적과 토론이 있었는데 혹시 이것 관련해서 부총리……</span><br/></div></div></div><div id="spk_91" class="item43 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_91"><label for="spk_cnt_chk_91">이춘석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><strong class="name">이춘석</strong><span class="position">위원</span><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub91-1">&nbsp;제가 한말씀만 드리겠습니다.</span><br/></div></div></div><div id="spk_92" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_92"><label for="spk_cnt_chk_92">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub92-1">&nbsp;예, 그러면 이춘석 위원님 먼저 발언하시고.</span><br/></div></div></div><div id="spk_93" class="item43 speaker spk_mem" data-mem_id="6742" data-name="이춘석" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_93"><label for="spk_cnt_chk_93">이춘석 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/d4c21d5cd5284c7583908d8c7692aec6.jpg" alt="이춘석"></span><span class="txt"><strong class="name">이춘석</strong><span class="position">위원</span><span class="area">(전북 익산시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub93-1">&nbsp;짧게 한말씀만 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub93-2">&nbsp;이게 지금 국민들이 다 보고 계셔서 국민들도 사실은 그 내용을 좀 알아야 될 거라고 생각합니다. 사실은 12월 2일 날 되면 예산안이 자동 상정되고 예산안과 관련된 부수법안도 자동 상정되도록 되어 있습니다. 18대 국회에 하도 여야가 대립하고 싸우니까 동물국회를 식물국회로 만들겠다 하면서 여야가 합의 본 사항입니다. 예산과 예산의 부수법안은 여당 측이 우선권을 갖게 하고 법안에 대해서는 야당 측이 그걸 좀 막을 수 있는 법안을 만들자 해서 타협된 안입니다. 이게 사실은 정착돼서 지금까지 오는 겁니다.</span><br/><span class="spk_sub" id="spk_sub93-3">&nbsp;여기서 논란이 되고 있는 미래대금 법안과 기금에 대해서는 저도 개인적으로는 약간의 의견이 있습니다. 하지만 그 설치에 대해서는 동의하는 입장입니다.</span><br/><span class="spk_sub" id="spk_sub93-4">&nbsp;그래서 우리 상임위가 특히 법에 대해서는 정부가 제출한 법안이 마음에 들지 않고 국민들에게 도움이 되지 않는다면 일부 수정할 수 있는 권한이 있다고 생각합니다, 전체는 아니지만. 그런데 이것을 하지 않아서 그대로 간다고 하면, 12월 2일 날 자동 상정해서 통과된다고 하면 사실은 국민을 위해서나 바람직하지 않다고 생각합니다. 약간의 이견이 있더라도 저희가 상임위 차원에서 최선을 다해서 수정안을 마련해서 넘기는 것이 저는 국민들에 대한 도리라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub93-5">&nbsp;그래서 정치적으로 견해가 다르지만 우리는 무조건 않겠다라고 해 봤자 국민들한테 도움이 안 되고 저는 지방 출신의 국회의원으로서 특히 지방기금과 관련해서는 몇 개의 제도적 장치가 마련돼야 한다는 생각도 가지고 있습니다.</span><br/><span class="spk_sub" id="spk_sub93-6">&nbsp;그래서 여야가 입장이 좀 다르지만 마지막까지 최선을 다해서 그 법안을 논의해서 통과시키는 것, 한 발짝이라도 더 나가서 통과시키는 것이 저는 국민적 도리라고 생각하고 우리 위원들의 입장이라고 생각합니다.</span><br/><span class="spk_sub" id="spk_sub93-7">&nbsp;그래서 마지막까지 최선을 다해 주시고 마지막에는 이게 그대로 다 본회의로 가게 된다고 하면 우리 재경위는 아무 일도, 역할도 못 하고 상임위가 무력화되는 것도 있습니다.</span><br/><span class="spk_sub" id="spk_sub93-8">&nbsp;그래서 위원장님께서 잘 중재하셔서 이것 만족하지 못하지만 조금씩 양보해서 미래대금법도 기금도 원활히 통과될 수 있도록 그렇게 여야가 서로 협력해서 도와주실 것을 간곡히 부탁드립니다.</span><br/></div></div></div><div id="spk_94" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_94"><label for="spk_cnt_chk_94">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub94-1">&nbsp;예, 알겠습니다.</span><br/><span class="spk_sub" id="spk_sub94-2">&nbsp;이광재 위원님.</span><br/></div></div></div><div id="spk_95" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_95"><label for="spk_cnt_chk_95">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub95-1">&nbsp;위원장님, 이것 상정 안 하신다고 약속을 해 주십시오.</span><br/></div></div></div><div id="spk_96" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_96"><label for="spk_cnt_chk_96">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub96-1">&nbsp;상정 벌써 했어요.</span><br/></div></div></div><div id="spk_97" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_97"><label for="spk_cnt_chk_97">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub97-1">&nbsp;아니, 그러니까 의결하지 않는다고 약속을 해 주시면 저희가 이거 다 떼고 인정할게요. 의결하실 겁니까?</span><br/></div></div></div><div id="spk_98" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_98"><label for="spk_cnt_chk_98">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub98-1">&nbsp;예, 의결할 생각입니다.</span><br/></div></div></div><div id="spk_99" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_99"><label for="spk_cnt_chk_99">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub99-1">&nbsp;의결하신답니다. 우리가 5개 조건을 내밀어서 최소한 하려고 그렇게 요구를 했는데 그것도 안 들어주고……</span><br/></div></div></div><div id="spk_100" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_100"><label for="spk_cnt_chk_100">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub100-1">&nbsp;그 부분은 미래대응기금과 관련해서는 제가 아까 말씀드린 것처럼, 논의를 하자고 제가 말씀을 드렸지 않습니까?</span><br/></div></div></div><div id="spk_101" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_101"><label for="spk_cnt_chk_101">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub101-1">&nbsp;전략수출기금하고 공익기금 아직 법도 통과되지 않았는데 여러분들 마음대로 통과시킨다는 겁니까, 기금부터? 안 맞아요!</span><br/></div></div></div><div id="spk_102" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_102"><label for="spk_cnt_chk_102">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub102-1">&nbsp;미래대응기금과 관련해서는 여야 간사들께서 협의해 주시기를 제가 말씀을 드렸습니다.</span><br/></div></div></div><div id="spk_103" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_103"><label for="spk_cnt_chk_103">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub103-1">&nbsp;위원장님, 이건 있을 수가 없는 일이에요. 어떻게 법안도 통과되지 않았는데 기금 먼저 통과한다고 그렇게 밀어붙이십니까?</span><br/></div></div></div><div id="spk_104" class="item43 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_104"><label for="spk_cnt_chk_104">임이자 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><strong class="name">임이자</strong><span class="position">위원</span><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub104-1">&nbsp;시간 있는데 위원장님, 뭘 그렇게 야박하게 해. 마지막에 가서 극적으로 하면 되는 거지. 너무 잘못하고 있어.</span><br/></div></div></div><div id="spk_105" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_105"><label for="spk_cnt_chk_105">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub105-1">&nbsp;자, 미래대응기금은 논의를 합시다.</span><br/></div></div></div><div id="spk_106" class="item43 speaker spk_mem" data-mem_id="6700" data-name="배준영" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_106"><label for="spk_cnt_chk_106">배준영 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c0680ca1b0ca410191f6597484db924f.png" alt="배준영"></span><span class="txt"><strong class="name">배준영</strong><span class="position">위원</span><span class="area">(인천 중구강화군옹진군)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub106-1">&nbsp;이거는 말이 안 맞아요! 마음대로 하십시오!</span><br/></div></div></div><div id="spk_107" class="item43 speaker spk_mem" data-mem_id="6645" data-name="임이자" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_107"><label for="spk_cnt_chk_107">임이자 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/c7818d8fbee2421b93382a592e6f096e.png" alt="임이자"></span><span class="txt"><strong class="name">임이자</strong><span class="position">위원</span><span class="area">(경북 상주시문경시 )</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub107-1">&nbsp;이렇게 얘기했잖아, 아까 해 보자고. 그거 하면 되지.</span><br/><span class="spk_sub" id="spk_sub107-2">&nbsp;(일부 위원 퇴장)</span><br/></div></div></div><div id="spk_108" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_108"><label for="spk_cnt_chk_108">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub108-1">&nbsp;알겠습니다.</span><br/><span class="spk_sub" id="spk_sub108-2">&nbsp;그러면 의결하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub108-3">&nbsp;먼저 의사일정 제24항 2027년도 예산안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 그 밖의 부분은 원안대로 의결하며 부대의견을 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub108-4">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub108-5">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub108-6">&nbsp;다음은 의사일정 제25항 미래대응기금을 제외한 8개 기금의 2027년도 기금운용계획안은 소위원회에서 심사보고한 바와 같이 수정한 부분은 수정한 대로, 그 밖의 부분은 원안대로 의결하며 부대의견을 채택하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub108-7">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub108-8">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub108-9">&nbsp;다음은 의사일정 제26항 2027년도에 발행하는 한국장학재단채권에 대한 국가보증동의안은 소위원회 심사보고와 같이 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub108-10">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub108-11">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub108-12">&nbsp;다음은 의사일정 제27항 2027년도에 발행하는 공급망안정화기금채권에 대한 국가보증동의안은 소위원회 심사보고와 같이 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub108-13">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub108-14">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub108-15">&nbsp;다음은 의사일정 제28항 2027년도에 발행하는 첨단전략산업기금채권에 대한 국가보증동의안은 소위원회 심사보고와 같이 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub108-16">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub108-17">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub108-18">&nbsp;다음은 의사일정 제29항 2027년도에 발행하는 한미전략투자채권에 대한 국가보증동의안은 소위원회 심사보고와 같이 원안대로 의결하고자 하는데 이의 없으십니까?</span><br/><span class="spk_sub" id="spk_sub108-19">&nbsp;(「예」 하는 위원 있음)</span><br/><span class="spk_sub" id="spk_sub108-20">&nbsp;가결되었습니다.</span><br/><span class="spk_sub" id="spk_sub108-21">&nbsp;혹시 이광재 위원님, 아까 발언 신청을 하셨는데 혹시 발언하시겠습니까?</span><br/></div></div></div><div id="spk_109" class="item43 speaker spk_mem" data-mem_id="7219" data-name="이광재" data-pos="위원"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_109"><label for="spk_cnt_chk_109">이광재 위원 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/LEEKWANGJAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/4A067125.jpg" alt="이광재"></span><span class="txt"><strong class="name">이광재</strong><span class="position">위원</span><span class="area">(경기 하남시갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub109-1">&nbsp;이춘석 위원님이 다 했는데, 계셨어야 됐는데 저는 법률이 정한 날짜에 예산안을 통과시키려고 노력할 겁니다. 그사이까지 국회의 존재 이유를 찾기 위해서, 국회의 권위는 스스로 지키는 거라고 봅니다. 여야가 충분한 대화를 하기를 희망하고 재경위도 그에 따라서 노력을 해 주시기 바라고 법적 기한은 반드시 지킨다, 그걸 목표로 하겠다는 말씀을 드리겠습니다.</span><br/></div></div></div><div id="spk_110" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_110"><label for="spk_cnt_chk_110">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub110-1">&nbsp;예, 알겠습니다.</span><br/><span class="spk_sub" id="spk_sub110-2">&nbsp;오늘 의결한 안건의 심사보고서 작성을 위한 자구 정리 등은 위원장에게 위임하여 주시기 바랍니다.</span><br/><span class="spk_sub" id="spk_sub110-3">&nbsp;아울러 국회법 제84조제5항에 따르면 예산결산특별위원회가 소관 상임위원회에서 삭감한 세출예산 각 항의 금액을 증가하게 하거나 새 비목을 설치하는 경우에는 소관 상임위원회의 동의를 받아야 합니다만 촉박한 국회 일정 등을 감안하여 우리 위원회의 동의 여부는 위원장이 간사와 협의하여 정할 수 있도록 위임해 주시면 감사하겠습니다.</span><br/><span class="spk_sub" id="spk_sub110-4">&nbsp;다음으로 오늘 의결된 안건과 관련하여 정부 측의 인사말씀을 듣도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub110-5">&nbsp;먼저 이형일 부총리겸재정경제부장관 나오셔서 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_111" class="item43 speaker spk_mem" data-mem_id="0" data-name="이형일" data-pos="부총리겸재정경제부장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_111"><label for="spk_cnt_chk_111">부총리겸재정경제부장관 이형일 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이형일"></span><span class="txt"><span class="position">부총리겸재정경제부장관</span><strong class="name">이형일</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub111-1">&nbsp;존경하는 조승래 위원장님 그리고 경제재정소위원회 위원장님 그리고 문진석 예산결산소위원회 위원장님 그리고 재정경제기획위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub111-2">&nbsp;정부가 제출한 2027년도 재정경제부 예산안 및 기금운용계획안, 국유재산특례제한법 일부개정법률안, 국가보증동의안에 대하여 심의 의결하여 주신 데 대하여 깊은 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub111-3">&nbsp;심의 과정에서 여러 위원님들께서 지적하여 주신 고견에 대해서는 앞으로의 정책 운영이나 개별 사업을 집행해 가는 과정에서 최대한 반영해 나가도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub111-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_112" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_112"><label for="spk_cnt_chk_112">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub112-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub112-2">&nbsp;다음은 박홍근 기획예산처장관 나오셔서 인사말씀해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_113" class="item43 speaker spk_mem" data-mem_id="0" data-name="박홍근" data-pos="기획예산처장관"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_113"><label for="spk_cnt_chk_113">기획예산처장관 박홍근 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박홍근"></span><span class="txt"><span class="position">기획예산처장관</span><strong class="name">박홍근</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub113-1">&nbsp;존경하는 조승래 위원장님, 문진석 예산결산소위원회 위원장님 그리고 재정경제기획위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub113-2">&nbsp;정부가 제출한 기획예산처 소관 2027년도 예산안 및 기금운용계획안을 심의 의결하여 주신 데 대하여 깊은 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub113-3">&nbsp;짧게 말씀을 드리면 왜 내년에 해도 되는데 올해 급하게 하려고 하느냐. 정말 예산에 대한 기본적 이해가 필요해 보입니다. 우리는 단년도 예산주의입니다. 그래서 올해 들어온 초과세수나 내년에 예상되는 추가세수를 내년도 예산안에 담지 않으면 이건 당연히 그냥 국가재정법에 따라서 그대로 처리되든지 아니면 한꺼번에 다 쓰든지 해야 되는데 다른 도리가 있다는 뜻입니까?</span><br/><span class="spk_sub" id="spk_sub113-4">&nbsp;또한 각 상임위의 현재 예산은 예비심사 성격입니다. 이건 국회법에 규정되어 있는 것입니다. 따라서 예비심사를 거쳐서 예결위에서 본심사를 하는 그 전 단계인 것이다. 거기에 대한 이해가 분명히 계셔야 될 것 같습니다.</span><br/><span class="spk_sub" id="spk_sub113-5">&nbsp;그리고 아까 문진석 소위원장께서 말씀하신 것처럼 기금이 신설되거나 또는 그 법이 개정될 경우에는 예산안과의 처리 순서에 있어서 국회에 많은 사례가 있습니다. 그동안 그렇게 해 왔습니다. 아까 말씀하신 기후대응기금뿐만 아니라 2016년도에 자동차사고 피해지원기금도 그렇게 했습니다. 또 당장 최근에도 국토위에서 기금안을 먼저 의결을 하고 그리고 법안을 11월 10일에 한 2주 차이로 이렇게 해 온 적도 있습니다.</span><br/><span class="spk_sub" id="spk_sub113-6">&nbsp;그래서 저희로서는 보다 합리적이고 효율적인 대안을 제시를 주시면 저희도 적극적으로 수용을 해 나갈 것입니다. 그리고 법률이 정한 시한 안에 국회에서 철저히 심사해서 처리해 줄 것을 요망하고 저희도 더 소통하도록 노력하겠다는 말씀을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub113-7">&nbsp;심의 과정에서 여러 위원님들께서 주신 말씀, 지적사항과 고견에 대해서는 향후 정부 정책 추진 과정에서 최대한 반영해 나가겠습니다.</span><br/><span class="spk_sub" id="spk_sub113-8">&nbsp;이상입니다.</span><br/></div></div></div><div id="spk_114" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_114"><label for="spk_cnt_chk_114">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub114-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub114-2">&nbsp;다음은 안형준 국가데이터처장 나오셔서 인사말씀 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_115" class="item43 speaker spk_mem" data-mem_id="0" data-name="안형준" data-pos="국가데이터처장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_115"><label for="spk_cnt_chk_115">국가데이터처장 안형준 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="안형준"></span><span class="txt"><span class="position">국가데이터처장</span><strong class="name">안형준</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub115-1">&nbsp;존경경하는 조승래 위원장님, 문진석 예산결산소위원회 위원장님 그리고 재정경제기획위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub115-2">&nbsp;2027년도 국가데이터처 소관 예산안을 심의·의결하여 주신 데 대해서 진심으로 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub115-3">&nbsp;심의 과정에서 여러 위원님들이 지적해 주신 사항과 고견은 업무 수행에 적극 반영하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub115-4">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_116" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_116"><label for="spk_cnt_chk_116">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub116-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub116-2">&nbsp;다음은 박해영 국세청장직무대행 나오셔서 인사말씀 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_117" class="item43 speaker spk_mem" data-mem_id="0" data-name="박해영" data-pos="국세청장직무대행"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_117"><label for="spk_cnt_chk_117">국세청장직무대행 박해영 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="박해영"></span><span class="txt"><span class="position">국세청장직무대행</span><strong class="name">박해영</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub117-1">&nbsp;존경하는 조승래 위원장님, 문진석 예산결산기금심사소위원장님 그리고 재정경제기획위원회 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub117-2">&nbsp;2027년도 국세청 소관 예산안을 심의·의결해 주신 데 대해서 진심으로 감사말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub117-3">&nbsp;심의 과정에서 말씀 주신 정책 제안과 지적사항들은 깊이 유념하여 향후 업무 과정에서 적극 반영토록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub117-4">&nbsp;앞으로도 위원님들의 많은 관심과 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub117-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_118" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_118"><label for="spk_cnt_chk_118">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub118-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub118-2">&nbsp;다음은 이종욱 관세청장 나오셔서 인사말씀 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_119" class="item43 speaker spk_mem" data-mem_id="0" data-name="이종욱" data-pos="관세청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_119"><label for="spk_cnt_chk_119">관세청장 이종욱 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="이종욱"></span><span class="txt"><span class="position">관세청장</span><strong class="name">이종욱</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub119-1">&nbsp;존경하는 조승래 위원장님, 문진석 예산결산소위원회 위원장님 그리고 재정경제기획위원회 여러 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub119-2">&nbsp;2027년도 관세청 소관 세입세출예산안을 의결해 주신 데 대하여 깊이 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub119-3">&nbsp;여러 위원님들께서 예산 심의 과정에서 지적해 주신 고견은 관세행정에 적극 반영하도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub119-4">&nbsp;앞으로도 관세청에 대한 위원님들의 지속적인 관심과 적극적인 지원을 부탁드립니다.</span><br/><span class="spk_sub" id="spk_sub119-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_120" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_120"><label for="spk_cnt_chk_120">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub120-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub120-2">&nbsp;끝으로 백승보 조달청장 나오셔서 인사말씀 해 주시기 바랍니다.</span><br/></div></div></div><div id="spk_121" class="item43 speaker spk_mem" data-mem_id="0" data-name="백승보" data-pos="조달청장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_121"><label for="spk_cnt_chk_121">조달청장 백승보 선택</label></div><div class="man"><span><span class="pic"><img src="/assembly/images/view/pic_member_none.jpg" alt="백승보"></span><span class="txt"><span class="position">조달청장</span><strong class="name">백승보</strong></span></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub121-1">&nbsp;존경하는 조승래 위원장님 그리고 위원님 여러분!</span><br/><span class="spk_sub" id="spk_sub121-2">&nbsp;2027년도 조달청 소관 예산안을 심의·의결하여 주신 데 대하여 감사드립니다.</span><br/><span class="spk_sub" id="spk_sub121-3">&nbsp;그리고 이번 예산결산기금심사소위원회에서 예산안을 심도 있게 검토해 주신 문진석 소위원장님과 위원님 여러분들께도 특별한 감사의 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub121-4">&nbsp;심의 과정에서 주신 위원님들의 고견은 향후 조달행정에 적극 반영하겠습니다.</span><br/><span class="spk_sub" id="spk_sub121-5">&nbsp;감사합니다.</span><br/></div></div></div><div id="spk_122" class="item43 speaker spk_mem" data-mem_id="6630" data-name="조승래" data-pos="위원장"><div class="in_chk"><input type="checkbox" name="spk_cnt" id="spk_cnt_chk_122"><label for="spk_cnt_chk_122">위원장 조승래 선택</label></div><div class="man"><a href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank" title="새창열림"><span class="pic"><img src="https://www.assembly.go.kr/static/portal/img/openassm/new/thumb/9e7bee59f70f453e9fad4939bd7f72c2.jpg" alt="조승래"></span><span class="txt"><span class="position">위원장</span><strong class="name">조승래</strong><span class="area">(대전 유성구갑)</span></a></span></div><div class="talk"><div class="txt"><span class="spk_sub" id="spk_sub122-1">&nbsp;수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub122-2">&nbsp;위원장으로서 야당 위원님들이 퇴장한 거에 대해서 매우 안타깝게 생각합니다. 아까도 말씀드린 바와 같이 부분이 합의가 안 됐다고 해서 나머지 압도적 부분을 동의를 못 하겠다 또 포기하겠다 이런 거는 있을 수 없는 겁니다. 합의되는 거는 합의되는 대로 처리하고 합의가 안 되는 거는 안 되는 대로 논의를 하면 되지 않겠습니까?</span><br/><span class="spk_sub" id="spk_sub122-3">&nbsp;그래서 미래대응기금을 제외한 나머지는 대체적으로 다 합의가 됐고 일부 기금에 대해서는 부대의견을 다는 것으로 정리가 된 것으로 저는 이해를 했고 그래서 오늘 법안 처리를 했다는 말씀을 드립니다.</span><br/><span class="spk_sub" id="spk_sub122-4">&nbsp;그리고 제가 아까 제안했던 것처럼 미래대응기금법안과 기금안에 대해서는 2개를 묶어서 오기형 간사와 배준영 간사 중심으로 하셔서 협의체를 만들어서라도, 밤새서라도 논의를 통해서 정리를 해 주시기를 당부를 드리겠고 만약에 그게 진전이 없게 된다면 위원장으로서 위원회 전체회의에서 직접 심사하는 등 특단의 대책을 강구하겠다는 말씀을 드리겠습니다. 그렇게 해서 가든 부든 빨리 결론을 내려 주는 것이 필요하다는 생각을 갖습니다. 결코 재정경제기획위원회의 법안심사권과 예산기금심사권을 포기하는 일은 없을 겁니다.</span><br/><span class="spk_sub" id="spk_sub122-5">&nbsp;그래서 정부 측 관계자들께서도 열린 자세를 가지고 협의에 임해 주시기를 당부를 드리겠고, 대통령께서 예산안과 관련된 시정연설을 하실 때 열린 자세를 가지고 국회 의견을 존중하겠다고 말씀을 하신 바 있기 때문에 충분히 위원님들의 의견을 숙고하셔서 개방적이고 여유 있는 자세를 가지고 협의에 임해 주시기를 부탁을 드리겠습니다.</span><br/><span class="spk_sub" id="spk_sub122-6">&nbsp;그러면 오늘 회의는 이것으로 마치도록 하겠습니다.</span><br/><span class="spk_sub" id="spk_sub122-7">&nbsp;위원님 여러분 수고하셨습니다.</span><br/><span class="spk_sub" id="spk_sub122-8">&nbsp;정부 관계자와 위원회 직원 및 보좌진 여러분도 모두 수고 많으셨습니다.</span><br/><span class="spk_sub" id="spk_sub122-9">&nbsp;산회를 선포합니다.</span><br/></div></div></div><p class="tit_sm taR">(12시00분 산회)</p><br/><div class="line_solid">&nbsp;</div><br/></div><div class="minutes_footer"><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 위원(20인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KANGMINKUK" target="_blank"><span class="name lts3 ">강민국</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMNAMJOON" target="_blank"><span class="name lts3 ">김남준</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSANGHOON" target="_blank"><span class="name lts3 ">김상훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMYOUNGWHAN" target="_blank"><span class="name lts3 ">김영환</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMTAENYEON" target="_blank"><span class="name lts3 ">김태년</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/MOONJINSEOG" target="_blank"><span class="name lts3 ">문진석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/PARKSOOYOUNG" target="_blank"><span class="name lts3 ">박수영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/BAEJUNEYOUNG" target="_blank"><span class="name lts3 ">배준영</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNDOGEOL" target="_blank"><span class="name lts3 ">안도걸</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/AHNSANGHOON" target="_blank"><span class="name lts3 ">안상훈</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/OHGIHYOUNG" target="_blank"><span class="name lts3 ">오기형</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONYOUNGSEOK" target="_blank"><span class="name lts3 ">윤영석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/YOONHUDUK" target="_blank"><span class="name lts3 ">윤후덕</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEKWANGJAE" target="_blank"><span class="name lts3 ">이광재</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJONHWOOK" target="_blank"><span class="name lts3 ">이종욱</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEECHOONSUAK" target="_blank"><span class="name lts3 ">이춘석</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LIMLEEJA" target="_blank"><span class="name lts3 ">임이자</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGSUNGHO" target="_blank"><span class="name lts3 ">정성호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JUNGTAEHO" target="_blank"><span class="name lts3 ">정태호</span></a></li><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/JOSEOUNGLAE" target="_blank"><span class="name lts3 ">조승래</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출장 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/LEEJUNSEOK" target="_blank"><span class="name lts3 ">이준석</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯청가 위원(1인)</strong></p> <div class="con"><ul class="list_nm col8"><li><a class="in_nm" href="https://www.assembly.go.kr/members/22nd/KIMSUNGWHAN" target="_blank"><span class="name lts3 ">김성환</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯출석 전문위원</strong></p> <div class="con"><ul class="list_nm col4"><li><a class="in_nm"><span class="pos"><span class="lts6">수석전문위원</span></span><span class="name lts3"> 이정은</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">전문위원</span></span><span class="name lts3"> 유인규</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>◯정부 측 및 기타 참석자</strong></p> <div class="con"><ul class="list_nm col4"><p>재정경제부</p><li><a class="in_nm"><span class="pos"><span class="lts6">부총리겸장관</span></span><span class="name lts3"> 이형일</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제1차관</span></span><span class="name lts3"> 권대영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">제2차관</span></span><span class="name lts2"> 허장</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 김후진</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">세제실장</span></span><span class="name lts3"> 조만희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">국고실장</span></span><span class="name lts3"> 황순관</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">대외경제국장</span></span><span class="name lts3"> 김동준</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">전략경제정책관</span></span><span class="name lts3"> 고광희</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts9">정책기획관직무대리</span></span><span class="name lts3"> 최재혁</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">국고정책관</span></span><span class="name lts3"> 허승철</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">국유재산정책관</span></span><span class="name lts3"> 고종안</span></a></li><p>기획예산처</p><li><a class="in_nm"><span class="pos"><span class="lts2">장관</span></span><span class="name lts3"> 박홍근</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차관</span></span><span class="name lts3"> 조용범</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts6">기획조정실장</span></span><span class="name lts3"> 정향우</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts8">미래전략기획실장</span></span><span class="name lts3"> 강영규</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts4">예산실장</span></span><span class="name lts3"> 김명중</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">정책기획관</span></span><span class="name lts3"> 박준호</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">예산총괄심의관</span></span><span class="name lts3"> 박창환</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts7">재정투자심의관</span></span><span class="name lts3"> 고재신</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts10">미래대응기금추진단장</span></span><span class="name lts3"> 박성훈</span></a></li><p>국가데이터처</p><li><a class="in_nm"><span class="pos"><span class="lts2">처장</span></span><span class="name lts3"> 안형준</span></a></li><p>국세청</p><li><a class="in_nm"><span class="pos"><span class="lts6">청장직무대행</span></span><span class="name lts3"> 박해영</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 유재준</span></a></li><p>관세청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 이종욱</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 한창령</span></a></li><p>조달청</p><li><a class="in_nm"><span class="pos"><span class="lts2">청장</span></span><span class="name lts3"> 백승보</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts2">차장</span></span><span class="name lts3"> 강성민</span></a></li><li><a class="in_nm"><span class="pos"><span class="lts5">기획조정관</span></span><span class="name lts3"> 이형식</span></a></li></ul></div></div><div class="list"><p class="tit"><span class="num"></span><strong>【보고사항】<br/>◯위원 개선</strong></p><div class="table_wrap2"><table class="normal"><caption>【보고사항】 ◯위원 개선</caption><colgroup><col width="21.80503880089295%"><col width="19.39832039970235%"><col width="19.39832039970235%"><col width="20.0%"><col width="19.39832039970235%"></colgroup><thead><tr><th scope="col">소위원회</th><th scope="col">사임위원</th><th scope="col">보임위원</th><th scope="col">교섭단체</th><th scope="col">연월일</th></tr></thead><tr><td>경제재정<br/></td><td>이광재<br/></td><td>김남준<br/></td><td>더불어민주당<br/></td><td>2026. 11. 13.<br/></td></tr></table></div><br/><p class="tit"><span class="num"></span><strong>◯의안 회부</strong></p><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 10. 30. 김상훈 의원 대표발의)(의안번호 2222333)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">11월 2일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 10. 문금주 의원 대표발의)(의안번호 2222631)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 10. 안상훈 의원 대표발의)(의안번호 2222647)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 11일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>국가재정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 11. 안상훈 의원 대표발의)(의안번호 2222666)</div></div><div class="con"><p class="tit_sm"><strong>관세법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 11. 안상훈 의원 대표발의)(의안번호 2222667)</div></div><div class="con"><p class="tit_sm"><strong>법인세법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 11. 박수영 의원 대표발의)(의안번호 2222669)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 3건 11월 12일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 김은혜 의원 대표발의)(의안번호 2222705)</div></div><div class="con"><p class="tit_sm"><strong>공공기관의 운영에 관한 법률 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 이헌승 의원 대표발의)(의안번호 2222710)</div></div><div class="con"><p class="tit_sm"><strong>국가재정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 박수영 의원 대표발의)(의안번호 2222729)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 이언주 의원 대표발의)(의안번호 2222732)</div></div><div class="con"><p class="tit_sm"><strong>한국은행법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 김영환 의원 대표발의)(의안번호 2222741)</div></div><div class="con"><p class="tit_sm"><strong>미래대응기금 설치 및 운용에 관한 법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 김선민 의원 대표발의)(의안번호 2222750)</div></div><div class="con"><p class="tit_sm"><strong>국가재정법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 김선민 의원 대표발의)(의안번호 2222751)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 12. 임호선 의원 대표발의)(의안번호 2222755)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 8건 11월 13일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 13. 김우영 의원 대표발의)(의안번호 2222796)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 13. 김주영 의원 대표발의)(의안번호 2222801)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 2건 11월 16일 회부됨</div></div><div class="con"><p class="tit_sm"><strong>소득세법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 16. 주철현 의원 대표발의)(의안번호 2222820)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 16. 주철현 의원 대표발의)(의안번호 2222823)</div></div><div class="con"><p class="tit_sm"><strong>조세특례제한법 일부개정법률안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 16. 유상범 의원 대표발의)(의안번호 2222826)</div></div><div class="con"><p class="tit_sm"><strong>국세청장후보자(안덕수) 인사청문요청안</strong></p><div class="pl10"></div></div><div class="con"><p class="tit_sm"></p><div class="pl10">(2026. 11. 16. 대통령 제출)</div></div><div class="con"><p class="tit_sm"></p><div class="pl10">이상 4건 11월 17일 회부됨</div></div><p class="tit"><span class="num"></span><strong>◯행정입법 제출</strong></p><div class="table_wrap2"><table class="normal"><caption>◯행정입법 제출</caption><colgroup><col width="11.359618292968667%"><col width="47.728289347562146%"><col width="13.43642831277824%"><col width="13.43642831277824%"><col width="14.039235733912712%"></colgroup><thead><tr><th scope="col">구분</th><th scope="col">행정입법명</th><th scope="col">공포번호</th><th scope="col">개정형태</th><th scope="col">소관부처</th></tr></thead><tr><td rowspan=5>대통령령<br/></td><td>통계법 시행령 일부개정령<br/></td><td>제36804호<br/></td><td>일부개정<br/></td><td>국가데이터처<br/></td></tr><tr><td>행정정보 공동이용 등을 활용한 행정서류 간소화에 관한 12개 법령의 일부개정에 관한 대통령령(안)<br/></td><td>입법예고<br/></td><td>일부개정<br/></td><td>법제처<br/></td></tr><tr><td>개별소비세법 시행령 일부개정령(안)<br/></td><td>입법예고<br/></td><td>일부개정<br/></td><td>재정경제부<br/></td></tr><tr><td>교통·에너지·환경세법 시행령 일부개정령(안)<br/></td><td>입법예고<br/></td><td>일부개정<br/></td><td>재정경제부<br/></td></tr><tr><td>소득세법 시행령 일부개정령(안)<br/></td><td>입법예고<br/></td><td>일부개정<br/></td><td>재정경제부<br/></td></tr></table></div><br/></div></div>
+		
+		
+	
+</div>
+
+				<!-- //minutes [E]-->
+			</div>
+			<!-- //content [E]-->
+		</div>
+		<!-- //container [E]-->
+
+		<!-- pop_layer [S] -->
+		<div class="pop_layer">
+		</div>
+		<!-- //pop_layer [E] -->
+		<div class="scroll_area">
+			<button type="button" class="btn_top">top</button>
+			<div class="progress_area">
+				<p>Scroll : <strong>0</strong>%</p>
+			</div>
+			<button type="button" class="btn_bottom" >down</button>
+		</div>
+		<div class="mask"></div>
+		<!-- 선택 인쇄 [S] -->
+		<div class="btn_spk_wrap">
+			<button type="button" class="btn_spk_down">발언 저장</button>
+			<button type="button" class="btn_spk_print">발언 인쇄</button>
+		</div>
+		<!-- //선택 인쇄 [E] -->
+		<script>
+			const conf = {"council_cd":"NAM","th":22.0,"half":"A","council_nm":"국회회의록","en_nm":"national assembly minutes","addr":"서울특별시 영등포구 의사당대로 1 (여의도동) 07233","tel":"02-6788-2114","inquiry_url":"webmaster@assembly.go.kr","copyright":"Copyright© National Assembly. All rights reserved.","keyword":"국회회의록, assembly, ASSEMBLY, Assembly","description":"국회회의록 홈페이지 입니다."};
+			const reqInfo = {"url":"https://record.assembly.go.kr:443/assembly/viewer/minutes/xml.do","host":"record.assembly.go.kr:443","path":"/assembly/viewer/minutes/xml.do","path_seq":["viewer","minutes","xml.do"],"page_group":"viewer","upper_path":"/assembly/viewer/minutes","cntx_path":"/assembly","parameters":{"schwrd":"","sel_date":"","sdate":"","flag":"all","sel_group":"","limit":"","page":"1","sel_align":"","edate":"","list_style":"","schword":""},"param_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","param_enc_str":"schwrd=\u0026sel_date=\u0026sdate=\u0026flag=all\u0026sel_group=\u0026limit=\u0026page=1\u0026sel_align=\u0026edate=\u0026list_style=\u0026schword=","main_page":false,"page_title":"국회회의록","user_agent":{"platform":"Mac OS X","browser":"Chrome","version_str":"131.0.0.0","version":131.0,"is_mobile":false,"is_robot":false}};
+			const reform = "";
+			const userAgent = "";
+			const is_modern_browser = "";
+			const mnts_id = 57765;
+			const class_id = 2;
+			const confer_num = "N054843";
+			const th = 22;
+			// 2025-04-14 17대는 안내문구 추가
+			
+			
+			
+			
+			    
+				  alert("신속한 정보 제공을 위해 임시로 공개되는 회의록입니다.");
+					
+				document.onmousedown = disableclick;
+				const status = "본회의록은 회의내용의 신속한 정보제공을 위한\r임시회의록으로서 정본회의록이 아니므로 복사하실 수 없습니다.";
+				function disableclick(event) {
+					if (event.button == 2) {
+						alert(status);
+						return false;
+					}
+				}
+			
+		</script>
+		<link rel="stylesheet" href="/assembly/resources/viewer/minutes/viewer.css?1795793737169" />
+		<script src="/assembly/resources/viewer/minutes/common.js?1795793737169"></script>
+		<script src="/assembly/resources/viewer/minutes/top.js?1795793737169"></script>
+		<script src="/assembly/resources/viewer/minutes/left.js?1795793737169"></script>
+		
+		
+		<script src="/assembly/assets/plugins/jquery-print/jQuery.print.js"></script>
+		<script src="/assembly/assets/plugins/mark.js/jquery.mark.min.js"></script>
+		<script src="/assembly/assets/plugins/tiffjs/tiff.min.js"></script>
+		
+	</div>
+	
+
+
+<script>
+    var _vsto = _vsto || {};
+    (function() {
+        var _rt =(("https:" === document.location.protocol) ? "https" : "http") + "://" + document.location.host + "/assembly";
+        _vsto._rt = _rt;
+        var _log = "/visitant/log.do";
+        _vsto._log = _log;
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0]; g.type = "text/javascript";
+        g.defer = true; g.async = true; g.src = _rt + "/assets/plugins/visitantjs/visitant.min.js"; s.parentNode.insertBefore(g, s);
+    })();
+</script>
+</body>
+
+</html>
